@@ -2,142 +2,187 @@
 
 Publish siyuan article to supported open platforms
 
-At present, it supports vuepress and two open API standard blog platforms, <code>metaweblog api</code> and <code>xmlrpc</code> remote call API based on <code>wordpress</code>
+At present, it supports vuepress and two open API standard blog platforms, `metaweblog api` and  
+`xmlrpc` remote call API based on <code>wordpress</code>
 
-ALso provide a [common API adaptor](https://github.com/terwer/src-sy-post-publisher/blob/main/src/lib/api.ts) , make every plantform posiable.
+Also provide a [common API adaptor](https://github.com/terwer/src-sy-post-publisher/blob/main/src/lib/api.ts) , make
+every plantform posiable.
 
-<a href="https://img1.terwergreen.com/api/public/20220729233245.gif" target="_blank" >Click me</a>
+![](preview.png)
 
-![](img/v001.gif)
+![](preview-light.png)
 
-[中文版说明](README-zh_CN.md)
+[Click to see Help doc](https://mp.terwer.space/post/readme-1j4ltp.html)
 
-## Support plantforms
-
-* [X] Vuepress-v0.0.1 support，2022-07-29 release
-
-* [X] Cnblogs-relay on v0.0.2 version，~~will release on 2022-10-31~~，released now on 2022-08-21
-
-* [X] Liandi-relay on v0.0.2 version，~~will release on 2022-10-31~~，released now on 2022-08-21
-
-* [X] Yueque-relay on v0.0.2 version，~~will release on 2022-10-31~~，released now on 2022-08-21
-
-* [X] Metaweblog API on v0.0.2，released now on 2022-08-21
-
-* [X] Wordpress on v0.0.2，released now on 2022-08-21
+[Click to see config video](https://mp.terwer.space/post/configure-entry-video-brpm9.html)
 
 ## Updates
 
 [Click here to view development progress](https://github.com/users/terwer/projects/1/views/1)
 
-### v0.0.2
-- [X] [#15](https://github.com/terwer/src-sy-post-publisher/issues/15) Published to other platforms-blog parks, WordPress, chain drop community, etc.
+* 0.0.3 key fatures
 
-  - [x] [#18](https://github.com/terwer/src-sy-post-publisher/issues/18) Implement MetaWeblog-API client
+  Published at 2022-09-28
 
-  - [x] [#24](https://github.com/terwer/src-sy-post-publisher/issues/24) Non-pendant server version, you need to pass the document ID. It is recommended to cooperate with my other work [node-siyuan](https://github.com/terwer/node-siyuan) use
+    * feat: #62 [标题支持数字编号](https://github.com/terwer/src-sy-post-publisher/pull/62)
 
-  - [x] [#25](https://github.com/terwer/src-sy-post-publisher/issues/25) Vercel deploy
+      例如在思源笔记的标题为 `023.利用pm2后台运行nodejs程序`，发布的时候会自动去掉编号变成 `利用pm2后台运行nodejs程序`。这样做的目的是保持文章在思源笔记的结构化，然后又不影响其他平台的展示。
+    * feat: #72 [Wordpress默认发布为Markdown](https://github.com/terwer/src-sy-post-publisher/pull/72)
 
-  - [X] [#38](https://github.com/terwer/src-sy-post-publisher/issues/38) Some platforms support cancel the release
+      这里还做了进一步的优化，现在发布方式支持配置了，可以自定发布为 markdown 还是 HTML，满足不同平台诉求。
+    * feat: #76 [动态类型支持选择发布格式](https://github.com/terwer/src-sy-post-publisher/pull/76)
 
-  - [X] [#39](https://github.com/terwer/src-sy-post-publisher/issues/39) Support ELETRON interface
+      支持 HTML 和 Markdown 两种发布格式。
+    * fix: #73 [发布到语雀偶发的获取默认知识库失败问题](https://github.com/terwer/src-sy-post-publisher/pull/73)
+    * feat: #103 [支持可设置分类的平台选择分类-语雀支持选择分类](https://github.com/terwer/src-sy-post-publisher/pull/103)
+    * feat: #77 [支持Metaweblog选择分类（博客园、Wordpress等）](https://github.com/terwer/src-sy-post-publisher/pull/77)
+    * feat: #81 [支持取消所有平台](https://github.com/terwer/src-sy-post-publisher/pull/81)
 
-  - [X] [#40](https://github.com/terwer/src-sy-post-publisher/issues/40) Published to Confluence, you need to cooperate with my project [node-metaweblog-api-adaptor](https://github.com/terwer/node-metaweblog-api-adaptor)
+      所有平台均支持关闭，不再强制内置任何平台，默认所有平台关闭，用户自行启用。
+    * feat: #88 [适配暗色模式](https://github.com/terwer/src-sy-post-publisher/pull/88)​
 
-  - [x] [#41](https://github.com/terwer/src-sy-post-publisher/issues/41) Send to Wordpess
+      现在所有页面都支持暗色模式和浅色模式切换
+    * feat: #89 [整合node-siyuan到挂件【非挂件模式】](https://github.com/terwer/src-sy-post-publisher/pull/89)​
 
-  - [x] [#42](https://github.com/terwer/src-sy-post-publisher/issues/42) Sendto Liandi
+      非挂件模式提供文章列表页面，整合我的另外一个 node-siyuan 项目。
+    * feat: #99 [Google插件扩展](https://github.com/terwer/src-sy-post-publisher/pull/99)​
 
-  - [x] [#43](https://github.com/terwer/src-sy-post-publisher/issues/43) Send to Yuque
+      现在可以直接在 Google Chrome 插件扩展中使用了。
+    * feat: #102 [代码优化以及空状态处理](https://github.com/terwer/src-sy-post-publisher/pull/102)​
 
-  - [x] [#44](https://github.com/terwer/src-sy-post-publisher/issues/44) Send to KMS
-  
-- [#19](https://github.com/terwer/src-sy-post-publisher/issues/19) 增强Vuepress支持，如果设置了Github参数，使用Github API实现自动发布，否则自行复制文本
+      现在支持加载过程中展示骨架，提供更好的体验。
+    * feat: #104 [动态类型支持自定义预览地址](https://github.com/terwer/src-sy-post-publisher/pull/104)​
 
-    - 1、add aupport for Github rest api
+* 0.0.4 preview
 
-    - 2、TS generic implementation Vuepress release parameter configuration
+  Will publish on 2022-12-31
 
-    - 3、Fix Octokit to build an error in vite, replace `node-fetch` as `isomorphic-fetch`
-  
-    - 4、Add config valifation
+    * [ ] 支持发布到印象笔记
+    * [ ] 支持详情页导出Anki记忆卡【非挂件模式】
+    * [ ] 支持微信消息、微信公众号、CSDN、简书、知乎（预研，目前没有公开API，可能需要借助cookie模拟登陆）
+    * [ ] 支持Github pages、HUGO、Jekyll、Next.js content、Nuxt.js content
+    * [ ] 集成PicGO，可直接粘贴图片自动上传。旧文档的非图床图片，在发布时候使用PicGO上传然后再发布
+    * [ ] 详情页支持下载所有图片到本地，并打包成带assets文件夹和md文件的zip包，这个主要是某些分享场景网络不畅通可能有用
+    * [ ] 支持发布时候选择一键剔除外链图片，主要是个别平台不允许外链图片
 
-    - 5、Time-consuming button operation add `loading`
-  
-    - 6、If the GitHub parameter is set, the GitHub API is set to be automatically published, otherwise the text will be copied by yourself
-  
-    - 7、Support selection of custom release directory
-  
-    - 8、Support modified file name
-  
-    - 9、Vuepress's slug add hash to avoid the conflict of repeated articles
-  
-    - 10、Support simple and complex mode
-  
-    - 11、New API status to ensure the availability of the API
-  
-    - 12、Configuration switch automatically takes effect
-  
-    - 13、Default directory switch
-  
-    - 14、Page initialization is also additional content
-  
-    - 15、Support article cancellation and release
+[Full changelog](Changelog-en-US.md)
 
-### v0.0.1
+## Support plantforms
 
-- [#13](https://github.com/terwer/src-sy-post-publisher/issues/13) Vuepress基本支持
-
-## Vue 3 + TypeScript + Vite
-
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-## Recommended IDE Setup
-
-* [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
-
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
-
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
-
-## Devlopment
-
-```bash
-yarn
-yarn dev
-```
+* [X] Vuepress
+* [X] Cnblog
+* [X] Liandi
+* [X] Yueque
+* [X] Wordpress
+* [X] Metaweblog API
 
 ## Tool Version
 
+Vue 3 + TypeScript + Vite
+
 |Tool|Version|
-| ------| ----------|
+| ------| --------|
 |node|v16.16.0|
 |yarn|1.22.19|
+|vercel|28.0.1|
+|pm2|5.2.0|
 
-## Init Project
+## Environment
+
+**Set up environment variables**
+
+Copy the .env.local.example file in this directory to .env.local (which will be ignored by Git):
 
 ```bash
-yarn create vite
+cp .env.local.example .env.local
 ```
 
-## Deploy
+Then open `.env.local` and set SIYUAN_API_URL to be the URL to your siyuan-note endpoint. For
+example: http://127.0.0.1:6806.
+
+Your `.env.local` file should look like this:
+
+```properties
+# log level
+VITE_LOG_INFO_ENABLED=false
+# siyuan api
+VITE_SIYUAN_API_URL=http://127.0.0.1:6806
+VITE_SIYUAN_CONFIG_TOKEN=
+# middlware to support cors, optional
+# VITE_MIDDLEWARE_URL=
+```
+
+You can also set `.env.development.local`, `.env.production.local`, `.env.test.local` for different modes
+
+See also [Vite .env docs](https://cn.vitejs.dev/guide/env-and-mode.html#env-files)
+
+## Devlopment
+
+setup
 
 ```bash
-yarn deploy
-```
-
-## Vercel CLI
-
-```
+npm i -g yarn
 npm i -g vercel
 ```
 
-[Vercel CLI](https://vercel.com/docs/cli#introduction/installing-the-cli)
+dev
 
+```bash
+# yarn create vite
+yarn
+yarn vdev
+```
+
+**Notice:**
+
+If you find vervel is not well for hot reload，you can try this way，But env `VITE_MIDDLEWARE_URL` should be set to support CORS
+
+```properties
+VITE_MIDDLEWARE_URL=https://publish.terwer.space/api/middleware
+```
+
+Then start with following commonds which supports hot reload
+
+```bash
+yarn dev
+```
+
+View URL is:
+
+http://localhost:3000/blog/index.html
+
+## Deploy
+
+### Build for siyuan widget
+
+```bash
+yarn w
+```
+
+### Build for chrome extension
+
+```bash
+yarn e
+```
+
+### Run with pm2
+
+setup
+
+```bash
+npm i -g yarn
+npm i -g vercel
+npm i -g pm2
+```
+
+start
+
+```bash
+yarn pm2
+```
+
+stop
+
+```bash
+yarn pm2s
+```
