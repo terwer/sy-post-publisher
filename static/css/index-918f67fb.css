@@ -1,0 +1,198 @@
+
+.main-common-header{
+  height: 20px !important;
+}
+
+h1[data-v-95e9535b]{
+  color: var(--el-table-text-color);
+}
+
+.footer[data-v-9776b98b] {
+  font-size: 12px;
+  color: #bbb;
+  text-align: center;
+}
+.footer .text[data-v-9776b98b] {
+  vertical-align: middle;
+}
+.s-dark[data-v-9776b98b] {
+  color: var(--el-color-primary);
+  cursor: pointer;
+}
+
+#post-detail-body[data-v-501e3e66] {
+  min-width: 600px !important;
+}
+#post-detail-body .btn-publish[data-v-501e3e66] {
+  /*margin-left: 10px;*/
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.publish-header[data-v-8fbb3308]{
+  margin-bottom: 16px;
+}
+#publish-body[data-v-8fbb3308] {
+  min-width: 600px !important;
+}
+
+.s-input {
+  min-width: 500px !important;
+}
+
+.top-data-tip[data-v-b81ccd10] {
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+/* search */
+.my-autocomplete li[data-v-b81ccd10] {
+  line-height: normal;
+  padding: 7px;
+}
+.my-autocomplete li .name[data-v-b81ccd10] {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.my-autocomplete li .addr[data-v-b81ccd10] {
+  font-size: 12px;
+  color: #b4b4b4;
+}
+.my-autocomplete li .highlighted .addr[data-v-b81ccd10] {
+  color: #ddd;
+}
+.s-btn[data-v-b81ccd10] {
+  margin-left: 20px;
+}
+
+/* table */
+.tb-data[data-v-b81ccd10] {
+  margin-top: 10px;
+}
+.el-pagination[data-v-b81ccd10] {
+  text-align: center;
+  margin-top: 20px;
+  justify-content: center;
+}
+:root {
+    font-family: "-apple-system", "Wenquanyi Micro Hei", "Wenquanyi Micro Hei Mono", "Microsoft YaHei", "LXGW WenKai", "PT Sans", "Liberation Mono", monospace, dejavu sans mono, Fira Code, Microsoft Yahei, Consolas, Courier New, monospace, Menlo, Monaco !important;
+
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+}
+
+a:hover {
+    color: #535bf2;
+}
+
+body {
+    margin: 0;
+}
+
+#app {
+    background: var(--custom-app-bg-color);
+    padding: 10px;
+}
+
+.el-header h1 {
+    --custom-title-text-color: #000000;
+    color: var(--custom-title-text-color);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+}
+
+.el-tag {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.top-version-tip {
+    margin: 10px 0 !important;
+}
+
+.el-alert {
+    margin-top: 10px !important;
+}
+
+html.dark .post-detail-content-box .hljs{
+    color: #ffffff;
+    background-color: #161616 !important;
+    border: 1px solid #ccc !important;
+}
+
+/* table */
+.post-detail-content-box table {
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.post-detail-content-box table th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+
+.post-detail-content-box table td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+
+/* dark table */
+html.dark .post-detail-content-box table {
+    color: #ffffff;
+    border-color: #ccc;
+}
+
+html.dark .post-detail-content-box table th {
+    border-color: #ccc;
+    background-color: #161616;
+}
+
+html.dark .post-detail-content-box table td {
+    border-color: #ccc;
+    background-color: #161616;
+}html.dark {
+  /* 自定义深色背景颜色 */
+  //--af-bg-color: #000000;
+  --custom-app-bg-color: #000000;
+}
+
+html.dark .el-header h1{
+  --custom-title-text-color: #ffffff;
+}
+
+html.dark .el-page-header__left{
+  color: #ffffff;
+}
+
+html.dark .post-detail-content-box{
+  color: #ffffff;
+}
