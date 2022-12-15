@@ -5,21 +5,22 @@
 将 [思源笔记](https://github.com/siyuan-note/siyuan) 的文章发布到支持的平台的 **思源笔记挂件**
 
 ![version](https://img.shields.io/github/release/terwer/src-sy-post-publisher.svg?style=flat-square)
-<a title="Downloads" target="_blank" href="https://github.com/terwer/src-sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/src-sy-post-publisher/total.svg?style=flat-square&color=blueviolet"></a>
 [![](https://img.shields.io/badge/online-preview-faad14.svg?style=popout-square)](https://publish.terwer.space/blog/index.html)
+![GitHub last commit](https://img.shields.io/github/last-commit/terwer/src-sy-post-publisher)
 ![](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)
 
 [![](https://img.shields.io/badge/%E9%A1%B9%E7%9B%AE%E6%BA%90%E7%A0%81-code-brightgreen)](https://github.com/terwer/src-sy-post-publisher)
-[![](https://img.shields.io/badge/%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3-doc-blue)](https://hugo.terwer.space/post/readme-1j4ltp.html)
-[![](https://img.shields.io/badge/%E6%96%B0%E6%89%8B%E5%B0%8F%E7%99%BD%E7%BA%A7%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B-video-red)](https://hugo.terwer.space/post/configure-entry-video-brpm9.html)
+[![](https://img.shields.io/badge/%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3-doc-blue)](https://www.terwer.space/post/readme-1j4ltp.html)
+[![](https://img.shields.io/badge/%E6%96%B0%E6%89%8B%E5%B0%8F%E7%99%BD%E7%BA%A7%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B-video-red)](https://www.terwer.space/post/configure-entry-video-brpm9.html)
 
 ![](https://raw.githubusercontent.com/terwer/src-sy-post-publisher/main/public/preview.png)
 
-## 开发状态
+## 状态
 
 [![dev checks](https://img.shields.io/github/checks-status/terwer/src-sy-post-publisher/main?label=main)](https://github.com/terwer/src-sy-post-publisher)
 [![dev checks](https://img.shields.io/github/checks-status/terwer/src-sy-post-publisher/dev?label=dev)](https://github.com/terwer/src-sy-post-publisher/tree/dev)
-![GitHub last commit](https://img.shields.io/github/last-commit/terwer/src-sy-post-publisher)
+<a title="Downloads" target="_blank" href="https://github.com/terwer/src-sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/src-sy-post-publisher/total.svg?label=extension-downloads&style=flat-square&color=blueviolet"></a>
+<a title="Downloads" target="_blank" href="https://github.com/terwer/src-sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/sy-post-publisher/total.svg?label=widget-downloads&style=flat-square&color=blue"></a>
 
 ## 支持平台
 
@@ -41,7 +42,24 @@
 - [x] [Metaweblog API](http://xmlrpc.com/spec.md)
 - [ ] 自定义 HTTP 协议 <sup>预研</sup>
 
-## 挂件版快速上手
+## 挂件版挂载菜单打开新窗口操作方式快速上手
+
+首先在设置 - 集市 - 挂件 中下载 sy-post-publisher
+
+点击设置 - 外观- 代码片段，代码片段加上下面的 `js` 片段，然后重启思源
+
+```js
+// 如果不喜欢这个菜单，直接去掉这个代码片段引用即可，去掉之后仍然可以通过挂件版通用方式使用
+import("/widgets/sy-post-publisher/lib/siyuanhook.js")
+```
+
+点击按钮开始体验
+
+![](https://img1.terwer.space/api/public/202212151951396.png)
+
+详情请参考: [挂件模式用挂载菜单的方式使用](https://www.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html#%E6%95%88%E6%9E%9C%E6%BC%94%E7%A4%BA)<sup>强烈推荐</sup> <sup>0.4.2+</sup>
+
+## 挂件版通用方式快速上手
 
 首先在设置 - 集市 - 挂件 中下载 sy-post-publisher
 
@@ -118,19 +136,19 @@ https://terwer.space/post/start-to-get-started-zi0eyk.html
 - [x] 多语言支持，支持中文版和英文版 <sup>0.0.1+</sup>
 - [x] 支持子目录模式 <sup>0.1.0+</sup>
 
-    - 现在无需在所有页面引用挂件了，只需要在父级页面引用一个挂件即可。
+  - 现在无需在所有页面引用挂件了，只需要在父级页面引用一个挂件即可。
 
-    1. 如果检测到没有子文档，会兼容 0.0.3 版本以前的方式，展示当前文档的发布页面。
+  1. 如果检测到没有子文档，会兼容 0.0.3 版本以前的方式，展示当前文档的发布页面。
 
-    2. 如果检测到有子文档，会以列表加分页的方式展示所有子文档列表。可单独选择某个子文档进行发布操作。
+  2. 如果检测到有子文档，会以列表加分页的方式展示所有子文档列表。可单独选择某个子文档进行发布操作。
 
 - [x] 发布页面支持预览 <sup>0.1.0+</sup>
 - [ ] 支持自定义接口协议 <sup>1.0.0+</sup>
 - [x] 支持文章标题使用数字编号 <sup>0.0.3+</sup>
 - [x] [多平台支持，并且持续适配中](https://github.com/terwer/src-sy-post-publisher#%E6%94%AF%E6%8C%81%E5%B9%B3%E5%8F%B0) <sup>
-  0.0.1+</sup>
+      0.0.1+</sup>
 - [x] 支持同步到 Github(Github pages、Hugo、Hexo、Jekyll、Vuepress、Vitepress、Nuxt content、Next.js)，0.1.0+
-  之后更加通用，支持动态添加管理多个 <sup>0.0.1+</sup> <sup>0.1.0+</sup>
+      之后更加通用，支持动态添加管理多个 <sup>0.0.1+</sup> <sup>0.1.0+</sup>
 - [ ] 支持自定义图床 <sup>1.0.0+</sup>
 - [x] 支持多种发布视图，简单模式、详细模式和源码模式（Github 系列平台） <sup>0.1.0+</sup> <sup>0.0.1+</sup>
 - [x] 支持自定义设置 API 地址，支持本地、局域网、远程 <sup>0.1.0+</sup>
