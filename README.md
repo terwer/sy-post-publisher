@@ -102,8 +102,8 @@ https://terwer.space/post/start-to-get-started-zi0eyk.html
 |  ![](https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/icons/browser/edge20.svg)  | [latest](https://microsoftedge.microsoft.com/addons/detail/%E6%80%9D%E6%BA%90%E7%AC%94%E8%AE%B0%E5%8F%91%E5%B8%83%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7/aejmkigifflimhjlhjkdckclhabbilee) |  已上架  |
 | ![](https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/icons/browser/chrome20.svg) |     [latest](https://chrome.google.com/webstore/detail/%E6%80%9D%E6%BA%90%E7%AC%94%E8%AE%B0%E5%8F%91%E5%B8%83%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7/gemlnnppcphbiimfjnobfgdkohjmgifm)     |  已上架  |
 |                                        网页版                                        |                                                                 [latest](https://publish.terwer.space/blog/index.html)                                                                  |  可使用  |
-|                                       离线 zip                                       |                                  [latest](https://github.com/terwer/src-sy-post-publisher/releases/download/v0.0.3/sy-post-publisher-chrome-0.0.3.zip)                                  |  可下载  |
-|                                        挂件版                                        |                                                                  [latest](https://github.com/terwer/sy-post-publisher)                                                                  |  可使用  |
+|                                       离线 zip                                       |                                                           [latest](https://github.com/terwer/src-sy-post-publisher/releases)                                                            |  可下载  |
+|                                        挂件版                                        |                                                             [latest](https://github.com/terwer/sy-post-publisher/releases)                                                              |  可使用  |
 
 小贴士：
 
@@ -121,9 +121,11 @@ https://terwer.space/post/start-to-get-started-zi0eyk.html
 
 ## 核心特性
 
-目前支持基于 `Github` <sup>0.0.1+</sup> 、 `metaweblog API` <sup>0.0.2+</sup> 、`Wordpress API` <sup>0.0.2+</sup> 以及 `自定义HTTP协议` <sup>1.0.0+(预研)</sup> 的平台
+目前支持基于 `Github` <sup>0.0.1+</sup> 、 `metaweblog API` <sup>0.0.2+</sup> 、`Wordpress API` <sup>0.0.2+</sup>
+以及 `自定义HTTP协议` <sup>1.0.0+(预研)</sup> 的平台
 
-同时提供了一个 [统一通用的 API 适配器](https://github.com/terwer/src-sy-post-publisher/blob/main/src/utils/api.ts)，让适配任何平台成为可能。
+同时提供了一个 [统一通用的 API 适配器](https://github.com/terwer/src-sy-post-publisher/blob/main/utils/api.ts)
+，让适配任何平台成为可能。
 
 - [x] 兼容 Metaweblog API 以及自定义平台 <sup>0.0.3+</sup>
 - [x] 支持平台开关 <sup>0.0.3+</sup>
@@ -136,19 +138,19 @@ https://terwer.space/post/start-to-get-started-zi0eyk.html
 - [x] 多语言支持，支持中文版和英文版 <sup>0.0.1+</sup>
 - [x] 支持子目录模式 <sup>0.1.0+</sup>
 
-  - 现在无需在所有页面引用挂件了，只需要在父级页面引用一个挂件即可。
+    - 现在无需在所有页面引用挂件了，只需要在父级页面引用一个挂件即可。
 
-  1. 如果检测到没有子文档，会兼容 0.0.3 版本以前的方式，展示当前文档的发布页面。
+    1. 如果检测到没有子文档，会兼容 0.0.3 版本以前的方式，展示当前文档的发布页面。
 
-  2. 如果检测到有子文档，会以列表加分页的方式展示所有子文档列表。可单独选择某个子文档进行发布操作。
+    2. 如果检测到有子文档，会以列表加分页的方式展示所有子文档列表。可单独选择某个子文档进行发布操作。
 
 - [x] 发布页面支持预览 <sup>0.1.0+</sup>
 - [ ] 支持自定义接口协议 <sup>1.0.0+</sup>
 - [x] 支持文章标题使用数字编号 <sup>0.0.3+</sup>
 - [x] [多平台支持，并且持续适配中](https://github.com/terwer/src-sy-post-publisher#%E6%94%AF%E6%8C%81%E5%B9%B3%E5%8F%B0) <sup>
-      0.0.1+</sup>
+  0.0.1+</sup>
 - [x] 支持同步到 Github(Github pages、Hugo、Hexo、Jekyll、Vuepress、Vitepress、Nuxt content、Next.js)，0.1.0+
-      之后更加通用，支持动态添加管理多个 <sup>0.0.1+</sup> <sup>0.1.0+</sup>
+  之后更加通用，支持动态添加管理多个 <sup>0.0.1+</sup> <sup>0.1.0+</sup>
 - [ ] 支持自定义图床 <sup>1.0.0+</sup>
 - [x] 支持多种发布视图，简单模式、详细模式和源码模式（Github 系列平台） <sup>0.1.0+</sup> <sup>0.0.1+</sup>
 - [x] 支持自定义设置 API 地址，支持本地、局域网、远程 <sup>0.1.0+</sup>
@@ -159,7 +161,7 @@ https://terwer.space/post/start-to-get-started-zi0eyk.html
 
 [开发进度](https://github.com/users/terwer/projects/1/views/1)
 
-[更新日志](CHANGELOG.md)
+[更新日志](https://github.com/terwer/src-sy-post-publisher/blob/main/CHANGELOG.md)
 
 ## Vue 3 + TypeScript + Vite
 
@@ -289,6 +291,41 @@ pnpm extChromeDev
 ```bash
 vercel
 ```
+
+## 🎈 鸣谢
+
+sy-post-publisher 系列主题的诞生与成长离不开下列开源项目的贡献，以及热心网友的反馈和建议。
+
+### 思源社区
+
+[思源笔记](https://github.com/siyuan-note/siyuan)
+
+### 资源
+
+UI 框架：（排名不分先后）
+
+- [Vue3](https://vuejs.org/)
+- [Element-Plus](https://element-plus.org/)
+- [lute](https://github.com/88250/lute)
+
+技术框架或托管平台：（排名不分先后）
+
+- [xmlrpc](https://github.com/baalexander/node-xmlrpc)
+- [yaml](https://github.com/nodeca/js-yaml)
+- [vercel](https://vercel.com/)
+
+### 个人
+
+技术支持：（排名不分先后）
+
+- 感谢 [Soltus](https://github.com/Soltus) 提供的新窗口打开相关代码及实现思路
+
+- 感谢 [leolee9086](https://github.com/leolee9086) 提供的挂载菜单相关代码及实现思路
+
+- 感谢 [Zuoqiu-Yingyi](https://github.com/Zuoqiu-Yingyi)
+  开源的 [Dark+](https://github.com/Zuoqiu-Yingyi/siyuan-theme-dark-plus) 主题的灵感
+
+- 感谢 [svchord](https://github.com/svchord) 开源的 [Rem Craft](https://github.com/svchord/Rem-Craft) 主题的灵感
 
 ## 版权声明
 
