@@ -1,1 +1,45 @@
-var n=function(a){var r=0;if(a.length==0)return r;for(var t=0;t<a.length;t++){var v=a.charCodeAt(t);r=(r<<5)-r+v,r=r&r}return r},f=function(a,r){var t="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";r=r||62;var v=[],o,s="",u=a<0?"-":"";for(a=Math.abs(a);a>=r;)o=a%r,a=Math.floor(a/r),v.push(t[o]);a>0&&v.push(t[a]);for(var h=v.length-1;h>=0;h--)s+=v[h];return u+s},p=function(a){var r=typeof a;if(r==="string"||r==="number"){var t=f(n(String(a)),61);return t.replace("-","Z")}else throw new Error("Unexpected input type")},c=p;export{c as d};
+var bitwise = function(str) {
+  var hash = 0;
+  if (str.length == 0)
+    return hash;
+  for (var i = 0; i < str.length; i++) {
+    var ch = str.charCodeAt(i);
+    hash = (hash << 5) - hash + ch;
+    hash = hash & hash;
+  }
+  return hash;
+};
+var binaryTransfer = function(integer, binary) {
+  var dictionary = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  binary = binary || 62;
+  var stack = [];
+  var num;
+  var result = "";
+  var sign = integer < 0 ? "-" : "";
+  integer = Math.abs(integer);
+  while (integer >= binary) {
+    num = integer % binary;
+    integer = Math.floor(integer / binary);
+    stack.push(dictionary[num]);
+  }
+  if (integer > 0) {
+    stack.push(dictionary[integer]);
+  }
+  for (var i = stack.length - 1; i >= 0; i--) {
+    result += stack[i];
+  }
+  return sign + result;
+};
+var shortHash = function(text) {
+  var type = typeof text;
+  if (type === "string" || type === "number") {
+    var id = binaryTransfer(bitwise(String(text)), 61);
+    return id.replace("-", "Z");
+  } else {
+    throw new Error("Unexpected input type");
+  }
+};
+var dist = shortHash;
+export {
+  dist as d
+};

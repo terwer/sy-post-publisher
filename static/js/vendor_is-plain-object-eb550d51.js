@@ -3,4 +3,25 @@
  *
  * Copyright (c) 2014-2017, Jon Schlinkert.
  * Released under the MIT License.
- */function n(t){return Object.prototype.toString.call(t)==="[object Object]"}function o(t){var e,r;return n(t)===!1?!1:(e=t.constructor,e===void 0?!0:(r=e.prototype,!(n(r)===!1||r.hasOwnProperty("isPrototypeOf")===!1)))}export{o as i};
+ */
+function isObject(o) {
+  return Object.prototype.toString.call(o) === "[object Object]";
+}
+function isPlainObject(o) {
+  var ctor, prot;
+  if (isObject(o) === false)
+    return false;
+  ctor = o.constructor;
+  if (ctor === void 0)
+    return true;
+  prot = ctor.prototype;
+  if (isObject(prot) === false)
+    return false;
+  if (prot.hasOwnProperty("isPrototypeOf") === false) {
+    return false;
+  }
+  return true;
+}
+export {
+  isPlainObject as i
+};

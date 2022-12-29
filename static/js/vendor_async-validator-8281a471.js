@@ -1,12 +1,1052 @@
-import{b as Te}from"./vendor_rollup-plugin-node-polyfills-2747d496.js";function R(){return R=Object.assign?Object.assign.bind():function(i){for(var e=1;e<arguments.length;e++){var r=arguments[e];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(i[n]=r[n])}return i},R.apply(this,arguments)}function ee(i,e){i.prototype=Object.create(e.prototype),i.prototype.constructor=i,S(i,e)}function U(i){return U=Object.setPrototypeOf?Object.getPrototypeOf.bind():function(r){return r.__proto__||Object.getPrototypeOf(r)},U(i)}function S(i,e){return S=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(n,t){return n.__proto__=t,n},S(i,e)}function re(){if(typeof Reflect>"u"||!Reflect.construct||Reflect.construct.sham)return!1;if(typeof Proxy=="function")return!0;try{return Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){})),!0}catch{return!1}}function I(i,e,r){return re()?I=Reflect.construct.bind():I=function(t,f,a){var s=[null];s.push.apply(s,f);var d=Function.bind.apply(t,s),w=new d;return a&&S(w,a.prototype),w},I.apply(null,arguments)}function ne(i){return Function.toString.call(i).indexOf("[native code]")!==-1}function B(i){var e=typeof Map=="function"?new Map:void 0;return B=function(n){if(n===null||!ne(n))return n;if(typeof n!="function")throw new TypeError("Super expression must either be null or a function");if(typeof e<"u"){if(e.has(n))return e.get(n);e.set(n,t)}function t(){return I(n,arguments,U(this).constructor)}return t.prototype=Object.create(n.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),S(t,n)},B(i)}var te=/%[sdj%]/g,ie=function(){};function W(i){if(!i||!i.length)return null;var e={};return i.forEach(function(r){var n=r.field;e[n]=e[n]||[],e[n].push(r)}),e}function F(i){for(var e=arguments.length,r=new Array(e>1?e-1:0),n=1;n<e;n++)r[n-1]=arguments[n];var t=0,f=r.length;if(typeof i=="function")return i.apply(null,r);if(typeof i=="string"){var a=i.replace(te,function(s){if(s==="%%")return"%";if(t>=f)return s;switch(s){case"%s":return String(r[t++]);case"%d":return Number(r[t++]);case"%j":try{return JSON.stringify(r[t++])}catch{return"[Circular]"}break;default:return s}});return a}return i}function ae(i){return i==="string"||i==="url"||i==="hex"||i==="email"||i==="date"||i==="pattern"}function m(i,e){return!!(i==null||e==="array"&&Array.isArray(i)&&!i.length||ae(e)&&typeof i=="string"&&!i)}function fe(i,e,r){var n=[],t=0,f=i.length;function a(s){n.push.apply(n,s||[]),t++,t===f&&r(n)}i.forEach(function(s){e(s,a)})}function K(i,e,r){var n=0,t=i.length;function f(a){if(a&&a.length){r(a);return}var s=n;n=n+1,s<t?e(i[s],f):r([])}f([])}function se(i){var e=[];return Object.keys(i).forEach(function(r){e.push.apply(e,i[r]||[])}),e}var z=function(i){ee(e,i);function e(r,n){var t;return t=i.call(this,"Async Validation Error")||this,t.errors=r,t.fields=n,t}return e}(B(Error));function oe(i,e,r,n,t){if(e.first){var f=new Promise(function(l,O){var x=function(o){return n(o),o.length?O(new z(o,W(o))):l(t)},u=se(i);K(u,r,x)});return f.catch(function(l){return l}),f}var a=e.firstFields===!0?Object.keys(i):e.firstFields||[],s=Object.keys(i),d=s.length,w=0,h=[],v=new Promise(function(l,O){var x=function(g){if(h.push.apply(h,g),w++,w===d)return n(h),h.length?O(new z(h,W(h))):l(t)};s.length||(n(h),l(t)),s.forEach(function(u){var g=i[u];a.indexOf(u)!==-1?K(g,r,x):fe(g,r,x)})});return v.catch(function(l){return l}),v}function de(i){return!!(i&&i.message!==void 0)}function ue(i,e){for(var r=i,n=0;n<e.length;n++){if(r==null)return r;r=r[e[n]]}return r}function H(i,e){return function(r){var n;return i.fullFields?n=ue(e,i.fullFields):n=e[r.field||i.fullField],de(r)?(r.field=r.field||i.fullField,r.fieldValue=n,r):{message:typeof r=="function"?r():r,fieldValue:n,field:r.field||i.fullField}}}function Q(i,e){if(e){for(var r in e)if(e.hasOwnProperty(r)){var n=e[r];typeof n=="object"&&typeof i[r]=="object"?i[r]=R({},i[r],n):i[r]=n}}return i}var C=function(e,r,n,t,f,a){e.required&&(!n.hasOwnProperty(e.field)||m(r,a||e.type))&&t.push(F(f.messages.required,e.fullField))},ce=function(e,r,n,t,f){(/^\s+$/.test(r)||r==="")&&t.push(F(f.messages.whitespace,e.fullField))},$,pe=function(){if($)return $;var i="[a-fA-F\\d:]",e=function(y){return y&&y.includeBoundaries?"(?:(?<=\\s|^)(?="+i+")|(?<="+i+")(?=\\s|$))":""},r="(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}",n="[a-fA-F\\d]{1,4}",t=(`
-(?:
-(?:`+n+":){7}(?:"+n+`|:)|                                    // 1:2:3:4:5:6:7::  1:2:3:4:5:6:7:8
-(?:`+n+":){6}(?:"+r+"|:"+n+`|:)|                             // 1:2:3:4:5:6::    1:2:3:4:5:6::8   1:2:3:4:5:6::8  1:2:3:4:5:6::1.2.3.4
-(?:`+n+":){5}(?::"+r+"|(?::"+n+`){1,2}|:)|                   // 1:2:3:4:5::      1:2:3:4:5::7:8   1:2:3:4:5::8    1:2:3:4:5::7:1.2.3.4
-(?:`+n+":){4}(?:(?::"+n+"){0,1}:"+r+"|(?::"+n+`){1,3}|:)| // 1:2:3:4::        1:2:3:4::6:7:8   1:2:3:4::8      1:2:3:4::6:7:1.2.3.4
-(?:`+n+":){3}(?:(?::"+n+"){0,2}:"+r+"|(?::"+n+`){1,4}|:)| // 1:2:3::          1:2:3::5:6:7:8   1:2:3::8        1:2:3::5:6:7:1.2.3.4
-(?:`+n+":){2}(?:(?::"+n+"){0,3}:"+r+"|(?::"+n+`){1,5}|:)| // 1:2::            1:2::4:5:6:7:8   1:2::8          1:2::4:5:6:7:1.2.3.4
-(?:`+n+":){1}(?:(?::"+n+"){0,4}:"+r+"|(?::"+n+`){1,6}|:)| // 1::              1::3:4:5:6:7:8   1::8            1::3:4:5:6:7:1.2.3.4
-(?::(?:(?::`+n+"){0,5}:"+r+"|(?::"+n+`){1,7}|:))             // ::2:3:4:5:6:7:8  ::2:3:4:5:6:7:8  ::8             ::1.2.3.4
-)(?:%[0-9a-zA-Z]{1,})?                                             // %eth0            %1
-`).replace(/\s*\/\/.*$/gm,"").replace(/\n/g,"").trim(),f=new RegExp("(?:^"+r+"$)|(?:^"+t+"$)"),a=new RegExp("^"+r+"$"),s=new RegExp("^"+t+"$"),d=function(y){return y&&y.exact?f:new RegExp("(?:"+e(y)+r+e(y)+")|(?:"+e(y)+t+e(y)+")","g")};d.v4=function(p){return p&&p.exact?a:new RegExp(""+e(p)+r+e(p),"g")},d.v6=function(p){return p&&p.exact?s:new RegExp(""+e(p)+t+e(p),"g")};var w="(?:(?:[a-z]+:)?//)",h="(?:\\S+(?::\\S*)?@)?",v=d.v4().source,l=d.v6().source,O="(?:(?:[a-z\\u00a1-\\uffff0-9][-_]*)*[a-z\\u00a1-\\uffff0-9]+)",x="(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*",u="(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))",g="(?::\\d{2,5})?",o='(?:[/?#][^\\s"]*)?',A="(?:"+w+"|www\\.)"+h+"(?:localhost|"+v+"|"+l+"|"+O+x+u+")"+g+o;return $=new RegExp("(?:^"+A+"$)","i"),$},X={email:/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+\.)+[a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,}))$/,hex:/^#?([a-f0-9]{6}|[a-f0-9]{3})$/i},T={integer:function(e){return T.number(e)&&parseInt(e,10)===e},float:function(e){return T.number(e)&&!T.integer(e)},array:function(e){return Array.isArray(e)},regexp:function(e){if(e instanceof RegExp)return!0;try{return!!new RegExp(e)}catch{return!1}},date:function(e){return typeof e.getTime=="function"&&typeof e.getMonth=="function"&&typeof e.getYear=="function"&&!isNaN(e.getTime())},number:function(e){return isNaN(e)?!1:typeof e=="number"},object:function(e){return typeof e=="object"&&!T.array(e)},method:function(e){return typeof e=="function"},email:function(e){return typeof e=="string"&&e.length<=320&&!!e.match(X.email)},url:function(e){return typeof e=="string"&&e.length<=2048&&!!e.match(pe())},hex:function(e){return typeof e=="string"&&!!e.match(X.hex)}},ye=function(e,r,n,t,f){if(e.required&&r===void 0){C(e,r,n,t,f);return}var a=["integer","float","array","regexp","object","method","email","number","date","url","hex"],s=e.type;a.indexOf(s)>-1?T[s](r)||t.push(F(f.messages.types[s],e.fullField,e.type)):s&&typeof r!==e.type&&t.push(F(f.messages.types[s],e.fullField,e.type))},ge=function(e,r,n,t,f){var a=typeof e.len=="number",s=typeof e.min=="number",d=typeof e.max=="number",w=/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,h=r,v=null,l=typeof r=="number",O=typeof r=="string",x=Array.isArray(r);if(l?v="number":O?v="string":x&&(v="array"),!v)return!1;x&&(h=r.length),O&&(h=r.replace(w,"_").length),a?h!==e.len&&t.push(F(f.messages[v].len,e.fullField,e.len)):s&&!d&&h<e.min?t.push(F(f.messages[v].min,e.fullField,e.min)):d&&!s&&h>e.max?t.push(F(f.messages[v].max,e.fullField,e.max)):s&&d&&(h<e.min||h>e.max)&&t.push(F(f.messages[v].range,e.fullField,e.min,e.max))},N="enum",he=function(e,r,n,t,f){e[N]=Array.isArray(e[N])?e[N]:[],e[N].indexOf(r)===-1&&t.push(F(f.messages[N],e.fullField,e[N].join(", ")))},me=function(e,r,n,t,f){if(e.pattern){if(e.pattern instanceof RegExp)e.pattern.lastIndex=0,e.pattern.test(r)||t.push(F(f.messages.pattern.mismatch,e.fullField,r,e.pattern));else if(typeof e.pattern=="string"){var a=new RegExp(e.pattern);a.test(r)||t.push(F(f.messages.pattern.mismatch,e.fullField,r,e.pattern))}}},c={required:C,whitespace:ce,type:ye,range:ge,enum:he,pattern:me},ve=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r,"string")&&!e.required)return n();c.required(e,r,t,a,f,"string"),m(r,"string")||(c.type(e,r,t,a,f),c.range(e,r,t,a,f),c.pattern(e,r,t,a,f),e.whitespace===!0&&c.whitespace(e,r,t,a,f))}n(a)},le=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r)&&!e.required)return n();c.required(e,r,t,a,f),r!==void 0&&c.type(e,r,t,a,f)}n(a)},we=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(r===""&&(r=void 0),m(r)&&!e.required)return n();c.required(e,r,t,a,f),r!==void 0&&(c.type(e,r,t,a,f),c.range(e,r,t,a,f))}n(a)},qe=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r)&&!e.required)return n();c.required(e,r,t,a,f),r!==void 0&&c.type(e,r,t,a,f)}n(a)},be=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r)&&!e.required)return n();c.required(e,r,t,a,f),m(r)||c.type(e,r,t,a,f)}n(a)},Fe=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r)&&!e.required)return n();c.required(e,r,t,a,f),r!==void 0&&(c.type(e,r,t,a,f),c.range(e,r,t,a,f))}n(a)},xe=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r)&&!e.required)return n();c.required(e,r,t,a,f),r!==void 0&&(c.type(e,r,t,a,f),c.range(e,r,t,a,f))}n(a)},Oe=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(r==null&&!e.required)return n();c.required(e,r,t,a,f,"array"),r!=null&&(c.type(e,r,t,a,f),c.range(e,r,t,a,f))}n(a)},Ee=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r)&&!e.required)return n();c.required(e,r,t,a,f),r!==void 0&&c.type(e,r,t,a,f)}n(a)},Ae="enum",_e=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r)&&!e.required)return n();c.required(e,r,t,a,f),r!==void 0&&c[Ae](e,r,t,a,f)}n(a)},Pe=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r,"string")&&!e.required)return n();c.required(e,r,t,a,f),m(r,"string")||c.pattern(e,r,t,a,f)}n(a)},je=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r,"date")&&!e.required)return n();if(c.required(e,r,t,a,f),!m(r,"date")){var d;r instanceof Date?d=r:d=new Date(r),c.type(e,d,t,a,f),d&&c.range(e,d.getTime(),t,a,f)}}n(a)},Re=function(e,r,n,t,f){var a=[],s=Array.isArray(r)?"array":typeof r;c.required(e,r,t,a,f,s),n(a)},M=function(e,r,n,t,f){var a=e.type,s=[],d=e.required||!e.required&&t.hasOwnProperty(e.field);if(d){if(m(r,a)&&!e.required)return n();c.required(e,r,t,s,f,a),m(r,a)||c.type(e,r,t,s,f)}n(s)},Ne=function(e,r,n,t,f){var a=[],s=e.required||!e.required&&t.hasOwnProperty(e.field);if(s){if(m(r)&&!e.required)return n();c.required(e,r,t,a,f)}n(a)},D={string:ve,method:le,number:we,boolean:qe,regexp:be,integer:Fe,float:xe,array:Oe,object:Ee,enum:_e,pattern:Pe,date:je,url:M,hex:M,email:M,required:Re,any:Ne};function Y(){return{default:"Validation error on field %s",required:"%s is required",enum:"%s must be one of %s",whitespace:"%s cannot be empty",date:{format:"%s date %s is invalid for format %s",parse:"%s date could not be parsed, %s is invalid ",invalid:"%s date %s is invalid"},types:{string:"%s is not a %s",method:"%s is not a %s (function)",array:"%s is not an %s",object:"%s is not an %s",number:"%s is not a %s",date:"%s is not a %s",boolean:"%s is not a %s",integer:"%s is not an %s",float:"%s is not a %s",regexp:"%s is not a valid %s",email:"%s is not a valid %s",url:"%s is not a valid %s",hex:"%s is not a valid %s"},string:{len:"%s must be exactly %s characters",min:"%s must be at least %s characters",max:"%s cannot be longer than %s characters",range:"%s must be between %s and %s characters"},number:{len:"%s must equal %s",min:"%s cannot be less than %s",max:"%s cannot be greater than %s",range:"%s must be between %s and %s"},array:{len:"%s must be exactly %s in length",min:"%s cannot be less than %s in length",max:"%s cannot be greater than %s in length",range:"%s must be between %s and %s in length"},pattern:{mismatch:"%s value %s does not match pattern %s"},clone:function(){var e=JSON.parse(JSON.stringify(this));return e.clone=this.clone,e}}}var G=Y(),L=function(){function i(r){this.rules=null,this._messages=G,this.define(r)}var e=i.prototype;return e.define=function(n){var t=this;if(!n)throw new Error("Cannot configure a schema with no rules");if(typeof n!="object"||Array.isArray(n))throw new Error("Rules must be an object");this.rules={},Object.keys(n).forEach(function(f){var a=n[f];t.rules[f]=Array.isArray(a)?a:[a]})},e.messages=function(n){return n&&(this._messages=Q(Y(),n)),this._messages},e.validate=function(n,t,f){var a=this;t===void 0&&(t={}),f===void 0&&(f=function(){});var s=n,d=t,w=f;if(typeof d=="function"&&(w=d,d={}),!this.rules||Object.keys(this.rules).length===0)return w&&w(null,s),Promise.resolve(s);function h(u){var g=[],o={};function A(y){if(Array.isArray(y)){var b;g=(b=g).concat.apply(b,y)}else g.push(y)}for(var p=0;p<u.length;p++)A(u[p]);g.length?(o=W(g),w(g,o)):w(null,s)}if(d.messages){var v=this.messages();v===G&&(v=Y()),Q(v,d.messages),d.messages=v}else d.messages=this.messages();var l={},O=d.keys||Object.keys(this.rules);O.forEach(function(u){var g=a.rules[u],o=s[u];g.forEach(function(A){var p=A;typeof p.transform=="function"&&(s===n&&(s=R({},s)),o=s[u]=p.transform(o)),typeof p=="function"?p={validator:p}:p=R({},p),p.validator=a.getValidationMethod(p),p.validator&&(p.field=u,p.fullField=p.fullField||u,p.type=a.getType(p),l[u]=l[u]||[],l[u].push({rule:p,value:o,source:s,field:u}))})});var x={};return oe(l,d,function(u,g){var o=u.rule,A=(o.type==="object"||o.type==="array")&&(typeof o.fields=="object"||typeof o.defaultField=="object");A=A&&(o.required||!o.required&&u.value),o.field=u.field;function p(q,j){return R({},j,{fullField:o.fullField+"."+q,fullFields:o.fullFields?[].concat(o.fullFields,[q]):[q]})}function y(q){q===void 0&&(q=[]);var j=Array.isArray(q)?q:[q];!d.suppressWarning&&j.length&&i.warning("async-validator:",j),j.length&&o.message!==void 0&&(j=[].concat(o.message));var _=j.map(H(o,s));if(d.first&&_.length)return x[o.field]=1,g(_);if(!A)g(_);else{if(o.required&&!u.value)return o.message!==void 0?_=[].concat(o.message).map(H(o,s)):d.error&&(_=[d.error(o,F(d.messages.required,o.field))]),g(_);var V={};o.defaultField&&Object.keys(u.value).map(function(P){V[P]=o.defaultField}),V=R({},V,u.rule.fields);var J={};Object.keys(V).forEach(function(P){var E=V[P],k=Array.isArray(E)?E:[E];J[P]=k.map(p.bind(null,P))});var Z=new i(J);Z.messages(d.messages),u.rule.options&&(u.rule.options.messages=d.messages,u.rule.options.error=d.error),Z.validate(u.value,u.rule.options||d,function(P){var E=[];_&&_.length&&E.push.apply(E,_),P&&P.length&&E.push.apply(E,P),g(E.length?E:null)})}}var b;if(o.asyncValidator)b=o.asyncValidator(o,u.value,y,u.source,d);else if(o.validator){try{b=o.validator(o,u.value,y,u.source,d)}catch(q){console.error==null||console.error(q),d.suppressValidatorError||setTimeout(function(){throw q},0),y(q.message)}b===!0?y():b===!1?y(typeof o.message=="function"?o.message(o.fullField||o.field):o.message||(o.fullField||o.field)+" fails"):b instanceof Array?y(b):b instanceof Error&&y(b.message)}b&&b.then&&b.then(function(){return y()},function(q){return y(q)})},function(u){h(u)},s)},e.getType=function(n){if(n.type===void 0&&n.pattern instanceof RegExp&&(n.type="pattern"),typeof n.validator!="function"&&n.type&&!D.hasOwnProperty(n.type))throw new Error(F("Unknown rule type %s",n.type));return n.type||"string"},e.getValidationMethod=function(n){if(typeof n.validator=="function")return n.validator;var t=Object.keys(n),f=t.indexOf("message");return f!==-1&&t.splice(f,1),t.length===1&&t[0]==="required"?D.required:D[this.getType(n)]||void 0},i}();L.register=function(e,r){if(typeof r!="function")throw new Error("Cannot register a validator by type, validator is not a function");D[e]=r};L.warning=ie;L.messages=G;L.validators=D;export{L as S};
+import { b as browser$1 } from "./vendor_rollup-plugin-node-polyfills-2747d496.js";
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  _setPrototypeOf(subClass, superClass);
+}
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o2) {
+    return o2.__proto__ || Object.getPrototypeOf(o2);
+  };
+  return _getPrototypeOf(o);
+}
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
+    o2.__proto__ = p2;
+    return o2;
+  };
+  return _setPrototypeOf(o, p);
+}
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct)
+    return false;
+  if (Reflect.construct.sham)
+    return false;
+  if (typeof Proxy === "function")
+    return true;
+  try {
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
+    }));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+function _construct(Parent, args, Class) {
+  if (_isNativeReflectConstruct()) {
+    _construct = Reflect.construct.bind();
+  } else {
+    _construct = function _construct2(Parent2, args2, Class2) {
+      var a = [null];
+      a.push.apply(a, args2);
+      var Constructor = Function.bind.apply(Parent2, a);
+      var instance = new Constructor();
+      if (Class2)
+        _setPrototypeOf(instance, Class2.prototype);
+      return instance;
+    };
+  }
+  return _construct.apply(null, arguments);
+}
+function _isNativeFunction(fn) {
+  return Function.toString.call(fn).indexOf("[native code]") !== -1;
+}
+function _wrapNativeSuper(Class) {
+  var _cache = typeof Map === "function" ? /* @__PURE__ */ new Map() : void 0;
+  _wrapNativeSuper = function _wrapNativeSuper2(Class2) {
+    if (Class2 === null || !_isNativeFunction(Class2))
+      return Class2;
+    if (typeof Class2 !== "function") {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+    if (typeof _cache !== "undefined") {
+      if (_cache.has(Class2))
+        return _cache.get(Class2);
+      _cache.set(Class2, Wrapper);
+    }
+    function Wrapper() {
+      return _construct(Class2, arguments, _getPrototypeOf(this).constructor);
+    }
+    Wrapper.prototype = Object.create(Class2.prototype, {
+      constructor: {
+        value: Wrapper,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    return _setPrototypeOf(Wrapper, Class2);
+  };
+  return _wrapNativeSuper(Class);
+}
+var formatRegExp = /%[sdj%]/g;
+var warning = function warning2() {
+};
+if (typeof browser$1 !== "undefined" && { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://publish.terwer.space/api/middleware" } && false) {
+  warning = function warning3(type4, errors) {
+    if (typeof console !== "undefined" && console.warn && typeof ASYNC_VALIDATOR_NO_WARNING === "undefined") {
+      if (errors.every(function(e) {
+        return typeof e === "string";
+      })) {
+        console.warn(type4, errors);
+      }
+    }
+  };
+}
+function convertFieldsError(errors) {
+  if (!errors || !errors.length)
+    return null;
+  var fields = {};
+  errors.forEach(function(error) {
+    var field = error.field;
+    fields[field] = fields[field] || [];
+    fields[field].push(error);
+  });
+  return fields;
+}
+function format(template) {
+  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+  var i = 0;
+  var len = args.length;
+  if (typeof template === "function") {
+    return template.apply(null, args);
+  }
+  if (typeof template === "string") {
+    var str = template.replace(formatRegExp, function(x) {
+      if (x === "%%") {
+        return "%";
+      }
+      if (i >= len) {
+        return x;
+      }
+      switch (x) {
+        case "%s":
+          return String(args[i++]);
+        case "%d":
+          return Number(args[i++]);
+        case "%j":
+          try {
+            return JSON.stringify(args[i++]);
+          } catch (_) {
+            return "[Circular]";
+          }
+          break;
+        default:
+          return x;
+      }
+    });
+    return str;
+  }
+  return template;
+}
+function isNativeStringType(type4) {
+  return type4 === "string" || type4 === "url" || type4 === "hex" || type4 === "email" || type4 === "date" || type4 === "pattern";
+}
+function isEmptyValue(value, type4) {
+  if (value === void 0 || value === null) {
+    return true;
+  }
+  if (type4 === "array" && Array.isArray(value) && !value.length) {
+    return true;
+  }
+  if (isNativeStringType(type4) && typeof value === "string" && !value) {
+    return true;
+  }
+  return false;
+}
+function asyncParallelArray(arr, func, callback) {
+  var results = [];
+  var total = 0;
+  var arrLength = arr.length;
+  function count(errors) {
+    results.push.apply(results, errors || []);
+    total++;
+    if (total === arrLength) {
+      callback(results);
+    }
+  }
+  arr.forEach(function(a) {
+    func(a, count);
+  });
+}
+function asyncSerialArray(arr, func, callback) {
+  var index = 0;
+  var arrLength = arr.length;
+  function next(errors) {
+    if (errors && errors.length) {
+      callback(errors);
+      return;
+    }
+    var original = index;
+    index = index + 1;
+    if (original < arrLength) {
+      func(arr[original], next);
+    } else {
+      callback([]);
+    }
+  }
+  next([]);
+}
+function flattenObjArr(objArr) {
+  var ret = [];
+  Object.keys(objArr).forEach(function(k) {
+    ret.push.apply(ret, objArr[k] || []);
+  });
+  return ret;
+}
+var AsyncValidationError = /* @__PURE__ */ function(_Error) {
+  _inheritsLoose(AsyncValidationError2, _Error);
+  function AsyncValidationError2(errors, fields) {
+    var _this;
+    _this = _Error.call(this, "Async Validation Error") || this;
+    _this.errors = errors;
+    _this.fields = fields;
+    return _this;
+  }
+  return AsyncValidationError2;
+}(/* @__PURE__ */ _wrapNativeSuper(Error));
+function asyncMap(objArr, option, func, callback, source) {
+  if (option.first) {
+    var _pending = new Promise(function(resolve, reject) {
+      var next = function next2(errors) {
+        callback(errors);
+        return errors.length ? reject(new AsyncValidationError(errors, convertFieldsError(errors))) : resolve(source);
+      };
+      var flattenArr = flattenObjArr(objArr);
+      asyncSerialArray(flattenArr, func, next);
+    });
+    _pending["catch"](function(e) {
+      return e;
+    });
+    return _pending;
+  }
+  var firstFields = option.firstFields === true ? Object.keys(objArr) : option.firstFields || [];
+  var objArrKeys = Object.keys(objArr);
+  var objArrLength = objArrKeys.length;
+  var total = 0;
+  var results = [];
+  var pending = new Promise(function(resolve, reject) {
+    var next = function next2(errors) {
+      results.push.apply(results, errors);
+      total++;
+      if (total === objArrLength) {
+        callback(results);
+        return results.length ? reject(new AsyncValidationError(results, convertFieldsError(results))) : resolve(source);
+      }
+    };
+    if (!objArrKeys.length) {
+      callback(results);
+      resolve(source);
+    }
+    objArrKeys.forEach(function(key) {
+      var arr = objArr[key];
+      if (firstFields.indexOf(key) !== -1) {
+        asyncSerialArray(arr, func, next);
+      } else {
+        asyncParallelArray(arr, func, next);
+      }
+    });
+  });
+  pending["catch"](function(e) {
+    return e;
+  });
+  return pending;
+}
+function isErrorObj(obj) {
+  return !!(obj && obj.message !== void 0);
+}
+function getValue(value, path) {
+  var v = value;
+  for (var i = 0; i < path.length; i++) {
+    if (v == void 0) {
+      return v;
+    }
+    v = v[path[i]];
+  }
+  return v;
+}
+function complementError(rule, source) {
+  return function(oe) {
+    var fieldValue;
+    if (rule.fullFields) {
+      fieldValue = getValue(source, rule.fullFields);
+    } else {
+      fieldValue = source[oe.field || rule.fullField];
+    }
+    if (isErrorObj(oe)) {
+      oe.field = oe.field || rule.fullField;
+      oe.fieldValue = fieldValue;
+      return oe;
+    }
+    return {
+      message: typeof oe === "function" ? oe() : oe,
+      fieldValue,
+      field: oe.field || rule.fullField
+    };
+  };
+}
+function deepMerge(target, source) {
+  if (source) {
+    for (var s in source) {
+      if (source.hasOwnProperty(s)) {
+        var value = source[s];
+        if (typeof value === "object" && typeof target[s] === "object") {
+          target[s] = _extends({}, target[s], value);
+        } else {
+          target[s] = value;
+        }
+      }
+    }
+  }
+  return target;
+}
+var required$1 = function required(rule, value, source, errors, options, type4) {
+  if (rule.required && (!source.hasOwnProperty(rule.field) || isEmptyValue(value, type4 || rule.type))) {
+    errors.push(format(options.messages.required, rule.fullField));
+  }
+};
+var whitespace = function whitespace2(rule, value, source, errors, options) {
+  if (/^\s+$/.test(value) || value === "") {
+    errors.push(format(options.messages.whitespace, rule.fullField));
+  }
+};
+var urlReg;
+var getUrlRegex = function() {
+  if (urlReg) {
+    return urlReg;
+  }
+  var word = "[a-fA-F\\d:]";
+  var b = function b2(options) {
+    return options && options.includeBoundaries ? "(?:(?<=\\s|^)(?=" + word + ")|(?<=" + word + ")(?=\\s|$))" : "";
+  };
+  var v4 = "(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}";
+  var v6seg = "[a-fA-F\\d]{1,4}";
+  var v6 = ("\n(?:\n(?:" + v6seg + ":){7}(?:" + v6seg + "|:)|                                    // 1:2:3:4:5:6:7::  1:2:3:4:5:6:7:8\n(?:" + v6seg + ":){6}(?:" + v4 + "|:" + v6seg + "|:)|                             // 1:2:3:4:5:6::    1:2:3:4:5:6::8   1:2:3:4:5:6::8  1:2:3:4:5:6::1.2.3.4\n(?:" + v6seg + ":){5}(?::" + v4 + "|(?::" + v6seg + "){1,2}|:)|                   // 1:2:3:4:5::      1:2:3:4:5::7:8   1:2:3:4:5::8    1:2:3:4:5::7:1.2.3.4\n(?:" + v6seg + ":){4}(?:(?::" + v6seg + "){0,1}:" + v4 + "|(?::" + v6seg + "){1,3}|:)| // 1:2:3:4::        1:2:3:4::6:7:8   1:2:3:4::8      1:2:3:4::6:7:1.2.3.4\n(?:" + v6seg + ":){3}(?:(?::" + v6seg + "){0,2}:" + v4 + "|(?::" + v6seg + "){1,4}|:)| // 1:2:3::          1:2:3::5:6:7:8   1:2:3::8        1:2:3::5:6:7:1.2.3.4\n(?:" + v6seg + ":){2}(?:(?::" + v6seg + "){0,3}:" + v4 + "|(?::" + v6seg + "){1,5}|:)| // 1:2::            1:2::4:5:6:7:8   1:2::8          1:2::4:5:6:7:1.2.3.4\n(?:" + v6seg + ":){1}(?:(?::" + v6seg + "){0,4}:" + v4 + "|(?::" + v6seg + "){1,6}|:)| // 1::              1::3:4:5:6:7:8   1::8            1::3:4:5:6:7:1.2.3.4\n(?::(?:(?::" + v6seg + "){0,5}:" + v4 + "|(?::" + v6seg + "){1,7}|:))             // ::2:3:4:5:6:7:8  ::2:3:4:5:6:7:8  ::8             ::1.2.3.4\n)(?:%[0-9a-zA-Z]{1,})?                                             // %eth0            %1\n").replace(/\s*\/\/.*$/gm, "").replace(/\n/g, "").trim();
+  var v46Exact = new RegExp("(?:^" + v4 + "$)|(?:^" + v6 + "$)");
+  var v4exact = new RegExp("^" + v4 + "$");
+  var v6exact = new RegExp("^" + v6 + "$");
+  var ip = function ip2(options) {
+    return options && options.exact ? v46Exact : new RegExp("(?:" + b(options) + v4 + b(options) + ")|(?:" + b(options) + v6 + b(options) + ")", "g");
+  };
+  ip.v4 = function(options) {
+    return options && options.exact ? v4exact : new RegExp("" + b(options) + v4 + b(options), "g");
+  };
+  ip.v6 = function(options) {
+    return options && options.exact ? v6exact : new RegExp("" + b(options) + v6 + b(options), "g");
+  };
+  var protocol = "(?:(?:[a-z]+:)?//)";
+  var auth = "(?:\\S+(?::\\S*)?@)?";
+  var ipv4 = ip.v4().source;
+  var ipv6 = ip.v6().source;
+  var host = "(?:(?:[a-z\\u00a1-\\uffff0-9][-_]*)*[a-z\\u00a1-\\uffff0-9]+)";
+  var domain = "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*";
+  var tld = "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))";
+  var port = "(?::\\d{2,5})?";
+  var path = '(?:[/?#][^\\s"]*)?';
+  var regex = "(?:" + protocol + "|www\\.)" + auth + "(?:localhost|" + ipv4 + "|" + ipv6 + "|" + host + domain + tld + ")" + port + path;
+  urlReg = new RegExp("(?:^" + regex + "$)", "i");
+  return urlReg;
+};
+var pattern$2 = {
+  email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+\.)+[a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,}))$/,
+  hex: /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i
+};
+var types = {
+  integer: function integer(value) {
+    return types.number(value) && parseInt(value, 10) === value;
+  },
+  "float": function float(value) {
+    return types.number(value) && !types.integer(value);
+  },
+  array: function array(value) {
+    return Array.isArray(value);
+  },
+  regexp: function regexp(value) {
+    if (value instanceof RegExp) {
+      return true;
+    }
+    try {
+      return !!new RegExp(value);
+    } catch (e) {
+      return false;
+    }
+  },
+  date: function date(value) {
+    return typeof value.getTime === "function" && typeof value.getMonth === "function" && typeof value.getYear === "function" && !isNaN(value.getTime());
+  },
+  number: function number(value) {
+    if (isNaN(value)) {
+      return false;
+    }
+    return typeof value === "number";
+  },
+  object: function object(value) {
+    return typeof value === "object" && !types.array(value);
+  },
+  method: function method(value) {
+    return typeof value === "function";
+  },
+  email: function email(value) {
+    return typeof value === "string" && value.length <= 320 && !!value.match(pattern$2.email);
+  },
+  url: function url(value) {
+    return typeof value === "string" && value.length <= 2048 && !!value.match(getUrlRegex());
+  },
+  hex: function hex(value) {
+    return typeof value === "string" && !!value.match(pattern$2.hex);
+  }
+};
+var type$1 = function type(rule, value, source, errors, options) {
+  if (rule.required && value === void 0) {
+    required$1(rule, value, source, errors, options);
+    return;
+  }
+  var custom = ["integer", "float", "array", "regexp", "object", "method", "email", "number", "date", "url", "hex"];
+  var ruleType = rule.type;
+  if (custom.indexOf(ruleType) > -1) {
+    if (!types[ruleType](value)) {
+      errors.push(format(options.messages.types[ruleType], rule.fullField, rule.type));
+    }
+  } else if (ruleType && typeof value !== rule.type) {
+    errors.push(format(options.messages.types[ruleType], rule.fullField, rule.type));
+  }
+};
+var range = function range2(rule, value, source, errors, options) {
+  var len = typeof rule.len === "number";
+  var min = typeof rule.min === "number";
+  var max = typeof rule.max === "number";
+  var spRegexp = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
+  var val = value;
+  var key = null;
+  var num = typeof value === "number";
+  var str = typeof value === "string";
+  var arr = Array.isArray(value);
+  if (num) {
+    key = "number";
+  } else if (str) {
+    key = "string";
+  } else if (arr) {
+    key = "array";
+  }
+  if (!key) {
+    return false;
+  }
+  if (arr) {
+    val = value.length;
+  }
+  if (str) {
+    val = value.replace(spRegexp, "_").length;
+  }
+  if (len) {
+    if (val !== rule.len) {
+      errors.push(format(options.messages[key].len, rule.fullField, rule.len));
+    }
+  } else if (min && !max && val < rule.min) {
+    errors.push(format(options.messages[key].min, rule.fullField, rule.min));
+  } else if (max && !min && val > rule.max) {
+    errors.push(format(options.messages[key].max, rule.fullField, rule.max));
+  } else if (min && max && (val < rule.min || val > rule.max)) {
+    errors.push(format(options.messages[key].range, rule.fullField, rule.min, rule.max));
+  }
+};
+var ENUM$1 = "enum";
+var enumerable$1 = function enumerable(rule, value, source, errors, options) {
+  rule[ENUM$1] = Array.isArray(rule[ENUM$1]) ? rule[ENUM$1] : [];
+  if (rule[ENUM$1].indexOf(value) === -1) {
+    errors.push(format(options.messages[ENUM$1], rule.fullField, rule[ENUM$1].join(", ")));
+  }
+};
+var pattern$1 = function pattern(rule, value, source, errors, options) {
+  if (rule.pattern) {
+    if (rule.pattern instanceof RegExp) {
+      rule.pattern.lastIndex = 0;
+      if (!rule.pattern.test(value)) {
+        errors.push(format(options.messages.pattern.mismatch, rule.fullField, value, rule.pattern));
+      }
+    } else if (typeof rule.pattern === "string") {
+      var _pattern = new RegExp(rule.pattern);
+      if (!_pattern.test(value)) {
+        errors.push(format(options.messages.pattern.mismatch, rule.fullField, value, rule.pattern));
+      }
+    }
+  }
+};
+var rules = {
+  required: required$1,
+  whitespace,
+  type: type$1,
+  range,
+  "enum": enumerable$1,
+  pattern: pattern$1
+};
+var string = function string2(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value, "string") && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options, "string");
+    if (!isEmptyValue(value, "string")) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+      rules.pattern(rule, value, source, errors, options);
+      if (rule.whitespace === true) {
+        rules.whitespace(rule, value, source, errors, options);
+      }
+    }
+  }
+  callback(errors);
+};
+var method2 = function method3(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var number2 = function number3(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (value === "") {
+      value = void 0;
+    }
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var _boolean = function _boolean2(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var regexp2 = function regexp3(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (!isEmptyValue(value)) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var integer2 = function integer3(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var floatFn = function floatFn2(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var array2 = function array3(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if ((value === void 0 || value === null) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options, "array");
+    if (value !== void 0 && value !== null) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var object2 = function object3(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var ENUM = "enum";
+var enumerable2 = function enumerable3(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules[ENUM](rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var pattern2 = function pattern3(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value, "string") && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (!isEmptyValue(value, "string")) {
+      rules.pattern(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var date2 = function date3(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value, "date") && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (!isEmptyValue(value, "date")) {
+      var dateObject;
+      if (value instanceof Date) {
+        dateObject = value;
+      } else {
+        dateObject = new Date(value);
+      }
+      rules.type(rule, dateObject, source, errors, options);
+      if (dateObject) {
+        rules.range(rule, dateObject.getTime(), source, errors, options);
+      }
+    }
+  }
+  callback(errors);
+};
+var required2 = function required3(rule, value, callback, source, options) {
+  var errors = [];
+  var type4 = Array.isArray(value) ? "array" : typeof value;
+  rules.required(rule, value, source, errors, options, type4);
+  callback(errors);
+};
+var type2 = function type3(rule, value, callback, source, options) {
+  var ruleType = rule.type;
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value, ruleType) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options, ruleType);
+    if (!isEmptyValue(value, ruleType)) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+};
+var any = function any2(rule, value, callback, source, options) {
+  var errors = [];
+  var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+  }
+  callback(errors);
+};
+var validators = {
+  string,
+  method: method2,
+  number: number2,
+  "boolean": _boolean,
+  regexp: regexp2,
+  integer: integer2,
+  "float": floatFn,
+  array: array2,
+  object: object2,
+  "enum": enumerable2,
+  pattern: pattern2,
+  date: date2,
+  url: type2,
+  hex: type2,
+  email: type2,
+  required: required2,
+  any
+};
+function newMessages() {
+  return {
+    "default": "Validation error on field %s",
+    required: "%s is required",
+    "enum": "%s must be one of %s",
+    whitespace: "%s cannot be empty",
+    date: {
+      format: "%s date %s is invalid for format %s",
+      parse: "%s date could not be parsed, %s is invalid ",
+      invalid: "%s date %s is invalid"
+    },
+    types: {
+      string: "%s is not a %s",
+      method: "%s is not a %s (function)",
+      array: "%s is not an %s",
+      object: "%s is not an %s",
+      number: "%s is not a %s",
+      date: "%s is not a %s",
+      "boolean": "%s is not a %s",
+      integer: "%s is not an %s",
+      "float": "%s is not a %s",
+      regexp: "%s is not a valid %s",
+      email: "%s is not a valid %s",
+      url: "%s is not a valid %s",
+      hex: "%s is not a valid %s"
+    },
+    string: {
+      len: "%s must be exactly %s characters",
+      min: "%s must be at least %s characters",
+      max: "%s cannot be longer than %s characters",
+      range: "%s must be between %s and %s characters"
+    },
+    number: {
+      len: "%s must equal %s",
+      min: "%s cannot be less than %s",
+      max: "%s cannot be greater than %s",
+      range: "%s must be between %s and %s"
+    },
+    array: {
+      len: "%s must be exactly %s in length",
+      min: "%s cannot be less than %s in length",
+      max: "%s cannot be greater than %s in length",
+      range: "%s must be between %s and %s in length"
+    },
+    pattern: {
+      mismatch: "%s value %s does not match pattern %s"
+    },
+    clone: function clone() {
+      var cloned = JSON.parse(JSON.stringify(this));
+      cloned.clone = this.clone;
+      return cloned;
+    }
+  };
+}
+var messages = newMessages();
+var Schema = /* @__PURE__ */ function() {
+  function Schema2(descriptor) {
+    this.rules = null;
+    this._messages = messages;
+    this.define(descriptor);
+  }
+  var _proto = Schema2.prototype;
+  _proto.define = function define(rules2) {
+    var _this = this;
+    if (!rules2) {
+      throw new Error("Cannot configure a schema with no rules");
+    }
+    if (typeof rules2 !== "object" || Array.isArray(rules2)) {
+      throw new Error("Rules must be an object");
+    }
+    this.rules = {};
+    Object.keys(rules2).forEach(function(name) {
+      var item = rules2[name];
+      _this.rules[name] = Array.isArray(item) ? item : [item];
+    });
+  };
+  _proto.messages = function messages2(_messages) {
+    if (_messages) {
+      this._messages = deepMerge(newMessages(), _messages);
+    }
+    return this._messages;
+  };
+  _proto.validate = function validate(source_, o, oc) {
+    var _this2 = this;
+    if (o === void 0) {
+      o = {};
+    }
+    if (oc === void 0) {
+      oc = function oc2() {
+      };
+    }
+    var source = source_;
+    var options = o;
+    var callback = oc;
+    if (typeof options === "function") {
+      callback = options;
+      options = {};
+    }
+    if (!this.rules || Object.keys(this.rules).length === 0) {
+      if (callback) {
+        callback(null, source);
+      }
+      return Promise.resolve(source);
+    }
+    function complete(results) {
+      var errors = [];
+      var fields = {};
+      function add(e) {
+        if (Array.isArray(e)) {
+          var _errors;
+          errors = (_errors = errors).concat.apply(_errors, e);
+        } else {
+          errors.push(e);
+        }
+      }
+      for (var i = 0; i < results.length; i++) {
+        add(results[i]);
+      }
+      if (!errors.length) {
+        callback(null, source);
+      } else {
+        fields = convertFieldsError(errors);
+        callback(errors, fields);
+      }
+    }
+    if (options.messages) {
+      var messages$1 = this.messages();
+      if (messages$1 === messages) {
+        messages$1 = newMessages();
+      }
+      deepMerge(messages$1, options.messages);
+      options.messages = messages$1;
+    } else {
+      options.messages = this.messages();
+    }
+    var series = {};
+    var keys = options.keys || Object.keys(this.rules);
+    keys.forEach(function(z) {
+      var arr = _this2.rules[z];
+      var value = source[z];
+      arr.forEach(function(r) {
+        var rule = r;
+        if (typeof rule.transform === "function") {
+          if (source === source_) {
+            source = _extends({}, source);
+          }
+          value = source[z] = rule.transform(value);
+        }
+        if (typeof rule === "function") {
+          rule = {
+            validator: rule
+          };
+        } else {
+          rule = _extends({}, rule);
+        }
+        rule.validator = _this2.getValidationMethod(rule);
+        if (!rule.validator) {
+          return;
+        }
+        rule.field = z;
+        rule.fullField = rule.fullField || z;
+        rule.type = _this2.getType(rule);
+        series[z] = series[z] || [];
+        series[z].push({
+          rule,
+          value,
+          source,
+          field: z
+        });
+      });
+    });
+    var errorFields = {};
+    return asyncMap(series, options, function(data, doIt) {
+      var rule = data.rule;
+      var deep = (rule.type === "object" || rule.type === "array") && (typeof rule.fields === "object" || typeof rule.defaultField === "object");
+      deep = deep && (rule.required || !rule.required && data.value);
+      rule.field = data.field;
+      function addFullField(key, schema) {
+        return _extends({}, schema, {
+          fullField: rule.fullField + "." + key,
+          fullFields: rule.fullFields ? [].concat(rule.fullFields, [key]) : [key]
+        });
+      }
+      function cb(e) {
+        if (e === void 0) {
+          e = [];
+        }
+        var errorList = Array.isArray(e) ? e : [e];
+        if (!options.suppressWarning && errorList.length) {
+          Schema2.warning("async-validator:", errorList);
+        }
+        if (errorList.length && rule.message !== void 0) {
+          errorList = [].concat(rule.message);
+        }
+        var filledErrors = errorList.map(complementError(rule, source));
+        if (options.first && filledErrors.length) {
+          errorFields[rule.field] = 1;
+          return doIt(filledErrors);
+        }
+        if (!deep) {
+          doIt(filledErrors);
+        } else {
+          if (rule.required && !data.value) {
+            if (rule.message !== void 0) {
+              filledErrors = [].concat(rule.message).map(complementError(rule, source));
+            } else if (options.error) {
+              filledErrors = [options.error(rule, format(options.messages.required, rule.field))];
+            }
+            return doIt(filledErrors);
+          }
+          var fieldsSchema = {};
+          if (rule.defaultField) {
+            Object.keys(data.value).map(function(key) {
+              fieldsSchema[key] = rule.defaultField;
+            });
+          }
+          fieldsSchema = _extends({}, fieldsSchema, data.rule.fields);
+          var paredFieldsSchema = {};
+          Object.keys(fieldsSchema).forEach(function(field) {
+            var fieldSchema = fieldsSchema[field];
+            var fieldSchemaList = Array.isArray(fieldSchema) ? fieldSchema : [fieldSchema];
+            paredFieldsSchema[field] = fieldSchemaList.map(addFullField.bind(null, field));
+          });
+          var schema = new Schema2(paredFieldsSchema);
+          schema.messages(options.messages);
+          if (data.rule.options) {
+            data.rule.options.messages = options.messages;
+            data.rule.options.error = options.error;
+          }
+          schema.validate(data.value, data.rule.options || options, function(errs) {
+            var finalErrors = [];
+            if (filledErrors && filledErrors.length) {
+              finalErrors.push.apply(finalErrors, filledErrors);
+            }
+            if (errs && errs.length) {
+              finalErrors.push.apply(finalErrors, errs);
+            }
+            doIt(finalErrors.length ? finalErrors : null);
+          });
+        }
+      }
+      var res;
+      if (rule.asyncValidator) {
+        res = rule.asyncValidator(rule, data.value, cb, data.source, options);
+      } else if (rule.validator) {
+        try {
+          res = rule.validator(rule, data.value, cb, data.source, options);
+        } catch (error) {
+          console.error == null ? void 0 : console.error(error);
+          if (!options.suppressValidatorError) {
+            setTimeout(function() {
+              throw error;
+            }, 0);
+          }
+          cb(error.message);
+        }
+        if (res === true) {
+          cb();
+        } else if (res === false) {
+          cb(typeof rule.message === "function" ? rule.message(rule.fullField || rule.field) : rule.message || (rule.fullField || rule.field) + " fails");
+        } else if (res instanceof Array) {
+          cb(res);
+        } else if (res instanceof Error) {
+          cb(res.message);
+        }
+      }
+      if (res && res.then) {
+        res.then(function() {
+          return cb();
+        }, function(e) {
+          return cb(e);
+        });
+      }
+    }, function(results) {
+      complete(results);
+    }, source);
+  };
+  _proto.getType = function getType(rule) {
+    if (rule.type === void 0 && rule.pattern instanceof RegExp) {
+      rule.type = "pattern";
+    }
+    if (typeof rule.validator !== "function" && rule.type && !validators.hasOwnProperty(rule.type)) {
+      throw new Error(format("Unknown rule type %s", rule.type));
+    }
+    return rule.type || "string";
+  };
+  _proto.getValidationMethod = function getValidationMethod(rule) {
+    if (typeof rule.validator === "function") {
+      return rule.validator;
+    }
+    var keys = Object.keys(rule);
+    var messageIndex = keys.indexOf("message");
+    if (messageIndex !== -1) {
+      keys.splice(messageIndex, 1);
+    }
+    if (keys.length === 1 && keys[0] === "required") {
+      return validators.required;
+    }
+    return validators[this.getType(rule)] || void 0;
+  };
+  return Schema2;
+}();
+Schema.register = function register(type4, validator) {
+  if (typeof validator !== "function") {
+    throw new Error("Cannot register a validator by type, validator is not a function");
+  }
+  validators[type4] = validator;
+};
+Schema.warning = warning;
+Schema.messages = messages;
+Schema.validators = validators;
+export {
+  Schema as S
+};

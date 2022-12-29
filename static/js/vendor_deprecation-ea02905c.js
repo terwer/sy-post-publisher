@@ -1,1 +1,12 @@
-class c extends Error{constructor(r){super(r),Error.captureStackTrace&&Error.captureStackTrace(this,this.constructor),this.name="Deprecation"}}export{c as D};
+class Deprecation extends Error {
+  constructor(message) {
+    super(message);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
+    this.name = "Deprecation";
+  }
+}
+export {
+  Deprecation as D
+};

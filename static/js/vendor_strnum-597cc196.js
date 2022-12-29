@@ -1,1 +1,93 @@
-const o=/^[-+]?0x[a-fA-F0-9]+$/,c=/^([\-\+])?(0*)(\.[0-9]+([eE]\-?[0-9]+)?|[0-9]+(\.[0-9]+([eE]\-?[0-9]+)?)?)$/;!Number.parseInt&&window.parseInt&&(Number.parseInt=window.parseInt);!Number.parseFloat&&window.parseFloat&&(Number.parseFloat=window.parseFloat);const d={hex:!0,leadingZeros:!0,decimalPoint:".",eNotation:!0};function g(e,n={}){if(n=Object.assign({},d,n),!e||typeof e!="string")return e;let r=e.trim();if(n.skipLike!==void 0&&n.skipLike.test(r))return e;if(n.hex&&o.test(r))return Number.parseInt(r,16);{const s=c.exec(r);if(s){const l=s[1],a=s[2];let f=N(s[3]);const u=s[4]||s[6];if(!n.leadingZeros&&a.length>0&&l&&r[2]!==".")return e;if(!n.leadingZeros&&a.length>0&&!l&&r[1]!==".")return e;{const i=Number(r),t=""+i;return t.search(/[eE]/)!==-1||u?n.eNotation?i:e:r.indexOf(".")!==-1?t==="0"&&f===""||t===f||l&&t==="-"+f?i:e:a?f===t||l+f===t?i:e:r===t||r===l+t?i:e}}else return e}}function N(e){return e&&e.indexOf(".")!==-1&&(e=e.replace(/0+$/,""),e==="."?e="0":e[0]==="."?e="0"+e:e[e.length-1]==="."&&(e=e.substr(0,e.length-1))),e}var x=g;export{x as s};
+const hexRegex = /^[-+]?0x[a-fA-F0-9]+$/;
+const numRegex = /^([\-\+])?(0*)(\.[0-9]+([eE]\-?[0-9]+)?|[0-9]+(\.[0-9]+([eE]\-?[0-9]+)?)?)$/;
+if (!Number.parseInt && window.parseInt) {
+  Number.parseInt = window.parseInt;
+}
+if (!Number.parseFloat && window.parseFloat) {
+  Number.parseFloat = window.parseFloat;
+}
+const consider = {
+  hex: true,
+  leadingZeros: true,
+  decimalPoint: ".",
+  eNotation: true
+};
+function toNumber(str, options = {}) {
+  options = Object.assign({}, consider, options);
+  if (!str || typeof str !== "string")
+    return str;
+  let trimmedStr = str.trim();
+  if (options.skipLike !== void 0 && options.skipLike.test(trimmedStr))
+    return str;
+  else if (options.hex && hexRegex.test(trimmedStr)) {
+    return Number.parseInt(trimmedStr, 16);
+  } else {
+    const match = numRegex.exec(trimmedStr);
+    if (match) {
+      const sign = match[1];
+      const leadingZeros = match[2];
+      let numTrimmedByZeros = trimZeros(match[3]);
+      const eNotation = match[4] || match[6];
+      if (!options.leadingZeros && leadingZeros.length > 0 && sign && trimmedStr[2] !== ".")
+        return str;
+      else if (!options.leadingZeros && leadingZeros.length > 0 && !sign && trimmedStr[1] !== ".")
+        return str;
+      else {
+        const num = Number(trimmedStr);
+        const numStr = "" + num;
+        if (numStr.search(/[eE]/) !== -1) {
+          if (options.eNotation)
+            return num;
+          else
+            return str;
+        } else if (eNotation) {
+          if (options.eNotation)
+            return num;
+          else
+            return str;
+        } else if (trimmedStr.indexOf(".") !== -1) {
+          if (numStr === "0" && numTrimmedByZeros === "")
+            return num;
+          else if (numStr === numTrimmedByZeros)
+            return num;
+          else if (sign && numStr === "-" + numTrimmedByZeros)
+            return num;
+          else
+            return str;
+        }
+        if (leadingZeros) {
+          if (numTrimmedByZeros === numStr)
+            return num;
+          else if (sign + numTrimmedByZeros === numStr)
+            return num;
+          else
+            return str;
+        }
+        if (trimmedStr === numStr)
+          return num;
+        else if (trimmedStr === sign + numStr)
+          return num;
+        return str;
+      }
+    } else {
+      return str;
+    }
+  }
+}
+function trimZeros(numStr) {
+  if (numStr && numStr.indexOf(".") !== -1) {
+    numStr = numStr.replace(/0+$/, "");
+    if (numStr === ".")
+      numStr = "0";
+    else if (numStr[0] === ".")
+      numStr = "0" + numStr;
+    else if (numStr[numStr.length - 1] === ".")
+      numStr = numStr.substr(0, numStr.length - 1);
+    return numStr;
+  }
+  return numStr;
+}
+var strnum = toNumber;
+export {
+  strnum as s
+};

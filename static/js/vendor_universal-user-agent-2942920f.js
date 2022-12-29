@@ -1,1 +1,13 @@
-import{b as e}from"./vendor_rollup-plugin-node-polyfills-2747d496.js";function t(){return typeof navigator=="object"&&"userAgent"in navigator?navigator.userAgent:typeof e=="object"&&"version"in e?`Node.js/${e.version.substr(1)} (${e.platform}; ${e.arch})`:"<environment undetectable>"}export{t as g};
+import { b as browser$1 } from "./vendor_rollup-plugin-node-polyfills-2747d496.js";
+function getUserAgent() {
+  if (typeof navigator === "object" && "userAgent" in navigator) {
+    return navigator.userAgent;
+  }
+  if (typeof browser$1 === "object" && "version" in browser$1) {
+    return `Node.js/${browser$1.version.substr(1)} (${browser$1.platform}; ${browser$1.arch})`;
+  }
+  return "<environment undetectable>";
+}
+export {
+  getUserAgent as g
+};

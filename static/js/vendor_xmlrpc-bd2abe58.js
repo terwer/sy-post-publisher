@@ -1,1 +1,718 @@
-import{B as k,c as b,d as z,e as D,b as R}from"./vendor_rollup-plugin-node-polyfills-2747d496.js";import{l as N}from"./vendor_xmlbuilder-c2ddcc20.js";import{s as I}from"./vendor_sax-0603144b.js";var m={},o=function(e){this.opts={},this.setOpts(e)};o.DEFAULT_OPTIONS={colons:!0,hyphens:!1,local:!0,ms:!1,offset:!1};o.ISO8601=new RegExp("([0-9]{4})([-]?([0-9]{2}))([-]?([0-9]{2}))(T([0-9]{2})(((:?([0-9]{2}))?((:?([0-9]{2}))?(.([0-9]+))?))?)(Z|([+-]([0-9]{2}(:?([0-9]{2}))?)))?)?");o.prototype.setOpts=function(e){e||(e=o.DEFAULT_OPTIONS);var t=this;Object.keys(o.DEFAULT_OPTIONS).forEach(function(r){t.opts[r]=e.hasOwnProperty(r)?e[r]:o.DEFAULT_OPTIONS[r]})};o.prototype.decodeIso8601=function(e){var t=e.toString().match(o.ISO8601);if(!t)throw new Error("Expected a ISO8601 datetime but got '"+e+"'");var r=[[t[1],t[3]||"01",t[5]||"01"].join("-"),"T",[t[7]||"00",t[11]||"00",t[14]||"00"].join(":"),".",t[16]||"000"].join("");return r+=t[17]!==void 0?t[17]+(t[19]&&t[20]===void 0?"00":""):o.formatCurrentOffset(new Date(r)),new Date(r)};o.prototype.encodeIso8601=function(e){var t=this.opts.local?o.getLocalDateParts(e):o.getUTCDateParts(e);return[[t[0],t[1],t[2]].join(this.opts.hyphens?"-":""),"T",[t[3],t[4],t[5]].join(this.opts.colons?":":""),this.opts.ms?"."+t[6]:"",this.opts.local?this.opts.offset?o.formatCurrentOffset(e):"":"Z"].join("")};o.getUTCDateParts=function(e){return[e.getUTCFullYear(),o.zeroPad(e.getUTCMonth()+1,2),o.zeroPad(e.getUTCDate(),2),o.zeroPad(e.getUTCHours(),2),o.zeroPad(e.getUTCMinutes(),2),o.zeroPad(e.getUTCSeconds(),2),o.zeroPad(e.getUTCMilliseconds(),3)]};o.getLocalDateParts=function(e){return[e.getFullYear(),o.zeroPad(e.getMonth()+1,2),o.zeroPad(e.getDate(),2),o.zeroPad(e.getHours(),2),o.zeroPad(e.getMinutes(),2),o.zeroPad(e.getSeconds(),2),o.zeroPad(e.getMilliseconds(),3)]};o.zeroPad=function(e,t){for(var r=""+e;r.length<t;)r="0"+r;return r};o.formatCurrentOffset=function(e){var t=(e||new Date).getTimezoneOffset();return t===0?"Z":[t<0?"+":"-",o.zeroPad(Math.abs(Math.floor(t/60)),2),":",o.zeroPad(Math.abs(t%60),2)].join("")};var x=new o,C={exports:{}},M=C.exports=function(e){this.raw=e};M.prototype.serialize=function(e){return e.ele(this.tagName).txt(this.raw)};M.prototype.tagName="customType";var E=N,F=x,j=C.exports,ue=m.serializeMethodCall=function(e,s,r){var s=s||[],i={version:"1.0",allowSurrogateChars:!0};r&&(i.encoding=r);var n=E.create("methodCall",i).ele("methodName").txt(e).up().ele("params");return s.forEach(function(h){w(h,n.ele("param"))}),n.doc().toString()};m.serializeMethodResponse=function(e){var t=E.create("methodResponse",{version:"1.0",allowSurrogateChars:!0}).ele("params").ele("param");return w(e,t),t.doc().toString()};m.serializeFault=function(e){var t=E.create("methodResponse",{version:"1.0",allowSurrogateChars:!0}).ele("fault");return w(e,t),t.doc().toString()};function w(e,t){for(var r=[{value:e,xml:t}],s=null,i=null,n=null;r.length>0;)if(s=r[r.length-1],s.index!==void 0)n=S(s),n?r.push(n):r.pop();else switch(i=s.xml.ele("value"),typeof s.value){case"boolean":U(s.value,i),r.pop();break;case"string":$(s.value,i),r.pop();break;case"number":_(s.value,i),r.pop();break;case"object":s.value===null?(i.ele("nil"),r.pop()):s.value instanceof Date?(B(s.value,i),r.pop()):k.isBuffer(s.value)?(q(s.value,i),r.pop()):s.value instanceof j?(s.value.serialize(i),r.pop()):(Array.isArray(s.value)?s.xml=i.ele("array").ele("data"):(s.xml=i.ele("struct"),s.keys=Object.keys(s.value)),s.index=0,n=S(s),n?r.push(n):r.pop());break;default:r.pop();break}}function S(e){var t=null;if(e.keys){if(e.index<e.keys.length){var r=e.keys[e.index++],s=e.xml.ele("member").ele("name").text(r).up();t={value:e.value[r],xml:s}}}else e.index<e.value.length&&(t={value:e.value[e.index],xml:e.xml},e.index++);return t}function U(e,t){t.ele("boolean").txt(e?1:0)}var L=/^(?![^<&]*]]>[^<&]*)[^<&]*$/;function $(e,t){e.length===0?t.ele("string"):L.test(e)?t.ele("string").txt(e):t.ele("string").d(e)}function _(e,t){e%1==0?t.ele("int").txt(e):t.ele("double").txt(e)}function B(e,t){t.ele("dateTime.iso8601").txt(F.encodeIso8601(e))}function q(e,t){t.ele("base64").txt(e.toString("base64"))}var H={},V=I,X=x,a=function(e){this.type=null,this.responseType=null,this.stack=[],this.marks=[],this.data=[],this.methodname=null,this.encoding=e||"utf8",this.value=!1,this.callback=null,this.error=null,this.parser=V.createStream(),this.parser.on("opentag",this.onOpentag.bind(this)),this.parser.on("closetag",this.onClosetag.bind(this)),this.parser.on("text",this.onText.bind(this)),this.parser.on("cdata",this.onCDATA.bind(this)),this.parser.on("end",this.onDone.bind(this)),this.parser.on("error",this.onError.bind(this))};a.prototype.deserializeMethodResponse=function(e,t){var r=this;this.callback=function(s,i){s?t(s):i.length>1?t(new Error("Response has more than one param")):r.type!=="methodresponse"?t(new Error("Not a method response")):r.responseType?t(null,i[0]):t(new Error("Invalid method response"))},e.setEncoding(this.encoding),e.on("error",this.onError.bind(this)),e.pipe(this.parser)};a.prototype.deserializeMethodCall=function(e,t){var r=this;this.callback=function(s,i){s?t(s):r.type!=="methodcall"?t(new Error("Not a method call")):r.methodname?t(null,r.methodname,i):t(new Error("Method call did not contain a method name"))},e.setEncoding(this.encoding),e.on("error",this.onError.bind(this)),e.pipe(this.parser)};a.prototype.onDone=function(){if(!this.error)if(this.type===null||this.marks.length)this.callback(new Error("Invalid XML-RPC message"));else if(this.responseType==="fault"){var e=function(t){var r=new Error("XML-RPC fault"+(t.faultString?": "+t.faultString:""));return r.code=t.faultCode,r.faultCode=t.faultCode,r.faultString=t.faultString,r};this.callback(e(this.stack[0]))}else this.callback(void 0,this.stack)};a.prototype.onError=function(e){this.error||(typeof e=="string"?this.error=new Error(e):this.error=e,this.callback(this.error))};a.prototype.push=function(e){this.stack.push(e)};a.prototype.onOpentag=function(e){(e.name==="ARRAY"||e.name==="STRUCT")&&this.marks.push(this.stack.length),this.data=[],this.value=e.name==="VALUE"};a.prototype.onText=function(e){this.data.push(e)};a.prototype.onCDATA=function(e){this.data.push(e)};a.prototype.onClosetag=function(e){var t=this.data.join("");try{switch(e){case"BOOLEAN":this.endBoolean(t);break;case"INT":case"I4":this.endInt(t);break;case"I8":this.endI8(t);break;case"DOUBLE":this.endDouble(t);break;case"STRING":case"NAME":this.endString(t);break;case"ARRAY":this.endArray(t);break;case"STRUCT":this.endStruct(t);break;case"BASE64":this.endBase64(t);break;case"DATETIME.ISO8601":this.endDateTime(t);break;case"VALUE":this.endValue(t);break;case"PARAMS":this.endParams(t);break;case"FAULT":this.endFault(t);break;case"METHODRESPONSE":this.endMethodResponse(t);break;case"METHODNAME":this.endMethodName(t);break;case"METHODCALL":this.endMethodCall(t);break;case"NIL":this.endNil(t);break;case"DATA":case"PARAM":case"MEMBER":break;default:this.onError("Unknown XML-RPC tag '"+e+"'");break}}catch(r){this.onError(r)}};a.prototype.endNil=function(e){this.push(null),this.value=!1};a.prototype.endBoolean=function(e){if(e==="1")this.push(!0);else if(e==="0")this.push(!1);else throw new Error("Illegal boolean value '"+e+"'");this.value=!1};a.prototype.endInt=function(e){var t=parseInt(e,10);if(isNaN(t))throw new Error("Expected an integer but got '"+e+"'");this.push(t),this.value=!1};a.prototype.endDouble=function(e){var t=parseFloat(e);if(isNaN(t))throw new Error("Expected a double but got '"+e+"'");this.push(t),this.value=!1};a.prototype.endString=function(e){this.push(e),this.value=!1};a.prototype.endArray=function(e){var t=this.marks.pop();this.stack.splice(t,this.stack.length-t,this.stack.slice(t)),this.value=!1};a.prototype.endStruct=function(e){for(var t=this.marks.pop(),r={},s=this.stack.slice(t),i=0;i<s.length;i+=2)r[s[i]]=s[i+1];this.stack.splice(t,this.stack.length-t,r),this.value=!1};a.prototype.endBase64=function(e){var t=new k(e,"base64");this.push(t),this.value=!1};a.prototype.endDateTime=function(e){var t=X.decodeIso8601(e);this.push(t),this.value=!1};var Y=/^-?\d+$/;a.prototype.endI8=function(e){if(Y.test(e))this.endString(e);else throw new Error("Expected integer (I8) value but got '"+e+"'")};a.prototype.endValue=function(e){this.value&&this.endString(e)};a.prototype.endParams=function(e){this.responseType="params"};a.prototype.endFault=function(e){this.responseType="fault"};a.prototype.endMethodResponse=function(e){this.type="methodresponse"};a.prototype.endMethodName=function(e){this.methodname=e};a.prototype.endMethodCall=function(e){this.type="methodcall"};var O=a;function A(){this.cookies={}}A.prototype={get:function(e){var t=this.cookies[e];return t&&this.checkNotExpired(e)?this.cookies[e].value:null},set:function(e,t,r){var s=typeof r=="object"?{value:t,expires:r.expires,secure:r.secure||!1,new:r.new||!1}:{value:t};this.checkNotExpired(e,s)&&(this.cookies[e]=s)},getExpirationDate:function(e){return this.cookies[e]?this.cookies[e].expires:null},checkNotExpired:function(e,t){typeof t>"u"&&(t=this.cookies[e]);var r=new Date;return t&&t.expires&&r>t.expires?(delete this.cookies[e],!1):!0},parseResponse:function(e){var t=e["set-cookie"];t&&t.forEach(function(r){var s=r.split(";"),i=s.shift().split("="),n={};s.forEach(function(h){if(h=h.trim(),h.toLowerCase().indexOf("expires")==0){var l=h.split("=")[1].trim();n.expires=new Date(l)}}),this.set(i[0].trim(),i[1].trim(),n)}.bind(this))},composeRequest:function(e){Object.keys(this.cookies).length!=0&&(e.Cookie=this.toString())},toString:function(){return Object.keys(this.cookies).filter(this.checkNotExpired.bind(this)).map(function(e){return e+"="+this.cookies[e].value}.bind(this)).join(";")}};var Z=A,G=b,J=b,T=z,K=m,Q=O,W=Z;function f(e,t){if(!(this instanceof f))return new f(e,t);if(typeof e=="string"&&(e=T.parse(e),e.host=e.hostname,e.path=e.pathname),typeof e.url<"u"){var r=T.parse(e.url);e.host=r.hostname,e.path=r.pathname,e.port=r.port}var s={"User-Agent":"NodeJS XML-RPC Client","Content-Type":"text/xml",Accept:"text/xml","Accept-Charset":"UTF8",Connection:"Keep-Alive"};if(e.headers=e.headers||{},e.headers.Authorization==null&&e.basic_auth!=null&&e.basic_auth.user!=null&&e.basic_auth.pass!=null){var i=e.basic_auth.user+":"+e.basic_auth.pass;e.headers.Authorization="Basic "+new k(i).toString("base64")}for(var n in s)e.headers[n]===void 0&&(e.headers[n]=s[n]);e.method="POST",this.options=e,this.isSecure=t,this.headersProcessors={processors:[],composeRequest:function(h){this.processors.forEach(function(l){l.composeRequest(h)})},parseResponse:function(h){this.processors.forEach(function(l){l.parseResponse(h)})}},e.cookies&&(this.cookies=new W,this.headersProcessors.processors.unshift(this.cookies))}f.prototype.methodCall=function(t,r,s){var i=this.options,n=K.serializeMethodCall(t,r,i.encoding),h=this.isSecure?J:G;i.headers["Content-Length"]=k.byteLength(n,"utf8"),this.headersProcessors.composeRequest(i.headers);var l=h.request(i,function(c){var p=[];c.on("data",function(u){p.push(u)});function d(u){return Object.defineProperty(u,"req",{value:l}),Object.defineProperty(u,"res",{value:c}),Object.defineProperty(u,"body",{value:p.join("")}),u}if(c.statusCode==404)s(d(new Error("Not Found")));else{this.headersProcessors.parseResponse(c.headers);var g=new Q(i.responseEncoding);g.deserializeMethodResponse(c,function(u,v){u&&(u=d(u)),s(u,v)})}}.bind(this));l.on("error",s),l.write(n,"utf8"),l.end()};f.prototype.getCookie=function(t){if(!this.cookies)throw"Cookies support is not turned on for this client instance";return this.cookies.get(t)};f.prototype.setCookie=function(t,r){if(!this.cookies)throw"Cookies support is not turned on for this client instance";return this.cookies.set(t,r),this};var ee=f,te=b,re=b,se=z,ie=D.EventEmitter,P=m,oe=O;function y(e,t,r){if(!(this instanceof y))return new y(e,t);r=r||function(){};var s=this;typeof e=="string"&&(e=se.parse(e),e.host=e.hostname,e.path=e.pathname);function i(n,h){var l=new oe;l.deserializeMethodCall(n,function(c,p,d){Object.prototype.hasOwnProperty.call(s._events,p)?s.emit(p,null,d,function(g,u){var v=null;g!==null?v=P.serializeFault(g):v=P.serializeMethodResponse(u),h.writeHead(200,{"Content-Type":"text/xml"}),h.end(v)}):(s.emit("NotFound",p,d),h.writeHead(404),h.end())})}this.httpServer=t?re.createServer(e,i):te.createServer(i),R.nextTick(function(){this.httpServer.listen(e.port,e.host,r)}.bind(this)),this.close=function(n){this.httpServer.once("close",n),this.httpServer.close()}.bind(this)}y.prototype.__proto__=ie.prototype;var ne=y;(function(e){var t=ee,r=ne,s=C.exports,i=x,n=e;n.createClient=function(h){return new t(h,!1)},n.createSecureClient=function(h){return new t(h,!0)},n.createServer=function(h,l){return new r(h,!1,l)},n.createSecureServer=function(h,l){return new r(h,!0,l)},n.CustomType=s,n.dateFormatter=i})(H);export{ue as s,H as x};
+import { B as Buffer, c as require$$1, d as require$$2, e as require$$3, b as browser$1 } from "./vendor_rollup-plugin-node-polyfills-2747d496.js";
+import { l as lib } from "./vendor_xmlbuilder-c2ddcc20.js";
+import { s as sax$1 } from "./vendor_sax-0603144b.js";
+var serializer = {};
+var DateFormatter = function(opts) {
+  this.opts = {};
+  this.setOpts(opts);
+};
+DateFormatter.DEFAULT_OPTIONS = {
+  colons: true,
+  hyphens: false,
+  local: true,
+  ms: false,
+  offset: false
+};
+DateFormatter.ISO8601 = new RegExp(
+  "([0-9]{4})([-]?([0-9]{2}))([-]?([0-9]{2}))(T([0-9]{2})(((:?([0-9]{2}))?((:?([0-9]{2}))?(.([0-9]+))?))?)(Z|([+-]([0-9]{2}(:?([0-9]{2}))?)))?)?"
+);
+DateFormatter.prototype.setOpts = function(opts) {
+  if (!opts)
+    opts = DateFormatter.DEFAULT_OPTIONS;
+  var ctx = this;
+  Object.keys(DateFormatter.DEFAULT_OPTIONS).forEach(function(k) {
+    ctx.opts[k] = opts.hasOwnProperty(k) ? opts[k] : DateFormatter.DEFAULT_OPTIONS[k];
+  });
+};
+DateFormatter.prototype.decodeIso8601 = function(time) {
+  var dateParts = time.toString().match(DateFormatter.ISO8601);
+  if (!dateParts) {
+    throw new Error("Expected a ISO8601 datetime but got '" + time + "'");
+  }
+  var date = [
+    [dateParts[1], dateParts[3] || "01", dateParts[5] || "01"].join("-"),
+    "T",
+    [
+      dateParts[7] || "00",
+      dateParts[11] || "00",
+      dateParts[14] || "00"
+    ].join(":"),
+    ".",
+    dateParts[16] || "000"
+  ].join("");
+  date += dateParts[17] !== void 0 ? dateParts[17] + (dateParts[19] && dateParts[20] === void 0 ? "00" : "") : DateFormatter.formatCurrentOffset(new Date(date));
+  return new Date(date);
+};
+DateFormatter.prototype.encodeIso8601 = function(date) {
+  var parts = this.opts.local ? DateFormatter.getLocalDateParts(date) : DateFormatter.getUTCDateParts(date);
+  return [
+    [parts[0], parts[1], parts[2]].join(this.opts.hyphens ? "-" : ""),
+    "T",
+    [parts[3], parts[4], parts[5]].join(this.opts.colons ? ":" : ""),
+    this.opts.ms ? "." + parts[6] : "",
+    this.opts.local ? this.opts.offset ? DateFormatter.formatCurrentOffset(date) : "" : "Z"
+  ].join("");
+};
+DateFormatter.getUTCDateParts = function(date) {
+  return [
+    date.getUTCFullYear(),
+    DateFormatter.zeroPad(date.getUTCMonth() + 1, 2),
+    DateFormatter.zeroPad(date.getUTCDate(), 2),
+    DateFormatter.zeroPad(date.getUTCHours(), 2),
+    DateFormatter.zeroPad(date.getUTCMinutes(), 2),
+    DateFormatter.zeroPad(date.getUTCSeconds(), 2),
+    DateFormatter.zeroPad(date.getUTCMilliseconds(), 3)
+  ];
+};
+DateFormatter.getLocalDateParts = function(date) {
+  return [
+    date.getFullYear(),
+    DateFormatter.zeroPad(date.getMonth() + 1, 2),
+    DateFormatter.zeroPad(date.getDate(), 2),
+    DateFormatter.zeroPad(date.getHours(), 2),
+    DateFormatter.zeroPad(date.getMinutes(), 2),
+    DateFormatter.zeroPad(date.getSeconds(), 2),
+    DateFormatter.zeroPad(date.getMilliseconds(), 3)
+  ];
+};
+DateFormatter.zeroPad = function(digit, length) {
+  var padded = "" + digit;
+  while (padded.length < length) {
+    padded = "0" + padded;
+  }
+  return padded;
+};
+DateFormatter.formatCurrentOffset = function(d) {
+  var offset = (d || new Date()).getTimezoneOffset();
+  return offset === 0 ? "Z" : [
+    offset < 0 ? "+" : "-",
+    DateFormatter.zeroPad(Math.abs(Math.floor(offset / 60)), 2),
+    ":",
+    DateFormatter.zeroPad(Math.abs(offset % 60), 2)
+  ].join("");
+};
+var date_formatter = new DateFormatter();
+var customtype = { exports: {} };
+var CustomType$1 = customtype.exports = function(raw) {
+  this.raw = raw;
+};
+CustomType$1.prototype.serialize = function(xml) {
+  return xml.ele(this.tagName).txt(this.raw);
+};
+CustomType$1.prototype.tagName = "customType";
+var xmlBuilder = lib, dateFormatter$1 = date_formatter, CustomType = customtype.exports;
+var serializeMethodCall = serializer.serializeMethodCall = function(method, params, encoding) {
+  var params = params || [];
+  var options = { version: "1.0", allowSurrogateChars: true };
+  if (encoding) {
+    options.encoding = encoding;
+  }
+  var xml = xmlBuilder.create("methodCall", options).ele("methodName").txt(method).up().ele("params");
+  params.forEach(function(param) {
+    serializeValue(param, xml.ele("param"));
+  });
+  return xml.doc().toString();
+};
+serializer.serializeMethodResponse = function(result) {
+  var xml = xmlBuilder.create("methodResponse", { version: "1.0", allowSurrogateChars: true }).ele("params").ele("param");
+  serializeValue(result, xml);
+  return xml.doc().toString();
+};
+serializer.serializeFault = function(fault) {
+  var xml = xmlBuilder.create("methodResponse", { version: "1.0", allowSurrogateChars: true }).ele("fault");
+  serializeValue(fault, xml);
+  return xml.doc().toString();
+};
+function serializeValue(value, xml) {
+  var stack = [{ value, xml }], current = null, valueNode = null, next = null;
+  while (stack.length > 0) {
+    current = stack[stack.length - 1];
+    if (current.index !== void 0) {
+      next = getNextItemsFrame(current);
+      if (next) {
+        stack.push(next);
+      } else {
+        stack.pop();
+      }
+    } else {
+      valueNode = current.xml.ele("value");
+      switch (typeof current.value) {
+        case "boolean":
+          appendBoolean(current.value, valueNode);
+          stack.pop();
+          break;
+        case "string":
+          appendString(current.value, valueNode);
+          stack.pop();
+          break;
+        case "number":
+          appendNumber(current.value, valueNode);
+          stack.pop();
+          break;
+        case "object":
+          if (current.value === null) {
+            valueNode.ele("nil");
+            stack.pop();
+          } else if (current.value instanceof Date) {
+            appendDatetime(current.value, valueNode);
+            stack.pop();
+          } else if (Buffer.isBuffer(current.value)) {
+            appendBuffer(current.value, valueNode);
+            stack.pop();
+          } else if (current.value instanceof CustomType) {
+            current.value.serialize(valueNode);
+            stack.pop();
+          } else {
+            if (Array.isArray(current.value)) {
+              current.xml = valueNode.ele("array").ele("data");
+            } else {
+              current.xml = valueNode.ele("struct");
+              current.keys = Object.keys(current.value);
+            }
+            current.index = 0;
+            next = getNextItemsFrame(current);
+            if (next) {
+              stack.push(next);
+            } else {
+              stack.pop();
+            }
+          }
+          break;
+        default:
+          stack.pop();
+          break;
+      }
+    }
+  }
+}
+function getNextItemsFrame(frame) {
+  var nextFrame = null;
+  if (frame.keys) {
+    if (frame.index < frame.keys.length) {
+      var key = frame.keys[frame.index++], member = frame.xml.ele("member").ele("name").text(key).up();
+      nextFrame = {
+        value: frame.value[key],
+        xml: member
+      };
+    }
+  } else if (frame.index < frame.value.length) {
+    nextFrame = {
+      value: frame.value[frame.index],
+      xml: frame.xml
+    };
+    frame.index++;
+  }
+  return nextFrame;
+}
+function appendBoolean(value, xml) {
+  xml.ele("boolean").txt(value ? 1 : 0);
+}
+var illegalChars = /^(?![^<&]*]]>[^<&]*)[^<&]*$/;
+function appendString(value, xml) {
+  if (value.length === 0) {
+    xml.ele("string");
+  } else if (!illegalChars.test(value)) {
+    xml.ele("string").d(value);
+  } else {
+    xml.ele("string").txt(value);
+  }
+}
+function appendNumber(value, xml) {
+  if (value % 1 == 0) {
+    xml.ele("int").txt(value);
+  } else {
+    xml.ele("double").txt(value);
+  }
+}
+function appendDatetime(value, xml) {
+  xml.ele("dateTime.iso8601").txt(dateFormatter$1.encodeIso8601(value));
+}
+function appendBuffer(value, xml) {
+  xml.ele("base64").txt(value.toString("base64"));
+}
+var xmlrpc = {};
+var sax = sax$1, dateFormatter = date_formatter;
+var Deserializer$2 = function(encoding) {
+  this.type = null;
+  this.responseType = null;
+  this.stack = [];
+  this.marks = [];
+  this.data = [];
+  this.methodname = null;
+  this.encoding = encoding || "utf8";
+  this.value = false;
+  this.callback = null;
+  this.error = null;
+  this.parser = sax.createStream();
+  this.parser.on("opentag", this.onOpentag.bind(this));
+  this.parser.on("closetag", this.onClosetag.bind(this));
+  this.parser.on("text", this.onText.bind(this));
+  this.parser.on("cdata", this.onCDATA.bind(this));
+  this.parser.on("end", this.onDone.bind(this));
+  this.parser.on("error", this.onError.bind(this));
+};
+Deserializer$2.prototype.deserializeMethodResponse = function(stream, callback) {
+  var that = this;
+  this.callback = function(error, result) {
+    if (error) {
+      callback(error);
+    } else if (result.length > 1) {
+      callback(new Error("Response has more than one param"));
+    } else if (that.type !== "methodresponse") {
+      callback(new Error("Not a method response"));
+    } else if (!that.responseType) {
+      callback(new Error("Invalid method response"));
+    } else {
+      callback(null, result[0]);
+    }
+  };
+  stream.setEncoding(this.encoding);
+  stream.on("error", this.onError.bind(this));
+  stream.pipe(this.parser);
+};
+Deserializer$2.prototype.deserializeMethodCall = function(stream, callback) {
+  var that = this;
+  this.callback = function(error, result) {
+    if (error) {
+      callback(error);
+    } else if (that.type !== "methodcall") {
+      callback(new Error("Not a method call"));
+    } else if (!that.methodname) {
+      callback(new Error("Method call did not contain a method name"));
+    } else {
+      callback(null, that.methodname, result);
+    }
+  };
+  stream.setEncoding(this.encoding);
+  stream.on("error", this.onError.bind(this));
+  stream.pipe(this.parser);
+};
+Deserializer$2.prototype.onDone = function() {
+  if (!this.error) {
+    if (this.type === null || this.marks.length) {
+      this.callback(new Error("Invalid XML-RPC message"));
+    } else if (this.responseType === "fault") {
+      var createFault = function(fault) {
+        var error = new Error("XML-RPC fault" + (fault.faultString ? ": " + fault.faultString : ""));
+        error.code = fault.faultCode;
+        error.faultCode = fault.faultCode;
+        error.faultString = fault.faultString;
+        return error;
+      };
+      this.callback(createFault(this.stack[0]));
+    } else {
+      this.callback(void 0, this.stack);
+    }
+  }
+};
+Deserializer$2.prototype.onError = function(msg) {
+  if (!this.error) {
+    if (typeof msg === "string") {
+      this.error = new Error(msg);
+    } else {
+      this.error = msg;
+    }
+    this.callback(this.error);
+  }
+};
+Deserializer$2.prototype.push = function(value) {
+  this.stack.push(value);
+};
+Deserializer$2.prototype.onOpentag = function(node) {
+  if (node.name === "ARRAY" || node.name === "STRUCT") {
+    this.marks.push(this.stack.length);
+  }
+  this.data = [];
+  this.value = node.name === "VALUE";
+};
+Deserializer$2.prototype.onText = function(text) {
+  this.data.push(text);
+};
+Deserializer$2.prototype.onCDATA = function(cdata) {
+  this.data.push(cdata);
+};
+Deserializer$2.prototype.onClosetag = function(el) {
+  var data = this.data.join("");
+  try {
+    switch (el) {
+      case "BOOLEAN":
+        this.endBoolean(data);
+        break;
+      case "INT":
+      case "I4":
+        this.endInt(data);
+        break;
+      case "I8":
+        this.endI8(data);
+        break;
+      case "DOUBLE":
+        this.endDouble(data);
+        break;
+      case "STRING":
+      case "NAME":
+        this.endString(data);
+        break;
+      case "ARRAY":
+        this.endArray(data);
+        break;
+      case "STRUCT":
+        this.endStruct(data);
+        break;
+      case "BASE64":
+        this.endBase64(data);
+        break;
+      case "DATETIME.ISO8601":
+        this.endDateTime(data);
+        break;
+      case "VALUE":
+        this.endValue(data);
+        break;
+      case "PARAMS":
+        this.endParams(data);
+        break;
+      case "FAULT":
+        this.endFault(data);
+        break;
+      case "METHODRESPONSE":
+        this.endMethodResponse(data);
+        break;
+      case "METHODNAME":
+        this.endMethodName(data);
+        break;
+      case "METHODCALL":
+        this.endMethodCall(data);
+        break;
+      case "NIL":
+        this.endNil(data);
+        break;
+      case "DATA":
+      case "PARAM":
+      case "MEMBER":
+        break;
+      default:
+        this.onError("Unknown XML-RPC tag '" + el + "'");
+        break;
+    }
+  } catch (e) {
+    this.onError(e);
+  }
+};
+Deserializer$2.prototype.endNil = function(data) {
+  this.push(null);
+  this.value = false;
+};
+Deserializer$2.prototype.endBoolean = function(data) {
+  if (data === "1") {
+    this.push(true);
+  } else if (data === "0") {
+    this.push(false);
+  } else {
+    throw new Error("Illegal boolean value '" + data + "'");
+  }
+  this.value = false;
+};
+Deserializer$2.prototype.endInt = function(data) {
+  var value = parseInt(data, 10);
+  if (isNaN(value)) {
+    throw new Error("Expected an integer but got '" + data + "'");
+  } else {
+    this.push(value);
+    this.value = false;
+  }
+};
+Deserializer$2.prototype.endDouble = function(data) {
+  var value = parseFloat(data);
+  if (isNaN(value)) {
+    throw new Error("Expected a double but got '" + data + "'");
+  } else {
+    this.push(value);
+    this.value = false;
+  }
+};
+Deserializer$2.prototype.endString = function(data) {
+  this.push(data);
+  this.value = false;
+};
+Deserializer$2.prototype.endArray = function(data) {
+  var mark = this.marks.pop();
+  this.stack.splice(mark, this.stack.length - mark, this.stack.slice(mark));
+  this.value = false;
+};
+Deserializer$2.prototype.endStruct = function(data) {
+  var mark = this.marks.pop(), struct = {}, items = this.stack.slice(mark), i = 0;
+  for (; i < items.length; i += 2) {
+    struct[items[i]] = items[i + 1];
+  }
+  this.stack.splice(mark, this.stack.length - mark, struct);
+  this.value = false;
+};
+Deserializer$2.prototype.endBase64 = function(data) {
+  var buffer = new Buffer(data, "base64");
+  this.push(buffer);
+  this.value = false;
+};
+Deserializer$2.prototype.endDateTime = function(data) {
+  var date = dateFormatter.decodeIso8601(data);
+  this.push(date);
+  this.value = false;
+};
+var isInteger = /^-?\d+$/;
+Deserializer$2.prototype.endI8 = function(data) {
+  if (!isInteger.test(data)) {
+    throw new Error("Expected integer (I8) value but got '" + data + "'");
+  } else {
+    this.endString(data);
+  }
+};
+Deserializer$2.prototype.endValue = function(data) {
+  if (this.value) {
+    this.endString(data);
+  }
+};
+Deserializer$2.prototype.endParams = function(data) {
+  this.responseType = "params";
+};
+Deserializer$2.prototype.endFault = function(data) {
+  this.responseType = "fault";
+};
+Deserializer$2.prototype.endMethodResponse = function(data) {
+  this.type = "methodresponse";
+};
+Deserializer$2.prototype.endMethodName = function(data) {
+  this.methodname = data;
+};
+Deserializer$2.prototype.endMethodCall = function(data) {
+  this.type = "methodcall";
+};
+var deserializer = Deserializer$2;
+function Cookies$1() {
+  this.cookies = {};
+}
+Cookies$1.prototype = {
+  get: function(name) {
+    var cookie = this.cookies[name];
+    if (cookie && this.checkNotExpired(name)) {
+      return this.cookies[name].value;
+    }
+    return null;
+  },
+  set: function(name, value, options) {
+    var cookie = typeof options == "object" ? { value, expires: options.expires, secure: options.secure || false, new: options.new || false } : { value };
+    if (this.checkNotExpired(name, cookie)) {
+      this.cookies[name] = cookie;
+    }
+  },
+  getExpirationDate: function(name) {
+    return this.cookies[name] ? this.cookies[name].expires : null;
+  },
+  checkNotExpired: function(name, cookie) {
+    if (typeof cookie === "undefined") {
+      cookie = this.cookies[name];
+    }
+    var now = new Date();
+    if (cookie && cookie.expires && now > cookie.expires) {
+      delete this.cookies[name];
+      return false;
+    }
+    return true;
+  },
+  parseResponse: function(headers) {
+    var cookies2 = headers["set-cookie"];
+    if (cookies2) {
+      cookies2.forEach(function(c) {
+        var cookiesParams = c.split(";");
+        var cookiePair = cookiesParams.shift().split("=");
+        var options = {};
+        cookiesParams.forEach(function(param) {
+          param = param.trim();
+          if (param.toLowerCase().indexOf("expires") == 0) {
+            var date = param.split("=")[1].trim();
+            options.expires = new Date(date);
+          }
+        });
+        this.set(cookiePair[0].trim(), cookiePair[1].trim(), options);
+      }.bind(this));
+    }
+  },
+  composeRequest: function(headers) {
+    if (Object.keys(this.cookies).length == 0) {
+      return;
+    }
+    headers["Cookie"] = this.toString();
+  },
+  toString: function() {
+    return Object.keys(this.cookies).filter(this.checkNotExpired.bind(this)).map(function(name) {
+      return name + "=" + this.cookies[name].value;
+    }.bind(this)).join(";");
+  }
+};
+var cookies = Cookies$1;
+var http$1 = require$$1, https$1 = require$$1, url$1 = require$$2, Serializer$1 = serializer, Deserializer$1 = deserializer, Cookies = cookies;
+function Client(options, isSecure) {
+  if (false === this instanceof Client) {
+    return new Client(options, isSecure);
+  }
+  if (typeof options === "string") {
+    options = url$1.parse(options);
+    options.host = options.hostname;
+    options.path = options.pathname;
+  }
+  if (typeof options.url !== "undefined") {
+    var parsedUrl = url$1.parse(options.url);
+    options.host = parsedUrl.hostname;
+    options.path = parsedUrl.pathname;
+    options.port = parsedUrl.port;
+  }
+  var headers = {
+    "User-Agent": "NodeJS XML-RPC Client",
+    "Content-Type": "text/xml",
+    "Accept": "text/xml",
+    "Accept-Charset": "UTF8",
+    "Connection": "Keep-Alive"
+  };
+  options.headers = options.headers || {};
+  if (options.headers.Authorization == null && options.basic_auth != null && options.basic_auth.user != null && options.basic_auth.pass != null) {
+    var auth = options.basic_auth.user + ":" + options.basic_auth.pass;
+    options.headers["Authorization"] = "Basic " + new Buffer(auth).toString("base64");
+  }
+  for (var attribute in headers) {
+    if (options.headers[attribute] === void 0) {
+      options.headers[attribute] = headers[attribute];
+    }
+  }
+  options.method = "POST";
+  this.options = options;
+  this.isSecure = isSecure;
+  this.headersProcessors = {
+    processors: [],
+    composeRequest: function(headers2) {
+      this.processors.forEach(function(p) {
+        p.composeRequest(headers2);
+      });
+    },
+    parseResponse: function(headers2) {
+      this.processors.forEach(function(p) {
+        p.parseResponse(headers2);
+      });
+    }
+  };
+  if (options.cookies) {
+    this.cookies = new Cookies();
+    this.headersProcessors.processors.unshift(this.cookies);
+  }
+}
+Client.prototype.methodCall = function methodCall(method, params, callback) {
+  var options = this.options;
+  var xml = Serializer$1.serializeMethodCall(method, params, options.encoding);
+  var transport = this.isSecure ? https$1 : http$1;
+  options.headers["Content-Length"] = Buffer.byteLength(xml, "utf8");
+  this.headersProcessors.composeRequest(options.headers);
+  var request = transport.request(options, function(response) {
+    var body = [];
+    response.on("data", function(chunk) {
+      body.push(chunk);
+    });
+    function __enrichError(err) {
+      Object.defineProperty(err, "req", { value: request });
+      Object.defineProperty(err, "res", { value: response });
+      Object.defineProperty(err, "body", { value: body.join("") });
+      return err;
+    }
+    if (response.statusCode == 404) {
+      callback(__enrichError(new Error("Not Found")));
+    } else {
+      this.headersProcessors.parseResponse(response.headers);
+      var deserializer2 = new Deserializer$1(options.responseEncoding);
+      deserializer2.deserializeMethodResponse(response, function(err, result) {
+        if (err) {
+          err = __enrichError(err);
+        }
+        callback(err, result);
+      });
+    }
+  }.bind(this));
+  request.on("error", callback);
+  request.write(xml, "utf8");
+  request.end();
+};
+Client.prototype.getCookie = function getCookie(name) {
+  if (!this.cookies) {
+    throw "Cookies support is not turned on for this client instance";
+  }
+  return this.cookies.get(name);
+};
+Client.prototype.setCookie = function setCookie(name, value) {
+  if (!this.cookies) {
+    throw "Cookies support is not turned on for this client instance";
+  }
+  this.cookies.set(name, value);
+  return this;
+};
+var client = Client;
+var http = require$$1, https = require$$1, url = require$$2, EventEmitter = require$$3.EventEmitter, Serializer = serializer, Deserializer = deserializer;
+function Server(options, isSecure, onListening) {
+  if (false === this instanceof Server) {
+    return new Server(options, isSecure);
+  }
+  onListening = onListening || function() {
+  };
+  var that = this;
+  if (typeof options === "string") {
+    options = url.parse(options);
+    options.host = options.hostname;
+    options.path = options.pathname;
+  }
+  function handleMethodCall(request, response) {
+    var deserializer2 = new Deserializer();
+    deserializer2.deserializeMethodCall(request, function(error, methodName, params) {
+      if (Object.prototype.hasOwnProperty.call(that._events, methodName)) {
+        that.emit(methodName, null, params, function(error2, value) {
+          var xml = null;
+          if (error2 !== null) {
+            xml = Serializer.serializeFault(error2);
+          } else {
+            xml = Serializer.serializeMethodResponse(value);
+          }
+          response.writeHead(200, { "Content-Type": "text/xml" });
+          response.end(xml);
+        });
+      } else {
+        that.emit("NotFound", methodName, params);
+        response.writeHead(404);
+        response.end();
+      }
+    });
+  }
+  this.httpServer = isSecure ? https.createServer(options, handleMethodCall) : http.createServer(handleMethodCall);
+  browser$1.nextTick(function() {
+    this.httpServer.listen(options.port, options.host, onListening);
+  }.bind(this));
+  this.close = function(callback) {
+    this.httpServer.once("close", callback);
+    this.httpServer.close();
+  }.bind(this);
+}
+Server.prototype.__proto__ = EventEmitter.prototype;
+var server = Server;
+(function(exports) {
+  var Client2 = client, Server2 = server, CustomType2 = customtype.exports, dateFormatter2 = date_formatter;
+  var xmlrpc2 = exports;
+  xmlrpc2.createClient = function(options) {
+    return new Client2(options, false);
+  };
+  xmlrpc2.createSecureClient = function(options) {
+    return new Client2(options, true);
+  };
+  xmlrpc2.createServer = function(options, callback) {
+    return new Server2(options, false, callback);
+  };
+  xmlrpc2.createSecureServer = function(options, callback) {
+    return new Server2(options, true, callback);
+  };
+  xmlrpc2.CustomType = CustomType2;
+  xmlrpc2.dateFormatter = dateFormatter2;
+})(xmlrpc);
+export {
+  serializeMethodCall as s,
+  xmlrpc as x
+};

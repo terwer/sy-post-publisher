@@ -1,1 +1,44 @@
-import{w as u}from"./vendor_wrappy-713fc6dc.js";var n={exports:{}},o=u;n.exports=o(t);n.exports.strict=o(a);t.proto=t(function(){Object.defineProperty(Function.prototype,"once",{value:function(){return t(this)},configurable:!0}),Object.defineProperty(Function.prototype,"onceStrict",{value:function(){return a(this)},configurable:!0})});function t(r){var e=function(){return e.called?e.value:(e.called=!0,e.value=r.apply(this,arguments))};return e.called=!1,e}function a(r){var e=function(){if(e.called)throw new Error(e.onceError);return e.called=!0,e.value=r.apply(this,arguments)},c=r.name||"Function wrapped with `once`";return e.onceError=c+" shouldn't be called more than once",e.called=!1,e}export{n as o};
+import { w as wrappy_1 } from "./vendor_wrappy-713fc6dc.js";
+var once$1 = { exports: {} };
+var wrappy = wrappy_1;
+once$1.exports = wrappy(once);
+once$1.exports.strict = wrappy(onceStrict);
+once.proto = once(function() {
+  Object.defineProperty(Function.prototype, "once", {
+    value: function() {
+      return once(this);
+    },
+    configurable: true
+  });
+  Object.defineProperty(Function.prototype, "onceStrict", {
+    value: function() {
+      return onceStrict(this);
+    },
+    configurable: true
+  });
+});
+function once(fn) {
+  var f = function() {
+    if (f.called)
+      return f.value;
+    f.called = true;
+    return f.value = fn.apply(this, arguments);
+  };
+  f.called = false;
+  return f;
+}
+function onceStrict(fn) {
+  var f = function() {
+    if (f.called)
+      throw new Error(f.onceError);
+    f.called = true;
+    return f.value = fn.apply(this, arguments);
+  };
+  var name = fn.name || "Function wrapped with `once`";
+  f.onceError = name + " shouldn't be called more than once";
+  f.called = false;
+  return f;
+}
+export {
+  once$1 as o
+};

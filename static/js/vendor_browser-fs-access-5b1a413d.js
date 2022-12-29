@@ -1,1 +1,172 @@
-const h=(()=>{if(typeof self>"u")return!1;if("top"in self&&self!==top)try{}catch{return!1}else if("showOpenFilePicker"in self)return"showOpenFilePicker";return!1})(),P=h?Promise.resolve().then(function(){return _}):Promise.resolve().then(function(){return T});async function j(...e){return(await P).default(...e)}h?Promise.resolve().then(function(){return A}):Promise.resolve().then(function(){return S});h?Promise.resolve().then(function(){return x}):Promise.resolve().then(function(){return R});const b=async e=>{const n=await e.getFile();return n.handle=e,n};var k=async(e=[{}])=>{Array.isArray(e)||(e=[e]);const n=[];e.forEach((a,o)=>{n[o]={description:a.description||"Files",accept:{}},a.mimeTypes?a.mimeTypes.map(i=>{n[o].accept[i]=a.extensions||[]}):n[o].accept["*/*"]=a.extensions||[]});const r=await window.showOpenFilePicker({id:e[0].id,startIn:e[0].startIn,types:n,multiple:e[0].multiple||!1,excludeAcceptAllOption:e[0].excludeAcceptAllOption||!1}),t=await Promise.all(r.map(b));return e[0].multiple?t:t[0]},_={__proto__:null,default:k};function m(e){function n(r){if(Object(r)!==r)return Promise.reject(new TypeError(r+" is not an object."));var t=r.done;return Promise.resolve(r.value).then(function(a){return{value:a,done:t}})}return m=function(r){this.s=r,this.n=r.next},m.prototype={s:null,n:null,next:function(){return n(this.n.apply(this.s,arguments))},return:function(r){var t=this.s.return;return t===void 0?Promise.resolve({value:r,done:!0}):n(t.apply(this.s,arguments))},throw:function(r){var t=this.s.return;return t===void 0?Promise.reject(r):n(t.apply(this.s,arguments))}},new m(e)}const v=async(e,n,r=e.name,t)=>{const a=[],o=[];var i,s=!1,c=!1;try{for(var u,p=function(l){var y,d,f,w=2;for(typeof Symbol<"u"&&(d=Symbol.asyncIterator,f=Symbol.iterator);w--;){if(d&&(y=l[d])!=null)return y.call(l);if(f&&(y=l[f])!=null)return new m(y.call(l));d="@@asyncIterator",f="@@iterator"}throw new TypeError("Object is not async iterable")}(e.values());s=!(u=await p.next()).done;s=!1){const l=u.value,y=`${r}/${l.name}`;l.kind==="file"?o.push(l.getFile().then(d=>(d.directoryHandle=e,d.handle=l,Object.defineProperty(d,"webkitRelativePath",{configurable:!0,enumerable:!0,get:()=>y})))):l.kind!=="directory"||!n||t&&t(l)||a.push(v(l,n,y,t))}}catch(l){c=!0,i=l}finally{try{s&&p.return!=null&&await p.return()}finally{if(c)throw i}}return[...(await Promise.all(a)).flat(),...await Promise.all(o)]};var g=async(e={})=>{e.recursive=e.recursive||!1,e.mode=e.mode||"read";const n=await window.showDirectoryPicker({id:e.id,startIn:e.startIn,mode:e.mode});return v(n,e.recursive,void 0,e.skipDirectory)},A={__proto__:null,default:g},E=async(e,n=[{}],r=null,t=!1,a=null)=>{Array.isArray(n)||(n=[n]),n[0].fileName=n[0].fileName||"Untitled";const o=[];let i=null;if(e instanceof Blob&&e.type?i=e.type:e.headers&&e.headers.get("content-type")&&(i=e.headers.get("content-type")),n.forEach((u,p)=>{o[p]={description:u.description||"Files",accept:{}},u.mimeTypes?(p===0&&i&&u.mimeTypes.push(i),u.mimeTypes.map(l=>{o[p].accept[l]=u.extensions||[]})):i?o[p].accept[i]=u.extensions||[]:o[p].accept["*/*"]=u.extensions||[]}),r)try{await r.getFile()}catch(u){if(r=null,t)throw u}const s=r||await window.showSaveFilePicker({suggestedName:n[0].fileName,id:n[0].id,startIn:n[0].startIn,types:o,excludeAcceptAllOption:n[0].excludeAcceptAllOption||!1});!r&&a&&a(s);const c=await s.createWritable();return"stream"in e?(await e.stream().pipeTo(c),s):"body"in e?(await e.body.pipeTo(c),s):(await c.write(await e),await c.close(),s)},x={__proto__:null,default:E},L=async(e=[{}])=>(Array.isArray(e)||(e=[e]),new Promise((n,r)=>{const t=document.createElement("input");t.type="file";const a=[...e.map(c=>c.mimeTypes||[]),...e.map(c=>c.extensions||[])].join();t.multiple=e[0].multiple||!1,t.accept=a||"",t.style.display="none",document.body.append(t);const o=c=>{typeof i=="function"&&i(),n(c)},i=e[0].legacySetup&&e[0].legacySetup(o,()=>i(r),t),s=()=>{window.removeEventListener("focus",s),t.remove()};t.addEventListener("click",()=>{window.addEventListener("focus",s)}),t.addEventListener("change",()=>{window.removeEventListener("focus",s),t.remove(),o(t.multiple?Array.from(t.files):t.files[0])}),"showPicker"in HTMLInputElement.prototype?t.showPicker():t.click()})),T={__proto__:null,default:L},O=async(e=[{}])=>(Array.isArray(e)||(e=[e]),e[0].recursive=e[0].recursive||!1,new Promise((n,r)=>{const t=document.createElement("input");t.type="file",t.webkitdirectory=!0;const a=i=>{typeof o=="function"&&o(),n(i)},o=e[0].legacySetup&&e[0].legacySetup(a,()=>o(r),t);t.addEventListener("change",()=>{let i=Array.from(t.files);e[0].recursive?e[0].recursive&&e[0].skipDirectory&&(i=i.filter(s=>s.webkitRelativePath.split("/").every(c=>!e[0].skipDirectory({name:c,kind:"directory"})))):i=i.filter(s=>s.webkitRelativePath.split("/").length===2),a(i)}),"showPicker"in HTMLInputElement.prototype?t.showPicker():t.click()})),S={__proto__:null,default:O},I=async(e,n={})=>{Array.isArray(n)&&(n=n[0]);const r=document.createElement("a");let t=e;"body"in e&&(t=await async function(i,s){const c=i.getReader(),u=new ReadableStream({start:y=>async function d(){return c.read().then(({done:f,value:w})=>{if(!f)return y.enqueue(w),d();y.close()})}()}),p=new Response(u),l=await p.blob();return c.releaseLock(),new Blob([l],{type:s})}(e.body,e.headers.get("content-type"))),r.download=n.fileName||"Untitled",r.href=URL.createObjectURL(await t);const a=()=>{typeof o=="function"&&o()},o=n.legacySetup&&n.legacySetup(a,()=>o(),r);return r.addEventListener("click",()=>{setTimeout(()=>URL.revokeObjectURL(r.href),3e4),a()}),r.click(),null},R={__proto__:null,default:I};export{j as n};
+const e = (() => {
+  if ("undefined" == typeof self)
+    return false;
+  if ("top" in self && self !== top)
+    try {
+      top;
+    } catch (e2) {
+      return false;
+    }
+  else if ("showOpenFilePicker" in self)
+    return "showOpenFilePicker";
+  return false;
+})(), t = e ? Promise.resolve().then(function() {
+  return l;
+}) : Promise.resolve().then(function() {
+  return h;
+});
+async function n(...e2) {
+  return (await t).default(...e2);
+}
+e ? Promise.resolve().then(function() {
+  return y;
+}) : Promise.resolve().then(function() {
+  return P;
+});
+e ? Promise.resolve().then(function() {
+  return m;
+}) : Promise.resolve().then(function() {
+  return k;
+});
+const s = async (e2) => {
+  const t2 = await e2.getFile();
+  return t2.handle = e2, t2;
+};
+var c = async (e2 = [{}]) => {
+  Array.isArray(e2) || (e2 = [e2]);
+  const t2 = [];
+  e2.forEach((e3, n3) => {
+    t2[n3] = { description: e3.description || "Files", accept: {} }, e3.mimeTypes ? e3.mimeTypes.map((r2) => {
+      t2[n3].accept[r2] = e3.extensions || [];
+    }) : t2[n3].accept["*/*"] = e3.extensions || [];
+  });
+  const n2 = await window.showOpenFilePicker({ id: e2[0].id, startIn: e2[0].startIn, types: t2, multiple: e2[0].multiple || false, excludeAcceptAllOption: e2[0].excludeAcceptAllOption || false }), r = await Promise.all(n2.map(s));
+  return e2[0].multiple ? r : r[0];
+}, l = { __proto__: null, default: c };
+function u(e2) {
+  function t2(e3) {
+    if (Object(e3) !== e3)
+      return Promise.reject(new TypeError(e3 + " is not an object."));
+    var t3 = e3.done;
+    return Promise.resolve(e3.value).then(function(e4) {
+      return { value: e4, done: t3 };
+    });
+  }
+  return u = function(e3) {
+    this.s = e3, this.n = e3.next;
+  }, u.prototype = { s: null, n: null, next: function() {
+    return t2(this.n.apply(this.s, arguments));
+  }, return: function(e3) {
+    var n2 = this.s.return;
+    return void 0 === n2 ? Promise.resolve({ value: e3, done: true }) : t2(n2.apply(this.s, arguments));
+  }, throw: function(e3) {
+    var n2 = this.s.return;
+    return void 0 === n2 ? Promise.reject(e3) : t2(n2.apply(this.s, arguments));
+  } }, new u(e2);
+}
+const p = async (e2, t2, n2 = e2.name, r) => {
+  const i = [], a = [];
+  var o, s2 = false, c2 = false;
+  try {
+    for (var l2, d2 = function(e3) {
+      var t3, n3, r2, i2 = 2;
+      for ("undefined" != typeof Symbol && (n3 = Symbol.asyncIterator, r2 = Symbol.iterator); i2--; ) {
+        if (n3 && null != (t3 = e3[n3]))
+          return t3.call(e3);
+        if (r2 && null != (t3 = e3[r2]))
+          return new u(t3.call(e3));
+        n3 = "@@asyncIterator", r2 = "@@iterator";
+      }
+      throw new TypeError("Object is not async iterable");
+    }(e2.values()); s2 = !(l2 = await d2.next()).done; s2 = false) {
+      const o2 = l2.value, s3 = `${n2}/${o2.name}`;
+      "file" === o2.kind ? a.push(o2.getFile().then((t3) => (t3.directoryHandle = e2, t3.handle = o2, Object.defineProperty(t3, "webkitRelativePath", { configurable: true, enumerable: true, get: () => s3 })))) : "directory" !== o2.kind || !t2 || r && r(o2) || i.push(p(o2, t2, s3, r));
+    }
+  } catch (e3) {
+    c2 = true, o = e3;
+  } finally {
+    try {
+      s2 && null != d2.return && await d2.return();
+    } finally {
+      if (c2)
+        throw o;
+    }
+  }
+  return [...(await Promise.all(i)).flat(), ...await Promise.all(a)];
+};
+var d = async (e2 = {}) => {
+  e2.recursive = e2.recursive || false, e2.mode = e2.mode || "read";
+  const t2 = await window.showDirectoryPicker({ id: e2.id, startIn: e2.startIn, mode: e2.mode });
+  return p(t2, e2.recursive, void 0, e2.skipDirectory);
+}, y = { __proto__: null, default: d }, f = async (e2, t2 = [{}], n2 = null, r = false, i = null) => {
+  Array.isArray(t2) || (t2 = [t2]), t2[0].fileName = t2[0].fileName || "Untitled";
+  const a = [];
+  let o = null;
+  if (e2 instanceof Blob && e2.type ? o = e2.type : e2.headers && e2.headers.get("content-type") && (o = e2.headers.get("content-type")), t2.forEach((e3, t3) => {
+    a[t3] = { description: e3.description || "Files", accept: {} }, e3.mimeTypes ? (0 === t3 && o && e3.mimeTypes.push(o), e3.mimeTypes.map((n3) => {
+      a[t3].accept[n3] = e3.extensions || [];
+    })) : o ? a[t3].accept[o] = e3.extensions || [] : a[t3].accept["*/*"] = e3.extensions || [];
+  }), n2)
+    try {
+      await n2.getFile();
+    } catch (e3) {
+      if (n2 = null, r)
+        throw e3;
+    }
+  const s2 = n2 || await window.showSaveFilePicker({ suggestedName: t2[0].fileName, id: t2[0].id, startIn: t2[0].startIn, types: a, excludeAcceptAllOption: t2[0].excludeAcceptAllOption || false });
+  !n2 && i && i(s2);
+  const c2 = await s2.createWritable();
+  if ("stream" in e2) {
+    const t3 = e2.stream();
+    return await t3.pipeTo(c2), s2;
+  }
+  return "body" in e2 ? (await e2.body.pipeTo(c2), s2) : (await c2.write(await e2), await c2.close(), s2);
+}, m = { __proto__: null, default: f }, w = async (e2 = [{}]) => (Array.isArray(e2) || (e2 = [e2]), new Promise((t2, n2) => {
+  const r = document.createElement("input");
+  r.type = "file";
+  const i = [...e2.map((e3) => e3.mimeTypes || []), ...e2.map((e3) => e3.extensions || [])].join();
+  r.multiple = e2[0].multiple || false, r.accept = i || "", r.style.display = "none", document.body.append(r);
+  const a = (e3) => {
+    "function" == typeof o && o(), t2(e3);
+  }, o = e2[0].legacySetup && e2[0].legacySetup(a, () => o(n2), r), s2 = () => {
+    window.removeEventListener("focus", s2), r.remove();
+  };
+  r.addEventListener("click", () => {
+    window.addEventListener("focus", s2);
+  }), r.addEventListener("change", () => {
+    window.removeEventListener("focus", s2), r.remove(), a(r.multiple ? Array.from(r.files) : r.files[0]);
+  }), "showPicker" in HTMLInputElement.prototype ? r.showPicker() : r.click();
+})), h = { __proto__: null, default: w }, v = async (e2 = [{}]) => (Array.isArray(e2) || (e2 = [e2]), e2[0].recursive = e2[0].recursive || false, new Promise((t2, n2) => {
+  const r = document.createElement("input");
+  r.type = "file", r.webkitdirectory = true;
+  const i = (e3) => {
+    "function" == typeof a && a(), t2(e3);
+  }, a = e2[0].legacySetup && e2[0].legacySetup(i, () => a(n2), r);
+  r.addEventListener("change", () => {
+    let t3 = Array.from(r.files);
+    e2[0].recursive ? e2[0].recursive && e2[0].skipDirectory && (t3 = t3.filter((t4) => t4.webkitRelativePath.split("/").every((t5) => !e2[0].skipDirectory({ name: t5, kind: "directory" })))) : t3 = t3.filter((e3) => 2 === e3.webkitRelativePath.split("/").length), i(t3);
+  }), "showPicker" in HTMLInputElement.prototype ? r.showPicker() : r.click();
+})), P = { __proto__: null, default: v }, b = async (e2, t2 = {}) => {
+  Array.isArray(t2) && (t2 = t2[0]);
+  const n2 = document.createElement("a");
+  let r = e2;
+  "body" in e2 && (r = await async function(e3, t3) {
+    const n3 = e3.getReader(), r2 = new ReadableStream({ start: (e4) => async function t4() {
+      return n3.read().then(({ done: n4, value: r3 }) => {
+        if (!n4)
+          return e4.enqueue(r3), t4();
+        e4.close();
+      });
+    }() }), i2 = new Response(r2), a2 = await i2.blob();
+    return n3.releaseLock(), new Blob([a2], { type: t3 });
+  }(e2.body, e2.headers.get("content-type"))), n2.download = t2.fileName || "Untitled", n2.href = URL.createObjectURL(await r);
+  const i = () => {
+    "function" == typeof a && a();
+  }, a = t2.legacySetup && t2.legacySetup(i, () => a(), n2);
+  return n2.addEventListener("click", () => {
+    setTimeout(() => URL.revokeObjectURL(n2.href), 3e4), i();
+  }), n2.click(), null;
+}, k = { __proto__: null, default: b };
+export {
+  n
+};

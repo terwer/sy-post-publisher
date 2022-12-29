@@ -1,1 +1,94 @@
-import{t as p}from"./vendor_toggle-selection-441a0a42.js";var m=p,u={"text/plain":"Text","text/html":"Url",default:"Text"},y="Copy to clipboard: #{key}, Enter";function g(r){var t=(/mac os x/i.test(navigator.userAgent)?"\u2318":"Ctrl")+"+C";return r.replace(/#{\s*key\s*}/g,t)}function b(r,t){var o,i,d,l,c,e,n=!1;t||(t={}),o=t.debug||!1;try{d=m(),l=document.createRange(),c=document.getSelection(),e=document.createElement("span"),e.textContent=r,e.ariaHidden="true",e.style.all="unset",e.style.position="fixed",e.style.top=0,e.style.clip="rect(0, 0, 0, 0)",e.style.whiteSpace="pre",e.style.webkitUserSelect="text",e.style.MozUserSelect="text",e.style.msUserSelect="text",e.style.userSelect="text",e.addEventListener("copy",function(a){if(a.stopPropagation(),t.format)if(a.preventDefault(),typeof a.clipboardData>"u"){o&&console.warn("unable to use e.clipboardData"),o&&console.warn("trying IE specific stuff"),window.clipboardData.clearData();var s=u[t.format]||u.default;window.clipboardData.setData(s,r)}else a.clipboardData.clearData(),a.clipboardData.setData(t.format,r);t.onCopy&&(a.preventDefault(),t.onCopy(a.clipboardData))}),document.body.appendChild(e),l.selectNodeContents(e),c.addRange(l);var f=document.execCommand("copy");if(!f)throw new Error("copy command was unsuccessful");n=!0}catch(a){o&&console.error("unable to copy using execCommand: ",a),o&&console.warn("trying IE specific stuff");try{window.clipboardData.setData(t.format||"text",r),t.onCopy&&t.onCopy(window.clipboardData),n=!0}catch(s){o&&console.error("unable to copy using clipboardData: ",s),o&&console.error("falling back to prompt"),i=g("message"in t?t.message:y),window.prompt(i,r)}}finally{c&&(typeof c.removeRange=="function"?c.removeRange(l):c.removeAllRanges()),e&&document.body.removeChild(e),d()}return n}var v=b;export{v as c};
+import { t as toggleSelection } from "./vendor_toggle-selection-441a0a42.js";
+var deselectCurrent = toggleSelection;
+var clipboardToIE11Formatting = {
+  "text/plain": "Text",
+  "text/html": "Url",
+  "default": "Text"
+};
+var defaultMessage = "Copy to clipboard: #{key}, Enter";
+function format(message) {
+  var copyKey = (/mac os x/i.test(navigator.userAgent) ? "\u2318" : "Ctrl") + "+C";
+  return message.replace(/#{\s*key\s*}/g, copyKey);
+}
+function copy(text, options) {
+  var debug, message, reselectPrevious, range, selection, mark, success = false;
+  if (!options) {
+    options = {};
+  }
+  debug = options.debug || false;
+  try {
+    reselectPrevious = deselectCurrent();
+    range = document.createRange();
+    selection = document.getSelection();
+    mark = document.createElement("span");
+    mark.textContent = text;
+    mark.ariaHidden = "true";
+    mark.style.all = "unset";
+    mark.style.position = "fixed";
+    mark.style.top = 0;
+    mark.style.clip = "rect(0, 0, 0, 0)";
+    mark.style.whiteSpace = "pre";
+    mark.style.webkitUserSelect = "text";
+    mark.style.MozUserSelect = "text";
+    mark.style.msUserSelect = "text";
+    mark.style.userSelect = "text";
+    mark.addEventListener("copy", function(e) {
+      e.stopPropagation();
+      if (options.format) {
+        e.preventDefault();
+        if (typeof e.clipboardData === "undefined") {
+          debug && console.warn("unable to use e.clipboardData");
+          debug && console.warn("trying IE specific stuff");
+          window.clipboardData.clearData();
+          var format2 = clipboardToIE11Formatting[options.format] || clipboardToIE11Formatting["default"];
+          window.clipboardData.setData(format2, text);
+        } else {
+          e.clipboardData.clearData();
+          e.clipboardData.setData(options.format, text);
+        }
+      }
+      if (options.onCopy) {
+        e.preventDefault();
+        options.onCopy(e.clipboardData);
+      }
+    });
+    document.body.appendChild(mark);
+    range.selectNodeContents(mark);
+    selection.addRange(range);
+    var successful = document.execCommand("copy");
+    if (!successful) {
+      throw new Error("copy command was unsuccessful");
+    }
+    success = true;
+  } catch (err) {
+    debug && console.error("unable to copy using execCommand: ", err);
+    debug && console.warn("trying IE specific stuff");
+    try {
+      window.clipboardData.setData(options.format || "text", text);
+      options.onCopy && options.onCopy(window.clipboardData);
+      success = true;
+    } catch (err2) {
+      debug && console.error("unable to copy using clipboardData: ", err2);
+      debug && console.error("falling back to prompt");
+      message = format("message" in options ? options.message : defaultMessage);
+      window.prompt(message, text);
+    }
+  } finally {
+    if (selection) {
+      if (typeof selection.removeRange == "function") {
+        selection.removeRange(range);
+      } else {
+        selection.removeAllRanges();
+      }
+    }
+    if (mark) {
+      document.body.removeChild(mark);
+    }
+    reselectPrevious();
+  }
+  return success;
+}
+var copyToClipboard = copy;
+export {
+  copyToClipboard as c
+};

@@ -1,0 +1,47 @@
+
+.picgo-body {
+  padding: 16px;
+}
+.upload-btn-list {
+}
+.upload-control {
+  display: inline-block;
+  margin: 10px 16px 10px 0;
+}
+.log-msg {
+  margin: 10px 0;
+}
+input[type="file"] {
+  /* 隐藏原有的文件选择按钮 */
+  display: none;
+}
+
+/* 创建自定义的文件选择按钮 */
+.custom-file-input {
+  display: inline-block;
+  padding: 0.35em 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+/* 文件选择按钮的悬停样式 */
+.custom-file-input:hover {
+  background-color: #eee;
+}
+.file-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.file-list li {
+  display: inline-block;
+  margin-right: 1em;
+  padding-bottom: 4px;
+}
+.file-list li img {
+  max-width: 100px;
+  height: auto;
+}

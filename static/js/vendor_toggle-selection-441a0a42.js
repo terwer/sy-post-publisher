@@ -1,1 +1,34 @@
-var o=function(){var e=document.getSelection();if(!e.rangeCount)return function(){};for(var t=document.activeElement,a=[],n=0;n<e.rangeCount;n++)a.push(e.getRangeAt(n));switch(t.tagName.toUpperCase()){case"INPUT":case"TEXTAREA":t.blur();break;default:t=null;break}return e.removeAllRanges(),function(){e.type==="Caret"&&e.removeAllRanges(),e.rangeCount||a.forEach(function(r){e.addRange(r)}),t&&t.focus()}};export{o as t};
+var toggleSelection = function() {
+  var selection = document.getSelection();
+  if (!selection.rangeCount) {
+    return function() {
+    };
+  }
+  var active = document.activeElement;
+  var ranges = [];
+  for (var i = 0; i < selection.rangeCount; i++) {
+    ranges.push(selection.getRangeAt(i));
+  }
+  switch (active.tagName.toUpperCase()) {
+    case "INPUT":
+    case "TEXTAREA":
+      active.blur();
+      break;
+    default:
+      active = null;
+      break;
+  }
+  selection.removeAllRanges();
+  return function() {
+    selection.type === "Caret" && selection.removeAllRanges();
+    if (!selection.rangeCount) {
+      ranges.forEach(function(range) {
+        selection.addRange(range);
+      });
+    }
+    active && active.focus();
+  };
+};
+export {
+  toggleSelection as t
+};
