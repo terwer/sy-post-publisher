@@ -1,0 +1,20 @@
+
+.anki-deck .el-form-item__label {
+  margin-top: -4px !important;
+}
+.anki-tags .el-form-item__label {
+  margin-top: -4px !important;
+}
+
+.anki-body[data-v-91834769] {
+  padding: 16px;
+}
+.block-title[data-v-91834769] {
+  margin-bottom: 16px;
+}
+.anki-card-col[data-v-91834769] {
+  margin: 8px 0;
+}
+.anki-value[data-v-91834769] {
+  margin: 16px 0;
+}

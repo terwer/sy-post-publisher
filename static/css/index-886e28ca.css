@@ -1,0 +1,13 @@
+
+#dt-tool .el-form-item__label {
+  width: unset !important;
+}
+
+.post-detail-content-box[data-v-d0eea16c] {
+  padding: 0 20px;
+}
+.post-detail-content-box .btn-publish[data-v-d0eea16c] {
+  /*margin-left: 10px;*/
+  cursor: pointer;
+  padding: 10px 10px 0 0;
+}

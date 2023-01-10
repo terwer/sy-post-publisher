@@ -1,0 +1,80 @@
+
+.publish-dyn-header[data-v-bc346138] {
+  height: 300px !important;
+}
+.dyn-table-list[data-v-bc346138] {
+}
+
+.switch-form[data-v-aa0af289] {
+  margin: 16px 10px;
+}
+
+.post-bind-form label {
+  min-width: 125px;
+}
+
+.post-bind-form[data-v-1e3d85a4] {
+  margin: 16px 10px;
+}
+
+.github-main[data-v-30c95cbc] {
+  padding: 0;
+}
+.source-opt[data-v-30c95cbc] {
+  margin-bottom: 10px;
+}
+.source-opt a[data-v-30c95cbc] {
+  --text-color: #1a1a1a;
+  /*padding: 4px 2px;*/
+  cursor: pointer;
+  /*border: solid 1px #409eff;*/
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 400;
+}
+html.dark .source-opt a[data-v-30c95cbc] {
+  --text-color: #999;
+}
+.source-opt a[data-v-30c95cbc]:first-child {
+  margin-right: 22px;
+}
+.source-opt a.middle[data-v-30c95cbc] {
+  margin-right: 22px;
+}
+.source-opt a.current[data-v-30c95cbc] {
+  --text-blue-color: #0084ff;
+  /*background-color: #409eff;*/
+  /*color: #ffffff;*/
+  color: var(--text-blue-color);
+  font-weight: 600;
+}
+.top-yaml-tip[data-v-30c95cbc] {
+  padding: 2px 4px;
+  margin: 0 10px 0 0;
+}
+#yaml-detail-preview[data-v-30c95cbc] {
+  cursor: default;
+  /*pointer-events: none;*/
+}
+.publish-status-box[data-v-30c95cbc] {
+  margin-bottom: 0;
+}
+.publish-status-box .publish-text-btn[data-v-30c95cbc] {
+  margin: 0;
+  padding: 0 12px 0 0;
+}
+.publish-build-status-icon[data-v-30c95cbc] {
+  margin-right: 12px;
+}
+
+.blog-main[data-v-9a977772] {
+  padding: 0;
+}
+
+.common-main[data-v-93eefdd4] {
+  padding: 0;
+}
+
+.pane-platform-main-body[data-v-59e02008] {
+  margin-right: 24px;
+}
