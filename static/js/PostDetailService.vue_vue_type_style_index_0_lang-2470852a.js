@@ -1,7 +1,7 @@
-import { a as ElButton, D as ElTooltip } from "./vendor_element-plus-1f908931.js";
-import { P as Post, A as API } from "./api-37974374.js";
-import { L as LogFactory, i as isInSiyuanNewWinBrowser, y as isBrowser, a0 as copyToClipboardInBrowser, au as getPageUrl, h as goToPage, A as API_TYPE_CONSTANTS } from "./AppLayout.vue_vue_type_script_setup_true_lang-182c0c92.js";
-import { M as defineComponent, u as ref, z as watch, A as onMounted, O as openBlock, P as createElementBlock, $ as toDisplayString, Z as createCommentVNode, W as createBaseVNode, a1 as createVNode, U as withCtx, V as withDirectives, aM as resolveComponent, aN as resolveDirective } from "./vendor-03279a5a.js";
+import { j as ElAlert, a as ElButton, D as ElTooltip } from "./vendor_element-plus-1f908931.js";
+import { P as Post, A as API } from "./api-7d0af9d4.js";
+import { L as LogFactory, i as isInSiyuanNewWinBrowser, y as isBrowser, a0 as copyToClipboardInBrowser, au as getPageUrl, h as goToPage, A as API_TYPE_CONSTANTS } from "./AppLayout.vue_vue_type_script_setup_true_lang-220beabc.js";
+import { M as defineComponent, u as ref, z as watch, A as onMounted, O as openBlock, P as createElementBlock, $ as toDisplayString, Z as createCommentVNode, a1 as createVNode, W as createBaseVNode, U as withCtx, V as withDirectives, aM as resolveComponent, aN as resolveDirective } from "./vendor-03279a5a.js";
 const _hoisted_1 = {
   class: "post-detail-wrap"
 };
@@ -73,12 +73,18 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       await initPage();
     });
     return (_ctx, _cache) => {
+      const _component_el_alert = ElAlert;
       const _component_font_awesome_icon = resolveComponent("font-awesome-icon");
       const _component_el_button = ElButton;
       const _component_el_tooltip = ElTooltip;
       const _directive_beauty = resolveDirective("beauty");
       const _directive_highlight = resolveDirective("highlight");
-      return openBlock(), createElementBlock("div", _hoisted_1, [inSiyuanNewWin.value ? (openBlock(), createElementBlock("h1", _hoisted_2, toDisplayString(post.value.title), 1)) : createCommentVNode("", true), createBaseVNode("blockquote", _hoisted_3, [createBaseVNode("span", _hoisted_4, "\u672C\u6587ID\uFF1A" + toDisplayString(post.value.postid), 1), createVNode(_component_el_tooltip, {
+      return openBlock(), createElementBlock("div", _hoisted_1, [inSiyuanNewWin.value ? (openBlock(), createElementBlock("h1", _hoisted_2, toDisplayString(post.value.title), 1)) : createCommentVNode("", true), createVNode(_component_el_alert, {
+        class: "top-version-tip",
+        title: _ctx.$t("siyuan.local.share.tip"),
+        type: "warning",
+        closable: false
+      }, null, 8, ["title"]), createBaseVNode("blockquote", _hoisted_3, [createBaseVNode("span", _hoisted_4, "\u672C\u6587ID\uFF1A" + toDisplayString(post.value.postid), 1), createVNode(_component_el_tooltip, {
         class: "box-item",
         effect: "dark",
         content: _ctx.$t("post.detail.button.copy.id"),

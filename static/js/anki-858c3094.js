@@ -1,5 +1,5 @@
-import { _ as _sfc_main$1, p as pageUtil } from "./AppLayout.vue_vue_type_script_setup_true_lang-182c0c92.js";
-import { A as AnkiIndex } from "./AnkiIndex-ae5a64ac.js";
+import { _ as _sfc_main$1, p as pageUtil } from "./AppLayout.vue_vue_type_script_setup_true_lang-220beabc.js";
+import { A as AnkiIndex } from "./AnkiIndex-a3d39082.js";
 import { M as defineComponent, T as createBlock, U as withCtx, O as openBlock, a1 as createVNode } from "./vendor-03279a5a.js";
 import "./vendor_pinia-65b72bdd.js";
 import "./vendor_vue-demi-1365f9ef.js";

@@ -358,7 +358,8 @@ const zh_CN = {
   "setting.kms.home.tip": "KMS\u5E73\u53F0\u9996\u9875\uFF0C\u4F8B\u5982\uFF1Ahttp://localhost:9564/kms16_release/kms/multidoc",
   "setting.kms.username.tip": "KMS\u5E73\u53F0Rest\u8D26\u6237\u7528\u6237\u540D\uFF0C\u8BF7\u6309\u7167\u94FE\u63A5\u6307\u793A\u521B\u5EFA",
   "setting.kms.password.tip": "KMS\u5E73\u53F0Rest\u8D26\u6237\u5BC6\u7801\uFF0C\u8BF7\u6309\u7167\u94FE\u63A5\u6307\u793A\u521B\u5EFA",
-  "setting.kms.apiurl.tip": "KMS\u5E73\u53F0\u7684API\u5730\u5740\uFF0C\u4F8B\u5982\uFF1Ahttp://localhost:9564/kms16_release/api/kms-multidoc/kmsMultidocKnowledgeRestService"
+  "setting.kms.apiurl.tip": "KMS\u5E73\u53F0\u7684API\u5730\u5740\uFF0C\u4F8B\u5982\uFF1Ahttp://localhost:9564/kms16_release/api/kms-multidoc/kmsMultidocKnowledgeRestService",
+  "siyuan.local.share.tip": "\u6E29\u99A8\u63D0\u793A\uFF1A\u5982\u679C\u53D1\u73B0\u5206\u4EAB\u94FE\u63A5\u6216\u8005\u6D4F\u89C8\u5668\u6253\u5F00\u65E0\u6CD5\u663E\u793A\u6216\u8005\u7F51\u7EDC\u8FDE\u63A5\u88AB\u62D2\u7EDD\uFF0C\u8BF7\u6309\u7167\u4E0B\u9762\u64CD\u4F5C\u6392\u67E5\u30021\uFF1A\u601D\u6E90\u7B14\u8BB0->\u8BBE\u7F6E->\u5173\u4E8E->\u6253\u5F00\u7F51\u7EDC\u4F3A\u670D\uFF1B2\uFF1A\u5728\u6D4F\u89C8\u5668\u6253\u5F00\u4E4B\u540E\uFF0C\u70B9\u51FB\u5E95\u90E8\u601D\u6E90\u5730\u5740\uFF0C\u4FEE\u6539\u5BF9\u5E94\u5730\u5740\u4E3A\u5C40\u57DF\u7F51ip\u5730\u5740\u3002"
 };
 const en_US = {
   "lang.choose": "Choose lang",
@@ -649,7 +650,8 @@ const en_US = {
   "setting.kms.home.tip": "KMS platform homepage, for example: http:// localhost: 9564/kms16_release/kms/multidoc",
   "setting.kms.username.tip": "KMS platform REST account user name, please create according to the link instruction",
   "setting.kms.password.tip": "KMS platform REST account password, please create according to the link instruction",
-  "setting.kms.apiurl.tip": "The API address of the KMS platform, for example: http:// localhost: 9564/kms16_release/API/KMS-Multidoc/KMSMultidOWRESTSERVICE"
+  "setting.kms.apiurl.tip": "The API address of the KMS platform, for example: http:// localhost: 9564/kms16_release/API/KMS-Multidoc/KMSMultidOWRESTSERVICE",
+  "siyuan.local.share.tip": "Reminder: If you find that the sharing link or the browser can be displayed or the network connection is rejected, please check according to the following operation. 1: Siyuan Note-> Settings-> About-> Open the network servo; 2: After the browser is opened, click the bottom Siyuan address at the bottom to modify the corresponding address to the local area network IP address."
 };
 const i18n = createI18n({
   legacy: false,
@@ -1233,25 +1235,19 @@ class SiYuanConfig {
   }
 }
 const getSiyuanCfg = () => {
+  var _a2;
   let baseUrl = getEnv("VITE_SIYUAN_API_URL");
   let token = getEnv("VITE_SIYUAN_CONFIG_TOKEN");
-  let middlewareUrl = getEnv("VITE_MIDDLEWARE_URL");
+  let middlewareUrl = (_a2 = getEnv("VITE_MIDDLEWARE_URL")) != null ? _a2 : "/api/middleware";
   const siyuanCfg = getJSONConf(SIYUAN_CONSTANTS.SIYUAN_CFG_KEY);
   if (!isEmptyString(siyuanCfg.baseUrl)) {
     baseUrl = siyuanCfg.baseUrl;
-  }
-  if (isBrowser()) {
-    if (!(window.location.href.indexOf("localhost") > -1) && !(window.location.href.indexOf("chrome-extension") > -1) && !window.location.href.includes(baseUrl)) {
-      baseUrl = window.location.protocol + "//" + window.location.host;
-    }
   }
   if (!isEmptyString(siyuanCfg.token)) {
     token = siyuanCfg.token;
   }
   if (!isEmptyString(siyuanCfg.middlewareUrl)) {
     middlewareUrl = siyuanCfg.middlewareUrl;
-  } else {
-    middlewareUrl = "/api/middleware";
   }
   return new SiYuanConfig(baseUrl, token, middlewareUrl);
 };
@@ -2802,7 +2798,7 @@ const _export_sfc = (sfc, props) => {
   return target;
 };
 const DefaultHeader = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-fd26f10c"]]);
-const version = "0.6.1";
+const version = "0.6.2";
 const _hoisted_1$4 = {
   class: "locale-changer"
 };
