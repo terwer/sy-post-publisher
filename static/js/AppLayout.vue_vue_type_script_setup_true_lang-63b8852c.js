@@ -2876,7 +2876,7 @@ const _export_sfc = (sfc, props) => {
   return target;
 };
 const DefaultHeader = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-da269c8f"]]);
-const version = "0.6.6";
+const version = "0.6.7";
 const _hoisted_1$4 = {
   class: "locale-changer"
 };

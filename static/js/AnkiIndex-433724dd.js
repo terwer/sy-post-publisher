@@ -1,6 +1,6 @@
 import { a as ElButton, z as ElTag, i as ElInput, e as ElFormItem, F as ElCard, G as ElCol, H as ElRow, E as ElMessage } from "./vendor_element-plus-865ba724.js";
 import { M as defineComponent, ac as reactive, z as watch, A as onMounted, O as openBlock, P as createElementBlock, Z as createCommentVNode, a1 as createVNode, U as withCtx, a0 as Fragment, ao as renderList, T as createBlock, W as createBaseVNode, $ as toDisplayString, _ as createTextVNode, ap as withKeys } from "./vendor-2ec86a49.js";
-import { i as isInSiyuanNewWinBrowser, L as LogFactory, b as getPageId, l as isEmptyString, S as SiYuanApi, o as appendStr, j as _export_sfc } from "./AppLayout.vue_vue_type_script_setup_true_lang-a2e686da.js";
+import { i as isInSiyuanNewWinBrowser, L as LogFactory, b as getPageId, l as isEmptyString, S as SiYuanApi, o as appendStr, j as _export_sfc } from "./AppLayout.vue_vue_type_script_setup_true_lang-63b8852c.js";
 import { u as useI18n } from "./vendor_vue-i18n-b34647c9.js";
 isInSiyuanNewWinBrowser() ? require("child_process") : "";
 isInSiyuanNewWinBrowser() ? require("process") : "";

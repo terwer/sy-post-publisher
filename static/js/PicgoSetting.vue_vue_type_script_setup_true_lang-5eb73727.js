@@ -4,9 +4,9 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-import { L as LogFactory, B as isEmptyObject, i as isInSiyuanNewWinBrowser, S as SiYuanApi, l as isEmptyString, C as CONSTANTS, aq as parseJSONObj, w as getSiyuanCfg, v as pathJoin, x as isElectron, ar as getSiyuanNewWinDataDir, as as isFileExist, at as toJSONString } from "./AppLayout.vue_vue_type_script_setup_true_lang-a2e686da.js";
+import { L as LogFactory, B as isEmptyObject, i as isInSiyuanNewWinBrowser, S as SiYuanApi, l as isEmptyString, C as CONSTANTS, aq as parseJSONObj, w as getSiyuanCfg, v as pathJoin, x as isElectron, ar as getSiyuanNewWinDataDir, as as isFileExist, at as toJSONString } from "./AppLayout.vue_vue_type_script_setup_true_lang-63b8852c.js";
 import { m as md5 } from "./vendor_blueimp-md5-es6-056b4f91.js";
-import { C as CommonblogApi } from "./commonblogApi-7c1eea21.js";
+import { C as CommonblogApi } from "./commonblogApi-389f5cec.js";
 import { E as ElMessage } from "./vendor_element-plus-865ba724.js";
 import { M as defineComponent, y as unref, O as openBlock, P as createElementBlock, W as createBaseVNode, $ as toDisplayString, _ as createTextVNode } from "./vendor-2ec86a49.js";
 class PicgoPostResult {
