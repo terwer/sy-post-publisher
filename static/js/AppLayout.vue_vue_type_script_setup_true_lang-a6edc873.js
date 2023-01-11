@@ -1578,14 +1578,6 @@ function goToPage(pageUrl) {
   const url = getPageUrl(pageUrl, "");
   window.open(url);
 }
-function goToPageWithTarget(pageUrl, target, split) {
-  const url = getPageUrl(pageUrl, split);
-  if (target === "_self") {
-    window.location.href = url;
-  } else {
-    window.open(url);
-  }
-}
 function isInChromeExtension() {
   if (!isBrowser()) {
     return false;
@@ -2798,7 +2790,7 @@ const _export_sfc = (sfc, props) => {
   return target;
 };
 const DefaultHeader = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-fd26f10c"]]);
-const version = "0.6.2";
+const version = "0.6.3";
 const _hoisted_1$4 = {
   class: "locale-changer"
 };
@@ -3044,7 +3036,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const _withScopeId = (n2) => (pushScopeId("data-v-6dece6b7"), n2 = n2(), popScopeId(), n2);
+const _withScopeId = (n2) => (pushScopeId("data-v-6d82d46d"), n2 = n2(), popScopeId(), n2);
 const _hoisted_1$1 = {
   class: "footer"
 };
@@ -3158,7 +3150,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
         ElMessage.success(t("main.opt.success"));
         setTimeout(function() {
           siyuanApiChangeFormVisible.value = false;
-          goToPageWithTarget("/blog/index.html", "_self", "");
+          reloadPage();
         }, 500);
       } catch (e) {
         siyuanApiChangeFormVisible.value = false;
@@ -3305,8 +3297,8 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
   }
 });
 const DefaultFooter_vue_vue_type_style_index_0_lang = "";
-const DefaultFooter_vue_vue_type_style_index_1_scoped_6dece6b7_lang = "";
-const DefaultFooter = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-6dece6b7"]]);
+const DefaultFooter_vue_vue_type_style_index_1_scoped_6d82d46d_lang = "";
+const DefaultFooter = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-6d82d46d"]]);
 const _hoisted_1 = {
   id: "app-layout-default"
 };

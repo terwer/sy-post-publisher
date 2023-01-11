@@ -1,8 +1,8 @@
 import { h as ElMessageBox, E as ElMessage, a as ElButton, D as ElTooltip, I as ElPopover, k as ElDialog, i as ElInput } from "./vendor_element-plus-1f908931.js";
-import { k as inSiyuan, i as isInSiyuanNewWinBrowser, L as LogFactory, x as isElectron, b as getPageId, S as SiYuanApi, a2 as reloadPage, y as isBrowser, a0 as copyToClipboardInBrowser } from "./AppLayout.vue_vue_type_script_setup_true_lang-220beabc.js";
+import { k as inSiyuan, i as isInSiyuanNewWinBrowser, L as LogFactory, x as isElectron, b as getPageId, S as SiYuanApi, a2 as reloadPage, y as isBrowser, a0 as copyToClipboardInBrowser } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6edc873.js";
 import { ac as reactive, z as watch, A as onMounted, M as defineComponent, u as ref, O as openBlock, P as createElementBlock, W as createBaseVNode, a1 as createVNode, U as withCtx, _ as createTextVNode, $ as toDisplayString, y as unref, T as createBlock, Z as createCommentVNode, a0 as Fragment, ao as renderList, aM as resolveComponent } from "./vendor-03279a5a.js";
 import { u as useI18n } from "./vendor_vue-i18n-ea606b0c.js";
-import { u as uploadByPicGO, a as ImageItem, P as PicgoPostApi, I as ImageParser, _ as _sfc_main$1 } from "./PicgoSetting.vue_vue_type_script_setup_true_lang-c736f906.js";
+import { u as uploadByPicGO, a as ImageItem, P as PicgoPostApi, I as ImageParser, _ as _sfc_main$1 } from "./PicgoSetting.vue_vue_type_script_setup_true_lang-0476ad29.js";
 const usePicgoCommon = () => {
   const isDev = false;
   const isSiyuanOrSiyuanNewWin = inSiyuan() || isInSiyuanNewWinBrowser();

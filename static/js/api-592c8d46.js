@@ -4,14 +4,14 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-import { L as LogFactory, S as SiYuanApi, A as API_TYPE_CONSTANTS, o as appendStr, e as getPublishCfg, r as removeTitleNumber, q as renderHTML, s as removeWidgetTag, t as removeH1, l as isEmptyString, u as getJSONConf, v as pathJoin, w as getSiyuanCfg, x as isElectron, c as isInChromeExtension, y as isBrowser, z as SubPlatformType, B as isEmptyObject, P as PlatformType } from "./AppLayout.vue_vue_type_script_setup_true_lang-220beabc.js";
+import { L as LogFactory, S as SiYuanApi, A as API_TYPE_CONSTANTS, o as appendStr, e as getPublishCfg, r as removeTitleNumber, q as renderHTML, s as removeWidgetTag, t as removeH1, l as isEmptyString, u as getJSONConf, v as pathJoin, w as getSiyuanCfg, x as isElectron, c as isInChromeExtension, y as isBrowser, z as SubPlatformType, B as isEmptyObject, P as PlatformType } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6edc873.js";
 import { c3 as Octokit } from "./vendor-03279a5a.js";
 import { g as gBase64 } from "./vendor_js-base64-904ab953.js";
 import { s as sax } from "./vendor_sax-e83a40a8.js";
 import { b as bytesToBase64 } from "./vendor_byte-base64-0dbd845f.js";
 import { x as xmlbuilder2_min } from "./vendor_xmlbuilder2-780b1a8c.js";
 import { f as fetch$1 } from "./vendor_cross-fetch-e4e57030.js";
-import { C as CommonblogApi } from "./commonblogApi-70c8eb5f.js";
+import { C as CommonblogApi } from "./commonblogApi-58207b58.js";
 const POST_STATUS_PUBLISH = "publish";
 const POST_TYPE_DRAFT = "draft";
 const POST_TYPE_INHERIT = "inherit";

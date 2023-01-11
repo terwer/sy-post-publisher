@@ -1,6 +1,6 @@
 import { j as ElAlert, a as ElButton, D as ElTooltip } from "./vendor_element-plus-1f908931.js";
-import { P as Post, A as API } from "./api-7d0af9d4.js";
-import { L as LogFactory, i as isInSiyuanNewWinBrowser, y as isBrowser, a0 as copyToClipboardInBrowser, au as getPageUrl, h as goToPage, A as API_TYPE_CONSTANTS } from "./AppLayout.vue_vue_type_script_setup_true_lang-220beabc.js";
+import { P as Post, A as API } from "./api-592c8d46.js";
+import { L as LogFactory, i as isInSiyuanNewWinBrowser, y as isBrowser, a0 as copyToClipboardInBrowser, au as getPageUrl, h as goToPage, A as API_TYPE_CONSTANTS } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6edc873.js";
 import { M as defineComponent, u as ref, z as watch, A as onMounted, O as openBlock, P as createElementBlock, $ as toDisplayString, Z as createCommentVNode, a1 as createVNode, W as createBaseVNode, U as withCtx, V as withDirectives, aM as resolveComponent, aN as resolveDirective } from "./vendor-03279a5a.js";
 const _hoisted_1 = {
   class: "post-detail-wrap"

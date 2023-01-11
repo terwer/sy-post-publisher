@@ -4,7 +4,7 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-import { L as LogFactory, w as getSiyuanCfg, av as sendChromeMessage, aw as isLocalhost, x as isElectron, c as isInChromeExtension, l as isEmptyString, g as getWidgetId } from "./AppLayout.vue_vue_type_script_setup_true_lang-220beabc.js";
+import { L as LogFactory, w as getSiyuanCfg, av as sendChromeMessage, aw as isLocalhost, x as isElectron, c as isInChromeExtension, l as isEmptyString, g as getWidgetId } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6edc873.js";
 class CommonblogApi {
   constructor() {
     __publicField(this, "logger");
