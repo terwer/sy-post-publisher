@@ -1,5 +1,5 @@
-import { g as global$1 } from "./vendor_rollup-plugin-node-polyfills-97f570f9.js";
-import { g as getUserAgent } from "./vendor_universal-user-agent-ef49518b.js";
+import { g as global$1 } from "./vendor_rollup-plugin-node-polyfills-b0907b85.js";
+import { g as getUserAgent } from "./vendor_universal-user-agent-5a18f85c.js";
 import { C as Collection } from "./vendor_before-after-hook-6380be1a.js";
 import { i as isPlainObject$2 } from "./vendor_is-plain-object-eb550d51.js";
 import { f as fetch } from "./vendor_cross-fetch-e4e57030.js";

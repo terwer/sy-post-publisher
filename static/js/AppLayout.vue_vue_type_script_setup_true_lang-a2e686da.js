@@ -5,10 +5,10 @@ var __publicField = (obj, key, value) => {
   return value;
 };
 var _a, _b;
-import { bG as library$1, bH as faUpload, bI as faBookOpenReader, bJ as faRectangleList, bK as faXmark, bL as faCircleXmark, bM as faBolt, bN as faCreditCard, bO as faImage, bP as faChrome, bQ as faShareNodes, bR as faListOl, bS as faFileLines, bT as faDownload, bU as faMagnifyingGlass, bV as faPaste, bW as faFileImport, bX as faGear, bY as faArrowRotateRight, bZ as FontAwesomeIcon, b_ as createApp, aG as h, M as defineComponent, u as ref, A as onMounted, aM as resolveComponent, O as openBlock, P as createElementBlock, a1 as createVNode, U as withCtx, T as createBlock, Z as createCommentVNode, _ as createTextVNode, a0 as Fragment, ao as renderList, ac as reactive, z as watch, b$ as useDark, c0 as useToggle, W as createBaseVNode, $ as toDisplayString, y as unref, c1 as pushScopeId, c2 as popScopeId, Q as renderSlot, L as shallowRef, Y as resolveDynamicComponent } from "./vendor-03279a5a.js";
-import { c as createPinia } from "./vendor_pinia-65b72bdd.js";
-import { c as createI18n, u as useI18n } from "./vendor_vue-i18n-ea606b0c.js";
-import { E as ElMessage, a as ElButton, b as ElHeader, c as ElOption, d as ElSelect, e as ElFormItem, f as ElForm, g as ElSwitch, h as ElMessageBox, i as ElInput, j as ElAlert, k as ElDialog } from "./vendor_element-plus-1f908931.js";
+import { bG as library$1, bH as faUpload, bI as faBookOpenReader, bJ as faRectangleList, bK as faXmark, bL as faCircleXmark, bM as faBolt, bN as faCreditCard, bO as faImage, bP as faChrome, bQ as faShareNodes, bR as faListOl, bS as faFileLines, bT as faDownload, bU as faMagnifyingGlass, bV as faPaste, bW as faFileImport, bX as faGear, bY as faArrowRotateRight, bZ as FontAwesomeIcon, b_ as createApp, aG as h, M as defineComponent, u as ref, A as onMounted, aM as resolveComponent, O as openBlock, P as createElementBlock, a1 as createVNode, U as withCtx, T as createBlock, Z as createCommentVNode, _ as createTextVNode, a0 as Fragment, ao as renderList, ac as reactive, z as watch, b$ as useDark, c0 as useToggle, W as createBaseVNode, $ as toDisplayString, y as unref, c1 as pushScopeId, c2 as popScopeId, Q as renderSlot, L as shallowRef, Y as resolveDynamicComponent } from "./vendor-2ec86a49.js";
+import { c as createPinia } from "./vendor_pinia-b97318c6.js";
+import { c as createI18n, u as useI18n } from "./vendor_vue-i18n-b34647c9.js";
+import { E as ElMessage, a as ElButton, b as ElHeader, c as ElOption, d as ElSelect, e as ElFormItem, f as ElForm, g as ElSwitch, h as ElMessageBox, i as ElInput, j as ElAlert, k as ElDialog } from "./vendor_element-plus-865ba724.js";
 import { H as HighlightJS, j as javascript, t as typescript, c, a as cpp, b as java, k as kotlin, d as bash, x as xml, e as css, p as plaintext, f as php, g as properties, s as sql, m as markdown } from "./vendor_highlight-js-1b1ee527.js";
 import { b as browserIndex } from "./vendor_plantuml-encoder-18698577.js";
 import { l as loglevel } from "./vendor_loglevel-bd2e1c44.js";
@@ -284,7 +284,7 @@ const zh_CN = {
   "setting.blog.siyuan.current.apiurl": "\u5F53\u524DAPI\u5730\u5740=>",
   "setting.blog.middlewareUrl": "\u8DE8\u57DF\u8BF7\u6C42\u4EE3\u7406",
   "setting.blog.middlewareUrl.tip": "\u67D0\u4E9B\u573A\u666F\u4E0B\u9700\u8981\uFF08\u4F8B\u5982Firefox\u63D2\u4EF6\u3001\u81EA\u90E8\u7F72\u6A21\u5F0F\uFF09\uFF0C\u5176\u4ED6\u60C5\u51B5\u53EF\u5FFD\u7565",
-  "setting.blog.middlewareUrl.my.tip": "\u5982\u679C\u6CA1\u6709\u90E8\u7F72\u4EE3\u7406\uFF0C\u53EF\u4EE5\u4F7F\u7528\u6211\u7684\u5171\u4EAB\u5730\u5740\uFF1Ahttps://publish.terwer.space/api/middleware \u3002\u51FA\u4E8E\u6027\u80FD\u8003\u8651\uFF0C\u5EFA\u8BAE\u81EA\u5DF1\u90E8\u7F72\u4E00\u4EFD\u3002",
+  "setting.blog.middlewareUrl.my.tip": "\u5982\u679C\u6CA1\u6709\u90E8\u7F72\u4EE3\u7406\uFF0C\u53EF\u4EE5\u4F7F\u7528\u6211\u7684\u5171\u4EAB\u5730\u5740\uFF1Ahttps://api.terwer.space/api/middleware \u3002\u51FA\u4E8E\u6027\u80FD\u8003\u8651\uFF0C\u5EFA\u8BAE\u81EA\u5DF1\u90E8\u7F72\u4E00\u4EFD\uFF0C\u8BF7\u4F7F\u7528 https://github.com/terwer/node-metaweblog-api-adaptor \u6B64\u9879\u76EE\u8FDB\u884C\u90E8\u7F72\u3002",
   "setting.conf.export": "\u5BFC\u51FA\u914D\u7F6E",
   "setting.conf.import": "\u5BFC\u5165\u914D\u7F6E",
   "setting.conf.clear": "\u6E05\u7A7A\u914D\u7F6E",
@@ -359,7 +359,37 @@ const zh_CN = {
   "setting.kms.username.tip": "KMS\u5E73\u53F0Rest\u8D26\u6237\u7528\u6237\u540D\uFF0C\u8BF7\u6309\u7167\u94FE\u63A5\u6307\u793A\u521B\u5EFA",
   "setting.kms.password.tip": "KMS\u5E73\u53F0Rest\u8D26\u6237\u5BC6\u7801\uFF0C\u8BF7\u6309\u7167\u94FE\u63A5\u6307\u793A\u521B\u5EFA",
   "setting.kms.apiurl.tip": "KMS\u5E73\u53F0\u7684API\u5730\u5740\uFF0C\u4F8B\u5982\uFF1Ahttp://localhost:9564/kms16_release/api/kms-multidoc/kmsMultidocKnowledgeRestService",
-  "siyuan.local.share.tip": "\u6E29\u99A8\u63D0\u793A\uFF1A\u5982\u679C\u53D1\u73B0\u5206\u4EAB\u94FE\u63A5\u6216\u8005\u6D4F\u89C8\u5668\u6253\u5F00\u65E0\u6CD5\u663E\u793A\u6216\u8005\u7F51\u7EDC\u8FDE\u63A5\u88AB\u62D2\u7EDD\uFF0C\u8BF7\u6309\u7167\u4E0B\u9762\u64CD\u4F5C\u6392\u67E5\u30021\uFF1A\u601D\u6E90\u7B14\u8BB0->\u8BBE\u7F6E->\u5173\u4E8E->\u6253\u5F00\u7F51\u7EDC\u4F3A\u670D\uFF1B2\uFF1A\u5728\u6D4F\u89C8\u5668\u6253\u5F00\u4E4B\u540E\uFF0C\u70B9\u51FB\u5E95\u90E8\u601D\u6E90\u5730\u5740\uFF0C\u4FEE\u6539\u5BF9\u5E94\u5730\u5740\u4E3A\u5C40\u57DF\u7F51ip\u5730\u5740\u3002"
+  "siyuan.local.share.tip": "\u6E29\u99A8\u63D0\u793A\uFF1A\u5982\u679C\u53D1\u73B0\u5206\u4EAB\u94FE\u63A5\u6216\u8005\u6D4F\u89C8\u5668\u6253\u5F00\u65E0\u6CD5\u663E\u793A\u6216\u8005\u7F51\u7EDC\u8FDE\u63A5\u88AB\u62D2\u7EDD\uFF0C\u8BF7\u6309\u7167\u4E0B\u9762\u64CD\u4F5C\u6392\u67E5\u30021\uFF1A\u601D\u6E90\u7B14\u8BB0->\u8BBE\u7F6E->\u5173\u4E8E->\u6253\u5F00\u7F51\u7EDC\u4F3A\u670D\uFF1B2\uFF1A\u5728\u6D4F\u89C8\u5668\u6253\u5F00\u4E4B\u540E\uFF0C\u70B9\u51FB\u5E95\u90E8\u601D\u6E90\u5730\u5740\uFF0C\u4FEE\u6539\u5BF9\u5E94\u5730\u5740\u4E3A\u5C40\u57DF\u7F51ip\u5730\u5740\u3002",
+  "setting.cnblogs.home.tip": "\u60A8\u7684\u535A\u5BA2\u56ED\u9996\u9875\uFF0C\u901A\u5E38\u662F\uFF1Ahttps://www.cnblogs.com/<\u60A8\u7684\u7528\u6237\u540D>",
+  "setting.cnblogs.username.tip": "\u60A8\u7684\u535A\u5BA2\u56EDMetaWeblog\u767B\u5F55\u540D\uFF0C\u53EF\u524D\u5F80\u60A8\u7684\u535A\u5BA2\u56ED\u540E\u53F0->\u8BBE\u7F6E\u67E5\u770B\uFF0C\u6CE8\u610F\uFF1A\u662F\u767B\u5F55\u540D\uFF0C\u4E0D\u662F\u7528\u6237\u6635\u79F0\u54E6(*^\u25BD^*)",
+  "setting.cnblogs.password.tip": "\u60A8\u7684\u535A\u5BA2\u56EDMetaWeblog\u8BBF\u95EE\u4EE4\u724C\uFF0C\u53EF\u524D\u5F80\u60A8\u7684\u535A\u5BA2\u56ED\u540E\u53F0->\u8BBE\u7F6E\u67E5\u770B",
+  "setting.cnblogs.apiUrl.tip": "\u60A8\u7684\u535A\u5BA2\u56EDMetaWeblog\u8BBF\u95EE\u5730\u5740\uFF0C\u53EF\u524D\u5F80\u60A8\u7684\u535A\u5BA2\u56ED\u540E\u53F0->\u8BBE\u7F6E\u67E5\u770B\uFF0C\u901A\u5E38\u662F\uFF1Ahttps://rpc.cnblogs.com/metaweblog/<\u60A8\u7684\u7528\u6237\u540D>",
+  "setting.cnblogs.previewUrl.tip": "\u535A\u5BA2\u56ED\u5E73\u53F0\u7684\u6587\u7AE0\u9884\u89C8\u89C4\u5219\uFF0C\u901A\u5E38\u662F\uFF1A/p/[postid].html",
+  "setting.wordpress.home.tip": "WordPress\u9996\u9875",
+  "setting.wordpress.username.tip": "WordPress\u767B\u5F55\u540D\uFF0C\u6CE8\u610F\uFF1A\u662F\u767B\u5F55\u540D\uFF0C\u4E0D\u662F\u7528\u6237\u6635\u79F0\u54E6(*^\u25BD^*)",
+  "setting.wordpress.password.tip": "WordPress\u767B\u5F55\u5BC6\u7801",
+  "setting.wordpress.apiUrl.tip": "WordPress\u7684xmlrpc\u8FDC\u7A0B\u53D1\u5E03\u5730\u5740\uFF0C\u901A\u5E38\u662F\uFF1Ahttps://<WordPress\u535A\u5BA2\u5730\u5740>/xmlrpc.php",
+  "setting.wordpress.previewUrl.tip": "WordPress\u5E73\u53F0\u7684\u6587\u7AE0\u9884\u89C8\u89C4\u5219\uFF0C\u901A\u5E38\u662F\uFF1A?p=[postid]",
+  "setting.oschina.home.tip": "\u5F00\u6E90\u4E2D\u56FD\u9996\u9875\uFF0C\u901A\u5E38\u662F\uFF1Ahttps://my.oschina.net/<\u60A8\u7684\u7528\u6237\u540D>",
+  "setting.oschina.username.tip": "\u5F00\u6E90\u4E2D\u56FD\u767B\u5F55\u540D\uFF0C\u53EF\u4EE5\u8F93\u5165\u767B\u5F55\u90AE\u7BB1",
+  "setting.oschina.password.tip": "\u5F00\u6E90\u4E2D\u56FD\u767B\u5F55\u5BC6\u7801",
+  "setting.oschina.apiUrl.tip": "\u5F00\u6E90\u4E2D\u56FD\u7684xmlrpc\u8FDC\u7A0B\u53D1\u5E03\u5730\u5740\uFF0C\u901A\u5E38\u56FA\u5B9A\u662F\uFF1Ahttps://www.oschina.net/action/xmlrpc",
+  "setting.oschina.previewUrl.tip": "\u5F00\u6E90\u4E2D\u56FD\u5E73\u53F0\u7684\u6587\u7AE0\u9884\u89C8\u89C4\u5219\uFF0C\u901A\u5E38\u662F\uFF1A/blog/[postid]",
+  "setting.typecho.home.tip": "Typecho\u5E73\u53F0\u7684\u9996\u9875",
+  "setting.typecho.username.tip": "Typecho\u5E73\u53F0\u767B\u5F55\u540D",
+  "setting.typecho.password.tip": "Typecho\u5E73\u53F0\u5BC6\u7801",
+  "setting.typecho.apiUrl.tip": "Typecho\u5E73\u53F0\u7684xmlrpc\u8FDC\u7A0B\u53D1\u5E03\u5730\u5740\uFF0C\u901A\u5E38\u56FA\u5B9A\u662F\uFF1Ahttps://<\u5E73\u53F0\u5730\u5740>/index.php/action/xmlrpc",
+  "setting.typecho.previewUrl.tip": "Typecho\u5E73\u53F0\u7684\u6587\u7AE0\u9884\u89C8\u89C4\u5219\uFF0C\u901A\u5E38\u662F\uFF1A/index.php/archives/[postid]",
+  "setting.jvue.home.tip": "JVue\u5E73\u53F0\u7684\u9996\u9875",
+  "setting.jvue.username.tip": "JVue\u5E73\u53F0\u767B\u5F55\u540D",
+  "setting.jvue.password.tip": "JVue\u5E73\u53F0\u5BC6\u7801",
+  "setting.jvue.apiUrl.tip": "JVue\u5E73\u53F0\u7684xmlrpc\u8FDC\u7A0B\u53D1\u5E03\u5730\u5740\uFF0C\u901A\u5E38\u56FA\u5B9A\u662F\uFF1Ahttps://<\u5E73\u53F0\u5730\u5740>/xmlrpc",
+  "setting.jvue.previewUrl.tip": "JVue\u5E73\u53F0\u7684\u6587\u7AE0\u9884\u89C8\u89C4\u5219\uFF0C\u901A\u5E38\u662F\uFF1A/post/[postid].html",
+  "setting.conf.home.tip": "Confluence Cloud\uFF0C\u9996\u9875\uFF0C\u901A\u5E38\u662F\uFF1Ahttps://<\u60A8\u7684\u7528\u6237\u540D>.atlassian.net/wiki/spaces/<\u7A7A\u95F4\u540D>",
+  "setting.conf.username.tip": "Confluence\u767B\u5F55\u540D\uFF0C\u53EF\u524D\u5F80\u60A8\u7684atlassian\u8D26\u6237\u83B7\u53D6",
+  "setting.conf.password.tip": "Confluence\u8BBF\u95EE\u4EE4\u724C\uFF0C\u53EF\u524D\u5F80\u60A8\u7684atlassian\u8D26\u6237\u83B7\u53D6",
+  "setting.conf.apiUrl.tip": "\u53EF\u524D\u5F80 https://developer.atlassian.com/cloud/confluence/rest/v1/#api-wiki-rest-api-content-get \u67E5\u770B\u6587\u6863",
+  "setting.conf.previewUrl.tip": "Confluence\u5E73\u53F0\u6587\u7AE0\u9884\u89C8\u89C4\u5219\uFF0C\u901A\u5E38\u662F\uFF1A/pages/[postid]"
 };
 const en_US = {
   "lang.choose": "Choose lang",
@@ -651,7 +681,37 @@ const en_US = {
   "setting.kms.username.tip": "KMS platform REST account user name, please create according to the link instruction",
   "setting.kms.password.tip": "KMS platform REST account password, please create according to the link instruction",
   "setting.kms.apiurl.tip": "The API address of the KMS platform, for example: http:// localhost: 9564/kms16_release/API/KMS-Multidoc/KMSMultidOWRESTSERVICE",
-  "siyuan.local.share.tip": "Reminder: If you find that the sharing link or the browser can be displayed or the network connection is rejected, please check according to the following operation. 1: Siyuan Note-> Settings-> About-> Open the network servo; 2: After the browser is opened, click the bottom Siyuan address at the bottom to modify the corresponding address to the local area network IP address."
+  "siyuan.local.share.tip": "Reminder: If you find that the sharing link or the browser can be displayed or the network connection is rejected, please check according to the following operation. 1: Siyuan Note-> Settings-> About-> Open the network servo; 2: After the browser is opened, click the bottom Siyuan address at the bottom to modify the corresponding address to the local area network IP address.",
+  "setting.cnblogs.home.tip": "The homepage of your blog park is usually: https://www.cnblogs.com/ <your username>",
+  "setting.cnblogs.username.tip": "Your blog garden MetaWeblog login name, you can go to your blog garden background-> Settings, note: login name, not a user nickname (*^\u25BD^*)",
+  "setting.cnblogs.password.tip": "Your blog garden Metaweblog access token, you can go to your blog garden backstage-> Settings",
+  "setting.cnblogs.apiUrl.tip": "Your blog garden Metaweblog access address, you can go to your blog park background-> settings, usually: https://rpc.cnblogs.com/metaweblog/ <Your username>",
+  "setting.cnblogs.previewUrl.tip": "Preview rules for your blog garden article",
+  "setting.wordpress.home.tip": "Wordpress homepage",
+  "setting.wordpress.username.tip": "WordPress login name, note: it is login name, not a user nickname (*^\u25BD^*)",
+  "setting.wordpress.password.tip": "Wordpress login password",
+  "setting.wordpress.apiUrl.tip": "WordPress's XMLRPC remote release address, usually: https:// <WordPress blog address> /xmlrpc.php",
+  "setting.wordpress.previewUrl.tip": "The preview rules of the WordPress platform are usually :? P = [Postid]",
+  "setting.oschina.home.tip": "Homepage of open source China, usually: https://my.oschina.net/ <Your username>",
+  "setting.oschina.username.tip": "Open source China login name, you can enter the login mailbox",
+  "setting.oschina.password.tip": "Open source China login password",
+  "setting.oschina.apiUrl.tip": "Open source China XMLRPC remote publishing address, usually fixed: https://www.oschina.net/ACTION/xmlrpc",
+  "setting.oschina.previewUrl.tip": "The preview rules of the open source China platform are usually:/blog/[postid]",
+  "setting.typecho.home.tip": "Homepage of the Typecho platform",
+  "setting.typecho.username.tip": "Typecho platform login name",
+  "setting.typecho.password.tip": "Typecho platform password",
+  "setting.typecho.apiUrl.tip": "The XMLRPC remote publishing address of the Typecho platform is usually fixed: https: // <platform address> /index.php/xmlrpc",
+  "setting.typecho.previewUrl.tip": "The preview rules of the Typecho platform are usually: /index.php/archives/ [Postid]",
+  "setting.jvue.home.tip": "Homepage of the Jvue platform",
+  "setting.jvue.username.tip": "Jvue platform login name",
+  "setting.jvue.password.tip": "Jvue platform password",
+  "setting.jvue.apiUrl.tip": "The XMLRPC remote release address of the JVUE platform is usually fixed: https: // <platform address>/xmlrpc",
+  "setting.jvue.previewUrl.tip": "The preview rules of the Jvue platform are usually:/post/[postid] .html",
+  "setting.conf.home.tip": "Confluence Cloud, homepage, usually: https: // <your user name> .atlassian.net/wiki/spaces/<Space name>",
+  "setting.conf.username.tip": "CONFLUENCE login name, you can go to your Atlassian account to get",
+  "setting.conf.password.tip": "Confluence access token, you can go to your Atlassian account to get",
+  "setting.conf.apiUrl.tip": "You can go to https://developper.atlassian.com/Cloud/confluence/rest/v1/1/1/",
+  "setting.conf.previewUrl.tip": "CONFLUENCE platform articles preview rules, usually:/pages/[postid]"
 };
 const i18n = createI18n({
   legacy: false,
@@ -834,78 +894,6 @@ const mdFileToTitle = (fmtTitle) => {
   }
   return fmtTitle;
 };
-const getEnv = (key) => {
-  let env = "";
-  try {
-    if ({ "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://publish.terwer.space/api/middleware", "BASE_URL": "/widgets/sy-post-publisher/", "MODE": "production", "DEV": false, "PROD": true }[key]) {
-      env = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://publish.terwer.space/api/middleware", "BASE_URL": "/widgets/sy-post-publisher/", "MODE": "production", "DEV": false, "PROD": true }[key];
-    }
-  } catch (e) {
-    throw new Error(e);
-  }
-  return env;
-};
-const getBooleanEnv = (key) => {
-  let env = false;
-  if (getEnv(key)) {
-    env = getEnv(key).toLowerCase() === "true";
-  }
-  return env;
-};
-const chalk = {
-  gray: (src) => {
-    return src.toString();
-  },
-  green: (src) => {
-    return src.toString();
-  },
-  yellow: (src) => {
-    return src.toString();
-  },
-  red: (src) => {
-    return src.toString();
-  }
-};
-const isTest = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://publish.terwer.space/api/middleware" }.TEST === "true";
-const isDev = false;
-const LOG_INFO_ENABLED = (_a = getBooleanEnv("VITE_LOG_INFO_ENABLED")) != null ? _a : false;
-const LOG_LEVEL_DEBUG = "DEBUG";
-const LOG_LEVEL_INFO = "INFO";
-const LOG_LEVEL_WARN = "WARN";
-const LOG_LEVEL_ERROR = "ERROR";
-const CONSOLE_LOGGER = "console";
-prefix.reg(loglevel);
-if (isTest || isDev) {
-  loglevel.setLevel(LOG_LEVEL_DEBUG);
-} else {
-  loglevel.setLevel(LOG_INFO_ENABLED ? LOG_LEVEL_INFO : LOG_LEVEL_WARN);
-}
-prefix.apply(loglevel, {
-  format(level, name, timestamp) {
-    const strarr = [];
-    strarr.push(chalk.gray("[") + chalk.green(timestamp).toString() + chalk.gray("]"));
-    switch (level) {
-      case LOG_LEVEL_INFO:
-        strarr.push(chalk.green(level.toUpperCase().toString()));
-        break;
-      case LOG_LEVEL_WARN:
-        strarr.push(chalk.yellow(level.toUpperCase().toString()));
-        break;
-      case LOG_LEVEL_ERROR:
-        strarr.push(chalk.red(level.toUpperCase().toString()));
-        break;
-    }
-    strarr.push(chalk.green(name).toString());
-    strarr.push(chalk.gray(":"));
-    return strarr.join(" ");
-  }
-});
-const getLogger = (loggerName) => {
-  return loglevel.getLogger(loggerName != null ? loggerName : CONSOLE_LOGGER);
-};
-const LogFactory = {
-  getLogger
-};
 const isBrowser = () => typeof window !== "undefined" && typeof window.document !== "undefined";
 const isLocalhost = (apiUrl) => apiUrl.indexOf("127.0.0.1") > -1;
 const isElectron = /Electron/.test(navigator.userAgent);
@@ -982,7 +970,309 @@ const copyToClipboardInBrowser = (text) => {
     }
   }
 };
+function isInChromeExtension() {
+  if (!isBrowser()) {
+    return false;
+  }
+  return window.location.href.indexOf("chrome-extension://") > -1;
+}
+const vueHljs = {};
+vueHljs.install = (Vue) => {
+  HighlightJS.registerLanguage("javascript", javascript);
+  HighlightJS.registerLanguage("js", javascript);
+  HighlightJS.registerLanguage("typescript", typescript);
+  HighlightJS.registerLanguage("ts", typescript);
+  HighlightJS.registerLanguage("c", c);
+  HighlightJS.registerLanguage("cpp", cpp);
+  HighlightJS.registerLanguage("java", java);
+  HighlightJS.registerLanguage("kotlin", kotlin);
+  HighlightJS.registerLanguage("csharp", java);
+  HighlightJS.registerLanguage("cs", java);
+  HighlightJS.registerLanguage("bash", bash);
+  HighlightJS.registerLanguage("shell", bash);
+  HighlightJS.registerLanguage("xml", xml);
+  HighlightJS.registerLanguage("html", xml);
+  HighlightJS.registerLanguage("css", css);
+  HighlightJS.registerLanguage("plaintext", plaintext);
+  HighlightJS.registerLanguage("plantuml", plaintext);
+  HighlightJS.registerLanguage("php", php);
+  HighlightJS.registerLanguage("properties", properties);
+  HighlightJS.registerLanguage("sql", sql);
+  HighlightJS.registerLanguage("markdown", markdown);
+  HighlightJS.registerLanguage("md", markdown);
+  HighlightJS.addPlugin(
+    new CopyButtonPlugin({
+      callback: (text, el) => console.log("Copied to clipboard", text)
+    })
+  );
+  Vue.directive("highlight", (el) => {
+    const blocks = el.querySelectorAll("pre code");
+    Array.prototype.forEach.call(blocks, HighlightJS.highlightBlock);
+    const codeGroups = el.querySelectorAll("code-group");
+    codeGroups.forEach((group) => {
+      var _a2;
+      if (group.getElementsByTagName("ul").length === 0) {
+        const newNode = document.createElement("ul");
+        newNode.setAttribute("class", "code-tab");
+        const codeBlocks = group.querySelectorAll("code-block");
+        codeBlocks.forEach((block) => {
+          var _a3, _b2;
+          const title = (_a3 = block.attributes.getNamedItem("title")) == null ? void 0 : _a3.value;
+          const active = (_b2 = block.attributes.getNamedItem("active")) == null ? void 0 : _b2.value;
+          const isActive = active !== void 0;
+          const item = document.createElement("li");
+          item.setAttribute(
+            "class",
+            isActive ? "code-tab-item current" : "code-tab-item"
+          );
+          item.innerHTML = title || "";
+          item.addEventListener("click", function(event) {
+            const targetElement = event.target;
+            const allLis = targetElement.parentElement.querySelectorAll("li");
+            allLis.forEach((li) => {
+              li.setAttribute("class", "code-tab-item");
+            });
+            targetElement.setAttribute("class", "code-tab-item current");
+            codeBlocks.forEach((cb) => {
+              var _a4;
+              if (((_a4 = cb.attributes.getNamedItem("title")) == null ? void 0 : _a4.value) === targetElement.innerHTML) {
+                cb.setAttribute("active", "");
+              } else {
+                cb.removeAttribute("active");
+              }
+            });
+          });
+          newNode.append(item);
+        });
+        const firstBlock = codeBlocks[0];
+        (_a2 = firstBlock == null ? void 0 : firstBlock.parentNode) == null ? void 0 : _a2.insertBefore(newNode, firstBlock);
+      }
+    });
+    const umlBlocks = el.querySelectorAll("div.language-plantuml");
+    umlBlocks.forEach((item) => {
+      var _a2;
+      const umlstr = unescapeHTML(item.innerHTML);
+      const encoded = browserIndex.encode(umlstr);
+      const plantUMLServer = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.PLANT_UML_SERVR || "https://www.plantuml.com/plantuml/svg/";
+      const url = plantUMLServer + encoded;
+      const newNode = document.createElement("img");
+      newNode.setAttribute("src", url);
+      (_a2 = item == null ? void 0 : item.parentNode) == null ? void 0 : _a2.insertBefore(newNode, item);
+      item.remove();
+    });
+    const inlineMathBlocks = el.querySelectorAll("span.language-math");
+    inlineMathBlocks.forEach((item) => {
+      if (isInChromeExtension()) {
+        let html = item.innerHTML;
+        html = html.replace(/，/g, ",");
+        html = html.replace(/。/g, ".");
+        html = html.replace(/并且/g, "AND");
+        html = html.replace(/或者/g, "OR");
+        html = encodeURIComponent(html);
+        const newHtml = '<img src="https://latex.codecogs.com/svg.image?' + html + '" />';
+        item.innerHTML = newHtml;
+      } else {
+        const newHtml = "$" + item.innerHTML + "$";
+        item.innerHTML = newHtml;
+      }
+    });
+    const mathBlocks = el.querySelectorAll("div.language-math");
+    mathBlocks.forEach((item) => {
+      if (isInChromeExtension()) {
+        let html = item.innerHTML;
+        html = html.replace(/，/g, ",");
+        html = html.replace(/。/g, ".");
+        html = html.replace(/并且/g, "AND");
+        html = html.replace(/或者/g, "OR");
+        html = encodeURIComponent(html);
+        const newHtml = '<img src="https://latex.codecogs.com/svg.image?' + html + '" />';
+        item.innerHTML = newHtml;
+      } else {
+        const newHtml = "$$" + item.innerHTML + "$$";
+        item.innerHTML = newHtml;
+      }
+    });
+    if (!isInChromeExtension()) {
+      MathJax.typeset();
+    }
+  });
+};
+const getEnv = (key) => {
+  let env = "";
+  try {
+    if ({ "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware", "BASE_URL": "/widgets/sy-post-publisher/", "MODE": "production", "DEV": false, "PROD": true }[key]) {
+      env = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware", "BASE_URL": "/widgets/sy-post-publisher/", "MODE": "production", "DEV": false, "PROD": true }[key];
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+  return env;
+};
+const getBooleanEnv = (key) => {
+  let env = false;
+  if (getEnv(key)) {
+    env = getEnv(key).toLowerCase() === "true";
+  }
+  return env;
+};
+const chalk = {
+  gray: (src) => {
+    return src.toString();
+  },
+  green: (src) => {
+    return src.toString();
+  },
+  yellow: (src) => {
+    return src.toString();
+  },
+  red: (src) => {
+    return src.toString();
+  }
+};
+const isTest = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.TEST === "true";
+const isDev = false;
+const LOG_INFO_ENABLED = (_a = getBooleanEnv("VITE_LOG_INFO_ENABLED")) != null ? _a : false;
+const LOG_LEVEL_DEBUG = "DEBUG";
+const LOG_LEVEL_INFO = "INFO";
+const LOG_LEVEL_WARN = "WARN";
+const LOG_LEVEL_ERROR = "ERROR";
+const CONSOLE_LOGGER = "console";
+prefix.reg(loglevel);
+if (isTest || isDev) {
+  loglevel.setLevel(LOG_LEVEL_DEBUG);
+} else {
+  loglevel.setLevel(LOG_INFO_ENABLED ? LOG_LEVEL_INFO : LOG_LEVEL_WARN);
+}
+prefix.apply(loglevel, {
+  format(level, name, timestamp) {
+    const strarr = [];
+    strarr.push(chalk.gray("[") + chalk.green(timestamp).toString() + chalk.gray("]"));
+    switch (level) {
+      case LOG_LEVEL_INFO:
+        strarr.push(chalk.green(level.toUpperCase().toString()));
+        break;
+      case LOG_LEVEL_WARN:
+        strarr.push(chalk.yellow(level.toUpperCase().toString()));
+        break;
+      case LOG_LEVEL_ERROR:
+        strarr.push(chalk.red(level.toUpperCase().toString()));
+        break;
+    }
+    strarr.push(chalk.green(name).toString());
+    strarr.push(chalk.gray(":"));
+    return strarr.join(" ");
+  }
+});
+const getLogger = (loggerName) => {
+  return loglevel.getLogger(loggerName != null ? loggerName : CONSOLE_LOGGER);
+};
+const LogFactory = {
+  getLogger
+};
+const MAX_TITLE_LENGTH = 10;
+const MAX_PREVIEW_LENGTH = 255;
+const DYNAMIC_CONFIG_KEY = "dynamic-config";
+const PUBLISH_PREFERENCE_CONFIG_KEY = "publish-preference";
+const PUBLISH_DYNAMIC_SLUG = "[dynamic-generated-on-publish]";
+const PICGO_FILE_MAP_KEY = "custom-picgo-file-map-key";
+const DEFAULT_JIEBA_WORD_LENGTH = 5;
+const CONSTANTS = {
+  MAX_TITLE_LENGTH,
+  MAX_PREVIEW_LENGTH,
+  DYNAMIC_CONFIG_KEY,
+  DEFAULT_JIEBA_WORD_LENGTH,
+  PUBLISH_PREFERENCE_CONFIG_KEY,
+  PUBLISH_DYNAMIC_SLUG,
+  PICGO_FILE_MAP_KEY
+};
 const logger$7 = LogFactory.getLogger();
+const zhSlugify = async (q) => {
+  const v = await fetch("https://api.terwer.space/api/translate?q=" + q);
+  const json = await v.json();
+  let res = json[0][0];
+  res = res.replaceAll(/-/g, "");
+  res = res.replaceAll(/\./g, "");
+  res = res.replaceAll(/~/g, "");
+  res = d(res);
+  res = res.replaceAll(/@/g, "");
+  return res;
+};
+const pinyinSlugify = (q) => d(q);
+const cutWords = async (words) => {
+  words = mdToPlainText(words);
+  logger$7.debug("\u51C6\u5907\u5F00\u59CB\u5206\u8BCD\uFF0C\u539F\u6587=>", words);
+  const v = await fetch("https://api.terwer.space/api/jieba?q=" + words);
+  const json = await v.json();
+  logger$7.debug("\u5206\u8BCD\u5B8C\u6BD5\uFF0C\u7ED3\u679C=>", json.result);
+  return json.result;
+};
+function countWords(words, len) {
+  const unUseWords = ["\u9875\u9762"];
+  logger$7.debug("\u6587\u672C\u6E05\u6D17\uFF0C\u7EDF\u8BA1\uFF0C\u6392\u5E8F\uFF0C\u53BB\u9664\u65E0\u610F\u4E49\u7684\u5355\u8BCDunUseWords=>", unUseWords);
+  const wordobj = words.reduce(function(count, word) {
+    if (word.length === 1 || unUseWords.includes(word)) {
+      count[word] = 0;
+      return count;
+    }
+    count[word] = count.hasOwnProperty(word) ? parseInt(count[word]) + 1 : 1;
+    return count;
+  }, {});
+  const wordarr = Object.keys(wordobj).sort(function(a, b) {
+    return wordobj[b] - wordobj[a];
+  });
+  logger$7.debug("\u6587\u672C\u6E05\u6D17\u7ED3\u675Fwordarr=>", wordarr);
+  if (!len || len === 0) {
+    return wordarr;
+  }
+  return wordarr.slice(0, len);
+}
+function jiebaToHotWords(words, len) {
+  let res;
+  const deflen = CONSTANTS.DEFAULT_JIEBA_WORD_LENGTH;
+  if (len) {
+    res = countWords(words, len);
+  } else {
+    res = countWords(words, deflen);
+  }
+  logger$7.debug("jiebaToHotWords=>", res);
+  return res;
+}
+const isEmptyObject = (obj) => {
+  if (!obj) {
+    return true;
+  }
+  return Object.getPrototypeOf(obj) === Object.prototype && Object.getOwnPropertyNames(obj).length === 0 && Object.getOwnPropertySymbols(obj).length === 0;
+};
+const isEmptyString = (str) => {
+  if (!str) {
+    return true;
+  }
+  if (!(typeof str === "string")) {
+    return true;
+  }
+  return str.trim().length === 0;
+};
+const pathJoin = (path1, path2) => {
+  let path = path1;
+  const path1LastIdx = path1.lastIndexOf("/");
+  if (path1LastIdx + 1 === path1.length) {
+    path = path1.substring(0, path1LastIdx);
+  }
+  const path2Idx = path2.indexOf("/");
+  if (path2Idx > 0) {
+    path = path + "/" + path2;
+  } else {
+    path = path + path2;
+  }
+  return path;
+};
+const parseBoolean = (val) => {
+  if (!val) {
+    val = "false";
+  }
+  return val.toString().toLowerCase() === "true";
+};
+const logger$6 = LogFactory.getLogger();
 const getConf = (key) => {
   const value = localStorage.getItem(key);
   if (!value) {
@@ -993,46 +1283,46 @@ const getConf = (key) => {
 const getBooleanConf = (key) => {
   const value = getConf(key);
   const valueObj = value.toLowerCase() === "true";
-  logger$7.debug("\u4ECElocalStorage\u83B7\u53D6Boolean\u6570\u636E=>");
-  logger$7.debug(valueObj);
+  logger$6.debug("\u4ECElocalStorage\u83B7\u53D6Boolean\u6570\u636E=>");
+  logger$6.debug(valueObj);
   return valueObj;
 };
 function getJSONConf(key) {
-  logger$7.debug("------------------------------");
-  logger$7.debug("\u5C1D\u8BD5\u4ECElocalStorage\u83B7\u53D6JSON\u6570\u636E\uFF0Ckey=>", key);
+  logger$6.debug("------------------------------");
+  logger$6.debug("\u5C1D\u8BD5\u4ECElocalStorage\u83B7\u53D6JSON\u6570\u636E\uFF0Ckey=>", key);
   let valueObj = {};
   const value = getConf(key);
   if (value !== "") {
     try {
       valueObj = JSON.parse(value);
     } catch (e) {
-      logger$7.error("JSON\u683C\u5F0F\u4E0D\u6B63\u786E", e);
+      logger$6.error("JSON\u683C\u5F0F\u4E0D\u6B63\u786E", e);
       throw e;
     }
   }
-  logger$7.debug("\u4ECElocalStorage\u83B7\u53D6JSON\u6570\u636E=>", valueObj);
-  logger$7.debug("------------------------------");
+  logger$6.debug("\u4ECElocalStorage\u83B7\u53D6JSON\u6570\u636E=>", valueObj);
+  logger$6.debug("------------------------------");
   return valueObj;
 }
 function parseJSONObj(objstr) {
-  logger$7.debug("------------------------------");
-  logger$7.debug("\u5C1D\u8BD5\u4ECEJSON\u5B57\u7B26\u4E32\u89E3\u6790Object\uFF0Cobjstr=>", objstr);
+  logger$6.debug("------------------------------");
+  logger$6.debug("\u5C1D\u8BD5\u4ECEJSON\u5B57\u7B26\u4E32\u89E3\u6790Object\uFF0Cobjstr=>", objstr);
   let valueObj = {};
   const value = objstr;
   if (value !== "") {
     try {
       valueObj = JSON.parse(value);
     } catch (e) {
-      logger$7.error("JSON\u683C\u5F0F\u4E0D\u6B63\u786E\uFF0C\u5C06\u76F4\u63A5\u8FD4\u56DE{}=>", e);
+      logger$6.error("JSON\u683C\u5F0F\u4E0D\u6B63\u786E\uFF0C\u5C06\u76F4\u63A5\u8FD4\u56DE{}=>", e);
     }
   }
-  logger$7.debug("\u4ECEJSON\u5B57\u7B26\u4E32\u89E3\u6790Object=>", valueObj);
-  logger$7.debug("------------------------------");
+  logger$6.debug("\u4ECEJSON\u5B57\u7B26\u4E32\u89E3\u6790Object=>", valueObj);
+  logger$6.debug("------------------------------");
   return valueObj;
 }
 const setConf = (key, value) => {
   if (!value || value === "") {
-    logger$7.warn("\u7A7A\u503C\uFF0C\u4E0D\u4FDD\u5B58");
+    logger$6.warn("\u7A7A\u503C\uFF0C\u4E0D\u4FDD\u5B58");
     return;
   }
   localStorage.setItem(key, value);
@@ -1042,19 +1332,19 @@ const setBooleanConf = (key, value) => {
   setConf(key, boolString);
 };
 const setJSONConf = (key, value) => {
-  logger$7.debug("++++++++++++++++++++++++++++++");
-  logger$7.debug("\u5C1D\u8BD5\u4FDD\u5B58JSON\u6570\u636E\u5230localStorage\u91CCkey=>", key);
-  logger$7.debug("\u4FDD\u5B58JSON\u6570\u636E\u5230localStorage=>", value);
+  logger$6.debug("++++++++++++++++++++++++++++++");
+  logger$6.debug("\u5C1D\u8BD5\u4FDD\u5B58JSON\u6570\u636E\u5230localStorage\u91CCkey=>", key);
+  logger$6.debug("\u4FDD\u5B58JSON\u6570\u636E\u5230localStorage=>", value);
   const valueString = JSON.stringify(value);
   setConf(key, valueString);
-  logger$7.debug("++++++++++++++++++++++++++++++");
+  logger$6.debug("++++++++++++++++++++++++++++++");
 };
 const toJSONString = (value) => {
-  logger$7.debug("++++++++++++++++++++++++++++++");
-  logger$7.debug("\u5C1D\u8BD5\u5C06Object\u8F6C\u6362\u4E3AJSON\u5B57\u7B26\u4E32", value);
+  logger$6.debug("++++++++++++++++++++++++++++++");
+  logger$6.debug("\u5C1D\u8BD5\u5C06Object\u8F6C\u6362\u4E3AJSON\u5B57\u7B26\u4E32", value);
   const valueString = JSON.stringify(value);
-  logger$7.debug("\u5C06Object\u8F6C\u6362\u4E3AJSON\u5B57\u7B26\u4E32=>", valueString);
-  logger$7.debug("++++++++++++++++++++++++++++++");
+  logger$6.debug("\u5C06Object\u8F6C\u6362\u4E3AJSON\u5B57\u7B26\u4E32=>", valueString);
+  logger$6.debug("++++++++++++++++++++++++++++++");
   return valueString;
 };
 const checkKeyExists = (key) => {
@@ -1100,9 +1390,9 @@ const importConf = async () => {
     }
   } catch (e) {
     if (e.toString().indexOf("AbortError") > -1) {
-      logger$7.warn("\u60A8\u53D6\u6D88\u4E86\u5BFC\u5165=>", e);
+      logger$6.warn("\u60A8\u53D6\u6D88\u4E86\u5BFC\u5165=>", e);
     } else {
-      logger$7.error("\u914D\u7F6E\u6587\u4EF6\u89E3\u6790\u9519\u8BEF=>", e);
+      logger$6.error("\u914D\u7F6E\u6587\u4EF6\u89E3\u6790\u9519\u8BEF=>", e);
       ElMessage.error(appendStr("\u914D\u7F6E\u6587\u4EF6\u89E3\u6790\u9519\u8BEF=>", e));
     }
   }
@@ -1120,109 +1410,6 @@ const DEBUG_SIYUAN_SUBDOC = false;
 const SIYUAN_CONSTANTS = {
   SIYUAN_CFG_KEY,
   DEBUG_SIYUAN_SUBDOC
-};
-const MAX_TITLE_LENGTH = 10;
-const MAX_PREVIEW_LENGTH = 255;
-const DYNAMIC_CONFIG_KEY = "dynamic-config";
-const PUBLISH_PREFERENCE_CONFIG_KEY = "publish-preference";
-const PUBLISH_DYNAMIC_SLUG = "[dynamic-generated-on-publish]";
-const PICGO_FILE_MAP_KEY = "custom-picgo-file-map-key";
-const DEFAULT_JIEBA_WORD_LENGTH = 5;
-const CONSTANTS = {
-  MAX_TITLE_LENGTH,
-  MAX_PREVIEW_LENGTH,
-  DYNAMIC_CONFIG_KEY,
-  DEFAULT_JIEBA_WORD_LENGTH,
-  PUBLISH_PREFERENCE_CONFIG_KEY,
-  PUBLISH_DYNAMIC_SLUG,
-  PICGO_FILE_MAP_KEY
-};
-const logger$6 = LogFactory.getLogger();
-const zhSlugify = async (q) => {
-  const v = await fetch("https://api.terwer.space/api/translate?q=" + q);
-  const json = await v.json();
-  let res = json[0][0];
-  res = res.replaceAll(/-/g, "");
-  res = res.replaceAll(/\./g, "");
-  res = res.replaceAll(/~/g, "");
-  res = d(res);
-  res = res.replaceAll(/@/g, "");
-  return res;
-};
-const pinyinSlugify = (q) => d(q);
-const cutWords = async (words) => {
-  words = mdToPlainText(words);
-  logger$6.debug("\u51C6\u5907\u5F00\u59CB\u5206\u8BCD\uFF0C\u539F\u6587=>", words);
-  const v = await fetch("https://api.terwer.space/api/jieba?q=" + words);
-  const json = await v.json();
-  logger$6.debug("\u5206\u8BCD\u5B8C\u6BD5\uFF0C\u7ED3\u679C=>", json.result);
-  return json.result;
-};
-function countWords(words, len) {
-  const unUseWords = ["\u9875\u9762"];
-  logger$6.debug("\u6587\u672C\u6E05\u6D17\uFF0C\u7EDF\u8BA1\uFF0C\u6392\u5E8F\uFF0C\u53BB\u9664\u65E0\u610F\u4E49\u7684\u5355\u8BCDunUseWords=>", unUseWords);
-  const wordobj = words.reduce(function(count, word) {
-    if (word.length === 1 || unUseWords.includes(word)) {
-      count[word] = 0;
-      return count;
-    }
-    count[word] = count.hasOwnProperty(word) ? parseInt(count[word]) + 1 : 1;
-    return count;
-  }, {});
-  const wordarr = Object.keys(wordobj).sort(function(a, b) {
-    return wordobj[b] - wordobj[a];
-  });
-  logger$6.debug("\u6587\u672C\u6E05\u6D17\u7ED3\u675Fwordarr=>", wordarr);
-  if (!len || len === 0) {
-    return wordarr;
-  }
-  return wordarr.slice(0, len);
-}
-function jiebaToHotWords(words, len) {
-  let res;
-  const deflen = CONSTANTS.DEFAULT_JIEBA_WORD_LENGTH;
-  if (len) {
-    res = countWords(words, len);
-  } else {
-    res = countWords(words, deflen);
-  }
-  logger$6.debug("jiebaToHotWords=>", res);
-  return res;
-}
-const isEmptyObject = (obj) => {
-  if (!obj) {
-    return true;
-  }
-  return Object.getPrototypeOf(obj) === Object.prototype && Object.getOwnPropertyNames(obj).length === 0 && Object.getOwnPropertySymbols(obj).length === 0;
-};
-const isEmptyString = (str) => {
-  if (!str) {
-    return true;
-  }
-  if (!(typeof str === "string")) {
-    return true;
-  }
-  return str.trim().length === 0;
-};
-const pathJoin = (path1, path2) => {
-  let path = path1;
-  const path1LastIdx = path1.lastIndexOf("/");
-  if (path1LastIdx + 1 === path1.length) {
-    path = path1.substring(0, path1LastIdx);
-  }
-  const path2Idx = path2.indexOf("/");
-  if (path2Idx > 0) {
-    path = path + "/" + path2;
-  } else {
-    path = path + path2;
-  }
-  return path;
-};
-const parseBoolean = (val) => {
-  if (!val) {
-    val = "false";
-  }
-  return val.toString().toLowerCase() === "true";
 };
 class SiYuanConfig {
   constructor(baseUrl, token, middlewareUrl) {
@@ -1465,7 +1652,7 @@ const getWidgetId = () => {
     widgetId
   };
 };
-const inSiyuan = () => {
+const isInSiyuan = () => {
   const widgetResult = getWidgetId();
   return widgetResult.isInSiyuan;
 };
@@ -1529,33 +1716,61 @@ const getPageId = async (force, pageId) => {
   }
   return syPageId;
 };
-function isInFirefoxExtension() {
-  return typeof InstallTrigger !== "undefined";
+var DeviceType = /* @__PURE__ */ ((DeviceType2) => {
+  DeviceType2[DeviceType2["DeviceType_Siyuan_NewWin"] = 0] = "DeviceType_Siyuan_NewWin";
+  DeviceType2[DeviceType2["DeviceType_Siyuan_Widget"] = 1] = "DeviceType_Siyuan_Widget";
+  DeviceType2[DeviceType2["DeviceType_Chrome_Extension"] = 2] = "DeviceType_Chrome_Extension";
+  DeviceType2[DeviceType2["DeviceType_Chrome_Browser"] = 3] = "DeviceType_Chrome_Browser";
+  return DeviceType2;
+})(DeviceType || {});
+class DeviceUtil {
+  static getDevice() {
+    if (isInSiyuan()) {
+      return 1;
+    }
+    if (isInSiyuanNewWinBrowser()) {
+      return 0;
+    }
+    if (isInChromeExtension()) {
+      return 2;
+    }
+    return 3;
+  }
 }
 const logger$4 = LogFactory.getLogger();
-const getPageUrl = (pageUrl, split, isShare) => {
+const FROM_SIYUAN = "siyuan";
+const FROM_SIYUAN_NEWWIN = "siyuanNewWin";
+const FROM_CHROME = "chrome";
+const FROM_CONSTANTS = {
+  FROM_SIYUAN,
+  FROM_SIYUAN_NEWWIN,
+  FROM_CHROME
+};
+const appendHost = (host, srcUrl, split) => {
+  let url = srcUrl;
+  let baseUrl = window.location.protocol + "//" + host;
+  if (split && split !== "") {
+    baseUrl = window.location.protocol + "//" + host + split;
+  }
+  url = pathJoin(baseUrl, url);
+  return url;
+};
+const getPageUrl = (pageUrl, split) => {
   let url = pageUrl;
   if (url.startsWith("http") || url.startsWith("https")) {
     logger$4.info("\u5F53\u524D\u662F\u5916\u90E8\u94FE\u63A5\uFF0C\u76F4\u63A5\u8DF3\u8F6C");
     return url;
   }
-  if (typeof chrome.runtime !== "undefined") {
-    if (isShare) {
-      url = "/widgets/sy-post-publisher" + url;
-      url = setUrlParameter(url, "from", "chrome");
-      const baseUrl = getSiyuanCfg().baseUrl;
-      url = pathJoin(baseUrl, url);
-    } else {
-      url = chrome.runtime.getURL(url);
-    }
-  } else {
+  const deviceType = DeviceUtil.getDevice();
+  console.log("deviceType=>", deviceType);
+  let from = getQueryString("from");
+  if (deviceType === DeviceType.DeviceType_Siyuan_Widget || deviceType === DeviceType.DeviceType_Siyuan_NewWin || FROM_CONSTANTS.FROM_SIYUAN === from || FROM_CONSTANTS.FROM_SIYUAN_NEWWIN === from) {
     url = "/widgets/sy-post-publisher" + url;
-    let from = getQueryString("from");
-    if (inSiyuan()) {
-      from = "siyuan";
+    if (isInSiyuan()) {
+      from = FROM_CONSTANTS.FROM_CHROME;
     }
     if (isInSiyuanNewWinBrowser()) {
-      from = "siyuanNewWin";
+      from = FROM_CONSTANTS.FROM_SIYUAN_NEWWIN;
     }
     if (!isEmptyString(from)) {
       url = setUrlParameter(url, "from", from);
@@ -1565,11 +1780,12 @@ const getPageUrl = (pageUrl, split, isShare) => {
       const ipv4 = window.terwer.ip;
       host = ipv4 + ":" + window.location.port;
     }
-    let baseUrl = window.location.protocol + "//" + host;
-    if (split && split !== "") {
-      baseUrl = window.location.protocol + "//" + host + split;
-    }
-    url = pathJoin(baseUrl, url);
+    url = appendHost(host, url, split);
+  } else if (deviceType === DeviceType.DeviceType_Chrome_Extension) {
+    url = chrome.runtime.getURL(url);
+  } else {
+    let host = window.location.host;
+    url = appendHost(host, url, split);
   }
   logger$4.warn("\u5C06\u8981\u6253\u5F00\u9875\u9762=>", url);
   return url;
@@ -1577,15 +1793,6 @@ const getPageUrl = (pageUrl, split, isShare) => {
 function goToPage(pageUrl) {
   const url = getPageUrl(pageUrl, "");
   window.open(url);
-}
-function isInChromeExtension() {
-  if (!isBrowser()) {
-    return false;
-  }
-  if (isInFirefoxExtension()) {
-    return false;
-  }
-  return !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
 }
 async function sendChromeMessage(message) {
   return await new Promise((resolve) => {
@@ -1615,127 +1822,6 @@ const isFileExist = (filepath) => {
     console.log("File does not exist");
     return false;
   }
-};
-const vueHljs = {};
-vueHljs.install = (Vue) => {
-  HighlightJS.registerLanguage("javascript", javascript);
-  HighlightJS.registerLanguage("js", javascript);
-  HighlightJS.registerLanguage("typescript", typescript);
-  HighlightJS.registerLanguage("ts", typescript);
-  HighlightJS.registerLanguage("c", c);
-  HighlightJS.registerLanguage("cpp", cpp);
-  HighlightJS.registerLanguage("java", java);
-  HighlightJS.registerLanguage("kotlin", kotlin);
-  HighlightJS.registerLanguage("csharp", java);
-  HighlightJS.registerLanguage("cs", java);
-  HighlightJS.registerLanguage("bash", bash);
-  HighlightJS.registerLanguage("shell", bash);
-  HighlightJS.registerLanguage("xml", xml);
-  HighlightJS.registerLanguage("html", xml);
-  HighlightJS.registerLanguage("css", css);
-  HighlightJS.registerLanguage("plaintext", plaintext);
-  HighlightJS.registerLanguage("plantuml", plaintext);
-  HighlightJS.registerLanguage("php", php);
-  HighlightJS.registerLanguage("properties", properties);
-  HighlightJS.registerLanguage("sql", sql);
-  HighlightJS.registerLanguage("markdown", markdown);
-  HighlightJS.registerLanguage("md", markdown);
-  HighlightJS.addPlugin(
-    new CopyButtonPlugin({
-      callback: (text, el) => console.log("Copied to clipboard", text)
-    })
-  );
-  Vue.directive("highlight", (el) => {
-    const blocks = el.querySelectorAll("pre code");
-    Array.prototype.forEach.call(blocks, HighlightJS.highlightBlock);
-    const codeGroups = el.querySelectorAll("code-group");
-    codeGroups.forEach((group) => {
-      var _a2;
-      if (group.getElementsByTagName("ul").length === 0) {
-        const newNode = document.createElement("ul");
-        newNode.setAttribute("class", "code-tab");
-        const codeBlocks = group.querySelectorAll("code-block");
-        codeBlocks.forEach((block) => {
-          var _a3, _b2;
-          const title = (_a3 = block.attributes.getNamedItem("title")) == null ? void 0 : _a3.value;
-          const active = (_b2 = block.attributes.getNamedItem("active")) == null ? void 0 : _b2.value;
-          const isActive = active !== void 0;
-          const item = document.createElement("li");
-          item.setAttribute(
-            "class",
-            isActive ? "code-tab-item current" : "code-tab-item"
-          );
-          item.innerHTML = title || "";
-          item.addEventListener("click", function(event) {
-            const targetElement = event.target;
-            const allLis = targetElement.parentElement.querySelectorAll("li");
-            allLis.forEach((li) => {
-              li.setAttribute("class", "code-tab-item");
-            });
-            targetElement.setAttribute("class", "code-tab-item current");
-            codeBlocks.forEach((cb) => {
-              var _a4;
-              if (((_a4 = cb.attributes.getNamedItem("title")) == null ? void 0 : _a4.value) === targetElement.innerHTML) {
-                cb.setAttribute("active", "");
-              } else {
-                cb.removeAttribute("active");
-              }
-            });
-          });
-          newNode.append(item);
-        });
-        const firstBlock = codeBlocks[0];
-        (_a2 = firstBlock == null ? void 0 : firstBlock.parentNode) == null ? void 0 : _a2.insertBefore(newNode, firstBlock);
-      }
-    });
-    const umlBlocks = el.querySelectorAll("div.language-plantuml");
-    umlBlocks.forEach((item) => {
-      var _a2;
-      const umlstr = unescapeHTML(item.innerHTML);
-      const encoded = browserIndex.encode(umlstr);
-      const plantUMLServer = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://publish.terwer.space/api/middleware" }.PLANT_UML_SERVR || "https://www.plantuml.com/plantuml/svg/";
-      const url = plantUMLServer + encoded;
-      const newNode = document.createElement("img");
-      newNode.setAttribute("src", url);
-      (_a2 = item == null ? void 0 : item.parentNode) == null ? void 0 : _a2.insertBefore(newNode, item);
-      item.remove();
-    });
-    const inlineMathBlocks = el.querySelectorAll("span.language-math");
-    inlineMathBlocks.forEach((item) => {
-      if (isInChromeExtension()) {
-        let html = item.innerHTML;
-        html = html.replace(/，/g, ",");
-        html = html.replace(/。/g, ".");
-        html = html.replace(/并且/g, "AND");
-        html = html.replace(/或者/g, "OR");
-        html = encodeURIComponent(html);
-        const newHtml = '<img src="https://latex.codecogs.com/svg.image?' + html + '" />';
-        item.innerHTML = newHtml;
-      } else {
-        const newHtml = "$" + item.innerHTML + "$";
-        item.innerHTML = newHtml;
-      }
-    });
-    const mathBlocks = el.querySelectorAll("div.language-math");
-    mathBlocks.forEach((item) => {
-      if (isInChromeExtension()) {
-        let html = item.innerHTML;
-        html = html.replace(/，/g, ",");
-        html = html.replace(/。/g, ".");
-        html = html.replace(/并且/g, "AND");
-        html = html.replace(/或者/g, "OR");
-        html = encodeURIComponent(html);
-        const newHtml = '<img src="https://latex.codecogs.com/svg.image?' + html + '" />';
-        item.innerHTML = newHtml;
-      } else {
-        const newHtml = "$$" + item.innerHTML + "$$";
-        item.innerHTML = newHtml;
-      }
-    });
-    if (!isInChromeExtension()) {
-      MathJax.typeset();
-    }
-  });
 };
 const logger$3 = LogFactory.getLogger("plugins/page-beauty/page-beauty.ts");
 const PageBeauty = {
@@ -2685,7 +2771,7 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
       }
     };
     onMounted(() => {
-      if (isInSiyuanNewWinBrowser() || inSiyuan()) {
+      if (isInSiyuanNewWinBrowser() || isInSiyuan()) {
         const publishCfg = getPublishCfg();
         showCloseBtn.value = isInSiyuanNewWinBrowser() || publishCfg.showCloseBtn;
         showOpenBtn.value = showCloseBtn.value;
@@ -2781,7 +2867,7 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const DefaultHeader_vue_vue_type_style_index_0_scoped_fd26f10c_lang = "";
+const DefaultHeader_vue_vue_type_style_index_0_scoped_da269c8f_lang = "";
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -2789,8 +2875,8 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const DefaultHeader = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-fd26f10c"]]);
-const version = "0.6.3";
+const DefaultHeader = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-da269c8f"]]);
+const version = "0.6.6";
 const _hoisted_1$4 = {
   class: "locale-changer"
 };
@@ -3036,7 +3122,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const _withScopeId = (n2) => (pushScopeId("data-v-6d82d46d"), n2 = n2(), popScopeId(), n2);
+const _withScopeId = (n2) => (pushScopeId("data-v-c0431dcc"), n2 = n2(), popScopeId(), n2);
 const _hoisted_1$1 = {
   class: "footer"
 };
@@ -3077,7 +3163,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
     } = useI18n();
     const isDark = useDark();
     const toggleDark = useToggle(isDark);
-    const isInSiyuan = ref(false);
+    const isInSiyuanEnv = ref(false);
     const v = ref("0.0.3");
     const formLabelWidth = "140px";
     const siyuanApiChangeFormVisible = ref(false);
@@ -3159,7 +3245,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
       }
     };
     const initConf = () => {
-      isInSiyuan.value = inSiyuan();
+      isInSiyuanEnv.value = isInSiyuan();
       v.value = version;
       const siyuanCfg = getSiyuanCfg();
       siyuanApiChangeForm.apiUrl = siyuanCfg.baseUrl;
@@ -3168,7 +3254,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
       logger2.debug("\u521D\u59CB\u5316\u601D\u6E90\u914D\u7F6E", siyuanCfg);
     };
     onMounted(() => {
-      if (inSiyuan()) {
+      if (isInSiyuan()) {
         logger2.info("\u606D\u559C\u4F60\uFF0C\u6B63\u5728\u4EE5\u6302\u4EF6\u6A21\u5F0F\u8FD0\u884C");
       } else {
         logger2.info("\u6B63\u5728\u4EE5\u975E\u6302\u4EF6\u6A21\u5F0F\u8FD0\u884C\uFF0C\u90E8\u5206\u529F\u80FD\u5C06\u901A\u8FC7\u8BF7\u6C42\u4EE3\u7406\u7684\u65B9\u5F0F\u8FDB\u884C\u6A21\u62DF\uFF0C\u8BF7\u77E5\u6089");
@@ -3193,7 +3279,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
       }, " sy-post-publisher "), createBaseVNode("span", _hoisted_3, " v" + toDisplayString(v.value) + " . ", 1), createBaseVNode("span", {
         class: "text s-dark",
         onClick: _cache[1] || (_cache[1] = ($event) => unref(toggleDark)())
-      }, toDisplayString(unref(isDark) ? _ctx.$t("theme.mode.light") : _ctx.$t("theme.mode.dark")), 1), !isInSiyuan.value ? (openBlock(), createElementBlock("span", _hoisted_4, ".")) : createCommentVNode("", true), !isInSiyuan.value ? (openBlock(), createElementBlock("span", {
+      }, toDisplayString(unref(isDark) ? _ctx.$t("theme.mode.light") : _ctx.$t("theme.mode.dark")), 1), !isInSiyuanEnv.value ? (openBlock(), createElementBlock("span", _hoisted_4, ".")) : createCommentVNode("", true), !isInSiyuanEnv.value ? (openBlock(), createElementBlock("span", {
         key: 1,
         class: "text s-dark",
         onClick: _cache[2] || (_cache[2] = ($event) => changeSiyuanApi())
@@ -3297,8 +3383,8 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
   }
 });
 const DefaultFooter_vue_vue_type_style_index_0_lang = "";
-const DefaultFooter_vue_vue_type_style_index_1_scoped_6d82d46d_lang = "";
-const DefaultFooter = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-6d82d46d"]]);
+const DefaultFooter_vue_vue_type_style_index_1_scoped_c0431dcc_lang = "";
+const DefaultFooter = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-c0431dcc"]]);
 const _hoisted_1 = {
   id: "app-layout-default"
 };
@@ -3399,7 +3485,7 @@ export {
   goToPage as h,
   isInSiyuanNewWinBrowser as i,
   _export_sfc as j,
-  inSiyuan as k,
+  isInSiyuan as k,
   isEmptyString as l,
   mdToHtml as m,
   formatIsoToZhDate as n,

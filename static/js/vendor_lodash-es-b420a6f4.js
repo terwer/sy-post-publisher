@@ -1,4 +1,4 @@
-import { g as global } from "./vendor_rollup-plugin-node-polyfills-97f570f9.js";
+import { g as global } from "./vendor_rollup-plugin-node-polyfills-b0907b85.js";
 var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
 const freeGlobal$1 = freeGlobal;
 var freeSelf = typeof self == "object" && self && self.Object === Object && self;

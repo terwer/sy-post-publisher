@@ -4,15 +4,15 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-import { j as ElAlert, a as ElButton, t as ElButtonGroup, e as ElFormItem, c as ElOption, d as ElSelect, i as ElInput, f as ElForm, b as ElHeader, o as ElTableColumn, p as ElTable, r as ElMain, s as ElContainer, E as ElMessage, h as ElMessageBox, g as ElSwitch, u as ElRadio, v as ElRadioGroup, w as ElTabPane, x as ElTabs, y as ElDatePicker, z as ElTag, A as ElTreeSelect, n as ElSkeleton, B as ElCheckbox, C as ElCheckboxGroup } from "./vendor_element-plus-1f908931.js";
-import { L as LogFactory, D as getDynamicJsonCfg, z as SubPlatformType, P as PlatformType, E as setDynamicJsonCfg, F as isDynamicKeyExists, G as checkKeyExists, H as DynamicConfig, I as getNewPlatformKey, J as getSubtypeList, K as getDefaultPlatformName, j as _export_sfc, M as getBooleanConf, N as getDynSwitchKey, O as getDynSwitchModelValue, Q as setBooleanConf, R as getDynSwitchActive, T as getDynSwitchInactive, U as getSwitchItem, b as getPageId, V as getDynPostidKey, S as SiYuanApi, l as isEmptyString, u as getJSONConf, W as setJSONConf, B as isEmptyObject, A as API_TYPE_CONSTANTS, e as getPublishCfg, X as getConf, Y as pinyinSlugify, Z as zhSlugify, o as appendStr, $ as mdFileToTitle, y as isBrowser, a0 as copyToClipboardInBrowser, a1 as YamlConvertAdaptor, r as removeTitleNumber, C as CONSTANTS, a2 as reloadPage, m as mdToHtml, t as removeH1, a3 as parseHtml, a4 as formatNumToZhDate, a5 as cutWords, a6 as jiebaToHotWords, a7 as getApiParams, v as pathJoin, f as parseBoolean, a8 as PageEditMode, a9 as SourceContentShowType, aa as removeMdWidgetTag, ab as removeMdH1, ac as yaml2Obj, ad as YamlFormatObj, ae as getPublishStatus, af as PostForm, ag as upperFirst, ah as VuepressYamlConvertAdaptor, ai as HugoYamlConverterAdaptor, aj as HexoYamlConverterAdaptor, ak as JekyllYamlConverterAdaptor, al as mdToPlainText, s as removeWidgetTag, am as setConf, an as calcLastSeconds, ao as getDynYamlConverterAdaptor, ap as _sfc_main$z } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6edc873.js";
-import { u as useI18n } from "./vendor_vue-i18n-ea606b0c.js";
-import { M as defineComponent, u as ref, ac as reactive, A as onMounted, O as openBlock, T as createBlock, U as withCtx, a1 as createVNode, y as unref, _ as createTextVNode, $ as toDisplayString, Z as createCommentVNode, P as createElementBlock, ao as renderList, a0 as Fragment, z as watch, F as isRef, W as createBaseVNode, K as onBeforeMount, V as withDirectives, a2 as vShow, ap as withKeys, X as normalizeClass, a8 as nextTick } from "./vendor-03279a5a.js";
-import { d as defineStore } from "./vendor_pinia-65b72bdd.js";
-import { a as POSTID_KEY_CONSTANTS, G as GithubCfg, A as API, P as Post, V as VuepressCfg, b as GithubApi } from "./api-592c8d46.js";
+import { j as ElAlert, a as ElButton, t as ElButtonGroup, e as ElFormItem, c as ElOption, d as ElSelect, i as ElInput, f as ElForm, b as ElHeader, o as ElTableColumn, p as ElTable, r as ElMain, s as ElContainer, E as ElMessage, h as ElMessageBox, g as ElSwitch, u as ElRadio, v as ElRadioGroup, w as ElTabPane, x as ElTabs, y as ElDatePicker, z as ElTag, A as ElTreeSelect, n as ElSkeleton, B as ElCheckbox, C as ElCheckboxGroup } from "./vendor_element-plus-865ba724.js";
+import { L as LogFactory, D as getDynamicJsonCfg, z as SubPlatformType, P as PlatformType, E as setDynamicJsonCfg, F as isDynamicKeyExists, G as checkKeyExists, H as DynamicConfig, I as getNewPlatformKey, J as getSubtypeList, K as getDefaultPlatformName, j as _export_sfc, M as getBooleanConf, N as getDynSwitchKey, O as getDynSwitchModelValue, Q as setBooleanConf, R as getDynSwitchActive, T as getDynSwitchInactive, U as getSwitchItem, b as getPageId, V as getDynPostidKey, S as SiYuanApi, l as isEmptyString, u as getJSONConf, W as setJSONConf, B as isEmptyObject, A as API_TYPE_CONSTANTS, e as getPublishCfg, X as getConf, Y as pinyinSlugify, Z as zhSlugify, o as appendStr, $ as mdFileToTitle, y as isBrowser, a0 as copyToClipboardInBrowser, a1 as YamlConvertAdaptor, r as removeTitleNumber, C as CONSTANTS, a2 as reloadPage, m as mdToHtml, t as removeH1, a3 as parseHtml, a4 as formatNumToZhDate, a5 as cutWords, a6 as jiebaToHotWords, a7 as getApiParams, v as pathJoin, f as parseBoolean, a8 as PageEditMode, a9 as SourceContentShowType, aa as removeMdWidgetTag, ab as removeMdH1, ac as yaml2Obj, ad as YamlFormatObj, ae as getPublishStatus, af as PostForm, ag as upperFirst, ah as VuepressYamlConvertAdaptor, ai as HugoYamlConverterAdaptor, aj as HexoYamlConverterAdaptor, ak as JekyllYamlConverterAdaptor, al as mdToPlainText, s as removeWidgetTag, am as setConf, an as calcLastSeconds, ao as getDynYamlConverterAdaptor, ap as _sfc_main$z } from "./AppLayout.vue_vue_type_script_setup_true_lang-a2e686da.js";
+import { u as useI18n } from "./vendor_vue-i18n-b34647c9.js";
+import { M as defineComponent, u as ref, ac as reactive, A as onMounted, O as openBlock, T as createBlock, U as withCtx, a1 as createVNode, y as unref, _ as createTextVNode, $ as toDisplayString, Z as createCommentVNode, P as createElementBlock, ao as renderList, a0 as Fragment, z as watch, F as isRef, W as createBaseVNode, K as onBeforeMount, V as withDirectives, a2 as vShow, ap as withKeys, X as normalizeClass, a8 as nextTick } from "./vendor-2ec86a49.js";
+import { d as defineStore } from "./vendor_pinia-b97318c6.js";
+import { a as POSTID_KEY_CONSTANTS, G as GithubCfg, A as API, P as Post, V as VuepressCfg, b as GithubApi } from "./api-592c525a.js";
 import { d as dist } from "./vendor_shorthash2-e60185c0.js";
 import { c as copyToClipboard } from "./vendor_copy-to-clipboard-a51858f9.js";
-import { P as PicgoPostApi, I as ImageParser, _ as _sfc_main$y } from "./PicgoSetting.vue_vue_type_script_setup_true_lang-0476ad29.js";
+import { P as PicgoPostApi, I as ImageParser, _ as _sfc_main$y } from "./PicgoSetting.vue_vue_type_script_setup_true_lang-d654477b.js";
 const githubCfg = [
   {
     platformType: "Github",
@@ -558,7 +558,7 @@ const useTabCount = () => {
   };
 };
 const _hoisted_1$9 = {
-  key: 0
+  key: 1
 };
 const _sfc_main$w = /* @__PURE__ */ defineComponent({
   __name: "ServiceSwitch",
@@ -704,7 +704,8 @@ const _sfc_main$w = /* @__PURE__ */ defineComponent({
             onChange: jvueOnChange
           }, null, 8, ["modelValue"])]),
           _: 1
-        }, 8, ["label"]), createVNode(_component_el_form_item, {
+        }, 8, ["label"]), false ? (openBlock(), createBlock(_component_el_form_item, {
+          key: 0,
           label: _ctx.$t("service.switch.conf")
         }, {
           default: withCtx(() => [createVNode(_component_el_switch, {
@@ -713,7 +714,7 @@ const _sfc_main$w = /* @__PURE__ */ defineComponent({
             onChange: confOnChange
           }, null, 8, ["modelValue"])]),
           _: 1
-        }, 8, ["label"]), createVNode(_component_el_form_item, {
+        }, 8, ["label"])) : createCommentVNode("", true), createVNode(_component_el_form_item, {
           label: _ctx.$t("service.switch.cnblogs")
         }, {
           default: withCtx(() => [createVNode(_component_el_switch, {
@@ -782,8 +783,8 @@ const _sfc_main$w = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const ServiceSwitch_vue_vue_type_style_index_0_scoped_aa0af289_lang = "";
-const ServiceSwitch = /* @__PURE__ */ _export_sfc(_sfc_main$w, [["__scopeId", "data-v-aa0af289"]]);
+const ServiceSwitch_vue_vue_type_style_index_0_scoped_d0e6a313_lang = "";
+const ServiceSwitch = /* @__PURE__ */ _export_sfc(_sfc_main$w, [["__scopeId", "data-v-d0e6a313"]]);
 const _hoisted_1$8 = {
   key: 1
 };
@@ -1170,6 +1171,19 @@ var PageType = /* @__PURE__ */ ((PageType2) => {
   PageType2[PageType2["Html"] = 1] = "Html";
   return PageType2;
 })(PageType || {});
+class MetaweblogPlaceholder {
+  constructor() {
+    __publicField(this, "homePlaceholder");
+    __publicField(this, "apiUrlPlaceholder");
+    __publicField(this, "usernamePlaceholder");
+    __publicField(this, "passwordPlaceholder");
+    __publicField(this, "apiStatusPlaceholder");
+    __publicField(this, "blogNamePlaceholder");
+    __publicField(this, "posidKeyPlaceholder");
+    __publicField(this, "previewUrlPlaceholder");
+    __publicField(this, "pageTypePlaceholder");
+  }
+}
 class MetaweblogCfg {
   constructor(home, apiUrl, username, password) {
     __publicField(this, "home");
@@ -1181,6 +1195,7 @@ class MetaweblogCfg {
     __publicField(this, "posidKey");
     __publicField(this, "previewUrl");
     __publicField(this, "pageType");
+    __publicField(this, "placeholder");
     this.home = home;
     this.apiUrl = apiUrl;
     this.username = username;
@@ -1190,6 +1205,7 @@ class MetaweblogCfg {
     this.posidKey = "";
     this.previewUrl = "";
     this.pageType = PageType.Markdown;
+    this.placeholder = new MetaweblogPlaceholder();
   }
 }
 class DynamicMCfg extends MetaweblogCfg {
@@ -1198,6 +1214,13 @@ class DynamicMCfg extends MetaweblogCfg {
     this.posidKey = postidKey;
     this.previewUrl = "/p/[postid].html";
     this.pageType = PageType.Html;
+    let dynPlaceholder = new MetaweblogPlaceholder();
+    dynPlaceholder.homePlaceholder = "\u5E73\u53F0\u9996\u9875";
+    dynPlaceholder.usernamePlaceholder = "\u7528\u6237\u540D";
+    dynPlaceholder.passwordPlaceholder = "\u5BC6\u7801";
+    dynPlaceholder.apiUrlPlaceholder = "xmlrpc\u8BF7\u6C42\u7684API\u5730\u5740";
+    dynPlaceholder.previewUrlPlaceholder = "\u9884\u89C8\u89C4\u5219";
+    this.placeholder = dynPlaceholder;
   }
 }
 class DynamicWCfg extends MetaweblogCfg {
@@ -1206,6 +1229,13 @@ class DynamicWCfg extends MetaweblogCfg {
     this.posidKey = postidKey;
     this.previewUrl = "/?p=[postid]";
     this.pageType = PageType.Html;
+    let dynPlaceholder = new MetaweblogPlaceholder();
+    dynPlaceholder.homePlaceholder = "\u5E73\u53F0\u9996\u9875";
+    dynPlaceholder.usernamePlaceholder = "\u7528\u6237\u540D";
+    dynPlaceholder.passwordPlaceholder = "\u5BC6\u7801";
+    dynPlaceholder.apiUrlPlaceholder = "xmlrpc\u8BF7\u6C42\u7684API\u5730\u5740";
+    dynPlaceholder.previewUrlPlaceholder = "\u9884\u89C8\u89C4\u5219";
+    this.placeholder = dynPlaceholder;
   }
 }
 const _hoisted_1$7 = {
@@ -1841,16 +1871,18 @@ const _sfc_main$p = /* @__PURE__ */ defineComponent({
         }, {
           default: withCtx(() => [createVNode(_component_el_input, {
             modelValue: home.value,
-            "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => home.value = $event)
-          }, null, 8, ["modelValue"])]),
+            "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => home.value = $event),
+            placeholder: props.cfg.placeholder.homePlaceholder
+          }, null, 8, ["modelValue", "placeholder"])]),
           _: 1
         }, 8, ["label"]), createVNode(_component_el_form_item, {
           label: _ctx.$t("setting.blog.username")
         }, {
           default: withCtx(() => [createVNode(_component_el_input, {
             modelValue: username.value,
-            "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => username.value = $event)
-          }, null, 8, ["modelValue"])]),
+            "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => username.value = $event),
+            placeholder: props.cfg.placeholder.usernamePlaceholder
+          }, null, 8, ["modelValue", "placeholder"])]),
           _: 1
         }, 8, ["label"]), createVNode(_component_el_form_item, {
           label: _ctx.$t("setting.blog.password")
@@ -1859,24 +1891,27 @@ const _sfc_main$p = /* @__PURE__ */ defineComponent({
             type: "password",
             modelValue: password.value,
             "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => password.value = $event),
-            "show-password": ""
-          }, null, 8, ["modelValue"])]),
+            "show-password": "",
+            placeholder: props.cfg.placeholder.passwordPlaceholder
+          }, null, 8, ["modelValue", "placeholder"])]),
           _: 1
         }, 8, ["label"]), createVNode(_component_el_form_item, {
           label: _ctx.$t("setting.blog.apiurl")
         }, {
           default: withCtx(() => [createVNode(_component_el_input, {
             modelValue: apiUrl.value,
-            "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => apiUrl.value = $event)
-          }, null, 8, ["modelValue"])]),
+            "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => apiUrl.value = $event),
+            placeholder: props.cfg.placeholder.apiUrlPlaceholder
+          }, null, 8, ["modelValue", "placeholder"])]),
           _: 1
         }, 8, ["label"]), createVNode(_component_el_form_item, {
           label: _ctx.$t("setting.blog.previewUrl")
         }, {
           default: withCtx(() => [createVNode(_component_el_input, {
             modelValue: previewUrl.value,
-            "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => previewUrl.value = $event)
-          }, null, 8, ["modelValue"])]),
+            "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => previewUrl.value = $event),
+            placeholder: props.cfg.placeholder.previewUrlPlaceholder
+          }, null, 8, ["modelValue", "placeholder"])]),
           _: 1
         }, 8, ["label"]), createVNode(_component_el_form_item, {
           label: _ctx.$t("setting.blog.pageType")
@@ -1944,7 +1979,18 @@ const _sfc_main$o = /* @__PURE__ */ defineComponent({
   __name: "JVueSetting",
   setup(__props) {
     const apiType = ref(API_TYPE_CONSTANTS.API_TYPE_JVUE);
-    const cfg = ref(new JVueCfg());
+    const {
+      t
+    } = useI18n();
+    const jvueCfg = new JVueCfg();
+    const jvuePlaceholder = new MetaweblogPlaceholder();
+    jvuePlaceholder.homePlaceholder = t("setting.jvue.home.tip");
+    jvuePlaceholder.usernamePlaceholder = t("setting.jvue.username.tip");
+    jvuePlaceholder.passwordPlaceholder = t("setting.jvue.password.tip");
+    jvuePlaceholder.apiUrlPlaceholder = t("setting.jvue.apiUrl.tip");
+    jvuePlaceholder.previewUrlPlaceholder = t("setting.jvue.previewUrl.tip");
+    jvueCfg.placeholder = jvuePlaceholder;
+    const cfg = ref(jvueCfg);
     return (_ctx, _cache) => {
       return openBlock(), createBlock(_sfc_main$p, {
         "api-type": apiType.value,
@@ -1965,7 +2011,18 @@ const _sfc_main$n = /* @__PURE__ */ defineComponent({
   __name: "ConfluenceSetting",
   setup(__props) {
     const apiType = ref(API_TYPE_CONSTANTS.API_TYPE_CONFLUENCE);
-    const cfg = ref(new ConfCfg());
+    const {
+      t
+    } = useI18n();
+    const confCfg = new ConfCfg();
+    const confPlaceholder = new MetaweblogPlaceholder();
+    confPlaceholder.homePlaceholder = t("setting.conf.home.tip");
+    confPlaceholder.usernamePlaceholder = t("setting.conf.username.tip");
+    confPlaceholder.passwordPlaceholder = t("setting.conf.password.tip");
+    confPlaceholder.apiUrlPlaceholder = t("setting.conf.apiUrl.tip");
+    confPlaceholder.previewUrlPlaceholder = t("setting.conf.previewUrl.tip");
+    confCfg.placeholder = confPlaceholder;
+    const cfg = ref(confCfg);
     return (_ctx, _cache) => {
       return openBlock(), createBlock(_sfc_main$p, {
         "api-type": apiType.value,
@@ -1986,7 +2043,17 @@ const _sfc_main$m = /* @__PURE__ */ defineComponent({
   __name: "CnblogsSetting",
   setup(__props) {
     const apiType = ref(API_TYPE_CONSTANTS.API_TYPE_CNBLOGS);
+    const {
+      t
+    } = useI18n();
     const cnblogsCfg = new CnblogsCfg();
+    const cnblogsPlaceholder = new MetaweblogPlaceholder();
+    cnblogsPlaceholder.homePlaceholder = t("setting.cnblogs.home.tip");
+    cnblogsPlaceholder.usernamePlaceholder = t("setting.cnblogs.username.tip");
+    cnblogsPlaceholder.passwordPlaceholder = t("setting.cnblogs.password.tip");
+    cnblogsPlaceholder.apiUrlPlaceholder = t("setting.cnblogs.apiUrl.tip");
+    cnblogsPlaceholder.previewUrlPlaceholder = t("setting.cnblogs.previewUrl.tip");
+    cnblogsCfg.placeholder = cnblogsPlaceholder;
     const cfg = ref(cnblogsCfg);
     return (_ctx, _cache) => {
       return openBlock(), createBlock(_sfc_main$p, {
@@ -2008,7 +2075,18 @@ const _sfc_main$l = /* @__PURE__ */ defineComponent({
   __name: "WordpressSetting",
   setup(__props) {
     const apiType = ref(API_TYPE_CONSTANTS.API_TYPE_WORDPRESS);
-    const cfg = ref(new WordpressCfg());
+    const {
+      t
+    } = useI18n();
+    const wpCfg = new WordpressCfg();
+    const wpPlaceholder = new MetaweblogPlaceholder();
+    wpPlaceholder.homePlaceholder = t("setting.wordpress.home.tip");
+    wpPlaceholder.usernamePlaceholder = t("setting.wordpress.username.tip");
+    wpPlaceholder.passwordPlaceholder = t("setting.wordpress.password.tip");
+    wpPlaceholder.apiUrlPlaceholder = t("setting.wordpress.apiUrl.tip");
+    wpPlaceholder.previewUrlPlaceholder = t("setting.wordpress.previewUrl.tip");
+    wpCfg.placeholder = wpPlaceholder;
+    const cfg = ref(wpCfg);
     return (_ctx, _cache) => {
       return openBlock(), createBlock(_sfc_main$p, {
         "api-type": apiType.value,
@@ -2433,14 +2511,41 @@ const _sfc_main$g = /* @__PURE__ */ defineComponent({
       metaweblogArray: [],
       wordpressArray: []
     });
+    const {
+      t
+    } = useI18n();
     const createGCfg = ref((gcfg) => {
       return new DynamicGCfg(gcfg);
     });
     const createMCfg = ref((mcfg) => {
-      return new DynamicMCfg(getDynPostidKey(mcfg.platformKey));
+      const dynMcfg = new DynamicMCfg(getDynPostidKey(mcfg.platformKey));
+      const dynTypechoPlaceholder = new MetaweblogPlaceholder();
+      const dynOschinaPlaceholder = new MetaweblogPlaceholder();
+      switch (mcfg.platformKey) {
+        case PRE_DEFINED_PLATFORM_KEY_CONSTANTS.PRE_DEFINED_TYPECHO_KEY:
+          dynTypechoPlaceholder.homePlaceholder = t("setting.typecho.home.tip");
+          dynTypechoPlaceholder.usernamePlaceholder = t("setting.typecho.username.tip");
+          dynTypechoPlaceholder.passwordPlaceholder = t("setting.typecho.password.tip");
+          dynTypechoPlaceholder.apiUrlPlaceholder = t("setting.typecho.apiUrl.tip");
+          dynTypechoPlaceholder.previewUrlPlaceholder = t("setting.typecho.previewUrl.tip");
+          dynMcfg.placeholder = dynTypechoPlaceholder;
+          break;
+        case PRE_DEFINED_PLATFORM_KEY_CONSTANTS.PRE_DEFINED_OSCHINA_KEY:
+          dynOschinaPlaceholder.homePlaceholder = t("setting.oschina.home.tip");
+          dynOschinaPlaceholder.usernamePlaceholder = t("setting.oschina.username.tip");
+          dynOschinaPlaceholder.passwordPlaceholder = t("setting.oschina.password.tip");
+          dynOschinaPlaceholder.apiUrlPlaceholder = t("setting.oschina.apiUrl.tip");
+          dynOschinaPlaceholder.previewUrlPlaceholder = t("setting.oschina.previewUrl.tip");
+          dynMcfg.placeholder = dynOschinaPlaceholder;
+          break;
+      }
+      return dynMcfg;
     });
     const createWCfg = ref((wcfg) => {
-      return new DynamicWCfg(getDynPostidKey(wcfg.platformKey));
+      const dynWcfg = new DynamicWCfg(getDynPostidKey(wcfg.platformKey));
+      switch (wcfg.platformKey) {
+      }
+      return dynWcfg;
     });
     const initDynCfg = (dynCfg) => {
       const newCfg = [];
@@ -2604,7 +2709,7 @@ const SIYUAN_PAGE_ATTR_KEY = {
   SIYUAN_PAGE_ATTR_CUSTOM_USE_PERMALINK_KEY,
   SIYUAN_PAGE_ATTR_CUSTOM_USE_DATE_KEY
 };
-const commonIsTest = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://publish.terwer.space/api/middleware" }.TEST === "true";
+const commonIsTest = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.TEST === "true";
 const CONSTANTS_SIYUAN_PAGE = "test-data-siyuanPage";
 const TEST_CONSTANTS = {
   CONSTANTS_SIYUAN_PAGE
@@ -4299,7 +4404,7 @@ const _sfc_main$f = /* @__PURE__ */ defineComponent({
                 modelValue: unref(picgoPostData).picgoEnabled,
                 "onUpdate:modelValue": _cache[21] || (_cache[21] = ($event) => unref(picgoPostData).picgoEnabled = $event),
                 onChange: unref(picgoPostMethods).picgoOnChange
-              }, null, 8, ["modelValue", "onChange"]), unref(picgoPostData).picgoEnabled ? (openBlock(), createBlock(_component_el_alert, {
+              }, null, 8, ["modelValue", "onChange"]), false ? (openBlock(), createBlock(_component_el_alert, {
                 key: 0,
                 closable: false,
                 title: _ctx.$t("github.post.picgo.use.tip"),
@@ -4460,8 +4565,8 @@ const _sfc_main$f = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const GithubMain_vue_vue_type_style_index_0_scoped_30c95cbc_lang = "";
-const GithubMain = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-30c95cbc"]]);
+const GithubMain_vue_vue_type_style_index_0_scoped_882973a7_lang = "";
+const GithubMain = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-882973a7"]]);
 const _sfc_main$e = /* @__PURE__ */ defineComponent({
   __name: "VuepressMain",
   props: {
@@ -4628,6 +4733,11 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
     const blogName = ref("");
     const apiTypeInfo = ref(t("setting.blog.platform.support.metaweblog") + props.apiType + " ");
     const apiStatus = ref(false);
+    const picgoPostApi = new PicgoPostApi();
+    const {
+      picgoPostData,
+      picgoPostMethods
+    } = usePicgoPost();
     const isSlugLoading = ref(false);
     const isDescLoading = ref(false);
     const isTagLoading = ref(false);
@@ -4713,6 +4823,7 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
       if (publishCfg.autoTag && formData.tag.dynamicTags.length === 0) {
         tagSwitch.value = true;
       }
+      picgoPostData.picgoEnabled = publishCfg.usePicgo;
       isPublished.value = getPublishStatus(props.apiType, siyuanData.meta);
       const metaweblogCfg2 = getJSONConf(props.apiType);
       const api = new API(props.apiType);
@@ -4910,7 +5021,16 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
         const publishCfg = getPublishCfg();
         let content;
         const data = await siyuanApi.exportMdContent(siyuanData.pageId);
-        const md = data.content;
+        let md = data.content;
+        if (picgoPostMethods.getPicgoPostData().picgoEnabled) {
+          ElMessage.info(t("github.post.picgo.start.upload"));
+          const picgoPostResult = await picgoPostApi.uploadPostImagesToBed(siyuanData.pageId, siyuanData.meta, md);
+          if (picgoPostResult.flag) {
+            md = picgoPostResult.mdContent;
+          } else {
+            ElMessage.warning(t("github.post.picgo.picbed.error"));
+          }
+        }
         if (PageType.Html === metaweblogCfg2.pageType) {
           const html = mdToHtml(md);
           content = removeWidgetTag(html);
@@ -5280,6 +5400,20 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
               })]),
               _: 1
             }, 8, ["label"])) : createCommentVNode("", true), createVNode(_component_el_form_item, {
+              label: _ctx.$t("github.post.picgo.use")
+            }, {
+              default: withCtx(() => [createVNode(_component_el_switch, {
+                modelValue: unref(picgoPostData).picgoEnabled,
+                "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => unref(picgoPostData).picgoEnabled = $event),
+                onChange: unref(picgoPostMethods).picgoOnChange
+              }, null, 8, ["modelValue", "onChange"]), false ? (openBlock(), createBlock(_component_el_alert, {
+                key: 0,
+                closable: false,
+                title: _ctx.$t("github.post.picgo.use.tip"),
+                type: "warning"
+              }, null, 8, ["title"])) : createCommentVNode("", true)]),
+              _: 1
+            }, 8, ["label"]), createVNode(_component_el_form_item, {
               label: ""
             }, {
               default: withCtx(() => [createVNode(_component_el_button, {
@@ -5327,8 +5461,8 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const MetaweblogMain_vue_vue_type_style_index_0_scoped_9a977772_lang = "";
-const MetaweblogMain = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-9a977772"]]);
+const MetaweblogMain_vue_vue_type_style_index_0_scoped_8e02bbef_lang = "";
+const MetaweblogMain = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-8e02bbef"]]);
 const _sfc_main$9 = /* @__PURE__ */ defineComponent({
   __name: "JVueMain",
   props: {
@@ -6273,7 +6407,7 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
                 modelValue: unref(picgoPostData).picgoEnabled,
                 "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => unref(picgoPostData).picgoEnabled = $event),
                 onChange: unref(picgoPostMethods).picgoOnChange
-              }, null, 8, ["modelValue", "onChange"]), unref(picgoPostData).picgoEnabled ? (openBlock(), createBlock(_component_el_alert, {
+              }, null, 8, ["modelValue", "onChange"]), false ? (openBlock(), createBlock(_component_el_alert, {
                 key: 0,
                 closable: false,
                 title: _ctx.$t("github.post.picgo.use.tip"),
@@ -6328,8 +6462,8 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const CommonBlogMain_vue_vue_type_style_index_0_scoped_93eefdd4_lang = "";
-const CommonBlogMain = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-93eefdd4"]]);
+const CommonBlogMain_vue_vue_type_style_index_0_scoped_0ccc55da_lang = "";
+const CommonBlogMain = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-0ccc55da"]]);
 const _sfc_main$4 = /* @__PURE__ */ defineComponent({
   __name: "LiandiMain",
   props: {

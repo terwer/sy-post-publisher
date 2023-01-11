@@ -5,7 +5,7 @@
 .dyn-table-list[data-v-bc346138] {
 }
 
-.switch-form[data-v-aa0af289] {
+.switch-form[data-v-d0e6a313] {
   margin: 16px 10px;
 }
 
@@ -17,13 +17,13 @@
   margin: 16px 10px;
 }
 
-.github-main[data-v-30c95cbc] {
+.github-main[data-v-882973a7] {
   padding: 0;
 }
-.source-opt[data-v-30c95cbc] {
+.source-opt[data-v-882973a7] {
   margin-bottom: 10px;
 }
-.source-opt a[data-v-30c95cbc] {
+.source-opt a[data-v-882973a7] {
   --text-color: #1a1a1a;
   /*padding: 4px 2px;*/
   cursor: pointer;
@@ -32,46 +32,46 @@
   font-size: 16px;
   font-weight: 400;
 }
-html.dark .source-opt a[data-v-30c95cbc] {
+html.dark .source-opt a[data-v-882973a7] {
   --text-color: #999;
 }
-.source-opt a[data-v-30c95cbc]:first-child {
+.source-opt a[data-v-882973a7]:first-child {
   margin-right: 22px;
 }
-.source-opt a.middle[data-v-30c95cbc] {
+.source-opt a.middle[data-v-882973a7] {
   margin-right: 22px;
 }
-.source-opt a.current[data-v-30c95cbc] {
+.source-opt a.current[data-v-882973a7] {
   --text-blue-color: #0084ff;
   /*background-color: #409eff;*/
   /*color: #ffffff;*/
   color: var(--text-blue-color);
   font-weight: 600;
 }
-.top-yaml-tip[data-v-30c95cbc] {
+.top-yaml-tip[data-v-882973a7] {
   padding: 2px 4px;
   margin: 0 10px 0 0;
 }
-#yaml-detail-preview[data-v-30c95cbc] {
+#yaml-detail-preview[data-v-882973a7] {
   cursor: default;
   /*pointer-events: none;*/
 }
-.publish-status-box[data-v-30c95cbc] {
+.publish-status-box[data-v-882973a7] {
   margin-bottom: 0;
 }
-.publish-status-box .publish-text-btn[data-v-30c95cbc] {
+.publish-status-box .publish-text-btn[data-v-882973a7] {
   margin: 0;
   padding: 0 12px 0 0;
 }
-.publish-build-status-icon[data-v-30c95cbc] {
+.publish-build-status-icon[data-v-882973a7] {
   margin-right: 12px;
 }
 
-.blog-main[data-v-9a977772] {
+.blog-main[data-v-8e02bbef] {
   padding: 0;
 }
 
-.common-main[data-v-93eefdd4] {
+.common-main[data-v-0ccc55da] {
   padding: 0;
 }
 

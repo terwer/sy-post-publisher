@@ -1,7 +1,7 @@
-import { j as ElAlert, a as ElButton, D as ElTooltip } from "./vendor_element-plus-1f908931.js";
-import { P as Post, A as API } from "./api-592c8d46.js";
-import { L as LogFactory, i as isInSiyuanNewWinBrowser, y as isBrowser, a0 as copyToClipboardInBrowser, au as getPageUrl, h as goToPage, A as API_TYPE_CONSTANTS } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6edc873.js";
-import { M as defineComponent, u as ref, z as watch, A as onMounted, O as openBlock, P as createElementBlock, $ as toDisplayString, Z as createCommentVNode, a1 as createVNode, W as createBaseVNode, U as withCtx, V as withDirectives, aM as resolveComponent, aN as resolveDirective } from "./vendor-03279a5a.js";
+import { j as ElAlert, a as ElButton, D as ElTooltip } from "./vendor_element-plus-865ba724.js";
+import { P as Post, A as API } from "./api-592c525a.js";
+import { L as LogFactory, i as isInSiyuanNewWinBrowser, y as isBrowser, a0 as copyToClipboardInBrowser, au as getPageUrl, h as goToPage, A as API_TYPE_CONSTANTS } from "./AppLayout.vue_vue_type_script_setup_true_lang-a2e686da.js";
+import { M as defineComponent, u as ref, z as watch, A as onMounted, O as openBlock, P as createElementBlock, $ as toDisplayString, Z as createCommentVNode, a1 as createVNode, W as createBaseVNode, U as withCtx, V as withDirectives, aM as resolveComponent, aN as resolveDirective } from "./vendor-2ec86a49.js";
 const _hoisted_1 = {
   class: "post-detail-wrap"
 };
@@ -42,10 +42,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }
     };
     const handleShareLink = () => {
+      const pageId = post.value.postid;
+      const pageUrl = "/detail/index.html?id=" + pageId;
+      const url = getPageUrl(pageUrl, "");
       if (isBrowser()) {
-        const pageId = post.value.postid;
-        const pageUrl = "/detail/index.html?id=" + pageId;
-        const url = getPageUrl(pageUrl, "", true);
         copyToClipboardInBrowser(url);
       }
     };
@@ -80,7 +80,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       const _directive_beauty = resolveDirective("beauty");
       const _directive_highlight = resolveDirective("highlight");
       return openBlock(), createElementBlock("div", _hoisted_1, [inSiyuanNewWin.value ? (openBlock(), createElementBlock("h1", _hoisted_2, toDisplayString(post.value.title), 1)) : createCommentVNode("", true), createVNode(_component_el_alert, {
-        class: "top-version-tip",
+        class: "top-share-tip",
         title: _ctx.$t("siyuan.local.share.tip"),
         type: "warning",
         closable: false

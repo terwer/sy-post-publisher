@@ -2758,25 +2758,25 @@ code {
   font-weight: bold;
 }
 
-.header-default[data-v-fd26f10c] {
+.header-default[data-v-da269c8f] {
 }
-.header-title-default[data-v-fd26f10c] {
+.header-title-default[data-v-da269c8f] {
   text-align: center;
   margin: 0;
 }
-.header-title-default .header-title-btn[data-v-fd26f10c] {
+.header-title-default .header-title-btn[data-v-da269c8f] {
   border: none;
   font-size: 32px;
   cursor: default;
 }
-.header-title-default .header-title-btn[data-v-fd26f10c]:hover {
+.header-title-default .header-title-btn[data-v-da269c8f]:hover {
   background: none;
   color: var(--el-button-text-color);
 }
-#publisher-header[data-v-fd26f10c] {
+#publisher-header[data-v-da269c8f] {
   padding: 0 6px;
 }
-#publisher-header .b3-button--cancel[data-v-fd26f10c] {
+#publisher-header .b3-button--cancel[data-v-da269c8f] {
   float: right;
 }
 
@@ -2784,20 +2784,20 @@ code {
   text-align: left !important;
 }
 
-.footer[data-v-6d82d46d] {
+.footer[data-v-c0431dcc] {
   font-size: 12px;
   color: #bbb;
   text-align: center;
   padding-bottom: 8px;
 }
-.footer .text[data-v-6d82d46d] {
+.footer .text[data-v-c0431dcc] {
   vertical-align: middle;
 }
-.s-dark[data-v-6d82d46d] {
+.s-dark[data-v-c0431dcc] {
   color: var(--el-color-primary);
   cursor: pointer;
 }
-.middleware-tip[data-v-6d82d46d] {
+.middleware-tip[data-v-c0431dcc] {
   text-align: left;
 }
 

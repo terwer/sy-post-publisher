@@ -4,7 +4,7 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-import { L as LogFactory, w as getSiyuanCfg, av as sendChromeMessage, aw as isLocalhost, x as isElectron, c as isInChromeExtension, l as isEmptyString, g as getWidgetId } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6edc873.js";
+import { L as LogFactory, w as getSiyuanCfg, av as sendChromeMessage, aw as isLocalhost, x as isElectron, c as isInChromeExtension, l as isEmptyString, g as getWidgetId } from "./AppLayout.vue_vue_type_script_setup_true_lang-a2e686da.js";
 class CommonblogApi {
   constructor() {
     __publicField(this, "logger");
@@ -94,7 +94,7 @@ class CommonblogApi {
       throw new Error("\u8BF7\u6C42\u5F02\u5E38");
     }
     let resJson;
-    const isTest = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://publish.terwer.space/api/middleware" }.TEST === "true";
+    const isTest = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.TEST === "true";
     if (isTest || typeof response !== "undefined" && response instanceof Response) {
       const statusCode = response.status;
       if (statusCode !== 200) {

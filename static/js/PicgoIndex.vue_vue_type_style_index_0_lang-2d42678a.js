@@ -1,11 +1,11 @@
-import { h as ElMessageBox, E as ElMessage, a as ElButton, D as ElTooltip, I as ElPopover, k as ElDialog, i as ElInput } from "./vendor_element-plus-1f908931.js";
-import { k as inSiyuan, i as isInSiyuanNewWinBrowser, L as LogFactory, x as isElectron, b as getPageId, S as SiYuanApi, a2 as reloadPage, y as isBrowser, a0 as copyToClipboardInBrowser } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6edc873.js";
-import { ac as reactive, z as watch, A as onMounted, M as defineComponent, u as ref, O as openBlock, P as createElementBlock, W as createBaseVNode, a1 as createVNode, U as withCtx, _ as createTextVNode, $ as toDisplayString, y as unref, T as createBlock, Z as createCommentVNode, a0 as Fragment, ao as renderList, aM as resolveComponent } from "./vendor-03279a5a.js";
-import { u as useI18n } from "./vendor_vue-i18n-ea606b0c.js";
-import { u as uploadByPicGO, a as ImageItem, P as PicgoPostApi, I as ImageParser, _ as _sfc_main$1 } from "./PicgoSetting.vue_vue_type_script_setup_true_lang-0476ad29.js";
+import { h as ElMessageBox, E as ElMessage, a as ElButton, D as ElTooltip, I as ElPopover, k as ElDialog, i as ElInput } from "./vendor_element-plus-865ba724.js";
+import { k as isInSiyuan, i as isInSiyuanNewWinBrowser, L as LogFactory, x as isElectron, b as getPageId, S as SiYuanApi, a2 as reloadPage, y as isBrowser, a0 as copyToClipboardInBrowser } from "./AppLayout.vue_vue_type_script_setup_true_lang-a2e686da.js";
+import { ac as reactive, z as watch, A as onMounted, M as defineComponent, u as ref, O as openBlock, P as createElementBlock, W as createBaseVNode, a1 as createVNode, U as withCtx, _ as createTextVNode, $ as toDisplayString, y as unref, T as createBlock, Z as createCommentVNode, a0 as Fragment, ao as renderList, aM as resolveComponent } from "./vendor-2ec86a49.js";
+import { u as useI18n } from "./vendor_vue-i18n-b34647c9.js";
+import { u as uploadByPicGO, a as ImageItem, P as PicgoPostApi, I as ImageParser, _ as _sfc_main$1 } from "./PicgoSetting.vue_vue_type_script_setup_true_lang-d654477b.js";
 const usePicgoCommon = () => {
   const isDev = false;
-  const isSiyuanOrSiyuanNewWin = inSiyuan() || isInSiyuanNewWinBrowser();
+  const isSiyuanOrSiyuanNewWin = isInSiyuan() || isInSiyuanNewWinBrowser();
   const picgoCommonData = reactive({
     isUploadLoading: false,
     popWidth: 400,
@@ -72,7 +72,7 @@ const usePicgoUpload = (props, deps, refs) => {
           picgoCommonData.isUploadLoading = false;
           return;
         }
-        if (!inSiyuan() && !isInSiyuanNewWinBrowser()) {
+        if (!isInSiyuan() && !isInSiyuanNewWinBrowser()) {
           ElMessage.error("\u975Eelectron\u73AF\u5883\u53EA\u80FD\u901A\u8FC7\u526A\u8D34\u677F\u4E0A\u4F20");
           picgoCommonData.isUploadLoading = false;
           return;

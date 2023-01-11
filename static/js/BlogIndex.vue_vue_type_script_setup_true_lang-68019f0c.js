@@ -1,12 +1,12 @@
-import { l as ElPageHeader, a as ElButton, m as ElAutocomplete, n as ElSkeleton, o as ElTableColumn, p as ElTable, q as ElPagination, j as ElAlert, h as ElMessageBox, E as ElMessage, r as ElMain, s as ElContainer } from "./vendor_element-plus-1f908931.js";
-import { u as useI18n } from "./vendor_vue-i18n-ea606b0c.js";
-import { d as getByLength, e as getPublishCfg, f as parseBoolean, h as goToPage, j as _export_sfc, L as LogFactory, k as inSiyuan, i as isInSiyuanNewWinBrowser, b as getPageId, l as isEmptyString, r as removeTitleNumber, C as CONSTANTS, m as mdToHtml, n as formatIsoToZhDate } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6edc873.js";
-import { P as Post, S as SiYuanApiAdaptor } from "./api-592c8d46.js";
-import { _ as _sfc_main$6 } from "./PostDetailService.vue_vue_type_style_index_0_lang-7934be83.js";
-import { M as defineComponent, u as ref, A as onMounted, O as openBlock, P as createElementBlock, a1 as createVNode, U as withCtx, W as createBaseVNode, $ as toDisplayString, y as unref, aD as arrow_left_default, _ as createTextVNode, T as createBlock, Z as createCommentVNode, aM as resolveComponent, c1 as pushScopeId, c2 as popScopeId } from "./vendor-03279a5a.js";
-import { P as PublishService } from "./PublishService-9cc509e9.js";
-import { A as AnkiIndex } from "./AnkiIndex-ca3e068d.js";
-import { _ as _sfc_main$7 } from "./PicgoIndex.vue_vue_type_style_index_0_lang-e666fa38.js";
+import { l as ElPageHeader, a as ElButton, m as ElAutocomplete, n as ElSkeleton, o as ElTableColumn, p as ElTable, q as ElPagination, j as ElAlert, h as ElMessageBox, E as ElMessage, r as ElMain, s as ElContainer } from "./vendor_element-plus-865ba724.js";
+import { u as useI18n } from "./vendor_vue-i18n-b34647c9.js";
+import { d as getByLength, e as getPublishCfg, f as parseBoolean, h as goToPage, j as _export_sfc, L as LogFactory, k as isInSiyuan, i as isInSiyuanNewWinBrowser, b as getPageId, l as isEmptyString, r as removeTitleNumber, C as CONSTANTS, m as mdToHtml, n as formatIsoToZhDate } from "./AppLayout.vue_vue_type_script_setup_true_lang-a2e686da.js";
+import { P as Post, S as SiYuanApiAdaptor } from "./api-592c525a.js";
+import { _ as _sfc_main$6 } from "./PostDetailService.vue_vue_type_style_index_0_lang-07923592.js";
+import { M as defineComponent, u as ref, A as onMounted, O as openBlock, P as createElementBlock, a1 as createVNode, U as withCtx, W as createBaseVNode, $ as toDisplayString, y as unref, aD as arrow_left_default, _ as createTextVNode, T as createBlock, Z as createCommentVNode, aM as resolveComponent, c1 as pushScopeId, c2 as popScopeId } from "./vendor-2ec86a49.js";
+import { P as PublishService } from "./PublishService-63f974e5.js";
+import { A as AnkiIndex } from "./AnkiIndex-85e67aba.js";
+import { _ as _sfc_main$7 } from "./PicgoIndex.vue_vue_type_style_index_0_lang-2d42678a.js";
 const _hoisted_1$5 = {
   id: "post-detail-body"
 };
@@ -237,7 +237,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
 });
 const SinglePicgo_vue_vue_type_style_index_0_scoped_07201bd8_lang = "";
 const SinglePicgo = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-07201bd8"]]);
-const _withScopeId = (n) => (pushScopeId("data-v-741686c5"), n = n(), popScopeId(), n);
+const _withScopeId = (n) => (pushScopeId("data-v-93f725f2"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
   id: "post-list"
@@ -314,7 +314,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     const showPicgo = ref(false);
     const postDetail = ref();
     const publishData = ref();
-    const isInSiyuan = ref(false);
+    const isInSiyuanEnv = ref(false);
     const isNewWin = ref(true);
     const state = ref("");
     const links = ref([]);
@@ -479,7 +479,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       });
     };
     const initPage = async () => {
-      isInSiyuan.value = inSiyuan();
+      isInSiyuanEnv.value = isInSiyuan();
       const publishCfg = getPublishCfg();
       isNewWin.value = parseBoolean(publishCfg.newWin);
       await reloadTableData();
@@ -491,7 +491,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       let hasSubdoc = false;
       try {
         const siyuanApi = new SiYuanApiAdaptor();
-        if (isInSiyuan.value || isInSiyuanNewWinBrowser()) {
+        if (isInSiyuanEnv.value || isInSiyuanNewWinBrowser()) {
           const postid = await getPageId();
           logger.warn("\u5904\u4E8E\u751F\u4EA7\u73AF\u5883\uFF0C\u7236\u6587\u6863ID\u4E3A=>", postid);
           if (!isEmptyString(postid)) {
@@ -651,7 +651,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
         onCurrentChange: handleCurrentPage
       }, null, 8, ["layout", "total", "current-page"])])), createBaseVNode("div", _hoisted_12, [createVNode(_component_el_alert, {
         class: "top-data-tip",
-        title: isInSiyuan.value ? _ctx.$t("blog.top-data-tip.siyuan") : _ctx.$t("blog.top-data-tip"),
+        title: isInSiyuanEnv.value ? _ctx.$t("blog.top-data-tip.siyuan") : _ctx.$t("blog.top-data-tip"),
         type: "info",
         closable: false
       }, null, 8, ["title"])])])) : createCommentVNode("", true), showDetail.value ? (openBlock(), createElementBlock("div", _hoisted_13, [createVNode(SingleBlogDetail, {
@@ -672,8 +672,8 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   }
 });
 const BlogMain_vue_vue_type_style_index_0_lang = "";
-const BlogMain_vue_vue_type_style_index_1_scoped_741686c5_lang = "";
-const BlogMain = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-741686c5"]]);
+const BlogMain_vue_vue_type_style_index_1_scoped_93f725f2_lang = "";
+const BlogMain = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-93f725f2"]]);
 const _hoisted_1 = {
   class: "common-layout"
 };
