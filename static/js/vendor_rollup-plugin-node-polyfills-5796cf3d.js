@@ -2262,7 +2262,7 @@ var debugs = {};
 var debugEnviron;
 function debuglog(set) {
   if (isUndefined(debugEnviron))
-    debugEnviron = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.NODE_DEBUG || "";
+    debugEnviron = { "VITE_LOG_INFO_ENABLED": "false", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.NODE_DEBUG || "";
   set = set.toUpperCase();
   if (!debugs[set]) {
     if (new RegExp("\\b" + set + "\\b", "i").test(debugEnviron)) {

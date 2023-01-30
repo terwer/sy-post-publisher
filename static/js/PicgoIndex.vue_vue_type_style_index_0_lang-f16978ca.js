@@ -1,8 +1,8 @@
-import { h as ElMessageBox, E as ElMessage, a as ElButton, D as ElTooltip, I as ElPopover, k as ElDialog, i as ElInput } from "./vendor_element-plus-865ba724.js";
-import { k as isInSiyuan, i as isInSiyuanNewWinBrowser, L as LogFactory, x as isElectron, b as getPageId, S as SiYuanApi, a2 as reloadPage, y as isBrowser, a0 as copyToClipboardInBrowser } from "./AppLayout.vue_vue_type_script_setup_true_lang-63b8852c.js";
-import { ac as reactive, z as watch, A as onMounted, M as defineComponent, u as ref, O as openBlock, P as createElementBlock, W as createBaseVNode, a1 as createVNode, U as withCtx, _ as createTextVNode, $ as toDisplayString, y as unref, T as createBlock, Z as createCommentVNode, a0 as Fragment, ao as renderList, aM as resolveComponent } from "./vendor-2ec86a49.js";
-import { u as useI18n } from "./vendor_vue-i18n-b34647c9.js";
-import { u as uploadByPicGO, a as ImageItem, P as PicgoPostApi, I as ImageParser, _ as _sfc_main$1 } from "./PicgoSetting.vue_vue_type_script_setup_true_lang-5eb73727.js";
+import { h as ElMessageBox, E as ElMessage, a as ElButton, D as ElTooltip, I as ElPopover, k as ElDialog, i as ElInput } from "./vendor_element-plus-1140ca7b.js";
+import { k as isInSiyuan, i as isInSiyuanNewWinBrowser, L as LogFactory, x as isElectron, b as getPageId, S as SiYuanApi, a2 as reloadPage, y as isBrowser, a0 as copyToClipboardInBrowser } from "./AppLayout.vue_vue_type_script_setup_true_lang-e0451189.js";
+import { ac as reactive, z as watch, A as onMounted, M as defineComponent, u as ref, O as openBlock, P as createElementBlock, W as createBaseVNode, a1 as createVNode, U as withCtx, _ as createTextVNode, $ as toDisplayString, y as unref, T as createBlock, Z as createCommentVNode, a0 as Fragment, ao as renderList, aM as resolveComponent } from "./vendor-d1463dcf.js";
+import { u as useI18n } from "./vendor_vue-i18n-1a506789.js";
+import { u as uploadByPicGO, a as ImageItem, P as PicgoPostApi, I as ImageParser, _ as _sfc_main$1 } from "./PicgoSetting.vue_vue_type_script_setup_true_lang-21cd119b.js";
 const usePicgoCommon = () => {
   const isDev = false;
   const isSiyuanOrSiyuanNewWin = isInSiyuan() || isInSiyuanNewWinBrowser();

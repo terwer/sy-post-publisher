@@ -1,4 +1,4 @@
-import { r as require$$0, B as Buffer, a as require$$1 } from "./vendor_rollup-plugin-node-polyfills-b0907b85.js";
+import { r as require$$0, B as Buffer, a as require$$1 } from "./vendor_rollup-plugin-node-polyfills-5796cf3d.js";
 var sax = {};
 (function(exports) {
   (function(sax2) {

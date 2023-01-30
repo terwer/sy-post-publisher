@@ -4,7 +4,7 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-import { s as sax } from "./vendor_sax-8f0ba4c8.js";
+import { s as sax } from "./vendor_sax-22683b4f.js";
 import { f as fetch } from "./vendor_cross-fetch-e4e57030.js";
 import { b as bytesToBase64 } from "./vendor_byte-base64-0dbd845f.js";
 import { x as xmlbuilder2_min } from "./vendor_xmlbuilder2-780b1a8c.js";

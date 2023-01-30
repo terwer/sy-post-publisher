@@ -4,13 +4,13 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-import { L as LogFactory, S as SiYuanApi, A as API_TYPE_CONSTANTS, o as appendStr, e as getPublishCfg, r as removeTitleNumber, q as renderHTML, s as removeWidgetTag, t as removeH1, l as isEmptyString, u as getJSONConf, v as pathJoin, w as getSiyuanCfg, x as isElectron, c as isInChromeExtension, y as isBrowser, z as SubPlatformType, B as isEmptyObject, P as PlatformType } from "./AppLayout.vue_vue_type_script_setup_true_lang-63b8852c.js";
-import { c3 as Octokit } from "./vendor-2ec86a49.js";
+import { L as LogFactory, S as SiYuanApi, A as API_TYPE_CONSTANTS, o as appendStr, e as getPublishCfg, r as removeTitleNumber, q as renderHTML, s as removeWidgetTag, t as removeH1, l as isEmptyString, u as getJSONConf, v as pathJoin, w as getSiyuanCfg, x as isElectron, c as isInChromeExtension, y as isBrowser, z as SubPlatformType, B as isEmptyObject, P as PlatformType } from "./AppLayout.vue_vue_type_script_setup_true_lang-e0451189.js";
+import { c3 as Octokit } from "./vendor-d1463dcf.js";
 import { g as gBase64 } from "./vendor_js-base64-904ab953.js";
-import "./vendor_sax-8f0ba4c8.js";
-import { S as SimpleXmlRpcClient } from "./vendor_simple-xmlrpc-d5a3cbb2.js";
+import "./vendor_sax-22683b4f.js";
+import { S as SimpleXmlRpcClient } from "./vendor_simple-xmlrpc-21ffbab6.js";
 import "./vendor_cross-fetch-e4e57030.js";
-import { C as CommonblogApi } from "./commonblogApi-389f5cec.js";
+import { C as CommonblogApi } from "./commonblogApi-81db5e95.js";
 const POST_STATUS_PUBLISH = "publish";
 const POST_TYPE_DRAFT = "draft";
 const POST_TYPE_INHERIT = "inherit";
@@ -73,7 +73,7 @@ class SiYuanApiAdaptor {
     const userBlog = new UserBlog();
     userBlog.blogid = API_TYPE_CONSTANTS.API_TYPE_SIYUAN;
     userBlog.blogName = API_TYPE_CONSTANTS.API_TYPE_SIYUAN;
-    userBlog.url = (_a = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.SIYUAN_API_URL) != null ? _a : "";
+    userBlog.url = (_a = { "VITE_LOG_INFO_ENABLED": "false", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.SIYUAN_API_URL) != null ? _a : "";
     result.push(userBlog);
     return result;
   }

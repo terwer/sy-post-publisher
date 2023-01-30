@@ -1,4 +1,4 @@
-import { b as browser$1 } from "./vendor_rollup-plugin-node-polyfills-b0907b85.js";
+import { b as browser$1 } from "./vendor_rollup-plugin-node-polyfills-5796cf3d.js";
 function _extends() {
   _extends = Object.assign ? Object.assign.bind() : function(target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -96,7 +96,7 @@ function _wrapNativeSuper(Class) {
 var formatRegExp = /%[sdj%]/g;
 var warning = function warning2() {
 };
-if (typeof browser$1 !== "undefined" && { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" } && false) {
+if (typeof browser$1 !== "undefined" && { "VITE_LOG_INFO_ENABLED": "false", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" } && false) {
   warning = function warning3(type4, errors) {
     if (typeof console !== "undefined" && console.warn && typeof ASYNC_VALIDATOR_NO_WARNING === "undefined") {
       if (errors.every(function(e) {

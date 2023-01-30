@@ -1,4 +1,4 @@
-import { b as browser$1 } from "./vendor_rollup-plugin-node-polyfills-b0907b85.js";
+import { b as browser$1 } from "./vendor_rollup-plugin-node-polyfills-5796cf3d.js";
 function getUserAgent() {
   if (typeof navigator === "object" && "userAgent" in navigator) {
     return navigator.userAgent;

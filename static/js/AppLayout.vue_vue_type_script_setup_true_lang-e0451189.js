@@ -5,10 +5,10 @@ var __publicField = (obj, key, value) => {
   return value;
 };
 var _a, _b;
-import { bG as library$1, bH as faUpload, bI as faBookOpenReader, bJ as faRectangleList, bK as faXmark, bL as faCircleXmark, bM as faBolt, bN as faCreditCard, bO as faImage, bP as faChrome, bQ as faShareNodes, bR as faListOl, bS as faFileLines, bT as faDownload, bU as faMagnifyingGlass, bV as faPaste, bW as faFileImport, bX as faGear, bY as faArrowRotateRight, bZ as FontAwesomeIcon, b_ as createApp, aG as h, M as defineComponent, u as ref, A as onMounted, aM as resolveComponent, O as openBlock, P as createElementBlock, a1 as createVNode, U as withCtx, T as createBlock, Z as createCommentVNode, _ as createTextVNode, a0 as Fragment, ao as renderList, ac as reactive, z as watch, b$ as useDark, c0 as useToggle, W as createBaseVNode, $ as toDisplayString, y as unref, c1 as pushScopeId, c2 as popScopeId, Q as renderSlot, L as shallowRef, Y as resolveDynamicComponent } from "./vendor-2ec86a49.js";
-import { c as createPinia } from "./vendor_pinia-b97318c6.js";
-import { c as createI18n, u as useI18n } from "./vendor_vue-i18n-b34647c9.js";
-import { E as ElMessage, a as ElButton, b as ElHeader, c as ElOption, d as ElSelect, e as ElFormItem, f as ElForm, g as ElSwitch, h as ElMessageBox, i as ElInput, j as ElAlert, k as ElDialog } from "./vendor_element-plus-865ba724.js";
+import { bG as library$1, bH as faUpload, bI as faBookOpenReader, bJ as faRectangleList, bK as faXmark, bL as faCircleXmark, bM as faBolt, bN as faCreditCard, bO as faImage, bP as faChrome, bQ as faShareNodes, bR as faListOl, bS as faFileLines, bT as faDownload, bU as faMagnifyingGlass, bV as faPaste, bW as faFileImport, bX as faGear, bY as faArrowRotateRight, bZ as FontAwesomeIcon, b_ as createApp, aG as h, M as defineComponent, u as ref, A as onMounted, aM as resolveComponent, O as openBlock, P as createElementBlock, a1 as createVNode, U as withCtx, T as createBlock, Z as createCommentVNode, _ as createTextVNode, a0 as Fragment, ao as renderList, ac as reactive, z as watch, b$ as useDark, c0 as useToggle, W as createBaseVNode, $ as toDisplayString, y as unref, c1 as pushScopeId, c2 as popScopeId, Q as renderSlot, L as shallowRef, Y as resolveDynamicComponent } from "./vendor-d1463dcf.js";
+import { c as createPinia } from "./vendor_pinia-aea155c7.js";
+import { c as createI18n, u as useI18n } from "./vendor_vue-i18n-1a506789.js";
+import { E as ElMessage, a as ElButton, b as ElHeader, c as ElOption, d as ElSelect, e as ElFormItem, f as ElForm, g as ElSwitch, h as ElMessageBox, i as ElInput, j as ElAlert, k as ElDialog } from "./vendor_element-plus-1140ca7b.js";
 import { H as HighlightJS, j as javascript, t as typescript, c, a as cpp, b as java, k as kotlin, d as bash, x as xml, e as css, p as plaintext, f as php, g as properties, s as sql, m as markdown } from "./vendor_highlight-js-1b1ee527.js";
 import { b as browserIndex } from "./vendor_plantuml-encoder-18698577.js";
 import { l as loglevel } from "./vendor_loglevel-bd2e1c44.js";
@@ -1053,7 +1053,7 @@ vueHljs.install = (Vue) => {
       var _a2;
       const umlstr = unescapeHTML(item.innerHTML);
       const encoded = browserIndex.encode(umlstr);
-      const plantUMLServer = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.PLANT_UML_SERVR || "https://www.plantuml.com/plantuml/svg/";
+      const plantUMLServer = { "VITE_LOG_INFO_ENABLED": "false", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.PLANT_UML_SERVR || "https://www.plantuml.com/plantuml/svg/";
       const url = plantUMLServer + encoded;
       const newNode = document.createElement("img");
       newNode.setAttribute("src", url);
@@ -1100,8 +1100,8 @@ vueHljs.install = (Vue) => {
 const getEnv = (key) => {
   let env = "";
   try {
-    if ({ "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware", "BASE_URL": "/widgets/sy-post-publisher/", "MODE": "production", "DEV": false, "PROD": true }[key]) {
-      env = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware", "BASE_URL": "/widgets/sy-post-publisher/", "MODE": "production", "DEV": false, "PROD": true }[key];
+    if ({ "VITE_LOG_INFO_ENABLED": "false", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware", "BASE_URL": "/widgets/sy-post-publisher/", "MODE": "production", "DEV": false, "PROD": true }[key]) {
+      env = { "VITE_LOG_INFO_ENABLED": "false", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware", "BASE_URL": "/widgets/sy-post-publisher/", "MODE": "production", "DEV": false, "PROD": true }[key];
     }
   } catch (e) {
     throw new Error(e);
@@ -1129,7 +1129,7 @@ const chalk = {
     return src.toString();
   }
 };
-const isTest = { "VITE_LOG_INFO_ENABLED": "false", "VITE_SIYUAN_API_URL": "http://127.0.0.1:6806", "VITE_SIYUAN_CONFIG_TOKEN": "", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.TEST === "true";
+const isTest = { "VITE_LOG_INFO_ENABLED": "false", "VITE_MIDDLEWARE_URL": "https://api.terwer.space/api/middleware" }.TEST === "true";
 const isDev = false;
 const LOG_INFO_ENABLED = (_a = getBooleanEnv("VITE_LOG_INFO_ENABLED")) != null ? _a : false;
 const LOG_LEVEL_DEBUG = "DEBUG";
@@ -1272,9 +1272,28 @@ const parseBoolean = (val) => {
   }
   return val.toString().toLowerCase() === "true";
 };
+const getLocalStorageAdaptor = (cfgfile) => {
+  let ret = window.localStorage;
+  if (isElectron) {
+    if (isInSiyuan()) {
+      ret = parent.window.JsonLocalStorage;
+    } else {
+      ret = window.JsonLocalStorage;
+    }
+    let cfg = "sy-p-cfg.json";
+    if (cfgfile) {
+      cfg = cfgfile;
+    }
+    ret.switchCfg(cfg);
+  } else {
+    ret = window.localStorage;
+  }
+  return ret;
+};
 const logger$6 = LogFactory.getLogger();
 const getConf = (key) => {
-  const value = localStorage.getItem(key);
+  const store = getLocalStorageAdaptor();
+  const value = store.getItem(key);
   if (!value) {
     return "";
   }
@@ -1325,7 +1344,8 @@ const setConf = (key, value) => {
     logger$6.warn("\u7A7A\u503C\uFF0C\u4E0D\u4FDD\u5B58");
     return;
   }
-  localStorage.setItem(key, value);
+  const store = getLocalStorageAdaptor();
+  store.setItem(key, value);
 };
 const setBooleanConf = (key, value) => {
   const boolString = value.toString();
@@ -1348,9 +1368,10 @@ const toJSONString = (value) => {
   return valueString;
 };
 const checkKeyExists = (key) => {
+  const store = getLocalStorageAdaptor();
   let flag = false;
-  for (let i = 0; i < localStorage.length; i++) {
-    const getKey = localStorage.key(i);
+  for (let i = 0; i < store.length; i++) {
+    const getKey = store.key(i);
     if (key === getKey) {
       flag = true;
       break;
@@ -1359,10 +1380,11 @@ const checkKeyExists = (key) => {
   return flag;
 };
 const getAllConf = () => {
+  const store = getLocalStorageAdaptor();
   const data = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = localStorage.getItem(key);
+  for (let i = 0; i < store.length; i++) {
+    const key = store.key(i);
+    const value = store.getItem(key);
     data[key] = value;
   }
   return data;
@@ -1398,8 +1420,9 @@ const importConf = async () => {
   }
 };
 const clearConf = () => {
-  localStorage.clear();
-  if (localStorage.length === 0) {
+  const store = getLocalStorageAdaptor();
+  store.clear();
+  if (store.length === 0) {
     console.log("LocalStorage is empty");
   } else {
     console.log("LocalStorage is not empty");
@@ -1422,10 +1445,10 @@ class SiYuanConfig {
   }
 }
 const getSiyuanCfg = () => {
-  var _a2;
-  let baseUrl = getEnv("VITE_SIYUAN_API_URL");
-  let token = getEnv("VITE_SIYUAN_CONFIG_TOKEN");
-  let middlewareUrl = (_a2 = getEnv("VITE_MIDDLEWARE_URL")) != null ? _a2 : "/api/middleware";
+  var _a2, _b2, _c;
+  let baseUrl = (_a2 = getEnv("VITE_SIYUAN_API_URL")) != null ? _a2 : "";
+  let token = (_b2 = getEnv("VITE_SIYUAN_CONFIG_TOKEN")) != null ? _b2 : "";
+  let middlewareUrl = (_c = getEnv("VITE_MIDDLEWARE_URL")) != null ? _c : "/api/middleware";
   const siyuanCfg = getJSONConf(SIYUAN_CONSTANTS.SIYUAN_CFG_KEY);
   if (!isEmptyString(siyuanCfg.baseUrl)) {
     baseUrl = siyuanCfg.baseUrl;
@@ -1435,6 +1458,9 @@ const getSiyuanCfg = () => {
   }
   if (!isEmptyString(siyuanCfg.middlewareUrl)) {
     middlewareUrl = siyuanCfg.middlewareUrl;
+  }
+  if (isEmptyString(baseUrl) || baseUrl.indexOf("127.0.0.1") > -1) {
+    baseUrl = window.location.protocol + "//" + window.location.host;
   }
   return new SiYuanConfig(baseUrl, token, middlewareUrl);
 };
@@ -1717,24 +1743,24 @@ const getPageId = async (force, pageId) => {
   return syPageId;
 };
 var DeviceType = /* @__PURE__ */ ((DeviceType2) => {
-  DeviceType2[DeviceType2["DeviceType_Siyuan_NewWin"] = 0] = "DeviceType_Siyuan_NewWin";
-  DeviceType2[DeviceType2["DeviceType_Siyuan_Widget"] = 1] = "DeviceType_Siyuan_Widget";
-  DeviceType2[DeviceType2["DeviceType_Chrome_Extension"] = 2] = "DeviceType_Chrome_Extension";
-  DeviceType2[DeviceType2["DeviceType_Chrome_Browser"] = 3] = "DeviceType_Chrome_Browser";
+  DeviceType2["DeviceType_Siyuan_NewWin"] = "Siyuan_NewWin";
+  DeviceType2["DeviceType_Siyuan_Widget"] = "Siyuan_Widget";
+  DeviceType2["DeviceType_Chrome_Extension"] = "Chrome_Extension";
+  DeviceType2["DeviceType_Chrome_Browser"] = "Chrome_Browser";
   return DeviceType2;
 })(DeviceType || {});
 class DeviceUtil {
   static getDevice() {
     if (isInSiyuan()) {
-      return 1;
+      return "Siyuan_Widget";
     }
     if (isInSiyuanNewWinBrowser()) {
-      return 0;
+      return "Siyuan_NewWin";
     }
     if (isInChromeExtension()) {
-      return 2;
+      return "Chrome_Extension";
     }
-    return 3;
+    return "Chrome_Browser";
   }
 }
 const logger$4 = LogFactory.getLogger();
@@ -1800,13 +1826,14 @@ async function sendChromeMessage(message) {
   });
 }
 const importJSONToLocalStorage = async () => {
+  const store = getLocalStorageAdaptor();
   const files = await readJSONFileFormDialog();
   const reader = new FileReader();
   reader.addEventListener("load", () => {
     const data = JSON.parse(reader.result);
     console.log("\u51C6\u5907\u5BFC\u5165\u914D\u7F6E\uFF0C\u8BFB\u53D6\u5230\u7684\u914D\u7F6E\u6570\u636E\u4E3A=>", data);
     for (const [key, value] of Object.entries(data)) {
-      localStorage.setItem(key, value);
+      store.setItem(key, value);
     }
   });
   reader.readAsText(files[0]);
@@ -1887,7 +1914,55 @@ const FontAwesome = {
     logger$2.debug("FontAwesome inited");
   }
 };
-const createPage = (rootComponent) => {
+const scriptRel = "modulepreload";
+const assetsURL = function(dep) {
+  return "/widgets/sy-post-publisher/" + dep;
+};
+const seen = {};
+const __vitePreload = function preload(baseModule, deps, importerUrl) {
+  if (!deps || deps.length === 0) {
+    return baseModule();
+  }
+  const links = document.getElementsByTagName("link");
+  return Promise.all(deps.map((dep) => {
+    dep = assetsURL(dep);
+    if (dep in seen)
+      return;
+    seen[dep] = true;
+    const isCss = dep.endsWith(".css");
+    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+    const isBaseRelative = !!importerUrl;
+    if (isBaseRelative) {
+      for (let i = links.length - 1; i >= 0; i--) {
+        const link2 = links[i];
+        if (link2.href === dep && (!isCss || link2.rel === "stylesheet")) {
+          return;
+        }
+      }
+    } else if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = isCss ? "stylesheet" : scriptRel;
+    if (!isCss) {
+      link.as = "script";
+      link.crossOrigin = "";
+    }
+    link.href = dep;
+    document.head.appendChild(link);
+    if (isCss) {
+      return new Promise((res, rej) => {
+        link.addEventListener("load", res);
+        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
+      });
+    }
+  })).then(() => baseModule());
+};
+const initHook = async () => {
+  await __vitePreload(() => import("./siyuanhook-f13f4c5c.js"), true ? [] : void 0);
+};
+const createPage = async (rootComponent) => {
+  await initHook();
   const app = createApp({
     render: () => h(rootComponent)
   });
@@ -2876,7 +2951,7 @@ const _export_sfc = (sfc, props) => {
   return target;
 };
 const DefaultHeader = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-da269c8f"]]);
-const version = "0.6.7";
+const version = "0.6.8";
 const _hoisted_1$4 = {
   class: "locale-changer"
 };
@@ -3122,7 +3197,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const _withScopeId = (n2) => (pushScopeId("data-v-c0431dcc"), n2 = n2(), popScopeId(), n2);
+const _withScopeId = (n2) => (pushScopeId("data-v-c1e544f6"), n2 = n2(), popScopeId(), n2);
 const _hoisted_1$1 = {
   class: "footer"
 };
@@ -3132,10 +3207,9 @@ const _hoisted_2$1 = {
 const _hoisted_3 = {
   class: "text"
 };
-const _hoisted_4 = {
-  key: 0,
+const _hoisted_4 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", {
   class: "text"
-};
+}, ".", -1));
 const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", {
   class: "text"
 }, ".", -1));
@@ -3163,7 +3237,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
     } = useI18n();
     const isDark = useDark();
     const toggleDark = useToggle(isDark);
-    const isInSiyuanEnv = ref(false);
+    ref(false);
     const v = ref("0.0.3");
     const formLabelWidth = "140px";
     const siyuanApiChangeFormVisible = ref(false);
@@ -3245,7 +3319,6 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
       }
     };
     const initConf = () => {
-      isInSiyuanEnv.value = isInSiyuan();
       v.value = version;
       const siyuanCfg = getSiyuanCfg();
       siyuanApiChangeForm.apiUrl = siyuanCfg.baseUrl;
@@ -3279,11 +3352,10 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
       }, " sy-post-publisher "), createBaseVNode("span", _hoisted_3, " v" + toDisplayString(v.value) + " . ", 1), createBaseVNode("span", {
         class: "text s-dark",
         onClick: _cache[1] || (_cache[1] = ($event) => unref(toggleDark)())
-      }, toDisplayString(unref(isDark) ? _ctx.$t("theme.mode.light") : _ctx.$t("theme.mode.dark")), 1), !isInSiyuanEnv.value ? (openBlock(), createElementBlock("span", _hoisted_4, ".")) : createCommentVNode("", true), !isInSiyuanEnv.value ? (openBlock(), createElementBlock("span", {
-        key: 1,
+      }, toDisplayString(unref(isDark) ? _ctx.$t("theme.mode.light") : _ctx.$t("theme.mode.dark")), 1), _hoisted_4, createBaseVNode("span", {
         class: "text s-dark",
         onClick: _cache[2] || (_cache[2] = ($event) => changeSiyuanApi())
-      }, toDisplayString(_ctx.$t("blog.change.siyuan.api")), 1)) : createCommentVNode("", true), _hoisted_5, createBaseVNode("span", {
+      }, toDisplayString(_ctx.$t("blog.change.siyuan.api")), 1), _hoisted_5, createBaseVNode("span", {
         class: "text s-dark",
         onClick: _cache[3] || (_cache[3] = ($event) => exportConfig())
       }, toDisplayString(_ctx.$t("setting.conf.export")), 1), _hoisted_6, createBaseVNode("span", {
@@ -3383,8 +3455,8 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
   }
 });
 const DefaultFooter_vue_vue_type_style_index_0_lang = "";
-const DefaultFooter_vue_vue_type_style_index_1_scoped_c0431dcc_lang = "";
-const DefaultFooter = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-c0431dcc"]]);
+const DefaultFooter_vue_vue_type_style_index_1_scoped_c1e544f6_lang = "";
+const DefaultFooter = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-c1e544f6"]]);
 const _hoisted_1 = {
   id: "app-layout-default"
 };
