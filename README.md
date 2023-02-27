@@ -4,33 +4,76 @@
 
 将 [思源笔记](https://github.com/siyuan-note/siyuan) 的文章发布到支持的平台的 **思源笔记挂件**
 
+[![dev checks](https://img.shields.io/github/checks-status/terwer/src-sy-post-publisher/dev?label=build)](https://github.com/terwer/src-sy-post-publisher/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/sy-post-publisher.svg?style=flat-square)
-[![](https://img.shields.io/badge/online-preview-faad14.svg?style=popout-square)](https://publish.terwer.space/blog/index.html)
 ![GitHub last commit](https://img.shields.io/github/last-commit/terwer/src-sy-post-publisher)
 ![](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)
 
-[![](https://img.shields.io/badge/%E9%A1%B9%E7%9B%AE%E6%BA%90%E7%A0%81-code-brightgreen)](https://github.com/terwer/src-sy-post-publisher)
-[![](https://img.shields.io/badge/%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3-doc-blue)](https://docs.publish.terwer.space)
-[![](https://img.shields.io/badge/视频教程（旧）-video-purple)](https://docs.publish.terwer.space/post/configure-entry-video-brpm9.html)
-[![](https://img.shields.io/badge/视频教程（新）-video-red)](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html#%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[![](https://img.shields.io/badge/帮助文档-doc-blue)](https://docs.publish.terwer.space)
+[![](https://img.shields.io/badge/视频教程-video-red)](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html#%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[![](https://img.shields.io/badge/在线体验-preview-faad14.svg?style=popout-square)](https://publish.terwer.space/blog/index.html)
+[![](https://img.shields.io/badge/项目源码-code-red)](https://github.com/terwer/src-sy-post-publisher)
 
-![](https://img1.terwer.space/api/public/202212181127124.png)
+![](https://static.terwergreen.com/img/202302222313542.png)
 
-## 状态
+使用之前请务必详细阅读 [快速上手指南](#快速上手指南)
 
-[![dev checks](https://img.shields.io/github/checks-status/terwer/src-sy-post-publisher/main?label=main)](https://github.com/terwer/src-sy-post-publisher)
-[![dev checks](https://img.shields.io/github/checks-status/terwer/src-sy-post-publisher/dev?label=dev)](https://github.com/terwer/src-sy-post-publisher/tree/dev)
 <a title="Downloads" target="_blank" href="https://github.com/terwer/src-sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/src-sy-post-publisher/total.svg?label=extension-downloads&style=flat-square&color=blueviolet"></a>
 <a title="Downloads" target="_blank" href="https://github.com/terwer/src-sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/sy-post-publisher/total.svg?label=widget-downloads&style=flat-square&color=blue"></a>
 
-## v0.6.8 特性一览<sup>new</sup>
+## v0.7.0 特性一览<sup>new</sup>
 
-- 提供通用的集成接口，方便思源笔记主题集成本插件
-- 重构数据存储方案，思源笔记内部使用 JSON 存储，解决多空间随机端口问题
+⚠️ 特别提醒: `0.7.0` 为灰度测试版本，所以随时可能发布 `0.7.x` 修复版本，请考虑好之后再升级。
 
-## 快速上手
+### PicGO 相关
 
-### 挂件版挂载菜单打开新窗口操作方式快速上手
+- 新增用户友好的 PicGO 图形化配置界面
+- 优化 PicGO 配置，支持 PicGO 插件（目前支持水印、s3、minio三个插件）
+- PicGO默认图床为github
+- PicGO支持图片重命名
+- 云床配置buffer读取报错问题，测试常用图床
+- PicGO引入事件监听机制，支持事件注册、事件发布
+- PicGO支持读取多个图床，单个图床支持多份配置
+
+### 系统配置相关
+
+- 整合系统所有配置项，提供统一的配置入口底部的【偏好设置】
+- 统一整合导入导出操作位底部的【导入导出】
+- 整合【思源 API 地址】设置到【偏好设置】的一个 tab 页
+- 整合原通用设置为【个性设置】，操作入口移到【偏好设置】的一个 tab 页
+
+### 发布体验相关
+
+- 【文章绑定】操作非配置项，也是可选功能，放在发布页面容易造成误解，现将操作移入详情页，仅在需要将平台文章与思源笔记建立联系时候使用。新增文章无需操作，新增会自动进行绑定
+- 修复浏览器插件不能使用http，只能用https问题
+- 修复typecho发布文章未成功解析文章id
+- 文章列表图标添加tooltip
+- 插槽按钮添加文字提示
+- 新窗口打开时操作按钮fixed不随页面滑动
+
+### 开发者相关
+
+- 使用python重构项目构建脚本-支持一键打包
+- 挂载SyCmd，适配Anki同步（目前仅Mac可用）
+
+### 其他
+
+- 修复已知问题，升级部分组件。
+
+## 快速上手指南
+
+### FAQ
+
+Q1：使用此思源笔记挂件或者浏览器插件有什么注意事项吗？
+
+A1：有。 **特别提示：【自定义 JS 片段】请不要和【挂件通用版】混合使用，使用其中一种即可。避免因为混用导致配置同步问题。**
+浏览器插件无限制。
+
+Q2：有哪些方式可以使用？具体步骤是什么？
+
+A2：请参考下面三种模式及其详细说明。特别注意温馨提示的内容。
+
+### 模式一：挂件版挂载菜单打开新窗口操作方式快速上手 <sup>强烈推荐</sup> <sup>0.4.2+</sup>
 
 首先在设置 - 集市 - 挂件 中下载 sy-post-publisher
 
@@ -41,14 +84,13 @@
 import("/widgets/sy-post-publisher/lib/siyuanhook.js")
 ```
 
-点击按钮开始体验
+点击按钮开始体验。
 
-![](https://img1.terwer.space/api/public/20221228-175950.jpeg)
+详情请参考: [挂件模式用挂载菜单的方式使用](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html)
 
-详情请参考: [挂件模式用挂载菜单的方式使用](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html)<sup>
-强烈推荐</sup> <sup>0.4.2+</sup>
+温馨提示：此模式下，功能已经是最全面的了，直接使用菜单功能即可，请不要再添加挂件。避免因为混用导致配置同步问题。
 
-### 挂件版通用方式快速上手
+### 模式二：挂件版通用方式快速上手
 
 首先在设置 - 集市 - 挂件 中下载 sy-post-publisher
 
@@ -58,11 +100,25 @@ import("/widgets/sy-post-publisher/lib/siyuanhook.js")
 
 然后选择你需要的平台然后进行设置
 
-点击发布即可
+点击发布即可。
 
-### 浏览器插件快速上手
+温馨提示：不建议通用版模式下添加 JS 片段，可能会导致配置不同步问题。要么单独使用通用版，要么单独使用挂载菜单。
+
+### 模式三：浏览器插件快速上手
 
 参考 [浏览器插件快速上手指南](https://docs.publish.terwer.space/docs/getting-started/#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E6%96%B9%E5%BC%8F%E4%BD%BF%E7%94%A8)
+
+Q3: `siyuanhook.js` 新增挂载了哪些对象？在哪些场景挂载？目的是什么？
+
+A3：SyPicgo、syp、terwer（仅新窗口）、SyCmd。仅在 `Electron` 环境（即思源笔记内部挂载）。
+
+浏览器插件和自部署模式无此功能。目的是为了扩展思源笔记的功能。
+
+Q4：有哪些是已知问题，需要特别注意的？
+
+1. 思源笔记的【优化排版】会导致 Anki 标记字符被转义。
+
+   目前可用解决方案：如果使用了优化排版，使用完成之后一定要打开 Anki 列表，重新保存一下 Anki 笔记来修复。
 
 ## 支持平台
 
