@@ -4,7 +4,7 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
-import { L as LogFactory, v as SiYuanApi, l as isEmptyString, C as CONSTANTS, as as parseJSONObj, at as getSiyuanCfg, K as pathJoin, aq as isElectron, am as getSiyuanNewWinDataDir, au as isFileExist, ar as picgoUtil, av as toJSONString } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6643e7a.js";
+import { L as LogFactory, v as SiYuanApi, l as isEmptyString, C as CONSTANTS, as as parseJSONObj, at as getSiyuanCfg, K as pathJoin, aq as isElectron, am as getSiyuanNewWinDataDir, au as isFileExist, ar as picgoUtil, av as toJSONString } from "./AppLayout.vue_vue_type_script_setup_true_lang-a01203bb.js";
 import { m as md5 } from "./vendor_blueimp-md5-es6-056b4f91.js";
 import { E as ElMessage } from "./vendor_element-plus-f0c88bcb.js";
 class PicgoPostResult {

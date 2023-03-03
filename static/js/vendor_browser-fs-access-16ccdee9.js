@@ -7,9 +7,7 @@ const e = (() => {
     } catch (e2) {
       return false;
     }
-  else if ("showOpenFilePicker" in self)
-    return "showOpenFilePicker";
-  return false;
+  return "showOpenFilePicker" in self;
 })(), t = e ? Promise.resolve().then(function() {
   return l;
 }) : Promise.resolve().then(function() {
@@ -21,7 +19,7 @@ async function n(...e2) {
 e ? Promise.resolve().then(function() {
   return y;
 }) : Promise.resolve().then(function() {
-  return P;
+  return b;
 });
 e ? Promise.resolve().then(function() {
   return m;
@@ -146,7 +144,7 @@ var d = async (e2 = {}) => {
     let t3 = Array.from(r.files);
     e2[0].recursive ? e2[0].recursive && e2[0].skipDirectory && (t3 = t3.filter((t4) => t4.webkitRelativePath.split("/").every((t5) => !e2[0].skipDirectory({ name: t5, kind: "directory" })))) : t3 = t3.filter((e3) => 2 === e3.webkitRelativePath.split("/").length), i(t3);
   }), "showPicker" in HTMLInputElement.prototype ? r.showPicker() : r.click();
-})), P = { __proto__: null, default: h }, b = async (e2, t2 = {}) => {
+})), b = { __proto__: null, default: h }, P = async (e2, t2 = {}) => {
   Array.isArray(t2) && (t2 = t2[0]);
   const n2 = document.createElement("a");
   let r = e2;
@@ -166,7 +164,7 @@ var d = async (e2 = {}) => {
   return n2.addEventListener("click", () => {
     setTimeout(() => URL.revokeObjectURL(n2.href), 3e4), i();
   }), n2.click(), null;
-}, k = { __proto__: null, default: b };
+}, k = { __proto__: null, default: P };
 export {
   n
 };

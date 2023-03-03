@@ -1,6 +1,6 @@
-import { L as LogFactory, w as isBrowser, b as isInSiyuanNewWinBrowser, aw as getWidgetId, j as goToPage, t as appendStr, f as getPublishCfg, r as removeTitleNumber, B as reloadPage, c as getPageId, v as SiYuanApi, k as _export_sfc, _ as _sfc_main$3, p as pageUtil } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6643e7a.js";
+import { L as LogFactory, w as isBrowser, b as isInSiyuanNewWinBrowser, aw as getWidgetId, j as goToPage, t as appendStr, f as getPublishCfg, r as removeTitleNumber, B as reloadPage, c as getPageId, v as SiYuanApi, k as _export_sfc, _ as _sfc_main$3, p as pageUtil } from "./AppLayout.vue_vue_type_script_setup_true_lang-a01203bb.js";
 import { a as ElButton, E as ElMessage } from "./vendor_element-plus-f0c88bcb.js";
-import { _ as _sfc_main$2 } from "./PostDetailService.vue_vue_type_style_index_0_lang-7019a44e.js";
+import { _ as _sfc_main$2 } from "./PostDetailService.vue_vue_type_style_index_0_lang-ebd030b9.js";
 import { O as defineComponent, u as ref, A as onMounted, P as openBlock, Q as createElementBlock, a2 as createVNode, V as withCtx, $ as createTextVNode, a0 as toDisplayString, _ as createCommentVNode, U as createBlock } from "./vendor-1c6b4df7.js";
 import "./vendor_pinia-0ad60f3b.js";
 import "./vendor_vue-demi-2d1e3e69.js";
@@ -10,7 +10,7 @@ import "./vendor_plantuml-encoder-18698577.js";
 import "./vendor_loglevel-bd2e1c44.js";
 import "./vendor_before-after-hook-6380be1a.js";
 import "./vendor_loglevel-plugin-prefix-34a2ac06.js";
-import "./vendor_browser-fs-access-bf84e7f7.js";
+import "./vendor_browser-fs-access-16ccdee9.js";
 import "./vendor_transliteration-0556f169.js";
 import "./vendor_shorthash2-e60185c0.js";
 import "./vendor_uuid-520e9b68.js";

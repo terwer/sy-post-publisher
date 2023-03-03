@@ -13,7 +13,7 @@ import { H as HighlightJS, j as javascript, t as typescript, c, a as cpp, b as j
 import { b as browserIndex } from "./vendor_plantuml-encoder-18698577.js";
 import { l as loglevel } from "./vendor_loglevel-bd2e1c44.js";
 import { p as prefix } from "./vendor_loglevel-plugin-prefix-34a2ac06.js";
-import { n } from "./vendor_browser-fs-access-bf84e7f7.js";
+import { n } from "./vendor_browser-fs-access-16ccdee9.js";
 import { d } from "./vendor_transliteration-0556f169.js";
 import { d as dist } from "./vendor_shorthash2-e60185c0.js";
 import { v as v4 } from "./vendor_uuid-520e9b68.js";
@@ -2244,7 +2244,7 @@ const __vitePreload = function preload(baseModule, deps, importerUrl) {
   })).then(() => baseModule());
 };
 const initHook = async () => {
-  await __vitePreload(() => import("./siyuanhook-151e6eb1.js"), true ? [] : void 0);
+  await __vitePreload(() => import("./siyuanhook-a3de8397.js"), true ? [] : void 0);
 };
 const createPage = async (rootComponent) => {
   await initHook();
@@ -9529,7 +9529,7 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
 });
 const ImportData_vue_vue_type_style_index_0_scoped_c8b429f6_lang = "";
 const ImportData = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-c8b429f6"]]);
-const version = "0.7.0";
+const version = "0.7.1";
 const _hoisted_1$3 = {
   class: "card-header"
 };

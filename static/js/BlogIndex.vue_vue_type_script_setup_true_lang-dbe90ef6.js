@@ -1,11 +1,11 @@
 import { u as ElPageHeader, a as ElButton, G as ElAutocomplete, H as ElSkeleton, p as ElTableColumn, b as ElTooltip, q as ElTable, I as ElPagination, h as ElAlert, t as ElMessageBox, E as ElMessage, r as ElMain, s as ElContainer } from "./vendor_element-plus-f0c88bcb.js";
 import { u as useI18n } from "./vendor_vue-i18n-b8c9be4e.js";
-import { P as Post, e as getByLength, f as getPublishCfg, h as parseBoolean, j as goToPage, k as _export_sfc, L as LogFactory, a as isInSiyuanWidget, S as SiYuanApiAdaptor, b as isInSiyuanNewWinBrowser, c as getPageId, l as isEmptyString, r as removeTitleNumber, C as CONSTANTS, m as mdToHtml, n as formatIsoToZhDate } from "./AppLayout.vue_vue_type_script_setup_true_lang-a6643e7a.js";
-import { _ as _sfc_main$6 } from "./PostDetailService.vue_vue_type_style_index_0_lang-7019a44e.js";
-import { O as defineComponent, u as ref, A as onMounted, P as openBlock, Q as createElementBlock, a2 as createVNode, V as withCtx, X as createBaseVNode, a0 as toDisplayString, x as unref, aD as arrow_left_default, $ as createTextVNode, U as createBlock, _ as createCommentVNode, ax as toRaw, aN as resolveComponent, c8 as pushScopeId, c9 as popScopeId } from "./vendor-1c6b4df7.js";
-import { P as PublishService } from "./PublishService-f9c5a1ff.js";
-import { A as AnkiIndex } from "./AnkiIndex-bc912707.js";
-import { _ as _sfc_main$7 } from "./PicgoIndex.vue_vue_type_style_index_0_lang-2378dce4.js";
+import { P as Post, e as getByLength, f as getPublishCfg, h as parseBoolean, j as goToPage, k as _export_sfc, L as LogFactory, a as isInSiyuanWidget, S as SiYuanApiAdaptor, b as isInSiyuanNewWinBrowser, c as getPageId, l as isEmptyString, r as removeTitleNumber, C as CONSTANTS, m as mdToHtml, n as formatIsoToZhDate } from "./AppLayout.vue_vue_type_script_setup_true_lang-a01203bb.js";
+import { _ as _sfc_main$6 } from "./PostDetailService.vue_vue_type_style_index_0_lang-ebd030b9.js";
+import { O as defineComponent, u as ref, A as onMounted, P as openBlock, Q as createElementBlock, a2 as createVNode, V as withCtx, X as createBaseVNode, a0 as toDisplayString, x as unref, aD as arrow_left_default, $ as createTextVNode, U as createBlock, _ as createCommentVNode, aN as resolveComponent, c8 as pushScopeId, c9 as popScopeId } from "./vendor-1c6b4df7.js";
+import { P as PublishService } from "./PublishService-6227fd1c.js";
+import { A as AnkiIndex } from "./AnkiIndex-7f15e979.js";
+import { _ as _sfc_main$7 } from "./PicgoIndex.vue_vue_type_style_index_0_lang-42ba62d9.js";
 const _hoisted_1$5 = {
   id: "post-detail-body"
 };
@@ -236,7 +236,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
 });
 const SinglePicgo_vue_vue_type_style_index_0_scoped_07201bd8_lang = "";
 const SinglePicgo = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-07201bd8"]]);
-const _withScopeId = (n) => (pushScopeId("data-v-50da1ab3"), n = n(), popScopeId(), n);
+const _withScopeId = (n) => (pushScopeId("data-v-ac3ebf78"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
   id: "post-list"
@@ -395,8 +395,29 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       showPicgo.value = false;
     };
     const handleEdit = (index, row) => {
-      console.log(toRaw(row));
-      return;
+      if (isNewWin.value) {
+        handleNewWinEdit(index, row);
+      } else {
+        const post = new Post();
+        post.postid = row.postid;
+        post.title = row.title;
+        publishData.value = post;
+        showPublish.value = true;
+        showHome.value = false;
+        showDetail.value = false;
+        showAnki.value = false;
+        showPicgo.value = false;
+      }
+    };
+    const handleNewWinEdit = (index, row) => {
+      ElMessageBox.confirm("\u6B64\u64CD\u4F5C\u4F1A\u6253\u5F00\u65B0\u9875\u9762\uFF0C\u6B64\u7A97\u53E3\u5C06\u5173\u95ED\uFF0C\u662F\u5426\u7EE7\u7EED\uFF1F", t("main.opt.warning"), {
+        confirmButtonText: t("main.opt.ok"),
+        cancelButtonText: t("main.opt.cancel"),
+        type: "warning"
+      }).then(async () => {
+        goToPage("/publish/index.html?id=" + row.postid);
+      }).catch(() => {
+      });
     };
     const handleRowClick = (row, column, event) => {
     };
@@ -687,8 +708,8 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   }
 });
 const BlogMain_vue_vue_type_style_index_0_lang = "";
-const BlogMain_vue_vue_type_style_index_1_scoped_50da1ab3_lang = "";
-const BlogMain = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-50da1ab3"]]);
+const BlogMain_vue_vue_type_style_index_1_scoped_ac3ebf78_lang = "";
+const BlogMain = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-ac3ebf78"]]);
 const _hoisted_1 = {
   class: "common-layout"
 };
