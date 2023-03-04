@@ -94,8 +94,6 @@ const initMethods = {
   initPicgoExtension: (entryName) => {
     const syWin = getSiyuanWindow();
     const dataDir = getSiyuanDataDir();
-    console.log("initPicgoExtension=>", dataDir);
-    console.log("syWin=>", syWin);
     if (syWin.SyPicgo) {
       console.warn("SyPicgo\u5DF2\u6302\u8F7D\uFF0C\u5FFD\u7565", entryName);
       return;
@@ -112,11 +110,15 @@ const initMethods = {
       appDataFolder,
       "sy-picgo"
     );
-    const picgo_cfg_070 = "picgo.cfg.json";
+    const picgo_cfg_070_file = "picgo.cfg.json";
+    const picgo_cfg_070 = picgoExtension.joinPath(
+      picgo_cfg_folder_070,
+      picgo_cfg_070_file
+    );
     picgoExtension.upgradeCfg(
       picgo_cfg_067,
       picgo_cfg_folder_070,
-      picgo_cfg_070
+      picgo_cfg_070_file
     );
     console.warn("PicGO\u914D\u7F6E\u6587\u4EF6\u521D\u59CB\u5316\u4E3A=>", picgo_cfg_070);
     const syPicgo = picgoExtension.initPicgo(picgo_cfg_070);

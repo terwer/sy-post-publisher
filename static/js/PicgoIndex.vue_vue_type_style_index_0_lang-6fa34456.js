@@ -1,8 +1,8 @@
 import { t as ElMessageBox, E as ElMessage, h as ElAlert, a as ElButton, b as ElTooltip, M as ElPopover, F as ElDialog, f as ElInput } from "./vendor_element-plus-f0c88bcb.js";
-import { a as isInSiyuanWidget, b as isInSiyuanNewWinBrowser, ap as envUtil, L as LogFactory, aq as isElectron, ar as picgoUtil, c as getPageId, v as SiYuanApi, B as reloadPage, w as isBrowser, x as copyToClipboardInBrowser, ah as PicgoSetting } from "./AppLayout.vue_vue_type_script_setup_true_lang-a01203bb.js";
+import { a as isInSiyuanWidget, b as isInSiyuanNewWinBrowser, ap as envUtil, L as LogFactory, aq as isElectron, ar as picgoUtil, c as getPageId, v as SiYuanApi, B as reloadPage, w as isBrowser, x as copyToClipboardInBrowser, ah as PicgoSetting } from "./AppLayout.vue_vue_type_script_setup_true_lang-0e4e5141.js";
 import { ad as reactive, z as watch, A as onMounted, O as defineComponent, u as ref, P as openBlock, Q as createElementBlock, a2 as createVNode, X as createBaseVNode, V as withCtx, $ as createTextVNode, a0 as toDisplayString, x as unref, U as createBlock, _ as createCommentVNode, a1 as Fragment, ao as renderList, aN as resolveComponent } from "./vendor-1c6b4df7.js";
 import { u as useI18n } from "./vendor_vue-i18n-b8c9be4e.js";
-import { a as ImageItem, P as PicgoPostApi, I as ImageParser } from "./picgoPostApi-eced7049.js";
+import { a as ImageItem, P as PicgoPostApi, I as ImageParser } from "./picgoPostApi-0729a340.js";
 const usePicgoCommon = () => {
   const isDev = envUtil.isDev;
   const isSiyuanOrSiyuanNewWin = isInSiyuanWidget() || isInSiyuanNewWinBrowser();

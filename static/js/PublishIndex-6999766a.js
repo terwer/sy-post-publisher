@@ -1,6 +1,6 @@
-import { P as PublishService } from "./PublishService-6227fd1c.js";
+import { P as PublishService } from "./PublishService-a5948f32.js";
 import { O as defineComponent, P as openBlock, Q as createElementBlock, a2 as createVNode } from "./vendor-1c6b4df7.js";
-import { k as _export_sfc } from "./AppLayout.vue_vue_type_script_setup_true_lang-a01203bb.js";
+import { k as _export_sfc } from "./AppLayout.vue_vue_type_script_setup_true_lang-0e4e5141.js";
 const _hoisted_1 = {
   id: "publish-index-body"
 };

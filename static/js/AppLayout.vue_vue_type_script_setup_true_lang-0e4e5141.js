@@ -1019,7 +1019,7 @@ const getByLength = (str, length, ignore) => {
   if (allText.length < length) {
     return allText;
   }
-  if (ignore === true) {
+  if (ignore) {
     return allText.substring(0, length);
   }
   return allText.substring(0, length) + "...";
@@ -1031,10 +1031,10 @@ const appendStr = (...str) => {
   return str.join("");
 };
 const mdFileToTitle = (fmtTitle) => {
-  if (fmtTitle.indexOf(".md") > -1) {
+  if (fmtTitle.includes(".md")) {
     fmtTitle = fmtTitle.replace(/\.md/g, "");
   }
-  if (fmtTitle.indexOf(".") > -1) {
+  if (fmtTitle.includes(".")) {
     fmtTitle = removeTitleNumber(fmtTitle);
   }
   return fmtTitle;
@@ -1079,7 +1079,7 @@ const includeInArray = (str, arr) => {
   let flag = false;
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i];
-    if (str.indexOf(item) > -1) {
+    if (str.includes(item)) {
       flag = true;
     }
   }
@@ -2244,7 +2244,7 @@ const __vitePreload = function preload(baseModule, deps, importerUrl) {
   })).then(() => baseModule());
 };
 const initHook = async () => {
-  await __vitePreload(() => import("./siyuanhook-a3de8397.js"), true ? [] : void 0);
+  await __vitePreload(() => import("./siyuanhook-8bbeb917.js"), true ? [] : void 0);
 };
 const createPage = async (rootComponent) => {
   await initHook();
@@ -9529,7 +9529,7 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
 });
 const ImportData_vue_vue_type_style_index_0_scoped_c8b429f6_lang = "";
 const ImportData = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-c8b429f6"]]);
-const version = "0.7.1";
+const version = "0.7.2";
 const _hoisted_1$3 = {
   class: "card-header"
 };

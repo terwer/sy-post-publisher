@@ -1,6 +1,6 @@
 import { h as ElAlert, a as ElButton, K as ElTag, f as ElInput, e as ElFormItem, v as ElCard, B as ElCol, A as ElRow, t as ElMessageBox, E as ElMessage } from "./vendor_element-plus-f0c88bcb.js";
 import { O as defineComponent, ad as reactive, u as ref, z as watch, A as onMounted, P as openBlock, Q as createElementBlock, U as createBlock, _ as createCommentVNode, x as unref, V as withCtx, $ as createTextVNode, a2 as createVNode, a1 as Fragment, ao as renderList, X as createBaseVNode, a0 as toDisplayString, ap as withKeys } from "./vendor-1c6b4df7.js";
-import { s as siyuanBrowserUtil, L as LogFactory, b as isInSiyuanNewWinBrowser, am as getSiyuanNewWinDataDir, c as getPageId, l as isEmptyString, an as strUtil, v as SiYuanApi, t as appendStr, ao as browserUtil, k as _export_sfc } from "./AppLayout.vue_vue_type_script_setup_true_lang-a01203bb.js";
+import { s as siyuanBrowserUtil, L as LogFactory, b as isInSiyuanNewWinBrowser, am as getSiyuanNewWinDataDir, c as getPageId, l as isEmptyString, an as strUtil, v as SiYuanApi, t as appendStr, ao as browserUtil, k as _export_sfc } from "./AppLayout.vue_vue_type_script_setup_true_lang-0e4e5141.js";
 import { u as useI18n } from "./vendor_vue-i18n-b8c9be4e.js";
 const cmd = async (c) => {
   const syWin = siyuanBrowserUtil.getSiyuanWindow();
