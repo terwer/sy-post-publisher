@@ -5,46 +5,4 @@
  * Copyright(c) 2015 Tiancheng "Timothy" Gu
  * MIT Licensed
  */
-var matchHtmlRegExp = /["'&<>]/;
-var escapeHtml_1 = escapeHtml;
-function escapeHtml(string) {
-  var str = "" + string;
-  var match = matchHtmlRegExp.exec(str);
-  if (!match) {
-    return str;
-  }
-  var escape;
-  var html = "";
-  var index = 0;
-  var lastIndex = 0;
-  for (index = match.index; index < str.length; index++) {
-    switch (str.charCodeAt(index)) {
-      case 34:
-        escape = "&quot;";
-        break;
-      case 38:
-        escape = "&amp;";
-        break;
-      case 39:
-        escape = "&#39;";
-        break;
-      case 60:
-        escape = "&lt;";
-        break;
-      case 62:
-        escape = "&gt;";
-        break;
-      default:
-        continue;
-    }
-    if (lastIndex !== index) {
-      html += str.substring(lastIndex, index);
-    }
-    lastIndex = index + 1;
-    html += escape;
-  }
-  return lastIndex !== index ? html + str.substring(lastIndex, index) : html;
-}
-export {
-  escapeHtml_1 as e
-};
+var e=/["'&<>]/,a=function(a){var r,t=""+a,s=e.exec(t);if(!s)return t;var c="",n=0,u=0;for(n=s.index;n<t.length;n++){switch(t.charCodeAt(n)){case 34:r="&quot;";break;case 38:r="&amp;";break;case 39:r="&#39;";break;case 60:r="&lt;";break;case 62:r="&gt;";break;default:continue}u!==n&&(c+=t.substring(u,n)),u=n+1,c+=r}return u!==n?c+t.substring(u,n):c};export{a as e};

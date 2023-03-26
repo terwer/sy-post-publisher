@@ -1,81 +1,4 @@
-var v = false, o, f, s, u, d, N, l, p, m, w, D, x, E, M, F;
-function a() {
-  if (!v) {
-    v = true;
-    var e = navigator.userAgent, n = /(?:MSIE.(\d+\.\d+))|(?:(?:Firefox|GranParadiso|Iceweasel).(\d+\.\d+))|(?:Opera(?:.+Version.|.)(\d+\.\d+))|(?:AppleWebKit.(\d+(?:\.\d+)?))|(?:Trident\/\d+\.\d+.*rv:(\d+\.\d+))/.exec(e), i = /(Mac OS X)|(Windows)|(Linux)/.exec(e);
-    if (x = /\b(iPhone|iP[ao]d)/.exec(e), E = /\b(iP[ao]d)/.exec(e), w = /Android/i.exec(e), M = /FBAN\/\w+;/i.exec(e), F = /Mobile/i.exec(e), D = !!/Win64/.exec(e), n) {
-      o = n[1] ? parseFloat(n[1]) : n[5] ? parseFloat(n[5]) : NaN, o && document && document.documentMode && (o = document.documentMode);
-      var r = /(?:Trident\/(\d+.\d+))/.exec(e);
-      N = r ? parseFloat(r[1]) + 4 : o, f = n[2] ? parseFloat(n[2]) : NaN, s = n[3] ? parseFloat(n[3]) : NaN, u = n[4] ? parseFloat(n[4]) : NaN, u ? (n = /(?:Chrome\/(\d+\.\d+))/.exec(e), d = n && n[1] ? parseFloat(n[1]) : NaN) : d = NaN;
-    } else
-      o = f = s = d = u = NaN;
-    if (i) {
-      if (i[1]) {
-        var t = /(?:Mac OS X (\d+(?:[._]\d+)?))/.exec(e);
-        l = t ? parseFloat(t[1].replace("_", ".")) : true;
-      } else
-        l = false;
-      p = !!i[2], m = !!i[3];
-    } else
-      l = p = m = false;
-  }
-}
-var _ = { ie: function() {
-  return a() || o;
-}, ieCompatibilityMode: function() {
-  return a() || N > o;
-}, ie64: function() {
-  return _.ie() && D;
-}, firefox: function() {
-  return a() || f;
-}, opera: function() {
-  return a() || s;
-}, webkit: function() {
-  return a() || u;
-}, safari: function() {
-  return _.webkit();
-}, chrome: function() {
-  return a() || d;
-}, windows: function() {
-  return a() || p;
-}, osx: function() {
-  return a() || l;
-}, linux: function() {
-  return a() || m;
-}, iphone: function() {
-  return a() || x;
-}, mobile: function() {
-  return a() || x || E || w || F;
-}, nativeApp: function() {
-  return a() || M;
-}, android: function() {
-  return a() || w;
-}, ipad: function() {
-  return a() || E;
-} }, A = _;
-var c = !!(typeof window < "u" && window.document && window.document.createElement), U = { canUseDOM: c, canUseWorkers: typeof Worker < "u", canUseEventListeners: c && !!(window.addEventListener || window.attachEvent), canUseViewport: c && !!window.screen, isInWorker: !c }, h = U;
-var X;
-h.canUseDOM && (X = document.implementation && document.implementation.hasFeature && document.implementation.hasFeature("", "") !== true);
-function S(e, n) {
-  if (!h.canUseDOM || n && !("addEventListener" in document))
-    return false;
-  var i = "on" + e, r = i in document;
-  if (!r) {
-    var t = document.createElement("div");
-    t.setAttribute(i, "return;"), r = typeof t[i] == "function";
-  }
-  return !r && X && e === "wheel" && (r = document.implementation.hasFeature("Events.wheel", "3.0")), r;
-}
-var b = S;
-var O = 10, I = 40, P = 800;
-function T(e) {
-  var n = 0, i = 0, r = 0, t = 0;
-  return "detail" in e && (i = e.detail), "wheelDelta" in e && (i = -e.wheelDelta / 120), "wheelDeltaY" in e && (i = -e.wheelDeltaY / 120), "wheelDeltaX" in e && (n = -e.wheelDeltaX / 120), "axis" in e && e.axis === e.HORIZONTAL_AXIS && (n = i, i = 0), r = n * O, t = i * O, "deltaY" in e && (t = e.deltaY), "deltaX" in e && (r = e.deltaX), (r || t) && e.deltaMode && (e.deltaMode == 1 ? (r *= I, t *= I) : (r *= P, t *= P)), r && !n && (n = r < 1 ? -1 : 1), t && !i && (i = t < 1 ? -1 : 1), { spinX: n, spinY: i, pixelX: r, pixelY: t };
-}
-T.getEventType = function() {
-  return A.firefox() ? "DOMMouseScroll" : b("wheel") ? "wheel" : "mousewheel";
-};
-var Y = T;
+var e,n,t,i,r,o,a,d,u,c,l,s,f,p,w,m=!1;function x(){if(!m){m=!0;var x=navigator.userAgent,v=/(?:MSIE.(\d+\.\d+))|(?:(?:Firefox|GranParadiso|Iceweasel).(\d+\.\d+))|(?:Opera(?:.+Version.|.)(\d+\.\d+))|(?:AppleWebKit.(\d+(?:\.\d+)?))|(?:Trident\/\d+\.\d+.*rv:(\d+\.\d+))/.exec(x),h=/(Mac OS X)|(Windows)|(Linux)/.exec(x);if(s=/\b(iPhone|iP[ao]d)/.exec(x),f=/\b(iP[ao]d)/.exec(x),c=/Android/i.exec(x),p=/FBAN\/\w+;/i.exec(x),w=/Mobile/i.exec(x),l=!!/Win64/.exec(x),v){(e=v[1]?parseFloat(v[1]):v[5]?parseFloat(v[5]):NaN)&&document&&document.documentMode&&(e=document.documentMode);var N=/(?:Trident\/(\d+.\d+))/.exec(x);o=N?parseFloat(N[1])+4:e,n=v[2]?parseFloat(v[2]):NaN,t=v[3]?parseFloat(v[3]):NaN,(i=v[4]?parseFloat(v[4]):NaN)?(v=/(?:Chrome\/(\d+\.\d+))/.exec(x),r=v&&v[1]?parseFloat(v[1]):NaN):r=NaN}else e=n=t=r=i=NaN;if(h){if(h[1]){var M=/(?:Mac OS X (\d+(?:[._]\d+)?))/.exec(x);a=!M||parseFloat(M[1].replace("_","."))}else a=!1;d=!!h[2],u=!!h[3]}else a=d=u=!1}}var v,h={ie:function(){return x()||e},ieCompatibilityMode:function(){return x()||o>e},ie64:function(){return h.ie()&&l},firefox:function(){return x()||n},opera:function(){return x()||t},webkit:function(){return x()||i},safari:function(){return h.webkit()},chrome:function(){return x()||r},windows:function(){return x()||d},osx:function(){return x()||a},linux:function(){return x()||u},iphone:function(){return x()||s},mobile:function(){return x()||s||f||c||w},nativeApp:function(){return x()||p},android:function(){return x()||c},ipad:function(){return x()||f}},N=h,M=!!(typeof window<"u"&&window.document&&window.document.createElement),F={canUseDOM:M,canUseWorkers:typeof Worker<"u",canUseEventListeners:M&&!(!window.addEventListener&&!window.attachEvent),canUseViewport:M&&!!window.screen,isInWorker:!M};F.canUseDOM&&(v=document.implementation&&document.implementation.hasFeature&&!0!==document.implementation.hasFeature("",""));var D=function(e,n){if(!F.canUseDOM||n&&!("addEventListener"in document))return!1;var t="on"+e,i=t in document;if(!i){var r=document.createElement("div");r.setAttribute(t,"return;"),i="function"==typeof r[t]}return!i&&v&&"wheel"===e&&(i=document.implementation.hasFeature("Events.wheel","3.0")),i},b=10,E=40,O=800;function X(e){var n=0,t=0,i=0,r=0;return"detail"in e&&(t=e.detail),"wheelDelta"in e&&(t=-e.wheelDelta/120),"wheelDeltaY"in e&&(t=-e.wheelDeltaY/120),"wheelDeltaX"in e&&(n=-e.wheelDeltaX/120),"axis"in e&&e.axis===e.HORIZONTAL_AXIS&&(n=t,t=0),i=n*b,r=t*b,"deltaY"in e&&(r=e.deltaY),"deltaX"in e&&(i=e.deltaX),(i||r)&&e.deltaMode&&(1==e.deltaMode?(i*=E,r*=E):(i*=O,r*=O)),i&&!n&&(n=i<1?-1:1),r&&!t&&(t=r<1?-1:1),{spinX:n,spinY:t,pixelX:i,pixelY:r}}X.getEventType=function(){return N.firefox()?"DOMMouseScroll":D("wheel")?"wheel":"mousewheel"};var A=X;
 /**
 * Checks if an event is supported in the current execution environment.
 *
@@ -89,7 +12,4 @@ var Y = T;
 * @return {boolean} True if the event is supported.
 * @internal
 * @license Modernizr 3.0.0pre (Custom Build) | MIT
-*/
-export {
-  Y
-};
+*/export{A as Y};

@@ -1,0 +1,1 @@
+import{b as e}from"./vendor_rollup-plugin-node-polyfills-64e646dc.js";function o(){return"object"==typeof navigator&&"userAgent"in navigator?navigator.userAgent:"object"==typeof e&&"version"in e?`Node.js/${e.version.substr(1)} (${e.platform}; ${e.arch})`:"<environment undetectable>"}export{o as g};

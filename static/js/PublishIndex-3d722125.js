@@ -1,0 +1,1 @@
+import{P as s}from"./PublishService-2a8da080.js";import{O as a,P as e,Q as i,a2 as o}from"./vendor-42595716.js";import{k as p}from"./AppLayout.vue_vue_type_script_setup_true_lang-59c75e45.js";const t={id:"publish-index-body"},d=p(a({__name:"PublishIndex",setup:a=>(a,p)=>(e(),i("div",t,[o(s,{"page-id":void 0})]))}),[["__scopeId","data-v-473e5abf"]]);export{d as P};
