@@ -98,11 +98,11 @@ const isChrome = ref(false)
 const v = ref(version)
 
 const goGithub = () => {
-  window.open("https://github.com/terwer/src-sy-post-publisher")
+  window.open("https://github.com/terwer/sy-post-publisher")
 }
 
 const goAbout = () => {
-  window.open("https://www.terwer.space/about")
+  window.open("https://blog.terwer.space/about")
 }
 
 const newWin = () => {

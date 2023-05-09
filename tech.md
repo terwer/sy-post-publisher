@@ -26,7 +26,7 @@
 |  ![](https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/icons/browser/edge20.svg)  | [latest](https://microsoftedge.microsoft.com/addons/detail/%E6%80%9D%E6%BA%90%E7%AC%94%E8%AE%B0%E5%8F%91%E5%B8%83%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7/aejmkigifflimhjlhjkdckclhabbilee) |  已上架  |
 | ![](https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/icons/browser/chrome20.svg) |     [latest](https://chrome.google.com/webstore/detail/%E6%80%9D%E6%BA%90%E7%AC%94%E8%AE%B0%E5%8F%91%E5%B8%83%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7/gemlnnppcphbiimfjnobfgdkohjmgifm)     |  已上架  |
 |                                        网页版                                        |                                                                 [latest](https://publish.terwer.space/blog/index.html)                                                                  |  可使用  |
-|                                       离线 zip                                       |                                                           [latest](https://github.com/terwer/src-sy-post-publisher/releases)                                                            |  可下载  |
+|                                       离线 zip                                       |                                                           [latest](https://github.com/terwer/sy-post-publisher/releases)                                                            |  可下载  |
 |                                        挂件版                                        |                                                             [latest](https://github.com/terwer/sy-post-publisher/releases)                                                              |  可使用  |
 
 小贴士：
@@ -51,7 +51,7 @@
 目前支持基于 `Github` <sup>0.0.1+</sup> 、 `metaweblog API` <sup>0.0.2+</sup> 、`Wordpress API` <sup>0.0.2+</sup>
 以及 `自定义HTTP协议` <sup>1.0.0+(预研)</sup> 的平台
 
-同时提供了一个 [统一通用的 API 适配器](https://github.com/terwer/src-sy-post-publisher/blob/main/utils/api.ts)
+同时提供了一个 [统一通用的 API 适配器](https://github.com/terwer/sy-post-publisher/blob/main/utils/api.ts)
 ，让适配任何平台成为可能。
 
 - [x] 兼容 Metaweblog API 以及自定义平台 <sup>0.0.3+</sup>
@@ -74,7 +74,7 @@
 - [x] 发布页面支持预览 <sup>0.1.0+</sup>
 - [ ] 支持自定义接口协议 <sup>1.0.0+</sup>
 - [x] 支持文章标题使用数字编号 <sup>0.0.3+</sup>
-- [x] [多平台支持，并且持续适配中](https://github.com/terwer/src-sy-post-publisher#%E6%94%AF%E6%8C%81%E5%B9%B3%E5%8F%B0) <sup>
+- [x] [多平台支持，并且持续适配中](https://github.com/terwer/sy-post-publisher#%E6%94%AF%E6%8C%81%E5%B9%B3%E5%8F%B0) <sup>
       0.0.1+</sup>
 - [x] 支持同步到 Github(Github pages、Hugo、Hexo、Jekyll、Vuepress、Vitepress、Nuxt content、Next.js)，0.1.0+
       之后更加通用，支持动态添加管理多个 <sup>0.0.1+</sup> <sup>0.1.0+</sup>
