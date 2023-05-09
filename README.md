@@ -9,15 +9,16 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/terwer/sy-post-publisher)
 ![](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)
 
-[![](https://img.shields.io/badge/帮助文档-doc-blue)](https://docs.publish.terwer.space)
-[![](https://img.shields.io/badge/视频教程-video-red)](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html#%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
-[![](https://img.shields.io/badge/项目源码-code-red)](https://github.com/terwer/sy-post-publisher)
+[![](https://img.shields.io/badge/helo-doc-blue)](https://docs.publish.terwer.space)
+[![](https://img.shields.io/badge/course-video-red)](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html#%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[![](https://img.shields.io/badge/source-code-red)](https://github.com/terwer/sy-post-publisher)
+<a title="Downloads" target="_blank" href="https://github.com/terwer/sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/sy-post-publisher/total.svg?label=downloads&style=flat-square&color=blue"></a>
 
 ![](https://static.terwergreen.com/img/202302222313542.png)
 
 使用之前请务必详细阅读 [快速上手指南](#快速上手指南)
 
-<a title="Downloads" target="_blank" href="https://github.com/terwer/sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/sy-post-publisher/total.svg?label=downloads&style=flat-square&color=blue"></a>
+## v0.9.0
 
 ## v0.8.0
 

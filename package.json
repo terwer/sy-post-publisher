@@ -9,8 +9,6 @@
     "preview": "vite preview",
     "test": "vitest --watch",
     "docs": "jsdoc -c jsdoc.json utils/api.ts",
-    "prettier": "prettier --write .",
-    "prepare": "husky install",
     "new": "python scripts/version.py 0.8.0",
     "widget": "python scripts/widget.py",
     "ext": "python scripts/ext.py",
@@ -68,7 +66,6 @@
     "eslint-plugin-vue": "^9.8.0",
     "fs-extra": "^11.1.0",
     "happy-dom": "^8.1.0",
-    "husky": "^8.0.2",
     "lint-staged": "^13.0.4",
     "node-localstorage": "^2.2.1",
     "prettier": "2.8.4",
@@ -82,8 +79,5 @@
     "vite-plugin-virtual-mpa": "^1.2.2",
     "vitest": "^0.29.1",
     "vue-tsc": "^1.0.10"
-  },
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
   }
 }
