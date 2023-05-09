@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "vitest --watch",
     "docs": "jsdoc -c jsdoc.json utils/api.ts",
-    "new": "python scripts/version.py",
+    "syncVersion": "python scripts/version.py",
     "widget": "python scripts/widget.py",
     "ext": "python scripts/ext.py",
     "package": "pnpm widget && pnpm ext"

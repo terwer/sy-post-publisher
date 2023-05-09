@@ -78,12 +78,7 @@ jobs:
       - name: Prepare new version
         if: ${{ steps.release.outputs.release_created }}
         run: |
-          pnpm new ${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
-          git config user.name terwer[bot]
-          git config user.email youweics@163.com
-          git remote add gh-token "https://${{ secrets.GH_TOKEN }}@github.com/terwer/sy-post-publisher.git"
-          git add -A
-          git push origin main
+          pnpm syncVersion ${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
 
       # Build for production and Archive package
       - name: Build for production
@@ -95,7 +90,7 @@ jobs:
       - name: Upload package.zip to the release
         if: ${{ steps.release.outputs.releases_created }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           for f in $(find ./build -name '*.zip'); do
             gh release upload ${{ steps.release.outputs.tag_name }} $f
