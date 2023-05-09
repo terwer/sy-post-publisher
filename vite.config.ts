@@ -159,6 +159,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         ],
       }),
       // https://github.com/WarrenJones/vite-plugin-require-transform/issues/10
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       vitePluginRequireTransform({}),
     ],

@@ -2,7 +2,7 @@
   "name": "sy-post-publisher",
   "private": true,
   "version": "0.8.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "serve": "python scripts/serve.py",
     "dev": "python scripts/dev.py",
@@ -11,7 +11,7 @@
     "test": "vitest --watch",
     "docs": "jsdoc -c jsdoc.json utils/api.ts",
     "syncVersion": "python scripts/version.py",
-    "parseChangelog": "ts-node-esm --experimental-specifier-resolution=node tools/changelogParser.ts",
+    "parseChangelog": "ts-node-esm --experimental-specifier-resolution=node tools/changelogParser.mts",
     "prepareRelease": "pnpm syncVersion && pnpm parseChangelog",
     "widget": "python scripts/widget.py",
     "ext": "python scripts/ext.py",
