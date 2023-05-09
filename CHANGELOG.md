@@ -1,57 +1,33 @@
 # Changelog
 
 ## [0.8.0](https://github.com/terwer/src-sy-post-publisher/compare/v0.7.2...v0.8.0) (2023-03-25)
-
 ### Features
-
 - Github 平台（HUGO、Hexo、Vitepress 等）支持笔记间的内部链接替换 ([a976a4c](https://github.com/terwer/src-sy-post-publisher/commit/a976a4c7b8506eecae3e8d1f8c754a1bc2745682))
 - 博客园、WordPress、Typecho 平台支持笔记间的内部链接替换 ([3294b4a](https://github.com/terwer/src-sy-post-publisher/commit/3294b4aa394ac9c47e294ae26901a1e786012489))
 - 发布至语雀支持笔记间的内部链接替换 ([2cc4cc1](https://github.com/terwer/src-sy-post-publisher/commit/2cc4cc121e84c16c1aafc96de92e53cbea3aac8b))
-
 ### Bug Fixes
-
 - [#434](https://github.com/terwer/src-sy-post-publisher/issues/434) 文章没有图片时候图床错误文章发布失败 ([3f286fa](https://github.com/terwer/src-sy-post-publisher/commit/3f286fa1df18d6f29cc773374a5ba48287ee44b6))
 - fix siyuanhook ([1603a61](https://github.com/terwer/src-sy-post-publisher/commit/1603a61a21205a57ec34cea3880b42c4a292fc4a))
 - 修复 PicGo 设置中的时间戳重命名关闭后会自动打开的问题 ([e673f58](https://github.com/terwer/src-sy-post-publisher/commit/e673f5879167b6eb889b688353c1d1e77611f6f8))
 - 修复普通挂件版使用方式 WordPress 和博客园发布文章报错问题 ([d6a21e1](https://github.com/terwer/src-sy-post-publisher/commit/d6a21e1ea1fced6f6f1128705e09214da7f01dc8))
 - 由于 Electron 主窗口机制问题，图片上传仅支持新窗口 ([20c9a85](https://github.com/terwer/src-sy-post-publisher/commit/20c9a851afb26ebdcf32c62b3b561204878990bd))
-
 ### Miscellaneous
-
 - [#420](https://github.com/terwer/src-sy-post-publisher/issues/420) ankisiyuan.bin 默认不提供，手动下载，减小打包体积 ([9598fb1](https://github.com/terwer/src-sy-post-publisher/commit/9598fb1a3b4458aee9fc2525c232972b848cd4ad))
 - 主窗口移除 Picgo 支持 ([6061125](https://github.com/terwer/src-sy-post-publisher/commit/60611250fea6204ed7a88b2751abd96e81109492))
 - 修复图片有备注时无法上传问题 ([054eddd](https://github.com/terwer/src-sy-post-publisher/commit/054eddda8cf7198e70930e897de7b4a3bcfb8045))
 - 移除不必要的日志打印 ([cb68777](https://github.com/terwer/src-sy-post-publisher/commit/cb6877728262223a42c3a015352454c63e1abb1e))
-
 ## [0.7.2](https://github.com/terwer/src-sy-post-publisher/compare/v0.7.1...v0.7.2) (2023-03-04)
-
-### Bug Fixes
-
 - fix siyuanhook ([724b182](https://github.com/terwer/src-sy-post-publisher/commit/724b1823c4434dd4c2b0232c8e1dbea54fdac0c1))
-
-### Miscellaneous
-
 - fix eslint ([31a2d06](https://github.com/terwer/src-sy-post-publisher/commit/31a2d06b2c15668200d8da12600a025bf260672c))
-
 ## [0.7.1](https://github.com/terwer/src-sy-post-publisher/compare/v0.7.0...v0.7.1) (2023-03-03)
-
-### Bug Fixes
-
 - [#416](https://github.com/terwer/src-sy-post-publisher/issues/416) 修复 PicGO 配置文件迁移路径问题 ([3e6c9bc](https://github.com/terwer/src-sy-post-publisher/commit/3e6c9bcbd64b776b24e223daf9b73339a43410a1))
 - **deps:** bump browser-fs-access from 0.32.1 to 0.33.0 ([7af5c5c](https://github.com/terwer/src-sy-post-publisher/commit/7af5c5cb1ded0c3e6405b95acf87a5dc90acf6a1))
 - fix file fomatter ([e34ab70](https://github.com/terwer/src-sy-post-publisher/commit/e34ab70481ae0b5a201610043d05c3c19678967e))
 - 修复 PicGO 配置文件迁移路径问题 ([6f7e90c](https://github.com/terwer/src-sy-post-publisher/commit/6f7e90cea622f6693a195d34e7e43db904b9972a))
-
-### Miscellaneous
-
 - **deps-dev:** bump @vitest/coverage-c8 from 0.28.5 to 0.29.1 ([edbef57](https://github.com/terwer/src-sy-post-publisher/commit/edbef5715c41aa762fdb9649d7b0c86b84da63bf))
 - remove unused log ([442c052](https://github.com/terwer/src-sy-post-publisher/commit/442c05204402b5975b8192e86973a74712848431))
 - update coverage-c8 ([60e81aa](https://github.com/terwer/src-sy-post-publisher/commit/60e81aaec490e3b226bf65fb533737cc80da7ca1))
-
 ## [0.7.0](https://github.com/terwer/src-sy-post-publisher/compare/v0.6.8...v0.7.0) (2023-02-27)
-
-### Features
-
 - [#209](https://github.com/terwer/src-sy-post-publisher/issues/209) 发布页面新增按钮支持绑定文章 ([239927b](https://github.com/terwer/src-sy-post-publisher/commit/239927b9593441ce6e646301d240c357915d1a9e))
 - [#276](https://github.com/terwer/src-sy-post-publisher/issues/276) 新窗口打开时操作按钮 fixed 不随页面滑动 ([1a094b2](https://github.com/terwer/src-sy-post-publisher/commit/1a094b20aabdaa0643e9638ac860a90b81f4731d))
 - [#319](https://github.com/terwer/src-sy-post-publisher/issues/319) PicGO 图形化配置界面-0.7.0-beta1 ([8a11a68](https://github.com/terwer/src-sy-post-publisher/commit/8a11a68f3412e752bee93c1d19ee738ec57db365))
@@ -127,9 +103,6 @@
 - 重构构建脚本-解决新版本脚本乱码问题 ([a23ede1](https://github.com/terwer/src-sy-post-publisher/commit/a23ede131a15e3dd23b577c25c555c4332bc710f))
 - 重构构建脚本-重构 serve 命令脚本 ([b60aeb4](https://github.com/terwer/src-sy-post-publisher/commit/b60aeb4850f4c235235332ed77feff537f5b4b0b))
 - 重构构建脚本-重构新版本脚本 ([f77a706](https://github.com/terwer/src-sy-post-publisher/commit/f77a7069e604242bab5c70d56f250317fb8720eb))
-
-### Bug Fixes
-
 - [#376](https://github.com/terwer/src-sy-post-publisher/issues/376) typecho 发布文章未成功解析文章 id ([f5975f5](https://github.com/terwer/src-sy-post-publisher/commit/f5975f514ea62ab2464067be550d10f6c3c480fc))
 - [#385](https://github.com/terwer/src-sy-post-publisher/issues/385) 路径问题可能导致挂载过程思源崩溃页面空白问题 ([0f18eda](https://github.com/terwer/src-sy-post-publisher/commit/0f18eda86420727e79223c57756aade6e650b43f))
 - [#394](https://github.com/terwer/src-sy-post-publisher/issues/394) 思源内部 Anki 同步报错 ([d2e6492](https://github.com/terwer/src-sy-post-publisher/commit/d2e6492a0a917576b6551c21b35a8c5d6b55f112))
@@ -137,10 +110,7 @@
 - CI complains of outdated lockfile but says the lockfile is up to date, see https://github.com/pnpm/pnpm/issues/5144 ([0b92761](https://github.com/terwer/src-sy-post-publisher/commit/0b92761afc64236e842969e4522ac79e6423ee7f))
 - **deps:** bump actions/checkout from 2 to 3 ([5cee6c7](https://github.com/terwer/src-sy-post-publisher/commit/5cee6c7eaf9227c6bfe9ef042b0e1214b59a8471))
 - **deps:** bump browser-fs-access from 0.31.2 to 0.32.1 ([5ccf58f](https://github.com/terwer/src-sy-post-publisher/commit/5ccf58fe8e093697ed5d75ec861e28da48510c7e))
-
-### Miscellaneous
-
-- **deps-dev:** bump eslint-config-standard-with-typescript ([2a007ec](https://github.com/terwer/src-sy-post-publisher/commit/2a007ecf5c708f0e7ae6f685a0ff148ff541b165))
+- **deps-dev:** bump eslint-config-standard-with-typescript ([a8866cf](https://github.com/terwer/src-sy-post-publisher/commit/a8866cf6545b7d8e05a0d541e38f942c157cf65f))
 - **deps-dev:** bump prettier from 2.8.3 to 2.8.4 ([fd3ec1a](https://github.com/terwer/src-sy-post-publisher/commit/fd3ec1a054d7225c8d3c5bcfc96db353c8511e91))
 - **deps-dev:** bump unplugin-vue-components from 0.22.12 to 0.24.0 ([a60a31f](https://github.com/terwer/src-sy-post-publisher/commit/a60a31f2fa25051d8de78da38a7440492dab02a8))
 - **deps-dev:** bump vitest from 0.28.5 to 0.29.1 ([11e0869](https://github.com/terwer/src-sy-post-publisher/commit/11e0869996da87350091ac11be67293811a3ddb5))
@@ -154,11 +124,7 @@
 - 新增说明 ([9793a1a](https://github.com/terwer/src-sy-post-publisher/commit/9793a1aaf817f6cec54d4f0517d0f2370d48b08a))
 - 更新 eslint-config-standard-with-typescript ([8f08863](https://github.com/terwer/src-sy-post-publisher/commit/8f08863dfb33c6481aca89b32ea53df452c2eaa0))
 - 添加灰度测试提示 ([48e84c6](https://github.com/terwer/src-sy-post-publisher/commit/48e84c69fdf47ca34c8763bb0c06d7b9a006242f))
-
 ## [0.6.8](https://github.com/terwer/src-sy-post-publisher/compare/v0.6.7...v0.6.8) (2023-01-30)
-
-### Bug Fixes
-
 - [#326](https://github.com/terwer/src-sy-post-publisher/issues/326) 思源配置读取出错 ([b3b8ddd](https://github.com/terwer/src-sy-post-publisher/commit/b3b8ddd5103ec77d9c175f92bcf2a5f3e1e0641e))
 - [#338](https://github.com/terwer/src-sy-post-publisher/issues/338) 联动 Sofill=主题，提供统一的 hook 入口，除了 js 片段之外，新增挂件触发插槽显示 ([c55437e](https://github.com/terwer/src-sy-post-publisher/commit/c55437ef1686aec8c841538c8606869017c1fe0c))
 - [#340](https://github.com/terwer/src-sy-post-publisher/issues/340) README 精简 ([38aa0ee](https://github.com/terwer/src-sy-post-publisher/commit/38aa0ee5c7471c7ac339471d91ec25a88d79003f))
@@ -175,12 +141,8 @@
 - 切换跨域代理 ([79f8882](https://github.com/terwer/src-sy-post-publisher/commit/79f8882872ab8f5feda4729351d79ffbee541e5d))
 - 局域网文章分享给出提示，因为可能存在伺服未打开的情况 ([9afa0e6](https://github.com/terwer/src-sy-post-publisher/commit/9afa0e68f2d0e4e8521c4b0590cf95e3e093284d))
 - 提前 simple-xmlrpc 为新项目 ([6b099eb](https://github.com/terwer/src-sy-post-publisher/commit/6b099ebd4d34278a663105f0b19ebd5ecd99ce92))
-
-### Miscellaneous
-
 - **deps-dev:** bump @esbuild-plugins/node-modules-polyfill ([ba8eab9](https://github.com/terwer/src-sy-post-publisher/commit/ba8eab95254853e09a19fb744f5ff74e5b755dd4))
 - **deps-dev:** bump @vitest/coverage-c8 from 0.27.3 to 0.28.2 ([1125eaf](https://github.com/terwer/src-sy-post-publisher/commit/1125eafe82f992c5554d06f4651bc343166332e7))
-- **deps-dev:** bump eslint-config-standard-with-typescript ([9010a2f](https://github.com/terwer/src-sy-post-publisher/commit/9010a2ff04e1831678542558f10af92bee7f0aa6))
 - **deps-dev:** bump prettier from 2.8.2 to 2.8.3 ([e1ed42c](https://github.com/terwer/src-sy-post-publisher/commit/e1ed42c234488ebcd7de0c535d2a31050a71d64c))
 - **deps-dev:** bump vitest from 0.27.3 to 0.28.2 ([c12654d](https://github.com/terwer/src-sy-post-publisher/commit/c12654de6d1fa7e5dc2ba58b651a47f3a4a70221))
 - fix build error ([ae044d1](https://github.com/terwer/src-sy-post-publisher/commit/ae044d1495c249db0e9edadaa0df564c61552263))
@@ -193,11 +155,7 @@
 - update node-globals-polyfill ([85b09af](https://github.com/terwer/src-sy-post-publisher/commit/85b09af08c179988e7645e837d9a35c1c132a237))
 - 先发个小版本 0.6.2，解决核心 bug ([cdb7a3d](https://github.com/terwer/src-sy-post-publisher/commit/cdb7a3d3b00bc50c4614a3c7dc8b521b671f11eb))
 - 准备开发 0.7.0 ([412a08e](https://github.com/terwer/src-sy-post-publisher/commit/412a08ee51d160a0a79a9082fd94736bd01a55b2))
-
 ## [0.6.1](https://github.com/terwer/src-sy-post-publisher/compare/v0.6.0...v0.6.1) (2023-01-10)
-
-### Bug Fixes
-
 - [#235](https://github.com/terwer/src-sy-post-publisher/issues/235) 支持复制分享链接-Chrome 浏览器插件只处理分享链接，其他情况保持不变 ([d147676](https://github.com/terwer/src-sy-post-publisher/commit/d147676d431f19d8a3950a143384c958078165a5))
 - [#235](https://github.com/terwer/src-sy-post-publisher/issues/235) 支持复制分享链接-修复分享链接地址问题 ([2e9bac5](https://github.com/terwer/src-sy-post-publisher/commit/2e9bac54e7a7d026950ce5b693a25369fb1d718e))
 - [#235](https://github.com/terwer/src-sy-post-publisher/issues/235) 支持复制分享链接-修复分享链接复制问题 ([8b46c1e](https://github.com/terwer/src-sy-post-publisher/commit/8b46c1e31118f570d594384712f07a609e3bdaab))
@@ -262,15 +220,11 @@
 - 计划支持 Docsy ([9ca06f8](https://github.com/terwer/src-sy-post-publisher/commit/9ca06f801f71b6c651c239d17f290e5e53548efc))
 - 通用平台新增更加友好的提示 ([5d59fdb](https://github.com/terwer/src-sy-post-publisher/commit/5d59fdbd186a5acde55ca2bd263ca1e7c2dfeb07))
 - 隐藏浏览器放插件由于限制而无法实现的功能 ([c7172ee](https://github.com/terwer/src-sy-post-publisher/commit/c7172ee35ed59f1a0eaba96fd774adc4d3b3651e))
-
-### Miscellaneous
-
 - [#309](https://github.com/terwer/src-sy-post-publisher/issues/309) 深度适配 Typecho-移除头部错误信息 ([975ccfd](https://github.com/terwer/src-sy-post-publisher/commit/975ccfd7e90c9bdf141f879fc97b411acd6918cf))
 - [#310](https://github.com/terwer/src-sy-post-publisher/issues/310) 更换 xmlrpc 解析库 ([7fb24b7](https://github.com/terwer/src-sy-post-publisher/commit/7fb24b7d1a07aeca551385ded5e0b9537991a668))
 - [#310](https://github.com/terwer/src-sy-post-publisher/issues/310) 更换 xmlrpc 解析库-通用同一套请求逻辑 ([511a9f5](https://github.com/terwer/src-sy-post-publisher/commit/511a9f526136d58122ec73a28cd560a33a199807))
 - [#310](https://github.com/terwer/src-sy-post-publisher/issues/310) 更换 xmlrpc 解析库-通用同一套请求逻辑 ([d49f535](https://github.com/terwer/src-sy-post-publisher/commit/d49f5353ffc33b041da69daa52385e99f6981ce4))
 - **deps-dev:** bump @vitest/coverage-c8 from 0.26.3 to 0.27.0 ([58d15e6](https://github.com/terwer/src-sy-post-publisher/commit/58d15e60cc15671ac74bae9fcc37b9100e4ddd87))
-- **deps-dev:** bump eslint-config-standard-with-typescript ([cd41105](https://github.com/terwer/src-sy-post-publisher/commit/cd4110504aa3e0b4ea776e2c7c2bfd4630296fb1))
 - **deps-dev:** bump prettier from 2.8.1 to 2.8.2 ([b2e83de](https://github.com/terwer/src-sy-post-publisher/commit/b2e83de5110532172092515a3983e29bcd9664d1))
 - **deps-dev:** bump vitest from 0.26.3 to 0.27.0 ([276be85](https://github.com/terwer/src-sy-post-publisher/commit/276be85b5c20544caf2e86c63a99e9d80cd8e18d))
 - release 0.6.0 ([d17f9ed](https://github.com/terwer/src-sy-post-publisher/commit/d17f9eda25c2344c3bd20ea1efb65121096fe6a5))
@@ -284,11 +238,7 @@
 - 提供 PicoGO 配置在线文档 ([f514fc0](https://github.com/terwer/src-sy-post-publisher/commit/f514fc0f019319385daf76dd760976810baff58e))
 - 文章发布时图床批量上传的错误由发布逻辑自己控制，公共接口只提供返回消息 ([5ae587e](https://github.com/terwer/src-sy-post-publisher/commit/5ae587e2154bb1eff1e45886115a12a3af0322f6))
 - 更新文档链接 ([1df39eb](https://github.com/terwer/src-sy-post-publisher/commit/1df39eb66d7b443aa48c28ea4b56a238dfaafc8c))
-
 ## [0.6.0](https://github.com/terwer/src-sy-post-publisher/compare/v0.5.1...v0.6.0) (2022-12-29)
-
-### Features
-
 - [#132](https://github.com/terwer/src-sy-post-publisher/issues/132) 集成 PicGO 以及图床-上传接口调整 ([b224ab1](https://github.com/terwer/src-sy-post-publisher/commit/b224ab173b36b2440e1a034293d98a2d6865168e))
 - [#132](https://github.com/terwer/src-sy-post-publisher/issues/132) 集成 PicGO 以及图床-修复 Windows 路径问题 ([b81dd85](https://github.com/terwer/src-sy-post-publisher/commit/b81dd85cc92814cc5b8712bc4637c9107016ae4b))
 - [#132](https://github.com/terwer/src-sy-post-publisher/issues/132) 集成 PicGO 以及图床-关闭按钮优化 ([1a488e6](https://github.com/terwer/src-sy-post-publisher/commit/1a488e60c04431c013799af27d0d6055d3b266d6))
@@ -312,15 +262,9 @@
 - 集成 PicGO 以及图床-展示文章中的图片 ([f5341a1](https://github.com/terwer/src-sy-post-publisher/commit/f5341a12b3b15a327af1dc1bf99c777875c2cfc6))
 - 集成 PicGO 以及图床-提取并构建构建单独可运行的 PicGo 依赖库 ([9741111](https://github.com/terwer/src-sy-post-publisher/commit/9741111f117c2dd0fa2e3d298bbd853424bffa0e))
 - 集成 PicGO 以及图床-显示操作状态 ([1332329](https://github.com/terwer/src-sy-post-publisher/commit/13323293362340228061ac017e0ad8a8a5844123))
-
-### Bug Fixes
-
 - 修复未生成属性时点击发布造成的文件名错误问题 ([a98eef8](https://github.com/terwer/src-sy-post-publisher/commit/a98eef8002a21722aaa70e3ac9ca49b724f3b05c))
 - 修改 Window 构建脚本，优化构建体验 ([2bac0eb](https://github.com/terwer/src-sy-post-publisher/commit/2bac0eb8721c7d18e33083231e4bce1e3693166a))
 - 未修改过别名才去更改 ([03e2736](https://github.com/terwer/src-sy-post-publisher/commit/03e27360ede3364befd2ab2f36b91cfe3c3a618b))
-
-### Miscellaneous
-
 - add script comment ([fd961e3](https://github.com/terwer/src-sy-post-publisher/commit/fd961e3a27fca83992988b8736fc94545f30b08e))
 - **deps-dev:** bump @vitest/coverage-c8 from 0.25.8 to 0.26.2 ([fca56ba](https://github.com/terwer/src-sy-post-publisher/commit/fca56baf8cec698ae0314530e4343ea899d7e749))
 - **deps-dev:** bump vitest from 0.25.8 to 0.26.2 ([97f450a](https://github.com/terwer/src-sy-post-publisher/commit/97f450ad0e8ccfe32575a554ddbd964908c464d1))
@@ -331,11 +275,7 @@
 - update deps ([92c3dc5](https://github.com/terwer/src-sy-post-publisher/commit/92c3dc53f651c474c065bc12270d8a4069fdbaf2))
 - use python script change new version ([64eb99c](https://github.com/terwer/src-sy-post-publisher/commit/64eb99c3960c99ad5742b71055d561e99455e741))
 - 新增 FontAwesome 感谢 ([b7d19b8](https://github.com/terwer/src-sy-post-publisher/commit/b7d19b808f5f3f2eb9808f9178e2ba01b323cc08))
-
 ## [0.5.1](https://github.com/terwer/src-sy-post-publisher/compare/v0.5.0...v0.5.1) (2022-12-17)
-
-### Bug Fixes
-
 - [#275](https://github.com/terwer/src-sy-post-publisher/issues/275) 保存属性到思源需要刷新页面 ([120ec34](https://github.com/terwer/src-sy-post-publisher/commit/120ec348cdb8840913d5ea84fef64b47b451b6b7))
 - [#275](https://github.com/terwer/src-sy-post-publisher/issues/275) 保存属性到思源需要刷新页面-成功提示 ([d5602f5](https://github.com/terwer/src-sy-post-publisher/commit/d5602f56aec752ce1e583e47ffb1fcfdbe803acc))
 - [#280](https://github.com/terwer/src-sy-post-publisher/issues/280) 弹窗新窗口打开 404 ([361b397](https://github.com/terwer/src-sy-post-publisher/commit/361b397a2cf836273f05112df09c2716fce0fbc5))
@@ -344,43 +284,24 @@
 - [#282](https://github.com/terwer/src-sy-post-publisher/issues/282) 弹窗支持手动切换发布页面与列表-新增一个管理所有文章的按钮 ([c57a605](https://github.com/terwer/src-sy-post-publisher/commit/c57a605e03b02a712a16c5cdb8a7ace09bb30ab2))
 - [#282](https://github.com/terwer/src-sy-post-publisher/issues/282) 弹窗支持手动切换发布页面与列表-美化按钮图标 ([fe745c1](https://github.com/terwer/src-sy-post-publisher/commit/fe745c1d9db7e011d3e0a6aaee2edcea42294fae))
 - 修复文章预览 H1 标签问题 ([58df259](https://github.com/terwer/src-sy-post-publisher/commit/58df25942585119d30b3d3c67446dedaf8cb73e0))
-
-### Miscellaneous
-
 - 0.5.0 release ([6150b1e](https://github.com/terwer/src-sy-post-publisher/commit/6150b1e9c1fabfd5b8b691faa8d9b63dcdf38410))
 - 0.5.0 release ([7f162d0](https://github.com/terwer/src-sy-post-publisher/commit/7f162d05e1d6af9196d0e9fad940f6a25a43e21f))
 - fix doc ([cc14f05](https://github.com/terwer/src-sy-post-publisher/commit/cc14f058568c368ac2f5533c0d370839765facfc))
 - 新增感谢说明 ([f6586db](https://github.com/terwer/src-sy-post-publisher/commit/f6586db7ebdda7759b30417786ead98e5e09449a))
 - 新增感谢说明，QQ 群 ([8e77a8b](https://github.com/terwer/src-sy-post-publisher/commit/8e77a8b2eee5ec55ef6099dc811544f33238e3da))
-
 ## [0.5.0](https://github.com/terwer/src-sy-post-publisher/compare/v0.4.1...v0.5.0) (2022-12-15)
-
-### Features
-
 - [#213](https://github.com/terwer/src-sy-post-publisher/issues/213) 挂件模式用挂载菜单的方式使用 ([0de9a73](https://github.com/terwer/src-sy-post-publisher/commit/0de9a73b7f333e74bb6a40c4e5f015d428edfd51))
 - [#213](https://github.com/terwer/src-sy-post-publisher/issues/213) 挂件模式用挂载菜单的方式使用-hook 挂件按钮 ([0b08791](https://github.com/terwer/src-sy-post-publisher/commit/0b08791ff513349406299c8d0bd856c0d1ad96e9))
 - [#213](https://github.com/terwer/src-sy-post-publisher/issues/213) 挂件模式用挂载菜单的方式使用-优化弹窗体验，改进子文档 ([2a94252](https://github.com/terwer/src-sy-post-publisher/commit/2a94252a6074b6fbf200782988bae1cb7fe9c614))
 - [#213](https://github.com/terwer/src-sy-post-publisher/issues/213) 挂件模式用挂载菜单的方式使用-弹窗关闭 ([430d73a](https://github.com/terwer/src-sy-post-publisher/commit/430d73a6ff1a7cdf035ac50b5c3bf5ea66dd2932))
 - [#213](https://github.com/terwer/src-sy-post-publisher/issues/213) 挂件模式用挂载菜单的方式使用-样式优化，pageId 错误逻辑修复 ([1a20189](https://github.com/terwer/src-sy-post-publisher/commit/1a20189450b27e7139a67e2979a7431713739dee))
-
-### Miscellaneous
-
-- **deps-dev:** bump eslint-config-standard-with-typescript ([a8866cf](https://github.com/terwer/src-sy-post-publisher/commit/a8866cf6545b7d8e05a0d541e38f942c157cf65f))
 - widget 0.4.1 ([0e3e526](https://github.com/terwer/src-sy-post-publisher/commit/0e3e5266006019960d61d04aa350c3b05907fe88))
 - widget 0.4.1 ([d9386f3](https://github.com/terwer/src-sy-post-publisher/commit/d9386f3978248d2083e6278764ceaabe51d68c53))
 - 修改项目说明 ([739b69b](https://github.com/terwer/src-sy-post-publisher/commit/739b69beeb7b3bbbda54fc6fcef22257715bbef2))
 - 升级 eslint，更改下载统计 ([9ad0592](https://github.com/terwer/src-sy-post-publisher/commit/9ad0592201782acff8fcb6478f661455a4d08754))
-
 ## [0.4.1](https://github.com/terwer/src-sy-post-publisher/compare/v0.4.0...v0.4.1) (2022-12-14)
-
-### Miscellaneous
-
 - 更新文档说明 ([5e20d65](https://github.com/terwer/src-sy-post-publisher/commit/5e20d656bd482402dcc8001cee3cb160f70d477e))
-
 ## [0.4.0](https://github.com/terwer/src-sy-post-publisher/compare/v0.3.0...v0.4.0) (2022-12-14)
-
-### Features
-
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-HUGO 平台适配 ([4d25fbd](https://github.com/terwer/src-sy-post-publisher/commit/4d25fbddb807c431569cfda7156a983cddc4f8bb))
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-Jekyll 平台适配 ([9bdbd19](https://github.com/terwer/src-sy-post-publisher/commit/9bdbd1903db1c87566c15106a7d67a057de86b27))
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-Vuepress 动态平台 YAML 解析器 ([99a1927](https://github.com/terwer/src-sy-post-publisher/commit/99a192760b80b2a9c961571877d7e48f1f698134))
@@ -391,9 +312,6 @@
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-适配 Nuxt content ([992c881](https://github.com/terwer/src-sy-post-publisher/commit/992c8818f371402b11d708dfadfc7c6f0c41d63c))
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-适配 Vitepress ([0931e26](https://github.com/terwer/src-sy-post-publisher/commit/0931e269d361b0e669431eaf0cc849548487d030))
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-预定义平台导入 ([7eadae1](https://github.com/terwer/src-sy-post-publisher/commit/7eadae1f2b14d0d3ecbc6487c75accffcb782692))
-
-### Bug Fixes
-
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-修复 Jekyll 平台预览路径问题 ([07e51a7](https://github.com/terwer/src-sy-post-publisher/commit/07e51a7013abea452548da1c34f4cdcb634e7e28))
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-修复 Markdown 挂件代码未去掉问题 ([8a06125](https://github.com/terwer/src-sy-post-publisher/commit/8a061255acb033eb6dc3f368862bd96546841004))
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-修复 YAML 更改错误提示 ([f39f1f3](https://github.com/terwer/src-sy-post-publisher/commit/f39f1f3e1c8de4fb456e8c87a5f1f76567bc3608))
@@ -403,16 +321,9 @@
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-修复日期问题 ([9f09069](https://github.com/terwer/src-sy-post-publisher/commit/9f09069123c00dec7fd8f5b6c61c01441f00660a))
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-修复误删除 Markdown 代码注释问题 ([865921f](https://github.com/terwer/src-sy-post-publisher/commit/865921f41fe693d18f082d0d8e58d2b2dd03caca))
 - [#268](https://github.com/terwer/src-sy-post-publisher/issues/268) 直接点击发布，不生成属性，文件名会 undefined ([01d3bf7](https://github.com/terwer/src-sy-post-publisher/commit/01d3bf73884d2b46c6855b71f050c7a2ce441989))
-
-### Miscellaneous
-
 - 优化项目说明 ([4d60d86](https://github.com/terwer/src-sy-post-publisher/commit/4d60d868b79a33581b7095d366c247a2280037e1))
 - 新增 0.2.0 项特性说明 ([2619353](https://github.com/terwer/src-sy-post-publisher/commit/2619353615b5f25a29292e88767b701d60bfb451))
-
 ## [0.3.0](https://github.com/terwer/src-sy-post-publisher/compare/v0.2.0...v0.3.0) (2022-12-13)
-
-### Features
-
 - [#133](https://github.com/terwer/src-sy-post-publisher/issues/133) 支持 Github 系列-源码模式展示方式切换 ([558950c](https://github.com/terwer/src-sy-post-publisher/commit/558950caab418456a803a22ac74f14159e5f67e3))
 - 组件化重构-Github pages 组件 ([31353dd](https://github.com/terwer/src-sy-post-publisher/commit/31353dd56ba446c3a4418419e470ba1485e61308))
 - 组件化重构-YAML 转换 ([731e324](https://github.com/terwer/src-sy-post-publisher/commit/731e32496754980ec60e40092503cb47c8bd0f3c))
@@ -435,14 +346,8 @@
 - 组件化重构-简化操作按钮 ([b22ea25](https://github.com/terwer/src-sy-post-publisher/commit/b22ea258ef8081e57c85948057ba74e6821fd40a))
 - 组件化重构-通用设置优化 ([0e64757](https://github.com/terwer/src-sy-post-publisher/commit/0e64757815abd348e20fc6e78309f0cfe62abdd7))
 - 组件化重构-页面初始化组件提取 ([d571e87](https://github.com/terwer/src-sy-post-publisher/commit/d571e87d2f6100d16a8bf9dfc9ceb910f2893801))
-
-### Bug Fixes
-
 - 修复版本检测构建失败问题 ([ce0b4f6](https://github.com/terwer/src-sy-post-publisher/commit/ce0b4f6c95d985dd276876a94c9360dff30d1e12))
 - 组件化重构-修复转换未及时更新问题 ([dfbf9de](https://github.com/terwer/src-sy-post-publisher/commit/dfbf9de79e296e53c7075db0c9820c0874a624fc))
-
-### Miscellaneous
-
 - **deps-dev:** bump happy-dom from 7.8.1 to 8.1.0 ([9ac1e24](https://github.com/terwer/src-sy-post-publisher/commit/9ac1e24b5c744973a9f579ab7a12bf4e0cf23afe))
 - **deps-dev:** bump prettier from 2.8.0 to 2.8.1 ([82e1667](https://github.com/terwer/src-sy-post-publisher/commit/82e16678d3eb69a9cbde39607659bf8d651c3854))
 - fix imports ([862c67f](https://github.com/terwer/src-sy-post-publisher/commit/862c67ff277467f7455378c07232f7ee20e9b851))
@@ -454,11 +359,7 @@
 - 组件化重构-改进源码模式 ([94541df](https://github.com/terwer/src-sy-post-publisher/commit/94541df113d79d7cd8862f4fc0dc2e00c0d87db2))
 - 组件化重构-文章别名 ([69d29f1](https://github.com/terwer/src-sy-post-publisher/commit/69d29f15399eded2234d66bd34d5156912c0ad45))
 - 调整目录结构 ([cd9b0a9](https://github.com/terwer/src-sy-post-publisher/commit/cd9b0a9a84322f6c6a8b1729c853a1551b8cf090))
-
 ## [0.2.0](https://github.com/terwer/src-sy-post-publisher/compare/v0.1.0...v0.2.0) (2022-12-07)
-
-### Features
-
 - [#101](https://github.com/terwer/src-sy-post-publisher/issues/101) 代码优化以及空状态处理 ([f3444dc](https://github.com/terwer/src-sy-post-publisher/commit/f3444dc1e61135749e99a4b26d70cd1b29a4cc8b))
 - [#101](https://github.com/terwer/src-sy-post-publisher/issues/101) 错误处理 ([b19b813](https://github.com/terwer/src-sy-post-publisher/commit/b19b8137a90fbd000ec136e71ead82a2a51f88c4))
 - [#13](https://github.com/terwer/src-sy-post-publisher/issues/13) v0.0.1 发版说明 ([40a8043](https://github.com/terwer/src-sy-post-publisher/commit/40a8043c88c963a0158e9d14bf916c68e7600289))
@@ -695,9 +596,6 @@
 - unit tests ([c06b769](https://github.com/terwer/src-sy-post-publisher/commit/c06b7690c6dde07b56e25854d4904e0a9e25c1b3))
 - 自定义类型文件 ([574abed](https://github.com/terwer/src-sy-post-publisher/commit/574abed407e4b447d66abfa4772c8d0d636a5eb2))
 - 项目打包瘦身 ([db2d311](https://github.com/terwer/src-sy-post-publisher/commit/db2d3115cf17199ad74ac428c0c46f07734ce34f))
-
-### Bug Fixes
-
 - [#112](https://github.com/terwer/src-sy-post-publisher/issues/112) Chrome 公式单独渲染 ([c84971f](https://github.com/terwer/src-sy-post-publisher/commit/c84971f60d8f57f27055506ad22c06204c785bc3))
 - [#112](https://github.com/terwer/src-sy-post-publisher/issues/112) UI 持续优化 ([a99ea3a](https://github.com/terwer/src-sy-post-publisher/commit/a99ea3af3117e7905f193973cf1176b9bf1c7c04))
 - [#112](https://github.com/terwer/src-sy-post-publisher/issues/112) 优先使用落霞孤鹜字体 ([3d04f74](https://github.com/terwer/src-sy-post-publisher/commit/3d04f7414ac6de73abb351e79820fecf827f524b))
@@ -740,9 +638,6 @@
 - 导入取消不提示错误，不打扰用户 ([0d41624](https://github.com/terwer/src-sy-post-publisher/commit/0d4162425e927e023b32fbb712d4c06998526a00))
 - 导出不刷新页面，导入成功之后才刷新页面 ([ef26986](https://github.com/terwer/src-sy-post-publisher/commit/ef26986150c02d84c35945e56d983e8ff20cdc63))
 - 添加 Window 构建脚本，优化构建体验 ([30e6d8f](https://github.com/terwer/src-sy-post-publisher/commit/30e6d8fdae7a1ef12cb2f35d68567dd1c25a6376))
-
-### Miscellaneous
-
 - component test ([6dd319d](https://github.com/terwer/src-sy-post-publisher/commit/6dd319d7e71b2152ffa589067e403af6301a99ea))
 - **deps-dev:** bump @vitest/coverage-c8 from 0.25.2 to 0.25.3 ([2ae763c](https://github.com/terwer/src-sy-post-publisher/commit/2ae763c0f0361cb889b4ba626af7801bfd2f4a73))
 - **deps-dev:** bump unplugin-vue-components from 0.22.9 to 0.22.11 ([0bfc0dc](https://github.com/terwer/src-sy-post-publisher/commit/0bfc0dcf5b8db73678e78b7fa4e13b09266d039c))
