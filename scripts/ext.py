@@ -141,7 +141,7 @@ if __name__ == "__main__":
 
         # 复制浏览器插件需要的其他文件
         scriptutils.cp_file("./LICENSE", dist_folder)
-        scriptutils.cp_file("../backup/key.pem", dist_folder)
+        scriptutils.cp_file("./assets/key.pem", dist_folder)
         print("复制浏览器插件需要的其他文件.")
 
         # 删除siyuan挂件专属文件

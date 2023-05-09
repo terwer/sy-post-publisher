@@ -43,3 +43,5 @@ public/lib/picgo/picgo.cfg.json
 public/lib/picgo/picgo.cfg.dev.json
 
 __pycache__
+package.zip
+test.sh

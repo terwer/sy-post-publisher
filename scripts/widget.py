@@ -39,7 +39,6 @@ if __name__ == "__main__":
     parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
     parser.add_argument("-nb", "--nobuild", action="store_true", help="ignore build")
     parser.add_argument("-t", "--test", action="store_true", help="copy files to public workspace for local testing")
-    parser.add_argument("-p", "--publish", action="store_true", help="copy files to sy-post-publisher for publishing")
     args = parser.parse_args()
 
     if args.verbose:
@@ -84,42 +83,23 @@ if __name__ == "__main__":
 
         print("项目构建完成.")
 
-        # 挂件打包
-        # 读取 JSON 文件
-        data = scriptutils.read_json_file(cwd + "package.json")
-        v = data["version"]
+    # 挂件打包
+    # 读取 JSON 文件
+    data = scriptutils.read_json_file(cwd + "package.json")
+    v = data["version"]
 
-        src_folder = dist_folder
-        tmp_folder_name = "./sy-post-publisher"
-        build_zip_path = "./build"
-        build_zip_name = "sy-post-publisher-widget-" + v + ".zip"
+    src_folder = dist_folder
+    tmp_folder_name = "./sy-post-publisher"
+    build_zip_path = "./build"
+    build_zip_name = "sy-post-publisher-widget-" + v + ".zip"
 
-        # 压缩dist为zip
-        scriptutils.zip_folder(src_folder, tmp_folder_name, build_zip_path, build_zip_name)
-        print("将dist文件打包成zip，用于挂件版本发布.")
+    # 压缩dist为zip
+    scriptutils.zip_folder(src_folder, tmp_folder_name, build_zip_path, build_zip_name)
+    scriptutils.cp_file(os.path.join(build_zip_path, build_zip_name), os.path.join(build_zip_path, "package.zip"))
+    print("将dist文件打包成zip，用于挂件版本发布.")
 
     if args.test:
         scriptutils.cp_folder(dist_folder, "../SiYuanWorkspace/public/data/widgets/sy-post-publisher/", True)
         print("拷贝文件到本地 public 工作空间测试.")
-
-    if args.publish:
-        os.chdir("../sy-post-publisher")
-        print("挂件发布切换路径，当前路径:" + os.getcwd())
-
-        # 删除所有文件
-        os.system("git rm -rf .")
-
-        # 拷贝文件
-        os.chdir("../src-sy-post-publisher")
-        scriptutils.cp_folder("./dist", "../sy-post-publisher")
-        scriptutils.cp_file("./.gitignore", "../sy-post-publisher")
-
-        # 添加新文件到仓库
-        os.chdir("../sy-post-publisher")
-        os.system("git add -A")
-
-        os.chdir("../src-sy-post-publisher")
-        print("路径还原，当前路径:" + os.getcwd())
-        print("拷贝文件到 sy-post-publisher 用于挂件版本发布.")
 
     print("发布完毕.")
