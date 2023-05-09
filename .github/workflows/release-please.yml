@@ -22,7 +22,7 @@ jobs:
           ## Should feat changes before 1.0.0 produce patch bumps instead of minor bumps? Default false
           bump-patch-for-minor-pre-major: true
           ## If set, create releases that are pre-major or pre-release version marked as pre-release on GitHub. Defaults false
-          prerelease: true
+          prerelease: false
           ## header used within the release PR body, defaults to using :robot: I have created a release *beep* *boop*
           pull-request-header: ':robot: A new release will be created'
           ## A JSON formatted String containing to override the outputted changelog sections
