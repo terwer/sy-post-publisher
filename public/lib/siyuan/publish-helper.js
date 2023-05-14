@@ -197,7 +197,7 @@ const initPublishHelper = () => {
       const mainWindow = getCurrentWindow()
       const newWin = new BrowserWindow({
         parent: mainWindow,
-        modal: true,
+        modal: false,
         show: true,
         width: 900,
         height: 750,

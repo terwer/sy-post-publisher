@@ -255,7 +255,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       },
 
       rollupOptions: {
-        external: ["stat", "readFile", "fs", "path", "@electron/remote", "/lib/siyuanhook.js"],
+        external: ["/lib/siyuanhook.js"],
         output: {
           chunkFileNames: "static/js/[name]-[hash].js",
           entryFileNames: "static/js/[name]-[hash].js",
