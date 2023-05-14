@@ -99,7 +99,7 @@ if __name__ == "__main__":
     print("将dist文件打包成zip，用于挂件版本发布.")
 
     if args.test:
-        scriptutils.cp_folder(dist_folder, "../SiYuanWorkspace/public/data/widgets/sy-post-publisher/", True)
+        scriptutils.cp_folder(dist_folder, "../../SiYuanWorkspace/public/data/widgets/sy-post-publisher/", True)
         print("拷贝文件到本地 public 工作空间测试.")
 
     print("发布完毕.")
