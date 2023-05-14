@@ -29,5 +29,5 @@
  * 设置思源笔记的hook
  */
 export const initHook = async () => {
-  await import("../../public/lib/siyuanhook.js")
+  await import("/lib/siyuanhook.js")
 }
