@@ -1,48 +1,26 @@
 # Changelog
 
 ## [0.8.1](https://github.com/terwer/sy-post-publisher/compare/v0.8.0...v0.8.1) (2023-05-21)
-
-
 ### Features
-
 * 兼容 siyuanhook ([e6a1ee5](https://github.com/terwer/sy-post-publisher/commit/e6a1ee54747bdcb0034119fea16c17eee68a5949))
-
-
 ### Bug Fixes
-
 * 修复 commonjs 构建错误，取消 type=module 默认 ([aa41b10](https://github.com/terwer/sy-post-publisher/commit/aa41b105c7c69fa905922053ea9112aefd65212c))
-
-
 ### Code Refactoring
-
-* 迁移源码到挂件仓库 https://github.com/siyuan-note/bazaar/issues/1095 ([5e7f9c1](https://github.com/terwer/sy-post-publisher/commit/5e7f9c1abac9c656b6f8facda637b6c9e920342e))
-* 迁移源码到挂件仓库 https://github.com/siyuan-note/bazaar/issues/1095 ([6d94a55](https://github.com/terwer/sy-post-publisher/commit/6d94a55ee233846ea50b723ab36d9ae1568cf2d7))
 * 迁移源码到挂件仓库 https://github.com/siyuan-note/bazaar/issues/1095 ([56fd048](https://github.com/terwer/sy-post-publisher/commit/56fd048420c2314149f865b791ec5cf2a56c2ee9))
-
-
 ### Miscellaneous
-
-* [#7](https://github.com/terwer/sy-post-publisher/issues/7) 全自动化发布流程 ([78d1b81](https://github.com/terwer/sy-post-publisher/commit/78d1b817309fb97fc1ad7ff64df144745fe915e2))
-* [#7](https://github.com/terwer/sy-post-publisher/issues/7) 全自动化发布流程 ([aa9a84d](https://github.com/terwer/sy-post-publisher/commit/aa9a84d27758f6699b70c947ca36bd4182bdf93c))
-* [#7](https://github.com/terwer/sy-post-publisher/issues/7) 全自动化发布流程 ([96db2f6](https://github.com/terwer/sy-post-publisher/commit/96db2f6a339082fdfd5c9fbd919b64ce3956e824))
 * [#7](https://github.com/terwer/sy-post-publisher/issues/7) 全自动化发布流程 ([75d83f5](https://github.com/terwer/sy-post-publisher/commit/75d83f556d8d47c08956f01e79c74cdd813e0608))
-* 同步版本号 ([a829944](https://github.com/terwer/sy-post-publisher/commit/a8299446aafaff1254b6c2ab51be26f7bbc86328))
 * 同步版本号 ([90b1dbb](https://github.com/terwer/sy-post-publisher/commit/90b1dbb0d776622c7da87d6fe75d180b10cd7522))
 * 更新依赖 ([281cba0](https://github.com/terwer/sy-post-publisher/commit/281cba0447b7f09b6a98435bbd07bb61ad645185))
 * 更新文档 ([2a2f0cb](https://github.com/terwer/sy-post-publisher/commit/2a2f0cbc9b9c1636ed586befe311fa8e581a205e))
-
 ## [0.8.0](https://github.com/terwer/src-sy-post-publisher/compare/v0.7.2...v0.8.0) (2023-03-25)
-### Features
 - Github 平台（HUGO、Hexo、Vitepress 等）支持笔记间的内部链接替换 ([a976a4c](https://github.com/terwer/src-sy-post-publisher/commit/a976a4c7b8506eecae3e8d1f8c754a1bc2745682))
 - 博客园、WordPress、Typecho 平台支持笔记间的内部链接替换 ([3294b4a](https://github.com/terwer/src-sy-post-publisher/commit/3294b4aa394ac9c47e294ae26901a1e786012489))
 - 发布至语雀支持笔记间的内部链接替换 ([2cc4cc1](https://github.com/terwer/src-sy-post-publisher/commit/2cc4cc121e84c16c1aafc96de92e53cbea3aac8b))
-### Bug Fixes
 - [#434](https://github.com/terwer/src-sy-post-publisher/issues/434) 文章没有图片时候图床错误文章发布失败 ([3f286fa](https://github.com/terwer/src-sy-post-publisher/commit/3f286fa1df18d6f29cc773374a5ba48287ee44b6))
 - fix siyuanhook ([1603a61](https://github.com/terwer/src-sy-post-publisher/commit/1603a61a21205a57ec34cea3880b42c4a292fc4a))
 - 修复 PicGo 设置中的时间戳重命名关闭后会自动打开的问题 ([e673f58](https://github.com/terwer/src-sy-post-publisher/commit/e673f5879167b6eb889b688353c1d1e77611f6f8))
 - 修复普通挂件版使用方式 WordPress 和博客园发布文章报错问题 ([d6a21e1](https://github.com/terwer/src-sy-post-publisher/commit/d6a21e1ea1fced6f6f1128705e09214da7f01dc8))
 - 由于 Electron 主窗口机制问题，图片上传仅支持新窗口 ([20c9a85](https://github.com/terwer/src-sy-post-publisher/commit/20c9a851afb26ebdcf32c62b3b561204878990bd))
-### Miscellaneous
 - [#420](https://github.com/terwer/src-sy-post-publisher/issues/420) ankisiyuan.bin 默认不提供，手动下载，减小打包体积 ([9598fb1](https://github.com/terwer/src-sy-post-publisher/commit/9598fb1a3b4458aee9fc2525c232972b848cd4ad))
 - 主窗口移除 Picgo 支持 ([6061125](https://github.com/terwer/src-sy-post-publisher/commit/60611250fea6204ed7a88b2751abd96e81109492))
 - 修复图片有备注时无法上传问题 ([054eddd](https://github.com/terwer/src-sy-post-publisher/commit/054eddda8cf7198e70930e897de7b4a3bcfb8045))

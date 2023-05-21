@@ -64,6 +64,10 @@ if __name__ == "__main__":
         # 复制挂件需要的其他文件
         scriptutils.cp_file("./LICENSE", dist_folder)
         scriptutils.cp_file("./README.md", dist_folder)
+        scriptutils.cp_file("./README_zh_CN.md", dist_folder)
+        scriptutils.cp_file("./widget.json", dist_folder)
+        scriptutils.cp_file("./icon.png", dist_folder)
+        scriptutils.cp_file("./preview.png", dist_folder)
         scriptutils.cp_file("./policy.md", dist_folder)
         print("复制挂件需要的其他文件.")
 
