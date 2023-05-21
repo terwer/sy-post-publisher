@@ -28,7 +28,7 @@
     "@terwer/changelog-parser": "^1.1.0",
     "@terwer/commit-config-custom": "^1.0.2",
     "@terwer/eslint-config-custom": "^1.0.1",
-    "@types/node": "^16.18.11",
+    "@types/node": "^20.2.1",
     "@vitejs/plugin-vue": "^3.0.0",
     "@vitest/coverage-c8": "^0.29.1",
     "@vue/test-utils": "^2.2.4",
