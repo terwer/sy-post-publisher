@@ -5,7 +5,7 @@
   "version": "0.8.1",
   "displayName": {
     "default": "sy-post-publisher",
-    "zh_CN": "思源笔记发布工具"
+    "zh_CN": "发布工具挂件版"
   },
   "description": {
     "default": "Publish articles from siyuan-note to supported platforms.It is highly recommended to use it with the 'Release Tool' plugin for a better experience~",
