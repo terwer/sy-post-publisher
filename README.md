@@ -4,22 +4,21 @@
 
 将 [思源笔记](https://github.com/siyuan-note/siyuan) 的文章发布到支持的平台的 **思源笔记挂件**
 
-[![dev checks](https://img.shields.io/github/checks-status/terwer/src-sy-post-publisher/dev?label=build)](https://github.com/terwer/src-sy-post-publisher/tree/dev)
+[![dev checks](https://img.shields.io/github/checks-status/terwer/sy-post-publisher/dev?label=build)](https://github.com/terwer/sy-post-publisher/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/sy-post-publisher.svg?style=flat-square)
-![GitHub last commit](https://img.shields.io/github/last-commit/terwer/src-sy-post-publisher)
+![GitHub last commit](https://img.shields.io/github/last-commit/terwer/sy-post-publisher)
 ![](https://img.shields.io/badge/license-GPL-blue.svg?style=popout-square)
 
-[![](https://img.shields.io/badge/帮助文档-doc-blue)](https://docs.publish.terwer.space)
-[![](https://img.shields.io/badge/视频教程-video-red)](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html#%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
-[![](https://img.shields.io/badge/在线体验-preview-faad14.svg?style=popout-square)](https://publish.terwer.space/blog/index.html)
-[![](https://img.shields.io/badge/项目源码-code-red)](https://github.com/terwer/src-sy-post-publisher)
+[![](https://img.shields.io/badge/helo-doc-blue)](https://docs.publish.terwer.space)
+[![](https://img.shields.io/badge/course-video-red)](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html#%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[![](https://img.shields.io/badge/source-code-red)](https://github.com/terwer/sy-post-publisher)
+<a title="Downloads" target="_blank" href="https://github.com/terwer/sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/sy-post-publisher/total.svg?label=downloads&style=flat-square&color=blue"></a>
 
 ![](https://static.terwergreen.com/img/202302222313542.png)
 
 使用之前请务必详细阅读 [快速上手指南](#快速上手指南)
 
-<a title="Downloads" target="_blank" href="https://github.com/terwer/src-sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/src-sy-post-publisher/total.svg?label=extension-downloads&style=flat-square&color=blueviolet"></a>
-<a title="Downloads" target="_blank" href="https://github.com/terwer/src-sy-post-publisher/releases"><img src="https://img.shields.io/github/downloads/terwer/sy-post-publisher/total.svg?label=widget-downloads&style=flat-square&color=blue"></a>
+## v0.9.0
 
 ## v0.8.0
 
@@ -177,11 +176,11 @@ Q4：有哪些是已知问题，需要特别注意的？
 
 更多内容请查看
 
-[技术方案](https://github.com/terwer/src-sy-post-publisher/blob/main/tech.md)
+[技术方案](https://github.com/terwer/sy-post-publisher/blob/main/tech.md)
 
 [开发进度](https://github.com/users/terwer/projects/1/views/1)
 
-[更新日志](https://github.com/terwer/src-sy-post-publisher/blob/main/CHANGELOG.md)
+[更新日志](https://github.com/terwer/sy-post-publisher/blob/main/CHANGELOG.md)
 
 ## 🎈 鸣谢
 
@@ -225,7 +224,7 @@ UI 框架：（排名不分先后）
 
 ## 版权声明
 
-本作品以 [GPL V3](https://github.com/terwer/src-sy-post-publisher/blob/main/LICENSE) 形式开源
+本作品以 [GPL V3](https://github.com/terwer/sy-post-publisher/blob/main/LICENSE) 形式开源
 
 ```
 /*
