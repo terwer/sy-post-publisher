@@ -4,7 +4,7 @@
 
 将 [思源笔记](https://github.com/siyuan-note/siyuan) 的文章发布到支持的平台的 **思源笔记挂件**
 
-强烈建议配合 `发布工具` 插件使用，体验更好哟~
+强烈建议配合 [发布工具](https://github.com/terwer/siyuan-plugin-publisher) 插件使用，体验更好哟~
 
 [![dev checks](https://img.shields.io/github/checks-status/terwer/sy-post-publisher/dev?label=build)](https://github.com/terwer/sy-post-publisher/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/sy-post-publisher.svg?style=flat-square)

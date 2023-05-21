@@ -4,7 +4,7 @@
 
 Publish articles from [siyuan-note](https://github.com/siyuan-note/siyuan) to supported platforms
 
-It is highly recommended to use it with the 'Release Tool' plugin for a better experience~
+It is highly recommended to use it with the [siyuan-publisher](https://github.com/terwer/siyuan-plugin-publisher) plugin for a better experience~
 
 [![dev checks](https://img.shields.io/github/checks-status/terwer/sy-post-publisher/dev?label=build)](https://github.com/terwer/sy-post-publisher/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/sy-post-publisher.svg?style=flat-square)
