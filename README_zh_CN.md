@@ -4,6 +4,8 @@
 
 将 [思源笔记](https://github.com/siyuan-note/siyuan) 的文章发布到支持的平台的 **思源笔记挂件**
 
+强烈建议配合 `发布工具` 插件使用，体验更好哟~
+
 [![dev checks](https://img.shields.io/github/checks-status/terwer/sy-post-publisher/dev?label=build)](https://github.com/terwer/sy-post-publisher/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/sy-post-publisher.svg?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/terwer/sy-post-publisher)
@@ -203,6 +205,22 @@ sy-post-publisher 项目的诞生与成长离不开下列开源项目的贡献�
 ### 思源笔记非官方 QQ 群
 
 欢迎加入 **思源爱好者折腾群** : `1017854502` ， 群内有各种爱折腾的技术大佬、萌妹子、热心网友，绝对不容错过。。。
+
+## 捐赠
+
+如果您认可这个项目，请我喝一杯咖啡吧，这将鼓励我持续更新，并创作出更多好用的工具~
+
+### 微信
+
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/wechat.jpg" alt="wechat" style="width:280px;height:375px;" />
+</div>
+
+### 支付宝
+
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/alipay.jpg" alt="alipay" style="width:280px;height:375px;" />
+</div>
 
 ### 资源
 

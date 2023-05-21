@@ -4,6 +4,8 @@
 
 Publish articles from [siyuan-note](https://github.com/siyuan-note/siyuan) to supported platforms
 
+It is highly recommended to use it with the 'Release Tool' plugin for a better experience~
+
 [![dev checks](https://img.shields.io/github/checks-status/terwer/sy-post-publisher/dev?label=build)](https://github.com/terwer/sy-post-publisher/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/sy-post-publisher.svg?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/terwer/sy-post-publisher)
@@ -203,6 +205,23 @@ The birth and growth of the sy-post-publisher project is inseparable from the co
 ### unofficial QQ group
 
 Welcome to join **Siyuan Lovers Toss Group**: `1017854502` , there are all kinds of technical bigwigs, cute girls, enthusiastic netizens in the group, definitely not to be missed...
+
+## Donate
+
+If you approve of this project, invite me to have a cup of coffee, which will encourage me to keep updating and create
+more useful tools~
+
+### Wechat
+
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/wechat.jpg" alt="wechat" style="width:280px;height:375px;" />
+</div>
+
+### Alipay
+
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/alipay.jpg" alt="alipay" style="width:280px;height:375px;" />
+</div>
 
 ### resource
 
