@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.8.1](https://github.com/terwer/sy-post-publisher/compare/v0.8.0...v0.8.1) (2023-05-21)
+
+
+### Features
+
+* 兼容 siyuanhook ([e6a1ee5](https://github.com/terwer/sy-post-publisher/commit/e6a1ee54747bdcb0034119fea16c17eee68a5949))
+
+
+### Bug Fixes
+
+* 修复 commonjs 构建错误，取消 type=module 默认 ([aa41b10](https://github.com/terwer/sy-post-publisher/commit/aa41b105c7c69fa905922053ea9112aefd65212c))
+
+
+### Code Refactoring
+
+* 迁移源码到挂件仓库 https://github.com/siyuan-note/bazaar/issues/1095 ([5e7f9c1](https://github.com/terwer/sy-post-publisher/commit/5e7f9c1abac9c656b6f8facda637b6c9e920342e))
+* 迁移源码到挂件仓库 https://github.com/siyuan-note/bazaar/issues/1095 ([6d94a55](https://github.com/terwer/sy-post-publisher/commit/6d94a55ee233846ea50b723ab36d9ae1568cf2d7))
+* 迁移源码到挂件仓库 https://github.com/siyuan-note/bazaar/issues/1095 ([56fd048](https://github.com/terwer/sy-post-publisher/commit/56fd048420c2314149f865b791ec5cf2a56c2ee9))
+
+
+### Miscellaneous
+
+* [#7](https://github.com/terwer/sy-post-publisher/issues/7) 全自动化发布流程 ([78d1b81](https://github.com/terwer/sy-post-publisher/commit/78d1b817309fb97fc1ad7ff64df144745fe915e2))
+* [#7](https://github.com/terwer/sy-post-publisher/issues/7) 全自动化发布流程 ([aa9a84d](https://github.com/terwer/sy-post-publisher/commit/aa9a84d27758f6699b70c947ca36bd4182bdf93c))
+* [#7](https://github.com/terwer/sy-post-publisher/issues/7) 全自动化发布流程 ([96db2f6](https://github.com/terwer/sy-post-publisher/commit/96db2f6a339082fdfd5c9fbd919b64ce3956e824))
+* [#7](https://github.com/terwer/sy-post-publisher/issues/7) 全自动化发布流程 ([75d83f5](https://github.com/terwer/sy-post-publisher/commit/75d83f556d8d47c08956f01e79c74cdd813e0608))
+* 同步版本号 ([a829944](https://github.com/terwer/sy-post-publisher/commit/a8299446aafaff1254b6c2ab51be26f7bbc86328))
+* 同步版本号 ([90b1dbb](https://github.com/terwer/sy-post-publisher/commit/90b1dbb0d776622c7da87d6fe75d180b10cd7522))
+* 更新依赖 ([281cba0](https://github.com/terwer/sy-post-publisher/commit/281cba0447b7f09b6a98435bbd07bb61ad645185))
+* 更新文档 ([2a2f0cb](https://github.com/terwer/sy-post-publisher/commit/2a2f0cbc9b9c1636ed586befe311fa8e581a205e))
+
 ## [0.8.0](https://github.com/terwer/src-sy-post-publisher/compare/v0.7.2...v0.8.0) (2023-03-25)
 ### Features
 - Github 平台（HUGO、Hexo、Vitepress 等）支持笔记间的内部链接替换 ([a976a4c](https://github.com/terwer/src-sy-post-publisher/commit/a976a4c7b8506eecae3e8d1f8c754a1bc2745682))
