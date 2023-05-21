@@ -68,7 +68,7 @@ if __name__ == "__main__":
         print("Verbose mode enabled")
 
     # widget.json
-    parse_json(cwd + "public/widget.json", "version", args.version)
+    parse_json(cwd + "widget.json", "version", args.version)
 
     # manifest.json
     parse_json(cwd + "public/manifest.dev.json", "version", args.version)

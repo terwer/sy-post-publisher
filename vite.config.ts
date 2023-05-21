@@ -240,6 +240,8 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       // 构建后是否生成 source map 文件
       sourcemap: false,
 
+      chunkSizeWarningLimit: 600,
+
       // 设置为 false 可以禁用最小化混淆
       // 或是用来指定是应用哪种混淆器
       // boolean | 'terser' | 'esbuild'

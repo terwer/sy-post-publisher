@@ -2,7 +2,9 @@
 
 ![](https://img1.terwer.space/api/public/202212181125714.png)
 
-将 [思源笔记](https://github.com/siyuan-note/siyuan) 的文章发布到支持的平台的 **思源笔记挂件**
+Publish articles from [siyuan-note](https://github.com/siyuan-note/siyuan) to supported platforms
+
+It is highly recommended to use it with the [siyuan-publisher](https://github.com/terwer/siyuan-plugin-publisher) plugin for a better experience~
 
 [![dev checks](https://img.shields.io/github/checks-status/terwer/sy-post-publisher/dev?label=build)](https://github.com/terwer/sy-post-publisher/tree/dev)
 ![version](https://img.shields.io/github/release/terwer/sy-post-publisher.svg?style=flat-square)
@@ -16,215 +18,242 @@
 
 ![](https://static.terwergreen.com/img/202302222313542.png)
 
-使用之前请务必详细阅读 [快速上手指南](#快速上手指南)
+Please be sure to read the [Quick Start Guide](#quick-start-guide) in detail before using
 
-## v0.9.0
+## v0.8.1
+
+Note: This version is mainly to move the source code back to the main warehouse and switch to a new packaging method.
+
+**Because the plug-in version is in full swing, this version has no energy to release new features and bug fixes. New features and bug fixes will be released along with the plugin version in `0.9.0`, so stay tuned!**
+
+Old users can continue to use the previous code snippets or widgets. After the plugin version is released, it can be seamlessly migrated to the plugin version.
+
+### Development refactoring
+
+- #8 Migrate to new packaging
 
 ## v0.8.0
 
-### Bug 修复
+### Bug Fixes
 
-- 修复普通挂件版使用方式 WordPress 和博客园发布文章报错问题
-- 修复图片有备注时无法上传问题，现在支持显示备注为图片的 alt
-- 修复 PicGo 设置中的时间戳重命名关闭后会自动打开的问题
-- #434 文章没有图片时候图床错误文章发布失败
+- Fixed the problem of error reporting when publishing articles in WordPress and Blog Garden in the way of using the common widget version
+- Fix the problem that the picture cannot be uploaded when it has a comment, and now supports displaying the alt of the comment as a picture
+- Fixed the problem that the time stamp renaming in PicGo settings will be automatically turned on after it is turned off
+- #434 When the article does not have a picture, the image bed error article fails to publish
 
-### 新特性
+### New Features
 
-- 发布至语雀支持笔记间的内部链接替换
-- 博客园、WordPress、Typecho 平台支持笔记间的内部链接替换
-- Github 平台（HUGO、Hexo、Vitepress 等）支持笔记间的内部链接替换
-- 普通挂件版使用方式支持使用图床[受限于 Electron 机制，主窗口直接上传会导致内核崩溃，目前仅支持链接替换，上传仍需打开新窗口]
+- Publish to Yuque supports internal link replacement between notes
+- Blog Garden, WordPress, and Typecho platforms support internal link replacement between notes
+- Github platforms (HUGO, Hexo, Vitepress, etc.) support internal link replacement between notes
+- The normal widget version supports the use of image beds [Limited by the Electron mechanism, uploading directly from the main window will cause a kernel crash. Currently only link replacement is supported, and a new window still needs to be opened for uploading]
 
-### 开发重构
+### Development refactoring
 
-- 移除不必要的日志打印
-- #420 ankisiyuan.bin（仅支持 Mac） 默认不提供，手动下载，减小打包体积
-- 鉴于主窗口直接上传会导致内核崩溃，主窗口移除 PicGO 支持，仅支持新窗口模式使用 PicGO
+- Remove unnecessary log printing
+- #420 ankisiyuan.bin (Mac only) Not available by default, download manually to reduce package size
+- In view of the direct upload of the main window will cause a kernel crash, the main window removes PicGO support, and only supports the new window mode to use PicGO
 
-## v0.7.2 Bug 修复
+## v0.7.2 Bug fixes
 
-- 修复 PicGO 初始化失败问题
+- Fix PicGO initialization failure
 
-## v0.7.1 Bug 修复
+## v0.7.1 Bug fixes
 
-- 修复 PicGO 旧的配置文件迁移过程中路径拼接错误问题
+- Fixed the problem of path splicing errors during the migration of PicGO's old configuration files
 
-## v0.7.0 特性一览<sup>new</sup>
+## v0.7.0 Feature List <sup>new</sup>
 
-⚠️ 特别提醒: `0.7.0` 为灰度测试版本，所以随时可能发布 `0.7.x` 修复版本，请考虑好之后再升级。
+⚠️ Special reminder: `0.7.0` is a grayscale test version, so `0.7.x` repair version may be released at any time, please consider it before upgrading.
 
-### PicGO 相关
+### PicGO related
 
-- 新增用户友好的 PicGO 图形化配置界面
-- 优化 PicGO 配置，支持 PicGO 插件（目前支持水印、s3、minio 三个插件）
-- PicGO 默认图床为 github
-- PicGO 支持图片重命名
-- 云床配置 buffer 读取报错问题，测试常用图床
-- PicGO 引入事件监听机制，支持事件注册、事件发布
-- PicGO 支持读取多个图床，单个图床支持多份配置
+- Added user-friendly PicGO GUI configuration interface
+- Optimize PicGO configuration, support PicGO plug-ins (currently support watermark, s3, minio three plug-ins)
+- PicGO default picture bed is github
+- PicGO supports image renaming
+- Cloud bed configuration buffer reading error problem, test common picture bed
+- PicGO introduces an event monitoring mechanism to support event registration and event release
+- PicGO supports reading multiple picture beds, and a single picture bed supports multiple configurations
 
-### 系统配置相关
+### System configuration related
 
-- 整合系统所有配置项，提供统一的配置入口底部的【偏好设置】
-- 统一整合导入导出操作位底部的【导入导出】
-- 整合【思源 API 地址】设置到【偏好设置】的一个 tab 页
-- 整合原通用设置为【个性设置】，操作入口移到【偏好设置】的一个 tab 页
+- Integrate all configuration items of the system and provide a unified configuration entry [Preferences] at the bottom
+- Unified integration of [Import and Export] at the bottom of the import and export operations
+- Integrate the settings of [Siyuan API address] into a tab page of [Preferences]
+- Integrate the original general settings into [Personal Settings], and move the operation entry to a tab page of [Preferences]
 
-### 发布体验相关
+### Publish experience related
 
-- 【文章绑定】操作非配置项，也是可选功能，放在发布页面容易造成误解，现将操作移入详情页，仅在需要将平台文章与思源笔记建立联系时候使用。新增文章无需操作，新增会自动进行绑定
-- 修复浏览器插件不能使用 http，只能用 https 问题
-- 修复 typecho 发布文章未成功解析文章 id
-- 文章列表图标添加 tooltip
-- 插槽按钮添加文字提示
-- 新窗口打开时操作按钮 fixed 不随页面滑动
+- [Article Binding] The operation is not a configuration item, and it is also an optional function. It is easy to cause misunderstandings when placed on the release page. Now the operation is moved to the details page, and it is only used when it is necessary to establish a connection between the platform article and Siyuan notes. No operation is required to add new articles, and new articles will be automatically bound
+- Fix the problem that the browser plug-in cannot use http, only https
+- Fixed typecho publishing article failed to parse the article id
+- Article list icon added tooltip
+- Added text hints to slot buttons
+- Action button fixed not to slide with the page when new window opens
 
-### 开发者相关
+### Developer Related
 
-- 使用 python 重构项目构建脚本-支持一键打包
-- 挂载 SyCmd，适配 Anki 同步（目前仅 Mac 可用）
+- Use python to refactor project build scripts - support one-click packaging
+- Mount SyCmd for Anki sync (currently only available on Mac)
 
-### 其他
+### other
 
-- 修复已知问题，升级部分组件。
+- Fix known issues and upgrade some components.
 
-温馨提示：
+Kind tips:
 
-`0.7.0` 之前的更新日志请参考 [CHANGELOG](CHANGELOG.md)
+Please refer to [CHANGELOG](CHANGELOG.md) for changelog before `0.7.0`
 
-## 快速上手指南
+## Quick Start Guide
 
 ### FAQ
 
-Q1：使用此思源笔记挂件或者浏览器插件有什么注意事项吗？
+Q1: Are there any precautions when using this Siyuan note widget or browser plug-in?
 
-A1：有。 **特别提示：【自定义 JS 片段】请不要和【挂件通用版】混合使用，使用其中一种即可。避免因为混用导致配置同步问题。**
-浏览器插件无限制。
+A1: Yes. **Special reminder: Please do not mix `Customized JS Fragment` with `Pendant Universal Version`, just use one of them. Avoid configuration synchronization problems caused by mixing.**
+Browser plugins are unlimited.
 
-Q2：有哪些方式可以使用？具体步骤是什么？
+Q2: What methods are available? What are the specific steps?
 
-A2：请参考下面三种模式及其详细说明。特别注意温馨提示的内容。
+A2: Please refer to the following three modes and their detailed descriptions. Pay special attention to the content of the warm reminder.
 
-### 模式一：挂件版挂载菜单打开新窗口操作方式快速上手 <sup>强烈推荐</sup> <sup>0.4.2+</sup>
+### Mode 1: The mount menu of the widget version opens a new window and the operation method is quick to get started <sup>Strongly recommended</sup> <sup>0.4.2+</sup>
 
-首先在设置 - 集市 - 挂件 中下载 sy-post-publisher
+First download sy-post-publisher in Settings - Bazaar - Widgets
 
-点击设置 - 外观- 代码片段，代码片段加上下面的 `js` 片段，然后重启思源
+Click Settings - Appearance - Code Snippets, add the following `js` snippets to the code snippets, and restart Siyuan
 
 ```js
-// 如果不喜欢这个菜单，直接去掉这个代码片段引用即可，去掉之后仍然可以通过挂件版通用方式使用
+// If you don't like this menu, just remove the reference to this code snippet. After removing it, you can still use it in a general way through the widget version.
 import("/widgets/sy-post-publisher/lib/siyuanhook.js")
 ```
 
-点击按钮开始体验。
+Click the button to start the experience.
 
-详情请参考: [挂件模式用挂载菜单的方式使用](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html)
+For details, please refer to: [The pendant mode is used in the method of mounting menu](https://docs.publish.terwer.space/post/the-pendant-mode-is-used-in-the-method-of-mounting-menu-169wrw.html)
 
-温馨提示：此模式下，功能已经是最全面的了，直接使用菜单功能即可，请不要再添加挂件。避免因为混用导致配置同步问题。
+Reminder: In this mode, the functions are already the most comprehensive, just use the menu functions directly, please do not add pendants. Avoid configuration synchronization problems caused by mixing.
 
-### 模式二：挂件版通用方式快速上手
+### Mode 2: The common way of the pendant version is quick to get started
 
-首先在设置 - 集市 - 挂件 中下载 sy-post-publisher
+First download sy-post-publisher in Settings - Bazaar - Widgets
 
-然后写好文章
+then write a good article
 
-在文中最后面输入 / 找到挂件，选择 sy-post-publisher
+Enter / find the widget at the end of the text, select sy-post-publisher
 
-然后选择你需要的平台然后进行设置
+Then select the platform you need and set it up
 
-点击发布即可。
+Click Publish.
 
-温馨提示：不建议通用版模式下添加 JS 片段，可能会导致配置不同步问题。要么单独使用通用版，要么单独使用挂载菜单。
+Reminder: It is not recommended to add JS fragments in the general version mode, which may cause configuration out of sync problems. Either use the universal version alone, or use the mount menu alone.
 
-### 模式三：浏览器插件快速上手
+### Mode 3: Get started quickly with browser plugins
 
-参考 [浏览器插件快速上手指南](https://docs.publish.terwer.space/docs/getting-started/#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E6%96%B9%E5%BC%8F%E4%BD%BF%E7%94%A8)
+Refer to [Browser Plugin Quick Start Guide](https://docs.publish.terwer.space/docs/getting-started/#%E6%B5%8F%E8%A7%88%E5%99%A8%E6% 8F%92%E4%BB%B6%E6%96%B9%E5%BC%8F%E4%BD%BF%E7%94%A8)
 
-Q3: `siyuanhook.js` 新增挂载了哪些对象？在哪些场景挂载？目的是什么？
+Q3: What objects are newly mounted in 'siyuanhook.js'? In which scenarios is it mounted? What is the purpose?
 
-A3：SyPicgo、syp、terwer（仅新窗口）、SyCmd。仅在 `Electron` 环境（即思源笔记内部挂载）。
+A3: SyPicgo, syp, terwer (new window only), SyCmd. Only mounted inside the 'Electron' environment (i.e. inside Sieyuan notes).
 
-浏览器插件和自部署模式无此功能。目的是为了扩展思源笔记的功能。
+This feature is not available in browser plug-ins and self-deploying mode. The purpose is to expand the functionality of Siyuan notes.
 
-Q4：有哪些是已知问题，需要特别注意的？
+Q4: What are the known issues that need special attention?
 
-1. 思源笔记的【优化排版】会导致 Anki 标记字符被转义。
+1. The [Optimized Typesetting] of Siyuan notes will cause Anki tag characters to be escaped.
 
-   目前可用解决方案：如果使用了优化排版，使用完成之后一定要打开 Anki 列表，重新保存一下 Anki 笔记来修复。
+   Currently available solution: If you use optimized typography, be sure to open the Anki list after using it and save the Anki notes again to fix it.
 
-## 支持平台
+## Supported platforms
 
-- [x] [Hugo](https://gohugo.io/) <sup>推荐</sup>
-- [x] [Docsy](https://www.docsy.dev/) <sup>推荐</sup>
+- [x] [Hugo](https://gohugo.io/) <sup>Recommended</sup>
+- [x] [Docsy](https://www.docsy.dev/) <sup>Recommended</sup>
 - [x] [Hexo](https://hexo.io/zh-cn/)
-- [x] [Jekyll](https://github.com/lorepirri/cayman-blog)（Github pages 默认内置支持的平台）
+- [x] [Jekyll](https://github.com/lorepirri/cayman-blog) (Github pages are supported by default with built-in platforms)
 - [x] [Vuepress](https://github.com/terwer/terwer.github.io)
 - [x] [Vitepress](https://vitepress.vuejs.org/guide/getting-started)
 - [x] [Nuxt](https://content.nuxtjs.org/)
 - [x] [Next](https://nextra.site/)
-- [x] [博客园](https://cnblogs.com) <sup>推荐</sup>
-- [ ] CSDN <sup>预研</sup>
-- [ ] 知乎 <sup>预研</sup>
-- [x] [语雀](https://yuque.com) <sup>推荐</sup>
-- [x] [开源中国](https://my.oschina.net/terwergreen)
-- [x] [链滴社区](https://ld246.com)
+- [x] [Cnblogs](https://cnblogs.com) <sup>Recommended</sup>
+- [ ] CSDN <sup>Pre-research</sup>
+- [ ] Zhihu <sup>Pre-research</sup>
+- [x] [Yuque](https://yuque.com) <sup>Recommended</sup>
+- [x] [Oschina](https://my.oschina.net/terwergreen)
+- [x] [Liandi](https://ld246.com)
 - [x] [WordPress](https://blog.terwergreen.com)
-- [x] [Confluence](https://github.com/terwer/node-metaweblog-api-adaptor) <sup>通过接口适配器支持</sup>
+- [x] [Confluence](https://github.com/terwer/node-metaweblog-api-adaptor) <sup>Supported through interface adapters</sup>
 - [x] [Metaweblog API](http://xmlrpc.com/spec.md)
-- [ ] 自定义 HTTP 协议 <sup>预研</sup>
+- [ ] Custom HTTP protocol <sup>pre-research</sup>
 
-更多内容请查看
+Check out more about this
 
-[技术方案](https://github.com/terwer/sy-post-publisher/blob/main/tech.md)
+[Technical solutions](https://github.com/terwer/sy-post-publisher/blob/main/tech.md)
 
-[开发进度](https://github.com/users/terwer/projects/1/views/1)
+[Development progress](https://github.com/users/terwer/projects/1/views/1)
 
-[更新日志](https://github.com/terwer/sy-post-publisher/blob/main/CHANGELOG.md)
+[Changelog](https://github.com/terwer/sy-post-publisher/blob/main/CHANGELOG.md)
 
-## 🎈 鸣谢
+## 🎈 Acknowledgement
 
-sy-post-publisher 项目的诞生与成长离不开下列开源项目的贡献，以及热心网友的反馈和建议。
+The birth and growth of the sy-post-publisher project is inseparable from the contributions of the following open source projects, as well as the feedback and suggestions of enthusiastic netizens.
 
-### 思源社区
+### Siyuan Community
 
-[思源笔记](https://github.com/siyuan-note/siyuan)
+[siyuan-note](https://github.com/siyuan-note/siyuan)
 
-### 思源笔记非官方 QQ 群
+### unofficial QQ group
 
-欢迎加入 **思源爱好者折腾群** : `1017854502` ， 群内有各种爱折腾的技术大佬、萌妹子、热心网友，绝对不容错过。。。
+Welcome to join **Siyuan Lovers Toss Group**: `1017854502` , there are all kinds of technical bigwigs, cute girls, enthusiastic netizens in the group, definitely not to be missed...
 
-### 资源
+## Donate
 
-UI 框架：（排名不分先后）
+If you approve of this project, invite me to have a cup of coffee, which will encourage me to keep updating and create
+more useful tools~
+
+### Wechat
+
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/wechat.jpg" alt="wechat" style="width:280px;height:375px;" />
+</div>
+
+### Alipay
+
+<div>
+<img src="https://static-rs-terwer.oss-cn-beijing.aliyuncs.com/donate/alipay.jpg" alt="alipay" style="width:280px;height:375px;" />
+</div>
+
+### resource
+
+UI framework: (in no particular order)
 
 - [Vue3](https://vuejs.org/)
 - [Element-Plus](https://element-plus.org/)
 - [lute](https://github.com/88250/lute)
 - [FontAwesome](https://fontawesome.com/)
 
-技术框架或托管平台：（排名不分先后）
+Technology framework or hosting platform: (in no particular order)
 
 - [xmlrpc](https://github.com/baalexander/node-xmlrpc)
 - [yaml](https://github.com/nodeca/js-yaml)
 - [vercel](https://vercel.com/)
 
-### 个人
+### individual
 
-技术支持：（排名不分先后）
+Technical Support: (in no particular order)
 
-- 感谢 [Soltus](https://github.com/Soltus) 提供的新窗口打开相关代码及实现思路
+- Thanks to [Soltus](https://github.com/Soltus) for providing a new window that opens the relevant code and implementation ideas
 
-- 感谢 [leolee9086](https://github.com/leolee9086) 提供的挂载菜单相关代码及实现思路
+- Thanks to [leolee9086](https://github.com/leolee9086) for the mount menu code and implementation ideas
 
-- 感谢 [Zuoqiu-Yingyi](https://github.com/Zuoqiu-Yingyi)
-  开源的 [Dark+](https://github.com/Zuoqiu-Yingyi/siyuan-theme-dark-plus) 主题的灵感
+- Thanks [Zuoqiu-Yingyi] (https://github.com/Zuoqiu-Yingyi)
+  Inspiration for the open source [Dark+] (https://github.com/Zuoqiu-Yingyi/siyuan-theme-dark-plus) theme
 
-- 感谢 [svchord](https://github.com/svchord) 开源的 [Rem Craft](https://github.com/svchord/Rem-Craft) 主题的灵感
+- Thanks to [svchord](https://github.com/svchord) for inspiration on the open source [Rem Craft] (https://github.com/svchord/Rem-Craft) theme
 
-## 版权声明
+## Copyright Notice
 
-本作品以 [GPL V3](https://github.com/terwer/sy-post-publisher/blob/main/LICENSE) 形式开源
+This work is open source in [GPLv3] (https://github.com/terwer/sy-post-publisher/blob/main/LICENSE).
 
 ```
 /*
