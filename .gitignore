@@ -9,7 +9,6 @@ lerna-debug.log*
 
 node_modules
 dist
-build
 dist-ssr
 *.local
 
@@ -23,25 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# test
-.vercel
-*.private.env.json
-__snapshots__
-test/data/polyfill
-extension/
-*.crx
-*.pem
-backup/
-.vitest-result.json
-coverage
-
-# docs
-out
-.pnpm-store
-public/lib/picgo/picgo.cfg.json
-public/lib/picgo/picgo.cfg.dev.json
-
-__pycache__
-package.zip
-test.sh

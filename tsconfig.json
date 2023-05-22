@@ -1,41 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "strict": false,
-    "jsx": "preserve",
-    "sourceMap": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
-    "allowJs": true,
-    "checkJs": false,
-    "noImplicitAny": false,
-    "types": ["node", "vite/client", "vitest/globals"],
-    "paths": {
-      "~/*": ["./*"]
-    }
+    "noEmit": true,
+    "jsx": "preserve",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+
+    "types": ["node", "vite/client"]
   },
-  "include": [
-    "./**/*.vue",
-    "./**/*.ts",
-    "./**/*.mjs",
-    "*.vue",
-    "*.ts",
-    "*.mjs",
-    "typings/*.d.ts",
-    "node_modules/vitest/*.d.ts",
-    "node_modules/vitest/*.d.cts",
-    "node_modules/.pnpm/vitest@0.25.3_32bectir4jwfrzzeqodcdh256u/node_modules/vitest/globals.d.ts"
-  ],
-  "exclude": [".github", ".husky", ".vercel", "node_modules", "dist", "vite.config.ts"],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
