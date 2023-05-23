@@ -4,6 +4,7 @@ import livereload from "rollup-plugin-livereload"
 import minimist from "minimist"
 import fg from "fast-glob"
 import { createHtmlPlugin } from "vite-plugin-html"
+import path from "path"
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w || false
@@ -62,6 +63,12 @@ export default defineConfig({
   // 在这里自定义变量
   define: {
     "process.env.DEV_MODE": `"${isWatch}"`,
+  },
+
+  resolve: {
+    alias: {
+      "~": path.resolve(__dirname, "./"),
+    },
   },
 
   build: {

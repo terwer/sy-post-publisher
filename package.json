@@ -1,7 +1,7 @@
 {
   "name": "sy-post-publisher",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.8.1",
   "type": "module",
   "scripts": {
     "serve": "vite",
@@ -12,7 +12,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@terwer/eslint-config-custom": "^1.2.0",

@@ -23,24 +23,18 @@
  * questions.
  */
 
-import { createApp } from "vue"
-import "./style.css"
-import App from "./App.vue"
-import { createLogger } from "./utils/simple-logger.ts"
-import { useRouter } from "./composables/useRouter.ts"
+import { createRouter, createWebHashHistory, Router, RouteRecordRaw } from "vue-router"
+import Home from "~/src/views/Home.vue"
+import About from "~/src/views/About.vue"
 
-/**
- * 初始化 Vue 实例
- */
-;(async () => {
-  const logger = createLogger("vue-main-entry")
+const routes: RouteRecordRaw[] = [
+  { path: "/", component: Home },
+  { path: "/about", component: About },
+]
 
-  const app = createApp(App)
-
-  // router
-  const router = useRouter()
-  app.use(router)
-
-  app.mount("#app")
-  logger.info("app mounted")
-})()
+export const useRouter = (): Router => {
+  return createRouter({
+    history: createWebHashHistory(),
+    routes,
+  })
+}
