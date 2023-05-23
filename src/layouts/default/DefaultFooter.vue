@@ -59,7 +59,7 @@
         -->
         <!-- 思源地址设置弹窗 -->
 
-        <!-- 导出导出弹窗 -->
+        <!-- 导入导出弹窗 -->
         <el-dialog v-model="transportFormVisible" :title="$t('setting.conf.transport')">
           <transport-select />
         </el-dialog>

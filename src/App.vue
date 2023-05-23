@@ -29,6 +29,16 @@ import AppLayout from "~/src/layouts/AppLayout.vue"
 // global style
 import "~/src/assets/style.css"
 import "~/src/assets/style.dark.css"
+import { inject } from "vue"
+import { InjectKeys } from "~/src/utils/inject-keys.ts"
+
+// Vue 实例
+// const vueInstance = inject(InjectKeys.VUE_INSTANCE)
+// logger.info("vueInstance=>", vueInstance)
+
+// appInstance
+const appInstance = inject(InjectKeys.APP_INSTANCE)
+appInstance.logger.debug("appInstance=>", appInstance)
 </script>
 
 <template>

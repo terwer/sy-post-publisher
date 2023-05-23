@@ -34,6 +34,9 @@ import i18n from "~/src/locales"
 import "element-plus/dist/index.css"
 import "element-plus/theme-chalk/dark/css-vars.css"
 
+import { InjectKeys } from "~/src/utils/inject-keys.ts"
+import { AppInstance } from "~/src/app-instance.ts"
+
 /**
  * 初始化 Vue 实例
  */
@@ -49,6 +52,15 @@ import "element-plus/theme-chalk/dark/css-vars.css"
   const router = useRouter()
   app.use(router)
 
+  // appInstance
+  const appInstance = new AppInstance()
+  await appInstance.init()
+  app.provide(InjectKeys.APP_INSTANCE, appInstance)
+
+  // 挂载 vue app
   app.mount("#app")
-  logger.info("app mounted")
+
+  // 暴露 Vue 实例
+  app.provide(InjectKeys.VUE_INSTANCE, app)
+  logger.info("vue app created")
 })()

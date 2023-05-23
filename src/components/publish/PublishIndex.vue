@@ -23,10 +23,38 @@
   - questions.
   -->
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { createLogger } from "~/src/utils/simple-logger.ts"
+import { inject, onBeforeMount } from "vue"
+import { InjectKeys } from "~/src/utils/inject-keys.ts"
+import { AppInstance } from "~/src/app-instance.ts"
+import { Utils } from "~/src/utils/utils.ts"
+
+const logger = createLogger("publisher-index")
+
+// lifecycle
+onBeforeMount(async () => {
+  // appInstance
+  const appInstance: AppInstance = inject(InjectKeys.APP_INSTANCE)
+
+  // const wordpressCfg = {}
+  // const wordpressApiAdaptor = {}
+  // const wordpressApi = Utils.blogApi(appInstance, wordpressApiAdaptor)
+  // const wordpressPosts = await wordpressApi.getRecentPosts(10)
+  // logger.info("wordpress recent post=>", wordpressPosts)
+
+  const siyuanCfg = new appInstance.zhiSiyuanApi.SiyuanConfig("", "")
+  // 显示指定修复标题
+  siyuanCfg.fixTitle = true
+  const siyuanApiAdaptor = new appInstance.zhiSiyuanApi.SiYuanApiAdaptor(siyuanCfg)
+  const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+  const siyuanPosts = await siyuanApi.getRecentPosts(10)
+  logger.info("siyuan recent post=>", siyuanPosts)
+})
+</script>
 
 <template>
-  <div>PublishIndex</div>
+  <div>PublishIndex222222</div>
 </template>
 
 <style scoped></style>
