@@ -1,5 +1,5 @@
 <!--
-  - Copyright (c) 2023, Terwer . All rights reserved.
+  - Copyright (c) 2022-2023, Terwer . All rights reserved.
   - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
   -
   - This code is free software; you can redistribute it and/or modify it
@@ -23,14 +23,16 @@
   - questions.
   -->
 
-<script setup lang="ts">
-import PublishIndex from "~/src/components/publish/PublishIndex.vue"
-</script>
-
 <template>
-  <div id="publish-index">
-    <publish-index />
-  </div>
+  <div class="header-default"></div>
 </template>
+
+<script lang="ts" setup>
+import { useI18n } from "vue-i18n"
+import { createLogger } from "~/src/utils/simple-logger"
+
+const { t } = useI18n()
+const logger = createLogger("layouts/default/DefaultHeader.vue")
+</script>
 
 <style scoped></style>

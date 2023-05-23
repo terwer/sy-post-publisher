@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, Terwer . All rights reserved.
+ * Copyright (c) 2022, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,32 +23,18 @@
  * questions.
  */
 
-import { createApp } from "vue"
-import App from "./App.vue"
-import { createLogger } from "./utils/simple-logger.ts"
-import { useRouter } from "./composables/useRouter.ts"
-// 国际化
-import i18n from "~/src/locales"
+import { createI18n } from "vue-i18n"
+import zh_CN from "./zh_CN"
+import en_US from "./en_US"
 
-// Element-Plus
-import "element-plus/dist/index.css"
-import "element-plus/theme-chalk/dark/css-vars.css"
+const i18n = createI18n({
+  legacy: false,
+  locale: "zh_CN", // 默认显示语言
+  fallbackLocale: "en_US", // 次要语言
+  messages: {
+    zh_CN,
+    en_US,
+  },
+})
 
-/**
- * 初始化 Vue 实例
- */
-;(async () => {
-  const logger = createLogger("vue-main-entry")
-
-  const app = createApp(App)
-
-  // 国际化
-  app.use(i18n)
-
-  // router
-  const router = useRouter()
-  app.use(router)
-
-  app.mount("#app")
-  logger.info("app mounted")
-})()
+export default i18n

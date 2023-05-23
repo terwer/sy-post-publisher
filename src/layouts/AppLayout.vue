@@ -1,5 +1,5 @@
 <!--
-  - Copyright (c) 2023, Terwer . All rights reserved.
+  - Copyright (c) 2022, Terwer . All rights reserved.
   - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
   -
   - This code is free software; you can redistribute it and/or modify it
@@ -23,14 +23,15 @@
   - questions.
   -->
 
-<script setup lang="ts">
-import PublishIndex from "~/src/components/publish/PublishIndex.vue"
-</script>
-
 <template>
-  <div id="publish-index">
-    <publish-index />
-  </div>
+  <component :is="layout">
+    <slot />
+  </component>
 </template>
 
-<style scoped></style>
+<script lang="ts" setup>
+import { shallowRef } from "vue"
+import AppLayoutDefault from "~/src/layouts/default/AppLayoutDefault.vue"
+
+const layout = shallowRef(AppLayoutDefault)
+</script>

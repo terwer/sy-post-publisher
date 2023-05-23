@@ -11,10 +11,6 @@
     "test": "vitest --watch",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "vue": "^3.2.47",
-    "vue-router": "4"
-  },
   "devDependencies": {
     "@terwer/eslint-config-custom": "^1.2.0",
     "@types/node": "18",
@@ -27,5 +23,11 @@
     "vite": "^4.3.2",
     "vite-plugin-html": "^3.2.0",
     "vue-tsc": "^1.4.2"
+  },
+  "dependencies": {
+    "element-plus": "^2.3.5",
+    "vue": "^3.2.47",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "4"
   }
 }

@@ -23,14 +23,10 @@
   - questions.
   -->
 
-<script setup lang="ts">
-import PublishIndex from "~/src/components/publish/PublishIndex.vue"
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div id="publish-index">
-    <publish-index />
-  </div>
+  <div>PublishIndex</div>
 </template>
 
 <style scoped></style>
