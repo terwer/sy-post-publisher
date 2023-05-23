@@ -23,10 +23,12 @@
  * questions.
  */
 
+import { isDev } from "./constants.ts"
+
 /**
  * 使用 eruda 更好的控制日志
  */
-const console = (window as any).eruda.get("console")
+const console = isDev ? (window as any).eruda.get("console") : window.console
 
 /**
  * 简单的日志接口
@@ -69,7 +71,11 @@ export const createLogger = (name: string): ILogger => {
   }
 
   return {
-    debug: (msg: string, obj?: any) => log("DEBUG", msg, obj),
+    debug: (msg: string, obj?: any) => {
+      if (isDev) {
+        log("DEBUG", msg, obj)
+      }
+    },
     info: (msg: string, obj?: any) => log("INFO", msg, obj),
     warn: (msg: string, obj?: any) => {
       const time = formatDate(new Date())

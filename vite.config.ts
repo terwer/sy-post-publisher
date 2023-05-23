@@ -23,18 +23,20 @@ export default defineConfig({
       minify: !isWatch,
       inject: {
         // 在 body 标签底部插入指定的 JavaScript 文件
-        tags: [
-          {
-            tag: "script",
-            attrs: {
-              src: "./libs/eruda/eruda.js",
-            },
-            injectTo: "head-prepend",
-          },
-        ],
+        tags: isWatch
+          ? [
+              {
+                tag: "script",
+                attrs: {
+                  src: "./libs/eruda/eruda.js",
+                },
+                injectTo: "head-prepend",
+              },
+            ]
+          : [],
         data: {
           title: "eruda",
-          injectScript: `<script>eruda.init();</script>`,
+          injectScript: isWatch ? `<script>eruda.init();</script>` : "",
         },
       },
     }),
