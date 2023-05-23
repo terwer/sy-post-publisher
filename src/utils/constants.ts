@@ -23,7 +23,4 @@
  * questions.
  */
 
-declare module "*.vue" {
-  import Vue from "vue";
-  export default Vue;
-}
+export const isDev = process.env.DEV_MODE === "true"

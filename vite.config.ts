@@ -22,9 +22,19 @@ export default defineConfig({
     createHtmlPlugin({
       minify: !isWatch,
       inject: {
-        // add v parameter to all script tags
+        // 在 body 标签底部插入指定的 JavaScript 文件
+        tags: [
+          {
+            tag: "script",
+            attrs: {
+              src: "./libs/eruda/eruda.js",
+            },
+            injectTo: "head-prepend",
+          },
+        ],
         data: {
-          v: "1.0.0",
+          title: "eruda",
+          injectScript: `<script>eruda.init();</script>`,
         },
       },
     }),
@@ -43,6 +53,14 @@ export default defineConfig({
   ],
 
   base: "",
+
+  // https://github.com/vitejs/vite/issues/1930
+  // https://vitejs.dev/guide/env-and-mode.html#env-files
+  // https://github.com/vitejs/vite/discussions/3058#discussioncomment-2115319
+  // 在这里自定义变量
+  define: {
+    "process.env.DEV_MODE": `"${isWatch}"`,
+  },
 
   build: {
     // 输出路径
