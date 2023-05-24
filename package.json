@@ -7,7 +7,7 @@
     "serve": "vite",
     "dev": "BUILD_TYPE=siyuan vite build --watch",
     "build": "BUILD_TYPE=siyuan vite build",
-    "stayicBuild": "BUILD_TYPE=static vite build",
+    "staticBuild": "BUILD_TYPE=static vite build",
     "start": "vite preview",
     "test": "vitest --watch",
     "preview": "vite preview",
@@ -16,11 +16,12 @@
     "prepareRelease": "pnpm syncVersion && pnpm parseChangelog",
     "widget": "python scripts/widget.py",
     "ext": "python scripts/ext.py",
-    "package": "pnpm widget && pnpm ext"
+    "package": "pnpm widget && pnpm ext && pnpm ext -t firefox"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
     "@terwer/eslint-config-custom": "^1.2.0",
-    "@types/node": "18",
+    "@types/node": "^18.16.14",
     "@vitejs/plugin-vue": "^4.1.0",
     "fast-glob": "^3.2.12",
     "minimist": "^1.2.8",
@@ -38,6 +39,12 @@
     "element-plus": "^2.3.5",
     "vue": "^3.2.47",
     "vue-i18n": "^9.2.2",
-    "vue-router": "4"
+    "vue-router": "^4.2.1",
+    "zhi-blog-api": "^1.2.2",
+    "zhi-common": "^1.5.6",
+    "zhi-device": "^0.7.3",
+    "zhi-env": "^1.17.2",
+    "zhi-log": "^1.13.3",
+    "zhi-siyuan-api": "^1.1.4"
   }
 }

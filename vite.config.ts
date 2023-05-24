@@ -5,6 +5,7 @@ import minimist from "minimist"
 import fg from "fast-glob"
 import { createHtmlPlugin } from "vite-plugin-html"
 import path from "path"
+import commonjs from "@rollup/plugin-commonjs"
 
 const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
   if (isSiyuanBuild) {
@@ -31,6 +32,7 @@ console.log("isStaticBuild=>", isStaticBuild)
 
 // https://github.com/vuejs/vue-cli/issues/1198
 // https://vitejs.dev/config/
+// https://github.com/intlify/vue-i18n-next/issues/543
 export default defineConfig({
   plugins: [
     vue(),
@@ -99,7 +101,8 @@ export default defineConfig({
     // 或是用来指定是应用哪种混淆器
     // boolean | 'terser' | 'esbuild'
     // 不压缩，用于调试
-    minify: !isWatch,
+    // minify: !isWatch,
+    minify: false,
 
     rollupOptions: {
       plugins: [
@@ -118,6 +121,7 @@ export default defineConfig({
               },
             ]
           : []),
+        commonjs(),
       ],
 
       // make sure to externalize deps that shouldn't be bundled

@@ -29,6 +29,7 @@ import { inject, onBeforeMount } from "vue"
 import { InjectKeys } from "~/src/utils/inject-keys.ts"
 import { AppInstance } from "~/src/app-instance.ts"
 import { Utils } from "~/src/utils/utils.ts"
+import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
 
 const logger = createLogger("publisher-index")
 
@@ -43,10 +44,10 @@ onBeforeMount(async () => {
   // const wordpressPosts = await wordpressApi.getRecentPosts(10)
   // logger.info("wordpress recent post=>", wordpressPosts)
 
-  const siyuanCfg = new appInstance.zhiSiyuanApi.SiyuanConfig("", "")
+  const siyuanCfg = new SiyuanConfig("", "")
   // 显示指定修复标题
   siyuanCfg.fixTitle = true
-  const siyuanApiAdaptor = new appInstance.zhiSiyuanApi.SiYuanApiAdaptor(siyuanCfg)
+  const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
   const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
   const siyuanPosts = await siyuanApi.getRecentPosts(10)
   logger.info("siyuan recent post=>", siyuanPosts)

@@ -25,6 +25,9 @@
 
 import { AppInstance } from "~/src/app-instance.ts"
 import { createLogger } from "~/src/utils/simple-logger.ts"
+import { ZhiUtil } from "zhi-common"
+import { BlogAdaptor } from "zhi-blog-api"
+import { SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
 
 /**
  * 通用工具类
@@ -39,17 +42,15 @@ export class Utils {
 
   /**
    * 通用工具入口
-   *
-   * @param appInstance - 插件实例
    */
-  public static zhiCommon(appInstance: AppInstance) {
-    return appInstance.zhiCommon.ZhiUtil.zhiCommon()
+  public static zhiCommon() {
+    return ZhiUtil.zhiCommon()
   }
 
   public static kernelApi(appInstance: AppInstance) {
     if (!this.kApi) {
-      const cfg = new appInstance.zhiSiyuanApi.SiyuanConfig("", "")
-      this.kApi = new appInstance.zhiSiyuanApi.SiyuanKernelApi(cfg)
+      const cfg = new SiyuanConfig("", "")
+      this.kApi = new SiyuanKernelApi(cfg)
       this.kApi.init(appInstance)
     }
     return this.kApi
@@ -69,6 +70,6 @@ export class Utils {
       apiAdaptor.init(appInstance)
     }
 
-    return new appInstance.zhiBlogApi.BlogAdaptor(apiAdaptor)
+    return new BlogAdaptor(apiAdaptor)
   }
 }

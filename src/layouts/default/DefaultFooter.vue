@@ -27,31 +27,31 @@
   <div>
     <div class="footer">
       <div>
-        <span class="text"> &copy;2011-2023 </span>
+        <span class="text"> &copy;2011-{{ nowYear }} </span>
         <span class="text s-dark" @click="goGithub()">&nbsp;sy-post-publisher&nbsp;</span>
 
         <span class="text">v{{ v }}&nbsp;</span>
 
-        <span class="text s-dark" @click="goAbout()">{{ $t("syp.about") }}</span>
+        <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
 
         <span class="text">.</span>
         <span class="text s-dark" @click="toggleDark()">{{
-          isDark ? $t("theme.mode.light") : $t("theme.mode.dark")
+          isDark ? t("theme.mode.light") : t("theme.mode.dark")
         }}</span>
 
         <span class="text">.</span>
         <span class="text s-dark" @click="openTransportSetting">
-          {{ $t("setting.conf.transport") }}
+          {{ t("setting.conf.transport") }}
         </span>
 
         <span class="text">.</span>
         <span class="text s-dark" @click="newWin()">
-          {{ $t("blog.newwin.open") }}
+          {{ t("blog.newwin.open") }}
         </span>
 
         <span class="text">.</span>
         <span class="text s-dark" @click="openGeneralSetting()">
-          {{ $t("setting.blog.index") }}
+          {{ t("setting.blog.index") }}
         </span>
 
         <!--
@@ -60,12 +60,12 @@
         <!-- 思源地址设置弹窗 -->
 
         <!-- 导入导出弹窗 -->
-        <el-dialog v-model="transportFormVisible" :title="$t('setting.conf.transport')">
+        <el-dialog v-model="transportFormVisible" :title="t('setting.conf.transport')">
           <transport-select />
         </el-dialog>
 
         <!-- 通用设置弹窗 -->
-        <el-dialog v-model="generalSettingFormVisible" :title="$t('setting.blog.index')">
+        <el-dialog v-model="generalSettingFormVisible" :title="t('setting.blog.index')">
           <set-index />
         </el-dialog>
       </div>
@@ -78,8 +78,12 @@ import { useDark, useToggle } from "@vueuse/core"
 import { ref } from "vue"
 import { version } from "../../../package.json"
 import { createLogger } from "~/src/utils/simple-logger.ts"
+import { useVueI18n } from "~/src/composables/useVueI18n.ts"
+import { Utils } from "~/src/utils/utils.ts"
 
 const logger = createLogger("layouts/default/DefaultFooter")
+const common = Utils.zhiCommon()
+const { t } = useVueI18n()
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -87,8 +91,8 @@ const toggleDark = useToggle(isDark)
 const transportFormVisible = ref(false)
 const generalSettingFormVisible = ref(false)
 
-const isChrome = ref(false)
 const v = ref(version)
+const nowYear = common.dateUtil.nowYear()
 
 const goGithub = () => {
   window.open("https://github.com/terwer/sy-post-publisher")

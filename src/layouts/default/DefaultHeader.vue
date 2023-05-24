@@ -28,10 +28,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useI18n } from "vue-i18n"
 import { createLogger } from "~/src/utils/simple-logger"
+import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 
-const { t } = useI18n()
+const { t } = useVueI18n()
 const logger = createLogger("layouts/default/DefaultHeader.vue")
 </script>
 

@@ -72,9 +72,6 @@ def do_firefox_package(source_folder):
     Package the Firefox extension.
     :param source_folder: The source folder to build.
     """
-    # Delete Chrome configuration.
-    scriptutils.rm_file(source_folder + "manifest.json")
-
     scriptutils.mv_file(source_folder + "mv2/manifest-v2-for-firefox.json", source_folder + "manifest.json")
     scriptutils.mv_file(source_folder + "mv2/background-v2-for-firefox.js", source_folder + "background.js")
     scriptutils.rm_folder(source_folder + "mv2")
@@ -154,7 +151,6 @@ if __name__ == "__main__":
         print("Firefox extension packaging complete.")
     else:
         do_chrome_package(dist_folder, None)
-        do_firefox_package(dist_folder)
         print("Browser extension packaging complete.")
 
         print("Project build complete.")

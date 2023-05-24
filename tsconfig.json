@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
 
     /* Linting */
     "strict": false,
@@ -24,7 +25,7 @@
 
     "paths": {
       "~/*": ["./*"]
-    }
+    },
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]

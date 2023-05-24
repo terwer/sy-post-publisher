@@ -22,60 +22,19 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
+import { useI18n } from "vue-i18n"
 
-import { initLibs } from "~/src/loader.ts"
-import { initTools } from "~/src/tools.ts"
-
-export class AppInstance {
-  public deviceType
-
-  public fs
-  public path
-  public importDep: (moduleName: any) => Promise<any>
-
-  // 基础类库
-  public zhiDevice: {
-    DeviceDetection
-    SiyuanDevice
-    DeviceTypeEnum
-  }
-  public zhiEnv: {
-    Env
-  }
-  public zhiLog: {
-    LogFactory
-    crossChalk
-  }
-  public zhiCommon: {
-    ZhiCommon
-    ZhiUtil
-  }
-  public zhiElectron: {
-    ZhiBrowserWindow
-  }
-  public zhiBlogApi: {
-    BlogConstants
-    BlogTypeEnum
-    BlogApi
-    BlogAdaptor
-  }
-  public zhiSiyuanApi: {
-    SiyuanConstants
-    SiyuanConfig
-    SiYuanApiAdaptor
-    SiyuanKernelApi
+/**
+ * 多语言封装，解决 CSP
+ *
+ * https://github.com/intlify/vue-i18n-next/issues/543
+ */
+export const useVueI18n = () => {
+  const translate = (key) => {
+    const { messages, locale } = useI18n()
+    const localeMessages = messages.value?.[locale.value]
+    return localeMessages[key] || key
   }
 
-  // 初始化常用工具类
-  public logger
-  public common
-
-  public windowManager
-
-  public async init() {
-    // 初始化基础类库
-    await initLibs(this)
-    // 初始化常用工具类
-    await initTools(this)
-  }
+  return { t: translate }
 }

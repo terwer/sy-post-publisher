@@ -72,17 +72,12 @@ if __name__ == "__main__":
 
         # 删除Chrome插件专属文件
         scriptutils.rm_file(dist_folder + "background.js")
-        scriptutils.rm_files(dist_folder + "manifest*.json")
+        scriptutils.rm_files(dist_folder + "manifest.json")
         print("删除Chrome插件专属文件.")
 
         # 删除Firefox的专属文件
         scriptutils.rm_folder(dist_folder + "mv2")
         print("删除Firefox的专属文件.")
-
-        # 删除Picgo配置文件
-        scriptutils.rm_file(dist_folder + "lib/picgo/picgo.cfg.json")
-        scriptutils.rm_file(dist_folder + "lib/picgo/picgo.cfg.dev.json")
-        print("删除Picgo配置文件.")
 
         print("项目构建完成.")
 

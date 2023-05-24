@@ -1,66 +1,92 @@
-import { moduleBase } from "~/src/utils/constants.ts"
+/*
+ * Copyright (c) 2023, Terwer . All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Terwer designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Terwer in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
+ * or visit www.terwer.space if you need additional information or have any
+ * questions.
+ */
+
 import { AppInstance } from "~/src/app-instance.ts"
+import { DeviceDetection, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
+import { Env } from "zhi-env"
+import { crossChalk, LogFactory } from "zhi-log"
+import { ZhiCommon, ZhiUtil } from "zhi-common"
+import {BlogAdaptor, BlogApi, BlogConstants, BlogTypeEnum} from "zhi-blog-api"
+import { SiYuanApiAdaptor, SiyuanConfig, SiyuanConstants, SiyuanKernelApi } from "zhi-siyuan-api"
 
 export const initLibs = async (appInstance: AppInstance) => {
+  // deviceType
+  appInstance.deviceType = DeviceDetection.getDevice()
+
   // polyfills
-  appInstance.fs = (await import(`${moduleBase}/polyfills/fs.js`))["default"]
-  appInstance.path = (await import(`${moduleBase}/polyfills/path.js`))["default"]
-  appInstance.importDep = async (moduleName) => {
-    return await import(appInstance.path.join(moduleBase, moduleName))
-  }
+  // appInstance.fs = (await import(`${moduleBase}/polyfills/fs.js`))["default"]
+  // appInstance.path = (await import(`${moduleBase}/polyfills/path.js`))["default"]
+  // appInstance.importDep = async (moduleName) => {
+  //   return await import(appInstance.path.join(moduleBase, moduleName))
+  // }
 
   // libs
 
   // zhi-device
-  const zhiDevice = (await appInstance.importDep("./libs/zhi-device/index.js")) as any
   appInstance.zhiDevice = {
-    DeviceDetection: zhiDevice["DeviceDetection"],
-    SiyuanDevice: zhiDevice["SiyuanDevice"],
-    DeviceTypeEnum: zhiDevice["DeviceTypeEnum"],
+    DeviceDetection: DeviceDetection,
+    SiyuanDevice: SiyuanDevice,
+    DeviceTypeEnum: DeviceTypeEnum,
   }
 
   // zhi-env
-  const zhiEnv = (await appInstance.importDep("./libs/zhi-env/index.js")) as any
   appInstance.zhiEnv = {
-    Env: zhiEnv["Env"],
+    Env: Env,
   }
 
   // zhi-log
-  const zhiLog = (await appInstance.importDep("./libs/zhi-log/index.js")) as any
   appInstance.zhiLog = {
-    LogFactory: zhiLog["LogFactory"],
-    DefaultLogger: zhiLog["DefaultLogger"],
-    crossChalk: zhiLog["crossChalk"],
+    LogFactory: LogFactory,
+    crossChalk: crossChalk,
   }
 
   // zhi-common
-  const zhiCommon = (await appInstance.importDep("./libs/zhi-common/index.js")) as any
   appInstance.zhiCommon = {
-    ZhiCommon: zhiCommon["ZhiCommon"],
-    ZhiUtil: zhiCommon["ZhiUtil"],
-  }
-
-  // zhi-electron
-  const zhiElectron = (await appInstance.importDep("./libs/zhi-electron/index.js")) as any
-  appInstance.zhiElectron = {
-    ZhiBrowserWindow: zhiElectron["ZhiBrowserWindow"],
+    ZhiCommon: ZhiCommon,
+    ZhiUtil: ZhiUtil,
   }
 
   // zhi-blog-api
-  const zhiBlogApi = (await appInstance.importDep("./libs/zhi-blog-api/index.js")) as any
   appInstance.zhiBlogApi = {
-    BlogConstants: zhiBlogApi["BlogConstants"],
-    BlogTypeEnum: zhiBlogApi["BlogTypeEnum"],
-    BlogApi: zhiBlogApi["BlogApi"],
-    BlogAdaptor: zhiBlogApi["BlogAdaptor"],
+    BlogConstants: BlogConstants,
+    BlogTypeEnum: BlogTypeEnum,
+    BlogApi: BlogApi,
+    BlogAdaptor: BlogAdaptor,
   }
 
   // zhi-siyuan-api
-  const zhiSiyuanApi = (await appInstance.importDep("./libs/zhi-siyuan-api/index.js")) as any
   appInstance.zhiSiyuanApi = {
-    SiyuanConstants: zhiSiyuanApi["SiyuanConstants"],
-    SiyuanConfig: zhiSiyuanApi["SiyuanConfig"],
-    SiYuanApiAdaptor: zhiSiyuanApi["SiYuanApiAdaptor"],
-    SiyuanKernelApi: zhiSiyuanApi["SiyuanKernelApi"],
+    SiyuanConstants: SiyuanConstants,
+    SiyuanConfig: SiyuanConfig,
+    SiYuanApiAdaptor: SiYuanApiAdaptor,
+    SiyuanKernelApi: SiyuanKernelApi,
   }
+
+  // zhi-electron
+  // const zhiElectron = (await appInstance.importDep("./libs/zhi-electron/index.js")) as any
+  // appInstance.zhiElectron = {
+  //   ZhiBrowserWindow: zhiElectron["ZhiBrowserWindow"],
+  // }
 }
