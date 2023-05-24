@@ -24,10 +24,10 @@
   -->
 
 <script setup lang="ts">
-import { createLogger } from "~/src/utils/simple-logger.ts"
+import { createLogger } from "~/src/utils/simpleLogger.ts"
 import { inject, onBeforeMount } from "vue"
-import { InjectKeys } from "~/src/utils/inject-keys.ts"
-import { AppInstance } from "~/src/app-instance.ts"
+import { InjectKeys } from "~/src/utils/injectKeys.ts"
+import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
 

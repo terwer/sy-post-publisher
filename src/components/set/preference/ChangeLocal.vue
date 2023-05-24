@@ -1,5 +1,5 @@
 <!--
-  - Copyright (c) 2022-2023, Terwer . All rights reserved.
+  - Copyright (c) 2023, Terwer . All rights reserved.
   - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
   -
   - This code is free software; you can redistribute it and/or modify it
@@ -23,16 +23,49 @@
   - questions.
   -->
 
-<template>
-  <div class="header-default"></div>
-</template>
-
-<script lang="ts" setup>
-import { createLogger } from "~/src/utils/simpleLogger.ts"
+<script setup lang="ts">
+import { onMounted } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
+import configUtil from "~/src/stores/configUtil.ts"
+import { ConfigKeys } from "~/src/stores/configKeys.ts"
 
-const { t } = useVueI18n()
-const logger = createLogger("layouts/default/DefaultHeader.vue")
+const { t, locale } = useVueI18n()
+const langs = [
+  {
+    value: "zh_CN",
+    label: "简体中文",
+  },
+  {
+    value: "en_US",
+    label: "English",
+  },
+]
+
+const langChanged = async (lang) => {
+  locale.value = lang
+  await configUtil.setConf(ConfigKeys.LANG_KEY, lang)
+}
+
+onMounted(async () => {
+  // 设置默认语言
+  const defaultLang = await configUtil.getConf(ConfigKeys.LANG_KEY)
+  if (defaultLang !== "") {
+    locale.value = defaultLang
+  }
+})
 </script>
+
+<template>
+  <div class="locale-changer">
+    <el-form label-width="150px">
+      <!-- 语言选项 -->
+      <el-form-item :label="t('lang.choose')">
+        <el-select v-model="locale" :placeholder="t('lang.choose.placeholder')" @change="langChanged">
+          <el-option v-for="(lang, i) in langs" :key="i" :label="lang.label" :value="lang.value" />
+        </el-select>
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
 
 <style scoped></style>

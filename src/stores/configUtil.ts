@@ -23,53 +23,55 @@
  * questions.
  */
 
-import { AppInstance } from "~/src/appInstance.ts"
+import { getLocalStorageAdaptor } from "~/src/stores/localStorageAdaptor.ts"
 import { createLogger } from "~/src/utils/simpleLogger.ts"
-import { ZhiUtil } from "zhi-common"
-import { BlogAdaptor } from "zhi-blog-api"
-import { SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
+import { toRaw } from "vue"
+
+const logger = createLogger("localstorage-config")
 
 /**
- * 通用工具类
+ * 获取配置：这个是所有数据保存的根方法
  *
+ * @param key key
+ */
+export const getConf = async (key: string): Promise<string> => {
+  logger.debug("尝试从localStorage获取数据，key=>", key)
+
+  const store = await getLocalStorageAdaptor()
+  const value = store.getItem(key)
+  if (!value) {
+    logger.error("未找到对应数据，key=>", key)
+    return ""
+  }
+  logger.debug("从localStorage获取数据=>", value)
+  return value
+}
+
+/**
+ * 保存配置：这个是所有数据保存的根方法
+ *
+ * @param key
+ * @param value
  * @author terwer
  * @version 0.9.0
- * @since 0.9.0
+ * @since 0.0.1
  */
-export class Utils {
-  private static logger = createLogger("publisher-widget-utils")
-  private static kApi
-
-  /**
-   * 通用工具入口
-   */
-  public static zhiCommon() {
-    return ZhiUtil.zhiCommon()
+const setConf = async (key: string, value: string): Promise<void> => {
+  if (!value || value === "") {
+    logger.warn("空值，不保存")
+    return
   }
 
-  public static kernelApi(appInstance: AppInstance) {
-    if (!this.kApi) {
-      const cfg = new SiyuanConfig("", "")
-      this.kApi = new SiyuanKernelApi(cfg)
-      this.kApi.init(appInstance)
-    }
-    return this.kApi
-  }
+  logger.debug("尝试保存数据到localStorage里key=>", key)
+  logger.debug("保存数据到localStorage=>", value)
 
-  public static blogApi(appInstance: AppInstance, apiAdaptor: any) {
-    if (!apiAdaptor) {
-      throw new Error("ApiAdaptor cannot be null")
-    }
-
-    if (!apiAdaptor.getUsersBlogs) {
-      this.logger.error("ApiAdaptor must implements BlogApi", apiAdaptor)
-      throw new Error(`ApiAdaptor must implements BlogApi`)
-    }
-
-    if (apiAdaptor.init) {
-      apiAdaptor.init(appInstance)
-    }
-
-    return new BlogAdaptor(apiAdaptor)
-  }
+  const store = await getLocalStorageAdaptor()
+  store.setItem(key, value)
 }
+
+const configUtil = {
+  setConf,
+  getConf,
+}
+
+export default configUtil

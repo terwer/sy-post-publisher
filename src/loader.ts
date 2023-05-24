@@ -23,12 +23,12 @@
  * questions.
  */
 
-import { AppInstance } from "~/src/app-instance.ts"
+import { AppInstance } from "~/src/appInstance.ts"
 import { DeviceDetection, DeviceTypeEnum, SiyuanDevice } from "zhi-device"
 import { Env } from "zhi-env"
 import { crossChalk, LogFactory } from "zhi-log"
 import { ZhiCommon, ZhiUtil } from "zhi-common"
-import {BlogAdaptor, BlogApi, BlogConstants, BlogTypeEnum} from "zhi-blog-api"
+import { BlogAdaptor, BlogApi, BlogConstants, BlogTypeEnum } from "zhi-blog-api"
 import { SiYuanApiAdaptor, SiyuanConfig, SiyuanConstants, SiyuanKernelApi } from "zhi-siyuan-api"
 
 export const initLibs = async (appInstance: AppInstance) => {

@@ -1,5 +1,5 @@
 <!--
-  - Copyright (c) 2022-2023, Terwer . All rights reserved.
+  - Copyright (c) 2023, Terwer . All rights reserved.
   - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
   -
   - This code is free software; you can redistribute it and/or modify it
@@ -23,16 +23,14 @@
   - questions.
   -->
 
-<template>
-  <div class="header-default"></div>
-</template>
-
-<script lang="ts" setup>
-import { createLogger } from "~/src/utils/simpleLogger.ts"
-import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-
-const { t } = useVueI18n()
-const logger = createLogger("layouts/default/DefaultHeader.vue")
+<script setup lang="ts">
+import ChangeLocal from "~/src/components/set/preference/ChangeLocal.vue"
 </script>
+
+<template>
+  <div class="general-setting">
+    <change-local />
+  </div>
+</template>
 
 <style scoped></style>

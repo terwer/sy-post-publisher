@@ -22,20 +22,13 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-import { useI18n } from "vue-i18n"
 
 /**
- * 多语言封装，解决 CSP
+ * 配置通用 key ， 注意：必须全局唯一
  *
- * https://github.com/intlify/vue-i18n-next/issues/543
+ * @version 0.9.0
+ * @since 0.0.1
  */
-export const useVueI18n = () => {
-  const { messages, locale } = useI18n()
-
-  const translate = (key) => {
-    const localeMessages = messages.value?.[locale.value]
-    return localeMessages[key] || key
-  }
-
-  return { t: translate, locale }
+export enum ConfigKeys {
+  LANG_KEY = "lang",
 }

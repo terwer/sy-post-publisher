@@ -30,7 +30,7 @@ import AppLayout from "~/src/layouts/AppLayout.vue"
 import "~/src/assets/style.css"
 import "~/src/assets/style.dark.css"
 import { inject } from "vue"
-import { InjectKeys } from "~/src/utils/inject-keys.ts"
+import { InjectKeys } from "~/src/utils/injectKeys.ts"
 
 // Vue 实例
 // const vueInstance = inject(InjectKeys.VUE_INSTANCE)

@@ -18,14 +18,19 @@ const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
 }
 
 const args = minimist(process.argv.slice(2))
+const debugMode = true
 const isWatch = args.watch || args.w || false
+const isDev = isWatch || debugMode
 const devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
 const distDir = isWatch ? devDistDir : "./dist"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
 const isStaticBuild = process.env.BUILD_TYPE === "static"
+const isChromeBuild = process.env.BUILD_TYPE === "chrome"
 const appBase = getAppBase(isSiyuanBuild, isStaticBuild)
 
 console.log("isWatch=>", isWatch)
+console.log("debugMode=>", debugMode)
+console.log("isDev=>", isDev)
 console.log("distDir=>", distDir)
 console.log("isSiyuanBuild=>", isSiyuanBuild)
 console.log("isStaticBuild=>", isStaticBuild)
@@ -38,23 +43,24 @@ export default defineConfig({
     vue(),
 
     createHtmlPlugin({
-      minify: !isWatch,
+      minify: !isDev,
       inject: {
         // 在 body 标签底部插入指定的 JavaScript 文件
-        tags: isWatch
-          ? [
-              {
-                tag: "script",
-                attrs: {
-                  src: "./libs/eruda/eruda.js",
+        tags:
+          isDev && !isChromeBuild
+            ? [
+                {
+                  tag: "script",
+                  attrs: {
+                    src: "./libs/eruda/eruda.js",
+                  },
+                  injectTo: "head-prepend",
                 },
-                injectTo: "head-prepend",
-              },
-            ]
-          : [],
+              ]
+            : [],
         data: {
           title: "eruda",
-          injectScript: isWatch ? `<script>eruda.init();</script>` : "",
+          injectScript: isDev && !isChromeBuild ? `<script>eruda.init();</script>` : "",
         },
       },
     }),
@@ -101,8 +107,7 @@ export default defineConfig({
     // 或是用来指定是应用哪种混淆器
     // boolean | 'terser' | 'esbuild'
     // 不压缩，用于调试
-    // minify: !isWatch,
-    minify: false,
+    minify: !isDev,
 
     rollupOptions: {
       plugins: [

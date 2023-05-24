@@ -22,20 +22,13 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-import { useI18n } from "vue-i18n"
 
 /**
- * 多语言封装，解决 CSP
+ * 获取 LocalStorage 适配器
  *
- * https://github.com/intlify/vue-i18n-next/issues/543
+ * @author terwer
+ * @since 0.9.0
  */
-export const useVueI18n = () => {
-  const { messages, locale } = useI18n()
-
-  const translate = (key) => {
-    const localeMessages = messages.value?.[locale.value]
-    return localeMessages[key] || key
-  }
-
-  return { t: translate, locale }
+export const getLocalStorageAdaptor = async () => {
+  return window.localStorage
 }

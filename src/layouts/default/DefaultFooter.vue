@@ -59,11 +59,6 @@
         -->
         <!-- 思源地址设置弹窗 -->
 
-        <!-- 导入导出弹窗 -->
-        <el-dialog v-model="transportFormVisible" :title="t('setting.conf.transport')">
-          <transport-select />
-        </el-dialog>
-
         <!-- 通用设置弹窗 -->
         <el-dialog v-model="generalSettingFormVisible" :title="t('setting.blog.index')">
           <set-index />
@@ -77,9 +72,10 @@
 import { useDark, useToggle } from "@vueuse/core"
 import { ref } from "vue"
 import { version } from "../../../package.json"
-import { createLogger } from "~/src/utils/simple-logger.ts"
+import { createLogger } from "~/src/utils/simpleLogger.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { Utils } from "~/src/utils/utils.ts"
+import SetIndex from "~/src/components/set/SetIndex.vue"
 
 const logger = createLogger("layouts/default/DefaultFooter")
 const common = Utils.zhiCommon()

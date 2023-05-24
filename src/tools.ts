@@ -1,6 +1,6 @@
 import { Utils } from "~/src/utils/utils"
-import { AppInstance } from "~/src/app-instance.ts"
-import { createLogger } from "~/src/utils/simple-logger.ts"
+import { AppInstance } from "~/src/appInstance.ts"
+import { createLogger } from "~/src/utils/simpleLogger.ts"
 
 /**
  * 初始化工具类
