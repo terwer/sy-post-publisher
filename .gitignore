@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Scripts
+venv
+__pycache__
+
+# ext
+extension
+build

@@ -37,7 +37,7 @@ import { InjectKeys } from "~/src/utils/inject-keys.ts"
 // logger.info("vueInstance=>", vueInstance)
 
 // appInstance
-const appInstance = inject(InjectKeys.APP_INSTANCE)
+const appInstance = inject(InjectKeys.APP_INSTANCE) as any
 appInstance.logger.debug("appInstance=>", appInstance)
 </script>
 

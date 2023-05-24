@@ -63,10 +63,4 @@ export const initLibs = async (appInstance: AppInstance) => {
     SiYuanApiAdaptor: zhiSiyuanApi["SiYuanApiAdaptor"],
     SiyuanKernelApi: zhiSiyuanApi["SiyuanKernelApi"],
   }
-
-  // zhi-publisher-sdk
-  const zhiPublisherSdk = (await appInstance.importDep("./libs/zhi-publisher-sdk/index.js")) as any
-  appInstance.zhiPublisherSdk = {
-    PublishSdk: zhiPublisherSdk["PublishSdk"],
-  }
 }
