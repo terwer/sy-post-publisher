@@ -60,7 +60,9 @@ import { AppInstance } from "~/src/appInstance.ts"
   app.provide(InjectKeys.APP_INSTANCE, appInstance)
 
   // ElementPlus
-  app.use(ElementPlus)
+  // 包太大，需要改成按需引入
+  // https://element-plus.org/zh-CN/guide/quickstart.html#%E6%8C%89%E9%9C%80%E5%AF%BC%E5%85%A5
+  // app.use(ElementPlus)
 
   // 挂载 vue app
   app.mount("#app")

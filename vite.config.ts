@@ -6,6 +6,9 @@ import fg from "fast-glob"
 import { createHtmlPlugin } from "vite-plugin-html"
 import path from "path"
 import commonjs from "@rollup/plugin-commonjs"
+import AutoImport from "unplugin-auto-import/vite"
+import Components from "unplugin-vue-components/vite"
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 
 const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
   if (isSiyuanBuild) {
@@ -41,6 +44,13 @@ console.log("isStaticBuild=>", isStaticBuild)
 export default defineConfig({
   plugins: [
     vue(),
+
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
 
     createHtmlPlugin({
       minify: !isDev,
@@ -149,6 +159,21 @@ export default defineConfig({
             // console.log("id=>", id)
             // console.log("dep=>", dep)
             if (dep !== "") {
+              // if (dep === "element-plus") {
+              //   let element_dep = dep
+              //   const componentPath = id
+              //   const componentRegex = /\/node_modules\/([^/]+)\/.*\/components\/([^/]+)/
+              //   const matches = componentPath.match(componentRegex)
+              //
+              //   if (matches !== null) {
+              //     element_dep = matches[2]
+              //     // console.log("element_dep=>", element_dep)
+              //   } else {
+              //     // console.log(`Could not match component name from ${componentPath}`)
+              //   }
+              //
+              //   return "vendor_element_plus_" + element_dep
+              // }
               return "vendor_" + dep
             }
             return "vendor"
