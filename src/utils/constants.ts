@@ -24,4 +24,4 @@
  */
 
 export const isDev = process.env.DEV_MODE === "true"
-export const moduleBase = "/widgets/sy-post-publisher"
+export const moduleBase = process.env.APP_BASE

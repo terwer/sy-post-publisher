@@ -27,143 +27,134 @@ import os
 import scriptutils
 
 
-def do_chrome_package(df, is_chrome):
+def do_chrome_package(source_folder, is_chrome):
     """
-    Chrome构建
-    :param df: 源文件目录
-    :param is_chrome: 是否是Chrome
+    Package the Chrome extension.
+    :param source_folder: The source folder to build.
+    :param is_chrome: Whether to build for Chrome.
     """
-    # 删除火狐配置
-    scriptutils.rm_folder(df + "mv2")
-    scriptutils.mv_file(df + "manifest.prod.json", df + "manifest.json")
-    scriptutils.rm_file(df + "manifest.dev.json")
-    print("删除火狐配置.")
+    # Delete Firefox configuration.
+    scriptutils.rm_folder(source_folder + "mv2")
+    print("Deleted Firefox configuration.")
 
+    # Copy the files to the chrome folder.
     scriptutils.mkdir("./extension/chrome")
-    scriptutils.cp_folder(df, "./extension/chrome", True)
+    scriptutils.cp_folder(source_folder, "./extension/chrome", True)
 
-    # 打包
-    # 读取 JSON 文件
+    # Package Chrome extension.
     data = scriptutils.read_json_file(cwd + "package.json")
-    v = data["version"]
-
+    version = data["version"]
     if is_chrome is None:
-        # 压缩dist为zip
+        # Package for both Chrome and Edge.
         scriptutils.zip_folder("./extension/chrome", "./sy-post-publisher-chrome", "./build",
-                               "sy-post-publisher-chrome-" + v + ".zip")
-        print("将dist文件打包成zip，用于Chrome浏览器插件版本发布.")
-        # 压缩dist为zip
+                               "sy-post-publisher-chrome-" + version + ".zip")
+        print("Packaged zip for Chrome browser extension.")
         scriptutils.zip_folder("./extension/chrome", "./sy-post-publisher-edge", "./build",
-                               "sy-post-publisher-edge-" + v + ".zip")
-        print("将dist文件打包成zip，用于Edge浏览器插件版本发布.")
-        print("浏览器插件发布完毕.")
+                               "sy-post-publisher-edge-" + version + ".zip")
+        print("Packaged zip for Edge browser extension.")
+        print("Browser extension packaging complete.")
     elif is_chrome:
-        # 压缩dist为zip
+        # Package only for Chrome.
         scriptutils.zip_folder("./extension/chrome", "./sy-post-publisher-chrome", "./build",
-                               "sy-post-publisher-chrome-" + v + ".zip")
-        print("将dist文件打包成zip，用于Chrome浏览器插件版本发布.")
-        print("Chrome插件发布完毕.")
+                               "sy-post-publisher-chrome-" + version + ".zip")
+        print("Packaged zip for Chrome browser extension.")
+        print("Chrome extension packaging complete.")
     else:
-        # 压缩dist为zip
+        # Package only for Edge.
         scriptutils.zip_folder("./extension/chrome", "./sy-post-publisher-edge", "./build",
-                               "sy-post-publisher-edge-" + v + ".zip")
-        print("将dist文件打包成zip，用于Edge浏览器插件版本发布.")
-        print("Edge插件发布完毕.")
+                               "sy-post-publisher-edge-" + version + ".zip")
+        print("Packaged zip for Edge browser extension.")
+        print("Edge extension packaging complete.")
 
 
-def do_firefox_package(df):
+def do_firefox_package(source_folder):
     """
-    Firefox构建
-    :param df: 源文件目录
+    Package the Firefox extension.
+    :param source_folder: The source folder to build.
     """
-    # 删除Chrome配置
-    scriptutils.rm_file(df + "manifest.dev.json")
-    scriptutils.rm_file(df + "manifest.prod.json")
+    # Delete Chrome configuration.
+    scriptutils.rm_file(source_folder + "manifest.json")
 
-    scriptutils.mv_file(df + "mv2/manifest-v2-for-firefox.json", df + "manifest.json")
-    scriptutils.mv_file(df + "mv2/background-v2-for-firefox.js", df + "background.js")
-    scriptutils.rm_folder(df + "mv2")
+    scriptutils.mv_file(source_folder + "mv2/manifest-v2-for-firefox.json", source_folder + "manifest.json")
+    scriptutils.mv_file(source_folder + "mv2/background-v2-for-firefox.js", source_folder + "background.js")
+    scriptutils.rm_folder(source_folder + "mv2")
 
-    print("删除Chrome配置.")
+    print("Deleted Chrome configuration.")
 
+    # Copy the files to the firefox folder.
     scriptutils.mkdir("./extension/firefox")
-    scriptutils.cp_folder(df, "./extension/firefox", True)
-    print("Firefox V2插件发布完毕.")
+    scriptutils.cp_folder(source_folder, "./extension/firefox", True)
+    print("Published Firefox V2 extension.")
 
-    # 打包
-    # 读取 JSON 文件
+    # Package Firefox extension.
     data = scriptutils.read_json_file(cwd + "package.json")
-    v = data["version"]
+    version = data["version"]
 
     src_folder = "./extension/firefox"
     tmp_folder_name = "./sy-post-publisher-firefox"
     build_zip_path = "./build"
-    build_zip_name = "sy-post-publisher-firefox-" + v + ".zip"
+    build_zip_name = "sy-post-publisher-firefox-" + version + ".zip"
 
-    # 压缩dist为zip
     scriptutils.zip_folder(src_folder, tmp_folder_name, build_zip_path, build_zip_name)
-    print("将dist文件打包成zip，用于Firefox浏览器插件版本发布.")
+    print("Packaged zip for Firefox browser extension.")
 
 
 if __name__ == "__main__":
-    # 切换工作空间
+    # Switch to the working directory.
     scriptutils.switch_workdir()
 
-    # 获取当前工作空间
+    # Get the current working directory.
     cwd = scriptutils.get_workdir()
 
-    # 参数解析
+    # Parse arguments.
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--dist", required=False, help="the dist for building files")
-    parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
-    parser.add_argument("-nb", "--nobuild", action="store_true", help="ignore build")
-    parser.add_argument("-t", "--type", help="build browser extension for publishing,like chrome, edge, firefox")
+    parser.add_argument("-d", "--dist", required=False, help="The dist for building files.")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose output.")
+    parser.add_argument("-nb", "--nobuild", action="store_true", help="Ignore build.")
+    parser.add_argument("-t", "--type", help="Build browser extension for publishing, like chrome, edge, firefox.")
     args = parser.parse_args()
 
     if args.verbose:
-        print("Verbose mode enabled")
+        print("Verbose mode enabled.")
 
-    # 构建项目到 dist 目录
+    # Build the project.
     dist_name = "dist"
     if args.dist is not None and args.dist != "":
         dist_name = str(args.dist)
     dist_folder = "./" + dist_name + "/"
-    print("dist_name:" + dist_name)
-    print("dist_folder:" + dist_folder)
+    print("Building folder for " + dist_name)
+    print("Building folder path: " + dist_folder)
 
     if args.nobuild:
-        print("忽略项目构建.")
+        print("Ignoring project build.")
     else:
-        # 在 node 里面可以通过 process.env.BUILD_TYPE 读取
+        # Set the BUILD_TYPE environment variable in node.
+        os.environ["BUILD_TYPE"] = "chrome"
         build_cmd = "vue-tsc --noEmit && vite build --outDir " + dist_name
-        print("构建命令:" + build_cmd)
+        print("Build command: " + build_cmd)
         os.system(build_cmd)
 
-        # 复制浏览器插件需要的其他文件
+        # Copy necessary files.
         scriptutils.cp_file("./LICENSE", dist_folder)
         scriptutils.cp_file("./assets/key.pem", dist_folder)
-        print("复制浏览器插件需要的其他文件.")
+        print("Copied required extension files.")
 
-        # 删除siyuan挂件专属文件
+        # Delete SiYuan widget only files.
         scriptutils.rm_file(dist_folder + "widget.json")
-        scriptutils.rm_file(dist_folder + "lib/siyuanhook.js")
-        scriptutils.rm_folder(dist_folder + "lib/picgo")
-        scriptutils.rm_folder(dist_folder + "lib/json-localstorage")
-        scriptutils.rm_folder(dist_folder + "lib/siyuan")
-        print("删除siyuan挂件专属文件.")
 
-    # 插件打包
+    # Package extensions.
     if args.type == "chrome":
         do_chrome_package(dist_folder, is_chrome=True)
-        print("构建Google Chrome浏览器插件完成.")
+        print("Google Chrome extension packaging complete.")
     elif args.type == "edge":
         do_chrome_package(dist_folder, is_chrome=False)
-        print("构建Microsoft edge浏览器插件完成.")
+        print("Microsoft Edge extension packaging complete.")
     elif args.type == "firefox":
         do_firefox_package(dist_folder)
-        print("构建Firefox浏览器插件完成.")
+        print("Firefox extension packaging complete.")
     else:
         do_chrome_package(dist_folder, None)
-        print("构建浏览器插件完成.")
+        do_firefox_package(dist_folder)
+        print("Browser extension packaging complete.")
 
-        print("项目构建完成.")
+        print("Project build complete.")

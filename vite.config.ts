@@ -6,13 +6,28 @@ import fg from "fast-glob"
 import { createHtmlPlugin } from "vite-plugin-html"
 import path from "path"
 
+const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
+  if (isSiyuanBuild) {
+    return "/widgets/sy-post-publisher/"
+  } else if (isStaticBuild) {
+    return "/dist/"
+  } else {
+    return "/"
+  }
+}
+
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w || false
 const devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
 const distDir = isWatch ? devDistDir : "./dist"
+const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
+const isStaticBuild = process.env.BUILD_TYPE === "static"
+const appBase = getAppBase(isSiyuanBuild, isStaticBuild)
 
 console.log("isWatch=>", isWatch)
 console.log("distDir=>", distDir)
+console.log("isSiyuanBuild=>", isSiyuanBuild)
+console.log("isStaticBuild=>", isStaticBuild)
 
 // https://github.com/vuejs/vue-cli/issues/1198
 // https://vitejs.dev/config/
@@ -63,6 +78,7 @@ export default defineConfig({
   // 在这里自定义变量
   define: {
     "process.env.DEV_MODE": `"${isWatch}"`,
+    "process.env.APP_BASE": `"${appBase}"`,
   },
 
   resolve: {
