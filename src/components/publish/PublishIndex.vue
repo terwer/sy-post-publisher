@@ -25,14 +25,31 @@
 
 <script setup lang="ts">
 import { createLogger } from "~/src/utils/simpleLogger.ts"
-import { ref } from "vue"
+import { reactive, ref } from "vue"
 import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
 
 const logger = createLogger("publisher-index")
 
+const params = ref("{}")
 const logMessage = ref("")
+
+const methodOption = ref("getUsersBlogs")
+const METHOD_GET_USERS_BLOGS = "getUsersBlogs"
+const METHOD_GET_RECENT_POSTS = "getRecentPosts"
+const methodOptions = reactive({
+  options: [
+    {
+      value: METHOD_GET_USERS_BLOGS,
+      label: "获取博客信息",
+    },
+    {
+      value: METHOD_GET_RECENT_POSTS,
+      label: "获取最新文章列表",
+    },
+  ],
+})
 
 const siyuanGetRecentPosts = async () => {
   logMessage.value = ""
@@ -43,14 +60,32 @@ const siyuanGetRecentPosts = async () => {
     await appInstance.init()
     logger.info("appInstance=>", appInstance)
 
-    const siyuanCfg = new SiyuanConfig("", "")
-    // 显示指定修复标题
-    siyuanCfg.fixTitle = true
-    const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
-    const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
-    const siyuanPosts = await siyuanApi.getRecentPosts(10)
-    logMessage.value = JSON.stringify(siyuanPosts)
-    logger.info("siyuan recent post=>", siyuanPosts)
+    switch (methodOption.value) {
+      case METHOD_GET_USERS_BLOGS: {
+        const siyuanCfg = new SiyuanConfig("", "")
+        // 显示指定修复标题
+        siyuanCfg.fixTitle = true
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        const siyuanUsersBlogs = await siyuanApi.getUsersBlogs()
+        logMessage.value = JSON.stringify(siyuanUsersBlogs)
+        logger.info("siyuan users blogs=>", siyuanUsersBlogs)
+        break
+      }
+      case METHOD_GET_RECENT_POSTS: {
+        const siyuanCfg = new SiyuanConfig("", "")
+        // 显示指定修复标题
+        siyuanCfg.fixTitle = true
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        const siyuanPosts = await siyuanApi.getRecentPosts(10)
+        logMessage.value = JSON.stringify(siyuanPosts)
+        logger.info("siyuan recent post=>", siyuanPosts)
+        break
+      }
+      default:
+        break
+    }
   } catch (e) {
     logMessage.value = e
   }
@@ -79,17 +114,25 @@ const wordpressGetRecentPosts = async () => {
 
 <template>
   <div id="publish-index">
+    <div class="method-list">
+      <el-select v-model="methodOption" class="m-2" placeholder="请选择方法名称">
+        <el-option v-for="item in methodOptions.options" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
+    </div>
+
     <el-tabs type="border-card">
       <el-tab-pane label="思源">
-        <p><el-button @click="siyuanGetRecentPosts">文章列表</el-button></p>
-        <p><el-button>单篇文章</el-button></p>
+        <p><el-button @click="siyuanGetRecentPosts">开始测试思源</el-button></p>
       </el-tab-pane>
       <el-tab-pane label="WordPress">
-        <p><el-button @click="wordpressGetRecentPosts">文章列表</el-button></p>
-        <p><el-button>单篇文章</el-button></p>
+        <p><el-button @click="wordpressGetRecentPosts">开始测试WordPress</el-button></p>
       </el-tab-pane>
     </el-tabs>
 
+    <p><el-button>入参</el-button></p>
+    <p><el-input v-model="params" type="textarea" :rows="5"></el-input></p>
+
+    <p><el-button>结果</el-button></p>
     <p>
       <el-input v-model="logMessage" type="textarea" :rows="10" placeholder="日志信息"></el-input>
     </p>
@@ -99,4 +142,7 @@ const wordpressGetRecentPosts = async () => {
 <style lang="stylus" scoped>
 #publish-index
   margin 16px 20px
+
+.method-list
+  margin-bottom 16px
 </style>

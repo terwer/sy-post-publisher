@@ -24,11 +24,12 @@
  */
 
 import { isDev } from "./constants.ts"
+import { simpleLogger } from "zhi-lib-base"
 
 /**
  * 使用 eruda 更好的控制日志
  */
-const console = isDev ? (window as any).eruda.get("console") : window.console
+window.console = isDev ? (window as any).eruda.get("console") : window.console
 
 /**
  * 简单的日志接口
@@ -48,51 +49,7 @@ interface ILogger {
  * @since 1.0.0
  */
 export const createLogger = (name: string): ILogger => {
-  const sign = "publisher-widget"
-
-  const formatDate = (date: Date) => {
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, "0")
-    const day = String(date.getDate()).padStart(2, "0")
-    const hours = String(date.getHours()).padStart(2, "0")
-    const minutes = String(date.getMinutes()).padStart(2, "0")
-    const seconds = String(date.getSeconds()).padStart(2, "0")
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
-  }
-
-  const log = (level: string, msg: any, obj?: any) => {
-    const time = formatDate(new Date())
-    if (obj) {
-      console.log(`[${sign}] [${time}] [${level}] [${name}] ${msg}`, obj)
-    } else {
-      console.log(`[${sign}] [${time}] [${level}] [${name}] ${msg}`)
-    }
-  }
-
-  return {
-    debug: (msg: string, obj?: any) => {
-      if (isDev) {
-        log("DEBUG", msg, obj)
-      }
-    },
-    info: (msg: string, obj?: any) => log("INFO", msg, obj),
-    warn: (msg: string, obj?: any) => {
-      const time = formatDate(new Date())
-      if (obj) {
-        console.warn(`[${sign}] [${time}] [WARN] ${msg}`, obj)
-      } else {
-        console.warn(`[${sign}] [${time}] [WARN] ${msg}`)
-      }
-    },
-    error: (msg: string | Error, obj?: any) => {
-      if (typeof msg == "string") {
-        log("ERROR", msg, obj)
-      } else {
-        console.error(`[${sign}] [${formatDate(new Date())}] [ERROR] [${name}] error occurred`, msg)
-      }
-    },
-  }
+  return simpleLogger(name, "publisher-widget", isDev)
 }
 
 /**
