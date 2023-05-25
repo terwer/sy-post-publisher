@@ -26,6 +26,7 @@
     "fast-glob": "^3.2.12",
     "minimist": "^1.2.8",
     "rollup-plugin-livereload": "^2.0.5",
+    "stylus": "^0.59.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
     "unplugin-auto-import": "^0.16.2",

@@ -63,7 +63,7 @@ export class Utils {
 
     if (!apiAdaptor.getUsersBlogs) {
       this.logger.error("ApiAdaptor must implements BlogApi", apiAdaptor)
-      throw new Error(`ApiAdaptor must implements BlogApi`)
+      throw new Error(`ApiAdaptor must implements BlogApi => ${this.getObjectName(apiAdaptor)}`)
     }
 
     if (apiAdaptor.init) {
@@ -71,5 +71,33 @@ export class Utils {
     }
 
     return new BlogAdaptor(apiAdaptor)
+  }
+
+  private static getObjectName(obj) {
+    try {
+      // 判断是否为类
+      if (typeof obj === "function" && /^class\s/.test(obj.toString())) {
+        return obj.name
+      }
+      // 判断是否为函数
+      else if (typeof obj === "function") {
+        return obj.name || "anonymous function"
+      }
+      // 判断是否为枚举
+      else if (typeof obj === "object" && Object.values(obj.constructor).includes(obj)) {
+        return Object.keys(obj.constructor)[Object.values(obj.constructor).indexOf(obj)]
+      }
+      // 判断是否为属性
+      else if (typeof obj !== "object") {
+        return obj
+      }
+      // 默认返回空字符串
+      else {
+        return "{}"
+      }
+    } catch (e) {
+      console.error(e)
+      return "{}"
+    }
   }
 }

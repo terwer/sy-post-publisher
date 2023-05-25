@@ -58,6 +58,7 @@ import { AppInstance } from "~/src/appInstance.ts"
   const appInstance = new AppInstance()
   await appInstance.init()
   app.provide(InjectKeys.APP_INSTANCE, appInstance)
+  logger.info("appInstance provided=>", appInstance)
 
   // ElementPlus
   // 包太大，需要改成按需引入

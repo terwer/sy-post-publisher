@@ -28,9 +28,7 @@ import PublishIndex from "~/src/components/publish/PublishIndex.vue"
 </script>
 
 <template>
-  <div id="publish-index">
-    <publish-index />
-  </div>
+  <publish-index />
 </template>
 
 <style scoped></style>
