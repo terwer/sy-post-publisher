@@ -1,3 +1,5 @@
+[English](README.md)
+
 # sy-post-publisher
 
 ![](https://img1.terwer.space/api/public/202212181125714.png)

@@ -1,3 +1,5 @@
+[中文](README_zh_CN.md)
+
 # sy-post-publisher
 
 ![](https://img1.terwer.space/api/public/202212181125714.png)
