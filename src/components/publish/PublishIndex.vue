@@ -42,6 +42,7 @@ const METHOD_GET_USERS_BLOGS = "getUsersBlogs"
 const METHOD_GET_RECENT_POSTS_COUNT = "getRecentPostsCount"
 const METHOD_GET_RECENT_POSTS = "getRecentPosts"
 const METHOD_NEW_POST = "newPost"
+const METHOD_EDIT_POST = "editPost"
 const methodOptions = reactive({
   options: [
     {
@@ -59,6 +60,10 @@ const methodOptions = reactive({
     {
       value: METHOD_NEW_POST,
       label: "发布文章",
+    },
+    {
+      value: METHOD_EDIT_POST,
+      label: "编辑文章",
     },
   ],
 })
