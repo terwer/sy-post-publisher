@@ -23,5 +23,7 @@
  * questions.
  */
 
+
 declare module "vite-plugin-html"
 
+declare module "node:buffer"

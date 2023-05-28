@@ -5,10 +5,10 @@ import minimist from "minimist"
 import fg from "fast-glob"
 import { createHtmlPlugin } from "vite-plugin-html"
 import path from "path"
-import commonjs from "@rollup/plugin-commonjs"
 import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
+import { nodePolyfills } from "vite-plugin-node-polyfills"
 
 const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
   if (isSiyuanBuild) {
@@ -66,8 +66,23 @@ export default defineConfig({
                   },
                   injectTo: "head-prepend",
                 },
+                {
+                  tag: "script",
+                  attrs: {
+                    src: "./libs/lute/lute-1.7.5-20230410.min.cjs",
+                  },
+                  injectTo: "head",
+                },
               ]
-            : [],
+            : [
+                {
+                  tag: "script",
+                  attrs: {
+                    src: "./libs/lute/lute-1.7.5-20230410.min.cjs",
+                  },
+                  injectTo: "head",
+                },
+              ],
         data: {
           title: "eruda",
           injectScript: isDev && !isChromeBuild ? `<script>eruda.init();</script>` : "",
@@ -86,6 +101,13 @@ export default defineConfig({
         return html
       },
     },
+
+    // 在浏览器中polyfill node
+    // https://github.com/davidmyersdev/vite-plugin-node-polyfills/blob/main/test/src/main.ts
+    nodePolyfills({
+      exclude: ["fs"],
+      protocolImports: true,
+    }),
   ],
 
   base: "",
@@ -136,12 +158,10 @@ export default defineConfig({
               },
             ]
           : []),
-        commonjs(),
       ],
 
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
-      external: ["process"],
+      // make sure to externalize deps that shouldn't be bundled into your library
+      external: [],
 
       output: {
         // add a query parameter to all JS and CSS file URLs
@@ -159,21 +179,6 @@ export default defineConfig({
             // console.log("id=>", id)
             // console.log("dep=>", dep)
             if (dep !== "") {
-              // if (dep === "element-plus") {
-              //   let element_dep = dep
-              //   const componentPath = id
-              //   const componentRegex = /\/node_modules\/([^/]+)\/.*\/components\/([^/]+)/
-              //   const matches = componentPath.match(componentRegex)
-              //
-              //   if (matches !== null) {
-              //     element_dep = matches[2]
-              //     // console.log("element_dep=>", element_dep)
-              //   } else {
-              //     // console.log(`Could not match component name from ${componentPath}`)
-              //   }
-              //
-              //   return "vendor_element_plus_" + element_dep
-              // }
               return "vendor_" + dep
             }
             return "vendor"

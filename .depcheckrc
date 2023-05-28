@@ -1,0 +1,2 @@
+ignores: ["eslint-*", "@terwer*", "typescript", "vercel", "vue-eslint-parser", "vue-eslint-parser", "vue-tsc", "@terwer/eslint-config-custom", "@vueuse/components"]
+skip-missing: true

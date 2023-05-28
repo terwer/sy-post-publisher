@@ -23,8 +23,8 @@
  * questions.
  */
 
-import { initLibs } from "~/src/loader.ts"
-import { initTools } from "~/src/tools.ts"
+import { initLibs } from "~/src/loaders/loader.ts"
+import { initTools } from "~/src/loaders/tools.ts"
 
 export class AppInstance {
   public deviceType

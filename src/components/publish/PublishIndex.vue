@@ -29,12 +29,14 @@ import { reactive, ref } from "vue"
 import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
-import { before } from "node:test"
 import { Post } from "zhi-blog-api"
+import fetch from "cross-fetch"
 
 const logger = createLogger("publisher-index")
 
 const params = ref("{}")
+const showParamFile = ref(false)
+let paramFile = undefined
 const logMessage = ref("")
 
 const methodOption = ref("getUsersBlogs")
@@ -42,7 +44,12 @@ const METHOD_GET_USERS_BLOGS = "getUsersBlogs"
 const METHOD_GET_RECENT_POSTS_COUNT = "getRecentPostsCount"
 const METHOD_GET_RECENT_POSTS = "getRecentPosts"
 const METHOD_NEW_POST = "newPost"
+const METHOD_GET_POST = "getPost"
 const METHOD_EDIT_POST = "editPost"
+const METHOD_DELETE_POST = "deletePost"
+const METHOD_GET_CATEGORIES = "getCategories"
+const METHOD_GET_PREVIEW_URL = "getPreviewUrl"
+const METHOD_NEW_MEDIA_OBJECT = "newMediaObject"
 const methodOptions = reactive({
   options: [
     {
@@ -62,13 +69,35 @@ const methodOptions = reactive({
       label: "发布文章",
     },
     {
+      value: METHOD_GET_POST,
+      label: "获取文章详情",
+    },
+    {
       value: METHOD_EDIT_POST,
       label: "编辑文章",
+    },
+    {
+      value: METHOD_DELETE_POST,
+      label: "删除文章",
+    },
+    {
+      value: METHOD_GET_CATEGORIES,
+      label: "获取分类列表",
+    },
+    {
+      value: METHOD_GET_PREVIEW_URL,
+      label: "获取文章预览地址",
+    },
+    {
+      value: METHOD_NEW_MEDIA_OBJECT,
+      label: "上传资源文件",
     },
   ],
 })
 
 const onMethodChange = (val: string) => {
+  showParamFile.value = false
+
   switch (val) {
     case METHOD_GET_USERS_BLOGS: {
       params.value = "{}"
@@ -94,11 +123,68 @@ const onMethodChange = (val: string) => {
       })
       break
     }
+    case METHOD_GET_POST: {
+      params.value = JSON.stringify({
+        postid: "20230526221603-3mgotyw",
+      })
+      break
+    }
+    case METHOD_EDIT_POST: {
+      params.value = JSON.stringify({
+        postid: "20230527202519-k09a4gx",
+        post: {
+          title: "自动发布的测试标题2",
+          description: "自动发布的测试内容2",
+          mt_keywords: "标签1,标签2",
+          categories: ["分类1", "分类2"],
+          // dateCreated: new Date(),
+        },
+      })
+      break
+    }
+    case METHOD_DELETE_POST: {
+      params.value = JSON.stringify({
+        postid: "20230528192554-mlcxbe8",
+      })
+      break
+    }
+    case METHOD_GET_CATEGORIES: {
+      params.value = "{}"
+      break
+    }
+    case METHOD_GET_PREVIEW_URL: {
+      params.value = JSON.stringify({
+        postid: "20230528192554-mlcxbe8",
+      })
+      break
+    }
+    case METHOD_NEW_MEDIA_OBJECT: {
+      params.value = "{}"
+      showParamFile.value = true
+      break
+    }
     default: {
       params.value = "{}"
       break
     }
   }
+}
+
+const uploadImage = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  if (input.files && input.files[0]) {
+    paramFile = input.files[0]
+  }
+}
+
+//将表单中的文件转换为base64编码格式
+async function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result.split(",")[1])
+    reader.onerror = (error) => reject(error)
+  })
 }
 
 const siyuanGetRecentPosts = async () => {
@@ -158,13 +244,118 @@ const siyuanGetRecentPosts = async () => {
         logMessage.value = JSON.stringify(result)
         break
       }
-      // 20230527202519-k09a4gx
+      case METHOD_GET_POST: {
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        const paramsValue = JSON.parse(params.value)
+        const postid = paramsValue.postid
+        const siyuanPost = await siyuanApi.getPost(postid)
+        logMessage.value = JSON.stringify(siyuanPost)
+        logger.info("siyuan post=>", siyuanPost)
+        break
+      }
+      case METHOD_EDIT_POST: {
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
+        siyuanCfg.notebook = "20230506132031-qbtyjdk"
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        const paramsValue = JSON.parse(params.value)
+        const postid = paramsValue.postid
+        let post = new Post()
+        post = {
+          ...post,
+          ...paramsValue.post,
+        }
+        const result = await siyuanApi.editPost(postid, post)
+        logMessage.value = JSON.stringify(result)
+        break
+      }
+      case METHOD_DELETE_POST: {
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
+        siyuanCfg.notebook = "20230506132031-qbtyjdk"
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        const paramsValue = JSON.parse(params.value)
+        const postid = paramsValue.postid
+        const result = await siyuanApi.deletePost(postid)
+        logMessage.value = JSON.stringify(result)
+        break
+      }
+      case METHOD_GET_CATEGORIES: {
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        const siyuanCategories = await siyuanApi.getCategories()
+        logMessage.value = JSON.stringify(siyuanCategories)
+        logger.info("siyuan categories=>", siyuanCategories)
+        break
+      }
+      case METHOD_GET_PREVIEW_URL: {
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        const paramsValue = JSON.parse(params.value)
+        const postid = paramsValue.postid
+        const siyuanPreviewUrl = await siyuanApi.getPreviewUrl(postid)
+        logMessage.value = JSON.stringify(siyuanPreviewUrl)
+        logger.info("siyuan preview url=>", siyuanPreviewUrl)
+        break
+      }
+      case METHOD_NEW_MEDIA_OBJECT: {
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
+        // const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        // const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        // const bits = (await fileToArrayBuffer(paramFile)) as any
+        // logger.info("asset bits=>", bits)
+        // const mediaObject = new MediaObject(paramFile.name, paramFile.type, bits)
+
+        // test
+        // const formData = new FormData()
+        // formData.append("file[]", mediaObject.bits, { filename: mediaObject.name })
+        // formData.append("assetsDirPath", "/assets/")
+        const formData = new FormData()
+        console.log("paramFile=>", paramFile)
+        formData.append("file[]", paramFile, paramFile.name)
+        formData.append("assetsDirPath", "/assets/")
+
+        // const siyuanKernelApi = new SiyuanKernelApi(appInstance, siyuanCfg)
+        // const data = await siyuanKernelApi.uploadAsset(formData)
+        const result = await siyuanRequestForm(`${siyuanCfg.apiUrl}/api/asset/upload`, formData)
+        console.log("uploadAsset result=>", result)
+        logMessage.value = JSON.stringify(result)
+        // test
+
+        // const result = await siyuanApi.newMediaObject(mediaObject)
+        // logMessage.value = JSON.stringify(result)
+        // logger.info("siyuan new mediaObject result=>", result)
+        break
+      }
       default:
         break
     }
   } catch (e) {
     logMessage.value = e
+    console.error(e)
   }
+}
+
+async function siyuanRequestForm(url: string, formData: any): Promise<SiyuanData> {
+  const fetchOps = {
+    body: formData,
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }
+  logger.info("开始向思源请求数据，url=>", url)
+  logger.info("开始向思源请求数据，fetchOps=>", fetchOps)
+
+  const response = await fetch(url, fetchOps)
+  const resJson = await response.json()
+  logger.info("思源请求数据返回，resJson=>", resJson)
+
+  return resJson
 }
 
 const wordpressGetRecentPosts = async () => {
@@ -207,6 +398,7 @@ const wordpressGetRecentPosts = async () => {
 
     <p><el-button>入参</el-button></p>
     <p><el-input v-model="params" type="textarea" :rows="5"></el-input></p>
+    <p v-if="showParamFile"><input type="file" @change="uploadImage" /></p>
 
     <p><el-button>结果</el-button></p>
     <p>
