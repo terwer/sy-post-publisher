@@ -29,6 +29,8 @@ import { reactive, ref } from "vue"
 import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
+import { before } from "node:test"
+import { Post } from "zhi-blog-api"
 
 const logger = createLogger("publisher-index")
 
@@ -37,7 +39,9 @@ const logMessage = ref("")
 
 const methodOption = ref("getUsersBlogs")
 const METHOD_GET_USERS_BLOGS = "getUsersBlogs"
+const METHOD_GET_RECENT_POSTS_COUNT = "getRecentPostsCount"
 const METHOD_GET_RECENT_POSTS = "getRecentPosts"
+const METHOD_NEW_POST = "newPost"
 const methodOptions = reactive({
   options: [
     {
@@ -45,11 +49,52 @@ const methodOptions = reactive({
       label: "获取博客信息",
     },
     {
+      value: METHOD_GET_RECENT_POSTS_COUNT,
+      label: "获取最新文章数目",
+    },
+    {
       value: METHOD_GET_RECENT_POSTS,
       label: "获取最新文章列表",
     },
+    {
+      value: METHOD_NEW_POST,
+      label: "发布文章",
+    },
   ],
 })
+
+const onMethodChange = (val: string) => {
+  switch (val) {
+    case METHOD_GET_USERS_BLOGS: {
+      params.value = "{}"
+      break
+    }
+    case METHOD_GET_RECENT_POSTS_COUNT: {
+      params.value = "{}"
+      break
+    }
+    case METHOD_GET_RECENT_POSTS: {
+      params.value = JSON.stringify({
+        numOfPosts: 10,
+      })
+      break
+    }
+    case METHOD_NEW_POST: {
+      params.value = JSON.stringify({
+        title: "自动发布的测试标题",
+        description: "自动发布的测试内容",
+        mt_keywords: "标签1,标签2",
+        categories: ["分类1", "分类2"],
+        // dateCreated: new Date(),
+      })
+      break
+    }
+    default: {
+      params.value = "{}"
+      break
+    }
+  }
+}
 
 const siyuanGetRecentPosts = async () => {
   logMessage.value = ""
@@ -62,27 +107,53 @@ const siyuanGetRecentPosts = async () => {
 
     switch (methodOption.value) {
       case METHOD_GET_USERS_BLOGS: {
-        const siyuanCfg = new SiyuanConfig("", "")
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
         // 显示指定修复标题
         siyuanCfg.fixTitle = true
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const siyuanUsersBlogs = await siyuanApi.getUsersBlogs()
         logMessage.value = JSON.stringify(siyuanUsersBlogs)
         logger.info("siyuan users blogs=>", siyuanUsersBlogs)
         break
       }
+      case METHOD_GET_RECENT_POSTS_COUNT: {
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        const recentPostsCount = await siyuanApi.getRecentPostsCount()
+        logMessage.value = JSON.stringify(recentPostsCount)
+        logger.info("siyuan recent post count=>", recentPostsCount)
+        break
+      }
       case METHOD_GET_RECENT_POSTS: {
-        const siyuanCfg = new SiyuanConfig("", "")
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
         // 显示指定修复标题
         siyuanCfg.fixTitle = true
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
-        const siyuanPosts = await siyuanApi.getRecentPosts(10)
+        const paramsValue = JSON.parse(params.value)
+        const siyuanPosts = await siyuanApi.getRecentPosts(paramsValue.numOfPosts)
         logMessage.value = JSON.stringify(siyuanPosts)
         logger.info("siyuan recent post=>", siyuanPosts)
         break
       }
+      case METHOD_NEW_POST: {
+        const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
+        siyuanCfg.notebook = "20230506132031-qbtyjdk"
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        const paramsValue = JSON.parse(params.value)
+        let post = new Post()
+        post = {
+          ...post,
+          ...paramsValue,
+        }
+        const result = await siyuanApi.newPost(post)
+        logMessage.value = JSON.stringify(result)
+        break
+      }
+      // 20230527202519-k09a4gx
       default:
         break
     }
@@ -115,7 +186,7 @@ const wordpressGetRecentPosts = async () => {
 <template>
   <div id="publish-index">
     <div class="method-list">
-      <el-select v-model="methodOption" class="m-2" placeholder="请选择方法名称">
+      <el-select v-model="methodOption" class="m-2" placeholder="请选择方法名称" @change="onMethodChange">
         <el-option v-for="item in methodOptions.options" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>

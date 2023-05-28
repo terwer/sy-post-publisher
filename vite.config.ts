@@ -145,9 +145,9 @@ export default defineConfig({
 
       output: {
         // add a query parameter to all JS and CSS file URLs
-        chunkFileNames: "static/chunk.[name].js",
-        entryFileNames: "static/entry.[name].js",
-        assetFileNames: "static/asset.[name].[ext]",
+        chunkFileNames: "chunks/chunk.[name].js",
+        entryFileNames: "entry.[name].js",
+        assetFileNames: "assets/[name].[ext]",
         manualChunks(id) {
           if (id.includes("node_modules")) {
             let arr = id.toString().split("node_modules/")[1].split("/")

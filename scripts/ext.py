@@ -39,7 +39,7 @@ def do_chrome_package(source_folder, is_chrome):
 
     # Copy the files to the chrome folder.
     scriptutils.mkdir("./extension/chrome")
-    scriptutils.cp_folder(source_folder, "./extension/chrome", True)
+    scriptutils.cp_folder(source_folder, "./extension/chrome")
 
     # Package Chrome extension.
     data = scriptutils.read_json_file(cwd + "package.json")
@@ -80,7 +80,7 @@ def do_firefox_package(source_folder):
 
     # Copy the files to the firefox folder.
     scriptutils.mkdir("./extension/firefox")
-    scriptutils.cp_folder(source_folder, "./extension/firefox", True)
+    scriptutils.cp_folder(source_folder, "./extension/firefox")
     print("Published Firefox V2 extension.")
 
     # Package Firefox extension.
@@ -125,19 +125,19 @@ if __name__ == "__main__":
     if args.nobuild:
         print("Ignoring project build.")
     else:
-        # Set the BUILD_TYPE environment variable in node.
-        os.environ["BUILD_TYPE"] = "chrome"
-        build_cmd = "vue-tsc --noEmit && vite build --outDir " + dist_name
-        print("Build command: " + build_cmd)
-        os.system(build_cmd)
-
         # Copy necessary files.
+        scriptutils.cp_folder("./src/extensions", dist_folder)
         scriptutils.cp_file("./LICENSE", dist_folder)
         scriptutils.cp_file("./assets/key.pem", dist_folder)
         print("Copied required extension files.")
 
-        # Delete SiYuan widget only files.
-        scriptutils.rm_file(dist_folder + "widget.json")
+        # Set the BUILD_TYPE environment variable in node.
+        os.environ["BUILD_TYPE"] = "chrome"
+        print(f"BUILD_TYPE=>chrome")
+        build_cmd = "vue-tsc --noEmit && vite build --outDir " + dist_name
+        print("Build command: " + build_cmd)
+        os.system(build_cmd)
+        print("Build finished")
 
     # Package extensions.
     if args.type == "chrome":

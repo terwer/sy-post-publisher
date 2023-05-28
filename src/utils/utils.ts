@@ -50,7 +50,7 @@ export class Utils {
   public static kernelApi(appInstance: AppInstance) {
     if (!this.kApi) {
       const cfg = new SiyuanConfig("", "")
-      this.kApi = new SiyuanKernelApi(cfg)
+      this.kApi = new SiyuanKernelApi(appInstance, cfg)
       this.kApi.init(appInstance)
     }
     return this.kApi
