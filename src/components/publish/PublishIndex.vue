@@ -309,25 +309,21 @@ const siyuanGetRecentPosts = async () => {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
         const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
-        // logger.info("paramFile=>", paramFile)
-        // siyuan form need file
+
         const bits = await fileToBuffer(paramFile.value)
-        // const mediaObject = new MediaObject(paramFile.value.name, paramFile.value.type, null, paramFile.value)
         const mediaObject = new MediaObject(paramFile.value.name, paramFile.value.type, bits)
         logger.info("mediaObject=>", mediaObject)
-        // const result = await siyuanApi.newMediaObject(mediaObject)
 
-        // const formData = new FormData()
-        // formData.append("file[]", paramFile.value)
-        // formData.append("assetsDirPath", "/assets/")
+        const result = await siyuanApi.newMediaObject(mediaObject, async () => {
+          const formData = new FormData()
+          const blob = new Blob([mediaObject.bits])
+          formData.append("file[]", blob, mediaObject.name)
+          formData.append("assetsDirPath", "/assets/")
 
-        const formData = new FormData()
-        const blob = new Blob([mediaObject.bits])
-        formData.append("file[]", blob, mediaObject.name)
-        formData.append("assetsDirPath", "/assets/")
+          const siyuanKernelApi = new SiyuanKernelApi(appInstance, siyuanCfg)
+          return await siyuanKernelApi.uploadAsset(formData)
+        })
 
-        const siyuanKernelApi = new SiyuanKernelApi(appInstance, siyuanCfg)
-        const result = await siyuanKernelApi.uploadAsset(formData)
         logMessage.value = JSON.stringify(result)
         logger.info("siyuan new mediaObject result=>", result)
         break
