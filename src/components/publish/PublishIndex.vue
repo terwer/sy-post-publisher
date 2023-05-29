@@ -28,15 +28,15 @@ import { createLogger } from "~/src/utils/simpleLogger.ts"
 import { reactive, ref } from "vue"
 import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
-import { SiYuanApiAdaptor, SiyuanConfig } from "zhi-siyuan-api"
-import { Post } from "zhi-blog-api"
-import fetch from "cross-fetch"
+import { SiYuanApiAdaptor, SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
+import { MediaObject, Post } from "zhi-blog-api"
+import { Buffer } from "node:buffer"
 
 const logger = createLogger("publisher-index")
 
 const params = ref("{}")
 const showParamFile = ref(false)
-let paramFile = undefined
+const paramFile = ref(null)
 const logMessage = ref("")
 
 const methodOption = ref("getUsersBlogs")
@@ -170,20 +170,23 @@ const onMethodChange = (val: string) => {
   }
 }
 
-const uploadImage = (event: Event) => {
+const onImageSelect = async (event: Event) => {
   const input = event.target as HTMLInputElement
   if (input.files && input.files[0]) {
-    paramFile = input.files[0]
+    paramFile.value = input.files[0]
   }
 }
 
-//将表单中的文件转换为base64编码格式
-async function fileToBase64(file) {
+const fileToBuffer = async (file: any): Promise<any> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result.split(",")[1])
-    reader.onerror = (error) => reject(error)
+    reader.onload = (e: any) => {
+      // 将 ArrayBuffer 转换成 Buffer 对象
+      const buffer = Buffer.from(e.target.result)
+      resolve(buffer)
+    }
+    reader.onerror = reject
+    reader.readAsArrayBuffer(file)
   })
 }
 
@@ -304,31 +307,29 @@ const siyuanGetRecentPosts = async () => {
       }
       case METHOD_NEW_MEDIA_OBJECT: {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
-        // const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
-        // const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
-        // const bits = (await fileToArrayBuffer(paramFile)) as any
-        // logger.info("asset bits=>", bits)
-        // const mediaObject = new MediaObject(paramFile.name, paramFile.type, bits)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
+        // logger.info("paramFile=>", paramFile)
+        // siyuan form need file
+        const bits = await fileToBuffer(paramFile.value)
+        // const mediaObject = new MediaObject(paramFile.value.name, paramFile.value.type, null, paramFile.value)
+        const mediaObject = new MediaObject(paramFile.value.name, paramFile.value.type, bits)
+        logger.info("mediaObject=>", mediaObject)
+        // const result = await siyuanApi.newMediaObject(mediaObject)
 
-        // test
         // const formData = new FormData()
-        // formData.append("file[]", mediaObject.bits, { filename: mediaObject.name })
+        // formData.append("file[]", paramFile.value)
         // formData.append("assetsDirPath", "/assets/")
+
         const formData = new FormData()
-        console.log("paramFile=>", paramFile)
-        formData.append("file[]", paramFile, paramFile.name)
+        const blob = new Blob([mediaObject.bits])
+        formData.append("file[]", blob, mediaObject.name)
         formData.append("assetsDirPath", "/assets/")
 
-        // const siyuanKernelApi = new SiyuanKernelApi(appInstance, siyuanCfg)
-        // const data = await siyuanKernelApi.uploadAsset(formData)
-        const result = await siyuanRequestForm(`${siyuanCfg.apiUrl}/api/asset/upload`, formData)
-        console.log("uploadAsset result=>", result)
+        const siyuanKernelApi = new SiyuanKernelApi(appInstance, siyuanCfg)
+        const result = await siyuanKernelApi.uploadAsset(formData)
         logMessage.value = JSON.stringify(result)
-        // test
-
-        // const result = await siyuanApi.newMediaObject(mediaObject)
-        // logMessage.value = JSON.stringify(result)
-        // logger.info("siyuan new mediaObject result=>", result)
+        logger.info("siyuan new mediaObject result=>", result)
         break
       }
       default:
@@ -338,24 +339,6 @@ const siyuanGetRecentPosts = async () => {
     logMessage.value = e
     console.error(e)
   }
-}
-
-async function siyuanRequestForm(url: string, formData: any): Promise<SiyuanData> {
-  const fetchOps = {
-    body: formData,
-    method: "POST",
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  }
-  logger.info("开始向思源请求数据，url=>", url)
-  logger.info("开始向思源请求数据，fetchOps=>", fetchOps)
-
-  const response = await fetch(url, fetchOps)
-  const resJson = await response.json()
-  logger.info("思源请求数据返回，resJson=>", resJson)
-
-  return resJson
 }
 
 const wordpressGetRecentPosts = async () => {
@@ -398,7 +381,7 @@ const wordpressGetRecentPosts = async () => {
 
     <p><el-button>入参</el-button></p>
     <p><el-input v-model="params" type="textarea" :rows="5"></el-input></p>
-    <p v-if="showParamFile"><input type="file" @change="uploadImage" /></p>
+    <p v-if="showParamFile"><input type="file" @change="onImageSelect" /></p>
 
     <p><el-button>结果</el-button></p>
     <p>

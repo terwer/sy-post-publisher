@@ -24,5 +24,6 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SetIndex: typeof import('./src/components/set/SetIndex.vue')['default']
+    SiyuanAssetUpload: typeof import('./src/components/SiyuanAssetUpload.vue')['default']
   }
 }
