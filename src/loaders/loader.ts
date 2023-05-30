@@ -30,6 +30,7 @@ import { crossChalk, LogFactory } from "zhi-log"
 import { ZhiCommon, ZhiUtil } from "zhi-common"
 import { BlogAdaptor, BlogApi, BlogConstants, BlogTypeEnum } from "zhi-blog-api"
 import { SiYuanApiAdaptor, SiyuanConfig, SiyuanConstants, SiyuanKernelApi } from "zhi-siyuan-api"
+import { SimpleXmlRpcClient } from "simple-xmlrpc"
 
 export const initLibs = async (appInstance: AppInstance) => {
   // deviceType
@@ -74,6 +75,11 @@ export const initLibs = async (appInstance: AppInstance) => {
     BlogTypeEnum: BlogTypeEnum,
     BlogApi: BlogApi,
     BlogAdaptor: BlogAdaptor,
+  }
+
+  // simple-xmlrpc
+  appInstance.simpleXmlrpc = {
+    SimpleXmlRpcClient,
   }
 
   // zhi-siyuan-api

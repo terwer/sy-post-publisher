@@ -39,26 +39,36 @@ export class AppInstance {
     SiyuanDevice
     DeviceTypeEnum
   }
+
   public zhiEnv: {
     Env
   }
+
   public zhiLog: {
     LogFactory
     crossChalk
   }
+
   public zhiCommon: {
     ZhiCommon
     ZhiUtil
   }
+
   public zhiElectron: {
     ZhiBrowserWindow
   }
+
+  public simpleXmlrpc: {
+    SimpleXmlRpcClient
+  }
+
   public zhiBlogApi: {
     BlogConstants
     BlogTypeEnum
     BlogApi
     BlogAdaptor
   }
+
   public zhiSiyuanApi: {
     SiyuanConstants
     SiyuanConfig
