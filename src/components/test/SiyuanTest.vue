@@ -32,7 +32,7 @@ import { SiYuanApiAdaptor, SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
 import { MediaObject, Post } from "zhi-blog-api"
 import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 
-const logger = createLogger("publisher-index")
+const logger = createLogger("siyuan-test")
 
 const params = ref("{}")
 const showParamFile = ref(false)
@@ -178,7 +178,7 @@ const onImageSelect = async (event: Event) => {
   }
 }
 
-const siyuanGetRecentPosts = async () => {
+const siyuanHandleApi = async () => {
   isLoading.value = true
   logMessage.value = ""
   logMessage.value = "siyuan requesting..."
@@ -324,7 +324,7 @@ const siyuanGetRecentPosts = async () => {
     isLoading.value = false
   } catch (e) {
     logMessage.value = e
-    console.error(e)
+    logger.error(e)
     isLoading.value = false
   }
 }
@@ -339,7 +339,7 @@ const siyuanGetRecentPosts = async () => {
     </div>
 
     <div class="item">
-      <el-button type="primary" :loading="isLoading" @click="siyuanGetRecentPosts">开始测试siyuan</el-button>
+      <el-button type="primary" :loading="isLoading" @click="siyuanHandleApi">开始测试siyuan</el-button>
     </div>
 
     <div class="item"><el-button>入参</el-button></div>
