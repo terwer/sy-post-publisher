@@ -299,8 +299,9 @@ const siyuanHandleApi = async () => {
         const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
 
-        const bits = await fileToBuffer(paramFile.value)
-        const mediaObject = new MediaObject(paramFile.value.name, paramFile.value.type, bits)
+        const file = paramFile.value
+        const bits = await fileToBuffer(file)
+        const mediaObject = new MediaObject(file.name, file.type, bits)
         logger.info("mediaObject=>", mediaObject)
 
         const result = await siyuanApi.newMediaObject(mediaObject, async () => {

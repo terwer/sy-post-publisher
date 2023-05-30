@@ -28,9 +28,9 @@ import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { createLogger } from "~/src/utils/simpleLogger.ts"
 import { reactive, ref } from "vue"
-import { SiYuanApiAdaptor, SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
-import { MediaObject, Post } from "zhi-blog-api"
 import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
+import { SimpleXmlRpcClient } from "simple-xmlrpc"
+import {MediaObject} from "zhi-blog-api";
 
 const logger = createLogger("wordpress-test")
 
@@ -223,6 +223,23 @@ const wordpressHandleApi = async () => {
         break
       }
       case METHOD_NEW_MEDIA_OBJECT: {
+        const file = paramFile.value
+        const bits = await fileToBuffer(file)
+        const mediaObject = new MediaObject(file.name, file.type, bits)
+        logger.info("mediaObject=>", mediaObject)
+
+        // 设置文件的元数据
+        const metadata = {
+          name: mediaObject.name,
+          type: mediaObject.type,
+          bits: mediaObject.bits,
+          overwrite: true,
+        }
+        const xmlrpcApiUrl = "http://127.0.0.1:3000/xmlrpc.php"
+        const client = new SimpleXmlRpcClient(xmlrpcApiUrl)
+        const result = await client.methodCall("metaWeblog.newMediaObject", ["", "terwer", "123456", metadata])
+        logMessage.value = JSON.stringify(result)
+        logger.info("wordpress new mediaObject result=>", result)
         break
       }
       default:

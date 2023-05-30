@@ -9,6 +9,7 @@ import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import { nodePolyfills } from "vite-plugin-node-polyfills"
+// import viteCompression from "vite-plugin-compression"
 
 const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
   if (isSiyuanBuild) {
@@ -108,6 +109,11 @@ export default defineConfig({
       exclude: ["fs"],
       protocolImports: true,
     }),
+
+    // viteCompression({
+    //   threshold: 512000, // 对大于 512kb 的文件进行压缩
+    //   deleteOriginFile: false,
+    // }),
   ],
 
   base: "",
