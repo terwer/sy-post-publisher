@@ -26,7 +26,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>About</div>
+  <div>WordpressTest</div>
 </template>
 
 <style scoped></style>

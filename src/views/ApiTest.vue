@@ -24,11 +24,60 @@
   -->
 
 <script setup lang="ts">
-import PublishIndex from "~/src/components/publish/PublishIndex.vue"
+import { ref, toRaw } from "vue"
+import { ElTabPane, ElTabs } from "element-plus"
+import { useRouter } from "vue-router"
+import { createLogger } from "~/src/utils/simpleLogger.ts"
+
+const logger = createLogger("api-test")
+const router = useRouter()
+const activeTab = ref<string>("siyuan")
+
+const changeTab = (tab: TabsPaneContext, event: Event) => {
+  const toRoute = `/test/${tab.paneName}`
+  logger.info(`toRoute=>${toRoute}`)
+  router.push({ path: toRoute })
+}
 </script>
 
 <template>
-  <publish-index />
+  <div class="tab-container">
+    <h1>ApiTest</h1>
+    <el-tabs v-model="activeTab" type="border-card" @tab-click="changeTab">
+      <el-tab-pane label="Siyuan" name="siyuan">
+        <router-view></router-view>
+      </el-tab-pane>
+      <el-tab-pane label="Wordpress" name="wordpress">
+        <router-view></router-view>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.tab-container {
+  margin: 0 20px;
+}
+
+.el-tabs__nav {
+  border-bottom: none;
+}
+
+.el-tabs__item {
+  margin: 0;
+  padding: 16px;
+  font-weight: normal;
+  color: #333;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 2px solid transparent;
+}
+
+.el-tabs__item.is-active {
+  color: #409eff;
+  border-bottom: 2px solid #409eff;
+}
+
+.el-tabs__pane {
+  padding: 16px;
+}
+</style>

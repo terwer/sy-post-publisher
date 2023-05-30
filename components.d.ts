@@ -24,5 +24,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SetIndex: typeof import('./src/components/set/SetIndex.vue')['default']
+    SiyuanTest: typeof import('./src/components/test/SiyuanTest.vue')['default']
+    WordpressTest: typeof import('./src/components/test/WordpressTest.vue')['default']
   }
 }

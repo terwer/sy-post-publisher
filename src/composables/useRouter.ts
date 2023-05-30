@@ -25,11 +25,22 @@
 
 import { createRouter, createWebHashHistory, Router, RouteRecordRaw } from "vue-router"
 import Home from "~/src/views/Home.vue"
-import About from "~/src/views/About.vue"
+
+const ApiTest = () => import("~/src/views/ApiTest.vue")
+const SiyuanTest = () => import("~/src/components/test/SiyuanTest.vue")
+const WordpressTest = () => import("~/src/components/test/WordpressTest.vue")
 
 const routes: RouteRecordRaw[] = [
   { path: "/", component: Home },
-  { path: "/about", component: About },
+  {
+    path: "/test",
+    component: ApiTest,
+    children: [
+      { path: "", component: SiyuanTest },
+      { path: "siyuan", component: SiyuanTest },
+      { path: "wordpress", component: WordpressTest },
+    ],
+  },
 ]
 
 export const useRouter = (): Router => {
