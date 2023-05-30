@@ -30,7 +30,7 @@ import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { SiYuanApiAdaptor, SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
 import { MediaObject, Post } from "zhi-blog-api"
-import { Buffer } from "node:buffer"
+import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 
 const logger = createLogger("publisher-index")
 
@@ -176,19 +176,6 @@ const onImageSelect = async (event: Event) => {
   if (input.files && input.files[0]) {
     paramFile.value = input.files[0]
   }
-}
-
-const fileToBuffer = async (file: any): Promise<any> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = (e: any) => {
-      // 将 ArrayBuffer 转换成 Buffer 对象
-      const buffer = Buffer.from(e.target.result)
-      resolve(buffer)
-    }
-    reader.onerror = reject
-    reader.readAsArrayBuffer(file)
-  })
 }
 
 const siyuanGetRecentPosts = async () => {
@@ -344,29 +331,33 @@ const siyuanGetRecentPosts = async () => {
 </script>
 
 <template>
-  <div id="publish-index">
+  <div id="siyuan-test">
     <div class="method-list">
       <el-select v-model="methodOption" class="m-2" placeholder="请选择方法名称" @change="onMethodChange">
         <el-option v-for="item in methodOptions.options" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
 
-    <p><el-button type="primary" :loading="isLoading" @click="siyuanGetRecentPosts">开始测试siyuan</el-button></p>
+    <div class="item">
+      <el-button type="primary" :loading="isLoading" @click="siyuanGetRecentPosts">开始测试siyuan</el-button>
+    </div>
 
-    <p><el-button>入参</el-button></p>
-    <p><el-input v-model="params" type="textarea" :rows="5"></el-input></p>
-    <p v-if="showParamFile"><input type="file" @change="onImageSelect" /></p>
+    <div class="item"><el-button>入参</el-button></div>
+    <div class="item"><el-input v-model="params" type="textarea" :rows="5"></el-input></div>
+    <div v-if="showParamFile" class="item"><input type="file" @change="onImageSelect" /></div>
 
-    <p><el-button>结果</el-button></p>
-    <p>
+    <div class="item"><el-button>结果</el-button></div>
+    <div class="item">
       <el-input v-model="logMessage" type="textarea" :rows="10" placeholder="日志信息"></el-input>
-    </p>
+    </div>
   </div>
 </template>
 
 <style lang="stylus" scoped>
-#publish-index
+#siyuan-test
   margin 16px 20px
+  .item
+    margin-bottom 8px
 
 .method-list
   margin-bottom 16px

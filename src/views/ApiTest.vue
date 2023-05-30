@@ -54,7 +54,10 @@ const changeTab = (tab: TabsPaneContext, event: Event) => {
   </div>
 </template>
 
-<style scoped>
+<style lang="stylus" scoped>
+:deep(.el-tabs--border-card > .el-tabs__content)
+  padding 0
+
 .tab-container {
   margin: 0 20px;
 }
