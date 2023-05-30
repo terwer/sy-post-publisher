@@ -38,6 +38,7 @@ const params = ref("{}")
 const showParamFile = ref(false)
 const paramFile = ref(null)
 const logMessage = ref("")
+const isLoading = ref(false)
 
 const methodOption = ref("getUsersBlogs")
 const METHOD_GET_USERS_BLOGS = "getUsersBlogs"
@@ -191,6 +192,7 @@ const fileToBuffer = async (file: any): Promise<any> => {
 }
 
 const siyuanGetRecentPosts = async () => {
+  isLoading.value = true
   logMessage.value = ""
   logMessage.value = "siyuan requesting..."
   try {
@@ -331,29 +333,12 @@ const siyuanGetRecentPosts = async () => {
       default:
         break
     }
+
+    isLoading.value = false
   } catch (e) {
     logMessage.value = e
     console.error(e)
-  }
-}
-
-const wordpressGetRecentPosts = async () => {
-  logMessage.value = ""
-  logMessage.value = "wordpress requesting..."
-  try {
-    // appInstance
-    const appInstance = new AppInstance()
-    await appInstance.init()
-    logger.info("appInstance=>", appInstance)
-
-    const wordpressCfg = {}
-    const wordpressApiAdaptor = {}
-    const wordpressApi = Utils.blogApi(appInstance, wordpressApiAdaptor)
-    const wordpressPosts = await wordpressApi.getRecentPosts(10)
-    logMessage.value = JSON.stringify(wordpressPosts)
-    logger.info("wordpress recent post=>", wordpressPosts)
-  } catch (e) {
-    logMessage.value = e
+    isLoading.value = false
   }
 }
 </script>
@@ -366,14 +351,7 @@ const wordpressGetRecentPosts = async () => {
       </el-select>
     </div>
 
-    <el-tabs type="border-card">
-      <el-tab-pane label="思源">
-        <p><el-button @click="siyuanGetRecentPosts">开始测试思源</el-button></p>
-      </el-tab-pane>
-      <el-tab-pane label="WordPress">
-        <p><el-button @click="wordpressGetRecentPosts">开始测试WordPress</el-button></p>
-      </el-tab-pane>
-    </el-tabs>
+    <p><el-button type="primary" :loading="isLoading" @click="siyuanGetRecentPosts">开始测试siyuan</el-button></p>
 
     <p><el-button>入参</el-button></p>
     <p><el-input v-model="params" type="textarea" :rows="5"></el-input></p>

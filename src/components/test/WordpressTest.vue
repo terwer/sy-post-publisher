@@ -23,7 +23,30 @@
   - questions.
   -->
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { AppInstance } from "~/src/appInstance.ts"
+import { Utils } from "~/src/utils/utils.ts"
+
+const wordpressGetRecentPosts = async () => {
+  logMessage.value = ""
+  logMessage.value = "wordpress requesting..."
+  try {
+    // appInstance
+    const appInstance = new AppInstance()
+    await appInstance.init()
+    logger.info("appInstance=>", appInstance)
+
+    const wordpressCfg = {}
+    const wordpressApiAdaptor = {}
+    const wordpressApi = Utils.blogApi(appInstance, wordpressApiAdaptor)
+    const wordpressPosts = await wordpressApi.getRecentPosts(10)
+    logMessage.value = JSON.stringify(wordpressPosts)
+    logger.info("wordpress recent post=>", wordpressPosts)
+  } catch (e) {
+    logMessage.value = e
+  }
+}
+</script>
 
 <template>
   <div>WordpressTest</div>
