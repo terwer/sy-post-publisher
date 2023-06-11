@@ -28,11 +28,11 @@
 </template>
 
 <script lang="ts" setup>
-import { createLogger } from "~/src/utils/simpleLogger.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 
 const { t } = useVueI18n()
-const logger = createLogger("layouts/default/DefaultHeader.vue")
+const logger = createAppLogger("layouts/default/DefaultHeader.vue")
 </script>
 
 <style scoped></style>

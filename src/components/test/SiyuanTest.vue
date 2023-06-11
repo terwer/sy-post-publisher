@@ -24,7 +24,7 @@
   -->
 
 <script setup lang="ts">
-import { createLogger } from "~/src/utils/simpleLogger.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { reactive, ref } from "vue"
 import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
@@ -32,7 +32,7 @@ import { SiYuanApiAdaptor, SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
 import { MediaObject, Post } from "zhi-blog-api"
 import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 
-const logger = createLogger("siyuan-test")
+const logger = createAppLogger("siyuan-test")
 
 const params = ref("{}")
 const showParamFile = ref(false)

@@ -27,9 +27,9 @@
 import { ref, toRaw } from "vue"
 import { ElTabPane, ElTabs } from "element-plus"
 import { useRouter } from "vue-router"
-import { createLogger } from "~/src/utils/simpleLogger.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 
-const logger = createLogger("api-test")
+const logger = createAppLogger("api-test")
 const router = useRouter()
 const activeTab = ref<string>("siyuan")
 

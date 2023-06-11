@@ -1,6 +1,6 @@
 import { Utils } from "~/src/utils/utils"
 import { AppInstance } from "~/src/appInstance.ts"
-import { createLogger } from "~/src/utils/simpleLogger.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 
 /**
  * 初始化工具类
@@ -9,7 +9,7 @@ import { createLogger } from "~/src/utils/simpleLogger.ts"
  */
 export const initTools = async (appInstance: AppInstance) => {
   // logger
-  appInstance.logger = createLogger("publisher-widget-app")
+  appInstance.logger = createAppLogger("publisher-widget-app")
 
   // common
   appInstance.common = Utils.zhiCommon()

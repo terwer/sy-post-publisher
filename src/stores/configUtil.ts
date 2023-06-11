@@ -24,10 +24,9 @@
  */
 
 import { getLocalStorageAdaptor } from "~/src/stores/localStorageAdaptor.ts"
-import { createLogger } from "~/src/utils/simpleLogger.ts"
-import { toRaw } from "vue"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 
-const logger = createLogger("localstorage-config")
+const logger = createAppLogger("localstorage-config")
 
 /**
  * 获取配置：这个是所有数据保存的根方法

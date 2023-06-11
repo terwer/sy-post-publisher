@@ -24,9 +24,9 @@
  */
 
 import { createRouter, createWebHashHistory, Router, RouteRecordRaw } from "vue-router"
-import Home from "~/src/views/Home.vue"
+import Home from "~/src/pages/Home.vue"
 
-const ApiTest = () => import("~/src/views/ApiTest.vue")
+const ApiTest = () => import("~/src/pages/ApiTest.vue")
 const SiyuanTest = () => import("~/src/components/test/SiyuanTest.vue")
 const WordpressTest = () => import("~/src/components/test/WordpressTest.vue")
 

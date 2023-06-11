@@ -24,9 +24,9 @@
   -->
 
 <script setup lang="ts">
-import { createLogger } from "~/src/utils/simpleLogger.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 
-const logger = createLogger("publisher-index")
+const logger = createAppLogger("publisher-index")
 </script>
 
 <template>

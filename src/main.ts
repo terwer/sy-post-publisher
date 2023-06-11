@@ -25,7 +25,7 @@
 
 import { createApp } from "vue"
 import App from "./App.vue"
-import { createLogger } from "./utils/simpleLogger.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useRouter } from "./composables/useRouter.ts"
 import i18n from "~/src/locales"
 import "element-plus/dist/index.css"
@@ -41,7 +41,7 @@ import { AppInstance } from "~/src/appInstance.ts"
  * @since 0.0.1
  */
 ;(async () => {
-  const logger = createLogger("vue-main-entry")
+  const logger = createAppLogger("vue-main-entry")
 
   // https://stackoverflow.com/a/62383325/4037224
   const app = createApp(App)

@@ -26,13 +26,13 @@
 <script setup lang="ts">
 import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
-import { createLogger } from "~/src/utils/simpleLogger.ts"
 import { reactive, ref } from "vue"
 import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 import { SimpleXmlRpcClient } from "simple-xmlrpc"
-import {MediaObject} from "zhi-blog-api";
+import { MediaObject } from "zhi-blog-api"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 
-const logger = createLogger("wordpress-test")
+const logger = createAppLogger("wordpress-test")
 
 const params = ref("{}")
 const showParamFile = ref(false)
@@ -236,7 +236,7 @@ const wordpressHandleApi = async () => {
           overwrite: true,
         }
         const xmlrpcApiUrl = "http://127.0.0.1:3000/xmlrpc.php"
-        const client = new SimpleXmlRpcClient(xmlrpcApiUrl)
+        const client = new SimpleXmlRpcClient(xmlrpcApiUrl, "", {})
         const result = await client.methodCall("metaWeblog.newMediaObject", ["", "terwer", "123456", metadata])
         logMessage.value = JSON.stringify(result)
         logger.info("wordpress new mediaObject result=>", result)

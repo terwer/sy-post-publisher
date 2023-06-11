@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { isDev } from "./constants.ts"
+import { isDev } from "~/src/utils/constants.ts"
 import { simpleLogger } from "zhi-lib-base"
 
 /**
@@ -48,8 +48,8 @@ interface ILogger {
  * @version 1.0.0
  * @since 1.0.0
  */
-export const createLogger = (name: string): ILogger => {
-  return simpleLogger(name, "publisher-widget", isDev)
+export const createAppLogger = (name: string): ILogger => {
+  return simpleLogger(name, "picgo-plugin-app", isDev)
 }
 
 /**

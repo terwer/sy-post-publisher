@@ -24,7 +24,7 @@
  */
 
 import { AppInstance } from "~/src/appInstance.ts"
-import { createLogger } from "~/src/utils/simpleLogger.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { ZhiUtil } from "zhi-common"
 import { BlogAdaptor } from "zhi-blog-api"
 import { SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
@@ -37,7 +37,7 @@ import { SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
  * @since 0.9.0
  */
 export class Utils {
-  private static logger = createLogger("publisher-widget-utils")
+  private static logger = createAppLogger("publisher-widget-utils")
   private static kApi
 
   /**
