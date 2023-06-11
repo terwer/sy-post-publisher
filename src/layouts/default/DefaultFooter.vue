@@ -75,7 +75,6 @@ import { version } from "../../../package.json"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { Utils } from "~/src/utils/utils.ts"
-import SetIndex from "~/src/components/set/SetIndex.vue"
 
 const logger = createAppLogger("layouts/default/DefaultFooter")
 const common = Utils.zhiCommon()

@@ -43,7 +43,7 @@ const routes: RouteRecordRaw[] = [
   },
 ]
 
-export const useRouter = (): Router => {
+export const useVueRouter = (): Router => {
   return createRouter({
     history: createWebHashHistory(),
     routes,

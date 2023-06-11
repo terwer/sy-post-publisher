@@ -26,7 +26,7 @@
 import { createApp } from "vue"
 import App from "./App.vue"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { useRouter } from "./composables/useRouter.ts"
+import { useVueRouter } from "./composables/useVueRouter.ts"
 import i18n from "~/src/locales"
 import "element-plus/dist/index.css"
 import "element-plus/theme-chalk/dark/css-vars.css"
@@ -40,7 +40,7 @@ import { AppInstance } from "~/src/appInstance.ts"
  * @version 0.9.0
  * @since 0.0.1
  */
-;(async () => {
+const createVueApp = async () => {
   const logger = createAppLogger("vue-main-entry")
 
   // https://stackoverflow.com/a/62383325/4037224
@@ -50,7 +50,7 @@ import { AppInstance } from "~/src/appInstance.ts"
   app.use(i18n)
 
   // router
-  const router = useRouter()
+  const router = useVueRouter()
   app.use(router)
 
   // appInstance
@@ -69,4 +69,8 @@ import { AppInstance } from "~/src/appInstance.ts"
   // 暴露 Vue 实例
   app.provide(InjectKeys.VUE_INSTANCE, app)
   logger.info("vue app created")
+}
+
+;(async () => {
+  await createVueApp()
 })()
