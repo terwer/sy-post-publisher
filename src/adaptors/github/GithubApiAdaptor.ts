@@ -29,8 +29,8 @@ import { BlogApi } from "zhi-blog-api"
  * Github API 适配器
  *
  * @author terwer
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.9.0
+ * @since 0.9.0
  */
 class GithubApiAdaptor extends BlogApi {
 

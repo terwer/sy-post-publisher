@@ -23,15 +23,11 @@
  * questions.
  */
 
-/**
- * 预定义 WordPress 变量
- *
- * @author terwer
- * @version 0.9.0
- * @since 0.9.0
- */
-class WordpressConstants {
-  public static METHOD_GET_USERS_BLOGS = "metaWeblog.getUsersBlogs"
-}
+import { BlogPlaceholder } from "zhi-blog-api"
 
-export { WordpressConstants }
+/**
+ * Yuque 配置提示
+ */
+class YuquePlaceHolder extends BlogPlaceholder {}
+
+export { YuquePlaceHolder }

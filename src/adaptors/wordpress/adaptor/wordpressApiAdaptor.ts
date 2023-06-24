@@ -34,8 +34,8 @@ import { WordpressConstants } from "~/src/adaptors/wordpress/wordpressConstants.
  * WordPress API 适配器
  *
  * @author terwer
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.9.0
+ * @since 0.9.0
  */
 class WordpressApiAdaptor extends BlogApi {
   private readonly logger

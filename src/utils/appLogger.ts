@@ -45,8 +45,8 @@ interface ILogger {
  * 一个简单轻量级的日志记录器
  *
  * @author terwer
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.9.0
+ * @since 0.9.0
  */
 export const createAppLogger = (name: string): ILogger => {
   return simpleLogger(name, "publisher-widget", isDev)

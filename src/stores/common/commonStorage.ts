@@ -34,8 +34,8 @@ import { SiyuanDevice } from "zhi-device"
  * https://github.com/vueuse/vueuse/blob/main/packages/core/ssr-handlers.ts#L11
  *
  * @author terwer
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.9.0
+ * @since 0.9.0
  */
 class CommonStorage implements StorageLikeAsync {
   private readonly logger
