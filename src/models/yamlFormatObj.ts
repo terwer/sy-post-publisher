@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, Terwer . All rights reserved.
+ * Copyright (c) 2022-2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,16 +23,30 @@
  * questions.
  */
 
-import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
-
-interface ISypConfig {
-  lang?: "zh_CN" | "en_US"
-  [DYNAMIC_CONFIG_KEY]?: string
-
-  [key: string]: any
-}
-
-export const SypConfig: ISypConfig = {
-  lang: "zh_CN",
-  [DYNAMIC_CONFIG_KEY]: "{}",
+/**
+ * 通用的YAML模型定义
+ * @author terwer
+ * @since 0.1.0
+ */
+export class YamlFormatObj {
+  /**
+   * YAML
+   */
+  yamlObj = {} as any
+  /**
+   * YAML字符串
+   */
+  formatter = ""
+  /**
+   * Markdown文本
+   */
+  mdContent = ""
+  /**
+   * YAML+MD
+   */
+  mdFullContent: string
+  /**
+   * HTML文本
+   */
+  htmlContent: string
 }

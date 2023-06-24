@@ -39,10 +39,12 @@
           isDark ? t("theme.mode.light") : t("theme.mode.dark")
         }}</span>
 
+        <!--
         <span class="text">.</span>
         <span class="text s-dark" @click="openTransportSetting">
           {{ t("setting.conf.transport") }}
         </span>
+        -->
 
         <span v-if="isChromeExtension" class="text">.</span>
         <span v-if="isChromeExtension" class="text s-dark" @click="newWin()">

@@ -31,6 +31,7 @@ export default {
   "theme.mode.light": "浅色模式",
   "service.tab.publish.service": "发布服务",
   "service.tab.publish.setting": "发布配置",
+  "service.tab.platform.setting": "平台配置",
   "service.tab.post.bind": "文章绑定",
   "service.tab.service.switch": "服务开关",
   "service.tab.change.local": "个性设置",

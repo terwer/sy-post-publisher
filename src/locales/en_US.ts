@@ -31,6 +31,7 @@ export default {
   "theme.mode.light": "Light mode",
   "service.tab.publish.service": "Publish service",
   "service.tab.publish.setting": "Publish setting",
+  "service.tab.platform.setting": "Platform setting",
   "service.tab.post.bind": "Post bind",
   "service.tab.service.switch": "Service switch",
   "service.tab.change.local": "Change language",

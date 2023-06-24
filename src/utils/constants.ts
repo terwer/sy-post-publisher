@@ -25,3 +25,8 @@
 
 export const isDev = process.env.DEV_MODE === "true"
 export const moduleBase = process.env.APP_BASE
+
+/**
+ * 动态配置key，全系统唯一，请勿更改
+ */
+export const DYNAMIC_CONFIG_KEY = "dynamic-config"

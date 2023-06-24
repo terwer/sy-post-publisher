@@ -23,16 +23,6 @@
  * questions.
  */
 
-import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
+class GithubConfig {}
 
-interface ISypConfig {
-  lang?: "zh_CN" | "en_US"
-  [DYNAMIC_CONFIG_KEY]?: string
-
-  [key: string]: any
-}
-
-export const SypConfig: ISypConfig = {
-  lang: "zh_CN",
-  [DYNAMIC_CONFIG_KEY]: "{}",
-}
+export { GithubConfig }

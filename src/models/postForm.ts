@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, Terwer . All rights reserved.
+ * Copyright (c) 2022-2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,16 +23,29 @@
  * questions.
  */
 
-import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
-
-interface ISypConfig {
-  lang?: "zh_CN" | "en_US"
-  [DYNAMIC_CONFIG_KEY]?: string
-
-  [key: string]: any
-}
-
-export const SypConfig: ISypConfig = {
-  lang: "zh_CN",
-  [DYNAMIC_CONFIG_KEY]: "{}",
+/**
+ * 通用发布表单数据定义
+ * @author terwer
+ * @since 0.1.0
+ */
+export class PostForm {
+  formData = {
+    title: "",
+    customSlug: "",
+    desc: "",
+    created: "",
+    tag: {
+      inputValue: "",
+      dynamicTags: <string[]>[],
+      inputVisible: false,
+    },
+    customPath: "",
+    categories: ["默认分类"],
+    mdContent: "",
+    htmlContent: "",
+    usePermalink: true,
+    useDate: true,
+    linkTitle: "",
+    weight: 0,
+  }
 }

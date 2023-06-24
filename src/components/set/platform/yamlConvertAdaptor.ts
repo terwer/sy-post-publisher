@@ -23,16 +23,25 @@
  * questions.
  */
 
-import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
+import { PostForm } from "~/src/models/postForm.ts"
+import { YamlFormatObj } from "~/src/models/yamlFormatObj.ts"
+import { GithubConfig } from "~/src/adaptors/github/config/GithubConfig.ts"
 
-interface ISypConfig {
-  lang?: "zh_CN" | "en_US"
-  [DYNAMIC_CONFIG_KEY]?: string
+export interface IYamlConvertAdaptor {
+  convertToYaml(postForm: PostForm, githubCfg?: GithubConfig): YamlFormatObj
 
-  [key: string]: any
+  convertToAttr(yamlObj: YamlFormatObj, githubCfg?: GithubConfig): PostForm
 }
 
-export const SypConfig: ISypConfig = {
-  lang: "zh_CN",
-  [DYNAMIC_CONFIG_KEY]: "{}",
+/**
+ * YAML转换适配器
+ */
+export class YamlConvertAdaptor implements IYamlConvertAdaptor {
+  convertToYaml(postForm: PostForm, githubCfg?: GithubConfig): YamlFormatObj {
+    throw new Error("YamlConvertAdaptor.convertToYaml: 该功能未实现，请在子类重写该方法")
+  }
+
+  convertToAttr(yamlFormatObj: YamlFormatObj, githubCfg?: GithubConfig): PostForm {
+    throw new Error("YamlConvertAdaptor.convertToAttr: 该功能未实现，请在子类重写该方法")
+  }
 }

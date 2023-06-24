@@ -46,17 +46,19 @@
     "element-plus": "^2.3.7",
     "js-base64": "^3.7.5",
     "pinia": "^2.1.4",
+    "shorthash2": "^1.0.3",
     "simple-xmlrpc": "^1.4.2",
+    "uuid": "^9.0.0",
     "vue": "^3.3.4",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.2.2",
     "xmlbuilder2": "^3.1.1",
-    "zhi-blog-api": "^1.13.3",
-    "zhi-common": "^1.11.2",
+    "zhi-blog-api": "^1.13.4",
+    "zhi-common": "^1.11.3",
     "zhi-device": "^2.3.0",
-    "zhi-fetch-middleware": "^0.1.16",
+    "zhi-fetch-middleware": "^0.1.17",
     "zhi-lib-base": "0.4.1",
-    "zhi-siyuan-api": "^1.25.3",
-    "zhi-xmlrpc-middleware": "^0.2.16"
+    "zhi-siyuan-api": "^1.25.4",
+    "zhi-xmlrpc-middleware": "^0.2.17"
   }
 }

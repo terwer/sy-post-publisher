@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, Terwer . All rights reserved.
+ * Copyright (c) 2022-2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,16 +23,27 @@
  * questions.
  */
 
-import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
+import shortHash from "shorthash2"
+import { v4 as uuidv4 } from "uuid"
 
-interface ISypConfig {
-  lang?: "zh_CN" | "en_US"
-  [DYNAMIC_CONFIG_KEY]?: string
-
-  [key: string]: any
+/**
+ * 唯一ID
+ */
+const newID = (): string => {
+  const newstr = new Date().toISOString()
+  return shortHash(newstr).toLowerCase()
 }
 
-export const SypConfig: ISypConfig = {
-  lang: "zh_CN",
-  [DYNAMIC_CONFIG_KEY]: "{}",
+/**
+ * ID生成统一入口
+ */
+const newUuid = () => {
+  return uuidv4()
 }
+
+const idUtil = {
+  newUuid,
+  newID,
+}
+
+export default idUtil
