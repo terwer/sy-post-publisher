@@ -32,6 +32,7 @@ import "element-plus/dist/index.css"
 import "element-plus/theme-chalk/dark/css-vars.css"
 import { InjectKeys } from "~/src/utils/injectKeys.ts"
 import { AppInstance } from "~/src/appInstance.ts"
+import { createPinia } from "pinia"
 
 /**
  * Vue 入口
@@ -48,6 +49,10 @@ const createVueApp = async () => {
 
   // 国际化
   app.use(i18n)
+
+  // pinia
+  const pinia = createPinia()
+  app.use(pinia)
 
   // router
   const router = useVueRouter()

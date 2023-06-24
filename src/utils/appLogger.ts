@@ -49,12 +49,13 @@ interface ILogger {
  * @since 1.0.0
  */
 export const createAppLogger = (name: string): ILogger => {
-  return simpleLogger(name, "picgo-plugin-app", isDev)
+  return simpleLogger(name, "publisher-widget", isDev)
 }
 
 /**
  * 销毁日志
  */
 export const destroyLogger = (): void => {
-  ;(window as any).eruda.destroy()
+  const win = window as any
+  win.eruda.destroy()
 }

@@ -23,12 +23,21 @@
  * questions.
  */
 
+import { createAppLogger } from "~/src/utils/appLogger.ts"
+import { useSiyuanApi } from "~/src/composables/api/useSiyuanApi.ts"
+
 /**
- * 获取 LocalStorage 适配器
- *
- * @author terwer
- * @since 0.9.0
+ * 文档相关
  */
-export const getLocalStorageAdaptor = async () => {
-  return window.localStorage
+export const usePostApi = () => {
+  const logger = createAppLogger("use-post")
+  const { blogApi } = useSiyuanApi()
+
+  const getPost = async (id: string, useSlug?: boolean, skipBody?: boolean) => {
+    logger.info("Loading post from remote api...")
+    const postid = id.replace(/\.html$/, "")
+    return await blogApi.getPost(postid, useSlug, skipBody)
+  }
+
+  return { getPost }
 }

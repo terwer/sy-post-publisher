@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { ref, toRaw } from "vue"
-import { ElTabPane, ElTabs } from "element-plus"
+import { ElTabPane, ElTabs, TabsPaneContext } from "element-plus"
 import { useRouter } from "vue-router"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 

@@ -1,4 +1,4 @@
-import { defineConfig } from "vite"
+import { defineConfig, loadEnv } from "vite"
 import vue from "@vitejs/plugin-vue"
 import livereload from "rollup-plugin-livereload"
 import minimist from "minimist"
@@ -9,7 +9,6 @@ import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import { nodePolyfills } from "vite-plugin-node-polyfills"
-// import viteCompression from "vite-plugin-compression"
 
 const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
   if (isSiyuanBuild) {
@@ -19,6 +18,34 @@ const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
   } else {
     return "/"
   }
+}
+
+const getDefineEnv = () => {
+  const mode = process.env.NODE_ENV
+  console.log("mode=>", mode)
+
+  const defaultEnv = {
+    DEV_MODE: `${isWatch}`,
+    APP_BASE: `${appBase}`,
+    NODE_ENV: "development",
+    VITE_DEFAULT_TYPE: `siyuan`,
+  }
+  const env = loadEnv(mode, process.cwd())
+  const processEnvValues = {
+    "process.env": Object.entries(env).reduce((prev, [key, val]) => {
+      return {
+        ...prev,
+        [key]: val,
+      }
+    }, defaultEnv),
+  }
+  const defineEnv = {
+    ...processEnvValues,
+    ...{},
+  }
+  console.log("defineEnv=>", defineEnv)
+
+  return defineEnv
 }
 
 const args = minimist(process.argv.slice(2))
@@ -109,11 +136,6 @@ export default defineConfig({
       exclude: ["fs"],
       protocolImports: true,
     }),
-
-    // viteCompression({
-    //   threshold: 512000, // 对大于 512kb 的文件进行压缩
-    //   deleteOriginFile: false,
-    // }),
   ],
 
   base: "",
@@ -122,10 +144,7 @@ export default defineConfig({
   // https://vitejs.dev/guide/env-and-mode.html#env-files
   // https://github.com/vitejs/vite/discussions/3058#discussioncomment-2115319
   // 在这里自定义变量
-  define: {
-    "process.env.DEV_MODE": `"${isWatch}"`,
-    "process.env.APP_BASE": `"${appBase}"`,
-  },
+  define: getDefineEnv(),
 
   resolve: {
     alias: {

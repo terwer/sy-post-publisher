@@ -25,9 +25,8 @@
 
 import { AppInstance } from "~/src/appInstance.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { ZhiUtil } from "zhi-common"
 import { BlogAdaptor } from "zhi-blog-api"
-import { SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
+import { StrUtil } from "zhi-common"
 
 /**
  * 通用工具类
@@ -38,23 +37,6 @@ import { SiyuanConfig, SiyuanKernelApi } from "zhi-siyuan-api"
  */
 export class Utils {
   private static logger = createAppLogger("publisher-widget-utils")
-  private static kApi
-
-  /**
-   * 通用工具入口
-   */
-  public static zhiCommon() {
-    return ZhiUtil.zhiCommon()
-  }
-
-  public static kernelApi(appInstance: AppInstance) {
-    if (!this.kApi) {
-      const cfg = new SiyuanConfig("", "")
-      this.kApi = new SiyuanKernelApi(appInstance, cfg)
-      this.kApi.init(appInstance)
-    }
-    return this.kApi
-  }
 
   public static blogApi(appInstance: AppInstance, apiAdaptor: any) {
     if (!apiAdaptor) {
@@ -99,5 +81,9 @@ export class Utils {
       console.error(e)
       return "{}"
     }
+  }
+
+  public static emptyOrDefault(value, defaultValue) {
+    return StrUtil.isEmptyString(value) ? defaultValue : value
   }
 }

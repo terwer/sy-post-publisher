@@ -44,8 +44,8 @@
           {{ t("setting.conf.transport") }}
         </span>
 
-        <span class="text">.</span>
-        <span class="text s-dark" @click="newWin()">
+        <span v-if="isChromeExtension" class="text">.</span>
+        <span v-if="isChromeExtension" class="text s-dark" @click="newWin()">
           {{ t("blog.newwin.open") }}
         </span>
 
@@ -74,21 +74,24 @@ import { ref } from "vue"
 import { version } from "../../../package.json"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { Utils } from "~/src/utils/utils.ts"
 import SetIndex from "~/src/components/set/SetIndex.vue"
+import { DateUtil } from "zhi-common"
+import { useSiyuanDevice } from "~/src/composables/useSiyuanDevice.ts"
 
-const logger = createAppLogger("layouts/default/DefaultFooter")
-const common = Utils.zhiCommon()
+const logger = createAppLogger("default-footer")
 const { t } = useVueI18n()
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
+const { isInChromeExtension } = useSiyuanDevice()
+const isChromeExtension = isInChromeExtension()
+
 const transportFormVisible = ref(false)
 const generalSettingFormVisible = ref(false)
 
 const v = ref(version)
-const nowYear = common.dateUtil.nowYear()
+const nowYear = DateUtil.nowYear()
 
 const goGithub = () => {
   window.open("https://github.com/terwer/sy-post-publisher")
@@ -99,7 +102,11 @@ const goAbout = () => {
 }
 
 const newWin = () => {
-  window.open("https://blog.terwer.space/about")
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const rt = chrome.runtime as any
+  const url = rt.getURL("/index.html")
+  window.open(url)
 }
 
 const openTransportSetting = () => {

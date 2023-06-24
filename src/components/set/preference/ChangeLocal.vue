@@ -24,11 +24,13 @@
   -->
 
 <script setup lang="ts">
-import { onMounted } from "vue"
+import { onBeforeMount } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import configUtil from "~/src/stores/configUtil.ts"
-import { ConfigKeys } from "~/src/stores/configKeys.ts"
+import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 
+const logger = createAppLogger("change-local")
+const { getSetting, updateSetting } = useSettingStore()
 const { t, locale } = useVueI18n()
 const langs = [
   {
@@ -41,16 +43,20 @@ const langs = [
   },
 ]
 
+const setting = await getSetting()
+
 const langChanged = async (lang) => {
   locale.value = lang
-  await configUtil.setConf(ConfigKeys.LANG_KEY, lang)
+  setting.lang = lang
+  await updateSetting(setting)
+  logger.info("lang changed to", lang)
 }
 
-onMounted(async () => {
+// lifecycles
+onBeforeMount(() => {
   // 设置默认语言
-  const defaultLang = await configUtil.getConf(ConfigKeys.LANG_KEY)
-  if (defaultLang !== "") {
-    locale.value = defaultLang
+  if (setting?.lang) {
+    locale.value = setting?.lang
   }
 })
 </script>
@@ -67,5 +73,3 @@ onMounted(async () => {
     </el-form>
   </div>
 </template>
-
-<style scoped></style>

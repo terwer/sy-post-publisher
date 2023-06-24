@@ -23,69 +23,20 @@
  * questions.
  */
 
-import { initLibs } from "~/src/loaders/loader.ts"
-import { initTools } from "~/src/loaders/tools.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
+import { DeviceDetection } from "zhi-device"
 
+/**
+ * 应用实例
+ */
 export class AppInstance {
+  public logger
   public deviceType
 
-  public fs
-  public path
-  public importDep: (moduleName: any) => Promise<any>
-
-  // 基础类库
-  public zhiDevice: {
-    DeviceDetection
-    SiyuanDevice
-    DeviceTypeEnum
+  constructor() {
+    this.logger = createAppLogger("app-instance")
+    this.deviceType = DeviceDetection.getDevice()
   }
 
-  public zhiEnv: {
-    Env
-  }
-
-  public zhiLog: {
-    LogFactory
-    crossChalk
-  }
-
-  public zhiCommon: {
-    ZhiCommon
-    ZhiUtil
-  }
-
-  public zhiElectron: {
-    ZhiBrowserWindow
-  }
-
-  public simpleXmlrpc: {
-    SimpleXmlRpcClient
-  }
-
-  public zhiBlogApi: {
-    BlogConstants
-    BlogTypeEnum
-    BlogApi
-    BlogAdaptor
-  }
-
-  public zhiSiyuanApi: {
-    SiyuanConstants
-    SiyuanConfig
-    SiYuanApiAdaptor
-    SiyuanKernelApi
-  }
-
-  // 初始化常用工具类
-  public logger
-  public common
-
-  public windowManager
-
-  public async init() {
-    // 初始化基础类库
-    await initLibs(this)
-    // 初始化常用工具类
-    await initTools(this)
-  }
+  public async init() {}
 }

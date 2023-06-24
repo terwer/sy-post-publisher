@@ -23,12 +23,14 @@
  * questions.
  */
 
-/**
- * 配置通用 key ， 注意：必须全局唯一
- *
- * @version 0.9.0
- * @since 0.0.1
- */
-export enum ConfigKeys {
-  LANG_KEY = "lang",
+interface ISypConfig {
+  lang?: "zh_CN" | "en_US"
+  "dynamic-config"?: string
+
+  [key: string]: any
+}
+
+export const SypConfig: ISypConfig = {
+  lang: "zh_CN",
+  "dynamic-config": "{}",
 }

@@ -193,7 +193,7 @@ const siyuanHandleApi = async () => {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
         // 显示指定修复标题
         siyuanCfg.fixTitle = true
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const siyuanUsersBlogs = await siyuanApi.getUsersBlogs()
         logMessage.value = JSON.stringify(siyuanUsersBlogs)
@@ -202,7 +202,7 @@ const siyuanHandleApi = async () => {
       }
       case METHOD_GET_RECENT_POSTS_COUNT: {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const recentPostsCount = await siyuanApi.getRecentPostsCount()
         logMessage.value = JSON.stringify(recentPostsCount)
@@ -213,7 +213,7 @@ const siyuanHandleApi = async () => {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
         // 显示指定修复标题
         siyuanCfg.fixTitle = true
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const paramsValue = JSON.parse(params.value)
         const siyuanPosts = await siyuanApi.getRecentPosts(paramsValue.numOfPosts)
@@ -224,7 +224,7 @@ const siyuanHandleApi = async () => {
       case METHOD_NEW_POST: {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
         siyuanCfg.notebook = "20230506132031-qbtyjdk"
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const paramsValue = JSON.parse(params.value)
         let post = new Post()
@@ -238,7 +238,7 @@ const siyuanHandleApi = async () => {
       }
       case METHOD_GET_POST: {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const paramsValue = JSON.parse(params.value)
         const postid = paramsValue.postid
@@ -250,7 +250,7 @@ const siyuanHandleApi = async () => {
       case METHOD_EDIT_POST: {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
         siyuanCfg.notebook = "20230506132031-qbtyjdk"
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const paramsValue = JSON.parse(params.value)
         const postid = paramsValue.postid
@@ -266,7 +266,7 @@ const siyuanHandleApi = async () => {
       case METHOD_DELETE_POST: {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
         siyuanCfg.notebook = "20230506132031-qbtyjdk"
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const paramsValue = JSON.parse(params.value)
         const postid = paramsValue.postid
@@ -276,7 +276,7 @@ const siyuanHandleApi = async () => {
       }
       case METHOD_GET_CATEGORIES: {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const siyuanCategories = await siyuanApi.getCategories()
         logMessage.value = JSON.stringify(siyuanCategories)
@@ -285,7 +285,7 @@ const siyuanHandleApi = async () => {
       }
       case METHOD_GET_PREVIEW_URL: {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
         const paramsValue = JSON.parse(params.value)
         const postid = paramsValue.postid
@@ -296,7 +296,7 @@ const siyuanHandleApi = async () => {
       }
       case METHOD_NEW_MEDIA_OBJECT: {
         const siyuanCfg = new SiyuanConfig("http://127.0.0.1:6806", "")
-        const siyuanApiAdaptor = new SiYuanApiAdaptor(appInstance, siyuanCfg)
+        const siyuanApiAdaptor = new SiYuanApiAdaptor(siyuanCfg)
         const siyuanApi = Utils.blogApi(appInstance, siyuanApiAdaptor)
 
         const file = paramFile.value
@@ -310,7 +310,7 @@ const siyuanHandleApi = async () => {
           formData.append("file[]", blob, mediaObject.name)
           formData.append("assetsDirPath", "/assets/")
 
-          const siyuanKernelApi = new SiyuanKernelApi(appInstance, siyuanCfg)
+          const siyuanKernelApi = new SiyuanKernelApi(siyuanCfg)
           return await siyuanKernelApi.uploadAsset(formData)
         })
 

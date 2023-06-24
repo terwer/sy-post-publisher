@@ -24,9 +24,11 @@
   -->
 
 <template>
-  <component :is="layout">
-    <slot />
-  </component>
+  <suspense>
+    <component :is="layout">
+      <slot />
+    </component>
+  </suspense>
 </template>
 
 <script lang="ts" setup>

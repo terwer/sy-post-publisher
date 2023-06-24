@@ -128,11 +128,12 @@ if __name__ == "__main__":
         # Copy necessary files.
         scriptutils.cp_folder("./src/extensions", dist_folder)
         scriptutils.cp_file("./LICENSE", dist_folder)
-        scriptutils.cp_file("./assets/key.pem", dist_folder)
+        # scriptutils.cp_file("./assets/key.pem", dist_folder)
         print("Copied required extension files.")
 
         # Set the BUILD_TYPE environment variable in node.
         os.environ["BUILD_TYPE"] = "chrome"
+        os.environ["VITE_SIYUAN_API_URL"] = "http://127.0.0.1:6806"
         print(f"BUILD_TYPE=>chrome")
         build_cmd = "vue-tsc --noEmit && vite build --outDir " + dist_name
         print("Build command: " + build_cmd)
