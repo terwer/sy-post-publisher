@@ -8,6 +8,8 @@
     "dev": "BUILD_TYPE=siyuan vite build --watch",
     "build": "BUILD_TYPE=siyuan vite build",
     "staticBuild": "BUILD_TYPE=static vite build",
+    "vercelBuild": "BUILD_TYPE=vercel vite build",
+    "nginxBuild": "BUILD_TYPE=nginx vite build",
     "start": "vite preview",
     "test": "vitest --watch",
     "preview": "vite preview",
