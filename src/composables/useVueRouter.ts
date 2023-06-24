@@ -25,6 +25,10 @@
 
 import { createRouter, createWebHashHistory, Router, RouteRecordRaw } from "vue-router"
 import Home from "~/src/pages/Home.vue"
+import SetIndex from "~/src/components/set/SetIndex.vue"
+import GeneralSetting from "~/src/components/set/GeneralSetting.vue"
+import PlatformSetting from "~/src/components/set/PlatformSetting.vue"
+import PublishSetting from "~/src/components/set/PublishSetting.vue"
 
 const ApiTest = () => import("~/src/pages/ApiTest.vue")
 const SiyuanTest = () => import("~/src/components/test/SiyuanTest.vue")
@@ -42,6 +46,22 @@ const routes: RouteRecordRaw[] = [
       { path: "wordpress", component: WordpressTest },
       { path: "yuque", component: YuqueTest },
     ],
+  },
+  {
+    path: "/setting",
+    component: SetIndex,
+  },
+  {
+    path: "/setting/general",
+    component: GeneralSetting,
+  },
+  {
+    path: "/setting/platform",
+    component: PlatformSetting,
+  },
+  {
+    path: "/setting/publish",
+    component: PublishSetting,
   },
 ]
 

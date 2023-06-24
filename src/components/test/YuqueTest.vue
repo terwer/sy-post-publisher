@@ -33,6 +33,8 @@ import { MediaObject } from "zhi-blog-api"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { Base64 } from "js-base64"
 import { CommonFetchClient } from "zhi-fetch-middleware"
+import { YuqueConfig } from "~/src/adaptors/yuque/config/yuqueConfig.ts"
+import { YuqueApiAdaptor } from "~/src/adaptors/yuque/adaptor/yuqueApiAdaptor.ts"
 
 const logger = createAppLogger("wordpress-test")
 
@@ -191,32 +193,18 @@ const yuqueHandleApi = async () => {
 
     switch (methodOption.value) {
       case METHOD_GET_USERS_BLOGS: {
-        const requestUrl = "http://127.0.0.1:9564/kms16_release"
-        const endpointUrl = "/api/kms-multidoc/kmsMultidocKnowledgeRestService/queryDoc"
-
-        // fetchOptions
-        const kmsUsername = "terwer"
-        const kmsPassword = "123456"
-        const basicToken = Base64.toBase64(`${kmsUsername}:${kmsPassword}`)
-        const bodyJson = {
-          fdId: "186a05544e8981e71d8e28c408e9ab42",
-        }
-        const fetchOptions = {
-          body: JSON.stringify(bodyJson),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Basic ${basicToken}`,
-          },
-          method: "POST",
-        }
-
-        const middlewareUrl = "http://127.0.0.1:3000/api/middleware"
-        const commonFetchClient = new CommonFetchClient(appInstance, requestUrl)
-        const result = await commonFetchClient.fetchCall(endpointUrl, fetchOptions, middlewareUrl)
-        // const yuqueCfg = {}
-        // const yuqueApiAdaptor = {}
-        // const yuqueApi = Utils.blogApi(appInstance, yuqueApiAdaptor)
-        // const result = await yuqueApi.getUsersBlogs()
+        // const middlewareUrl = "http://127.0.0.1:3000/api/middleware"
+        const middlewareUrl = "https://api.terwer.space/api/middleware"
+        const yuqueCfg = new YuqueConfig(
+          "https://www.yuque.com/api/v2",
+          "terwer",
+          "JJWN5QEz5vwBdkbMgutoNNRouyz4MnxLbSVbz9Pc",
+          middlewareUrl
+        )
+        // yuqueCfg.blogid = "terwer/note"
+        const yuqueApiAdaptor = new YuqueApiAdaptor(appInstance, yuqueCfg)
+        const yuqueApi = Utils.blogApi(appInstance, yuqueApiAdaptor)
+        const result = await yuqueApi.getUsersBlogs()
         logMessage.value = JSON.stringify(result)
         logger.info("yuque users blogs=>", result)
         break

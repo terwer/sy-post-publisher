@@ -63,7 +63,7 @@ onBeforeMount(() => {
 
 <template>
   <div class="locale-changer">
-    <el-form label-width="150px">
+    <el-form label-width="85px">
       <!-- 语言选项 -->
       <el-form-item :label="t('lang.choose')">
         <el-select v-model="locale" :placeholder="t('lang.choose.placeholder')" @change="langChanged">

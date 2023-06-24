@@ -28,6 +28,39 @@ import { BlogConfig } from "zhi-blog-api"
 /**
  * Yuque 配置
  */
-class YuqueConfig extends BlogConfig {}
+class YuqueConfig extends BlogConfig {
+  /**
+   * API 地址
+   */
+  public override apiUrl = ""
+
+  /**
+   * 用户名
+   */
+  public override username = ""
+
+  /**
+   * 密码
+   */
+  public override password = ""
+
+  /**
+   * 标识
+   */
+  public override blogid = ""
+
+  /**
+   * 代理地址
+   */
+  public override middlewareUrl = ""
+
+  constructor(apiUrl: string, username: string, password: string, middlewareUrl?: string) {
+    super()
+    this.apiUrl = apiUrl
+    this.username = username
+    this.password = password
+    this.middlewareUrl = middlewareUrl
+  }
+}
 
 export { YuqueConfig }
