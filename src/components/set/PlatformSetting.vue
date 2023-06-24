@@ -328,8 +328,8 @@ onMounted(async () => {
               <el-table-column prop="platformType" :label="t('dynamic.platform.type')" />
               <el-table-column prop="subPlatformType" :label="t('dynamic.platform.subtype')" />
               -->
-              <el-table-column prop="platformKey" :label="t('dynamic.platform.key')" width="180" />
-              <el-table-column prop="platformName" :label="t('dynamic.platform.name')" width="180" />
+              <el-table-column prop="platformKey" :label="t('dynamic.platform.key')" width="120" />
+              <el-table-column prop="platformName" :label="t('dynamic.platform.name')" width="120" />
               <el-table-column align="center">
                 <template #header>
                   <div style="text-align: center">授权状态</div>
