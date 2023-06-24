@@ -185,7 +185,6 @@ const siyuanHandleApi = async () => {
   try {
     // appInstance
     const appInstance = new AppInstance()
-    await appInstance.init()
     logger.info("appInstance=>", appInstance)
 
     switch (methodOption.value) {

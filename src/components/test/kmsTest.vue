@@ -31,8 +31,8 @@ import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 import { SimpleXmlRpcClient } from "simple-xmlrpc"
 import { MediaObject } from "zhi-blog-api"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { WordpressConfig } from "~/src/adaptors/wordpress/config/wordpressConfig.ts"
-import { WordpressApiAdaptor } from "~/src/adaptors/wordpress/adaptor/wordpressApiAdaptor.ts"
+import { Base64 } from "js-base64"
+import { CommonFetchClient } from "zhi-fetch-middleware"
 
 const logger = createAppLogger("wordpress-test")
 
@@ -180,7 +180,7 @@ const onImageSelect = async (event: Event) => {
   }
 }
 
-const wordpressHandleApi = async () => {
+const kmsHandleApi = async () => {
   isLoading.value = true
   logMessage.value = ""
   logMessage.value = "wordpress requesting..."
@@ -191,29 +191,40 @@ const wordpressHandleApi = async () => {
 
     switch (methodOption.value) {
       case METHOD_GET_USERS_BLOGS: {
-        const wordpressCfg = new WordpressConfig(
-          "http://127.0.0.1:8000/xmlrpc.php",
-          "terwer",
-          "123456",
-          "http://127.0.0.1:3000/api/middleware"
-        )
-        const wordpressApiAdaptor = new WordpressApiAdaptor(appInstance, wordpressCfg)
-        const wordpressApi = Utils.blogApi(appInstance, wordpressApiAdaptor)
-        const result = await wordpressApi.getUsersBlogs()
+        const requestUrl = "http://127.0.0.1:9564/kms16_release"
+        const endpointUrl = "/api/kms-multidoc/kmsMultidocKnowledgeRestService/queryDoc"
+
+        // fetchOptions
+        const kmsUsername = "terwer"
+        const kmsPassword = "123456"
+        const basicToken = Base64.toBase64(`${kmsUsername}:${kmsPassword}`)
+        const bodyJson = {
+          fdId: "186a05544e8981e71d8e28c408e9ab42",
+        }
+        const fetchOptions = {
+          body: JSON.stringify(bodyJson),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${basicToken}`,
+          },
+          method: "POST",
+        }
+
+        const middlewareUrl = "http://127.0.0.1:3000/api/middleware"
+        const commonFetchClient = new CommonFetchClient(appInstance, requestUrl)
+        const result = await commonFetchClient.fetchCall(endpointUrl, fetchOptions, middlewareUrl)
+        // const kmsCfg = {}
+        // const kmsApiAdaptor = {}
+        // const kmsApi = Utils.blogApi(appInstance, kmsApiAdaptor)
+        // const result = await kmsApi.getUsersBlogs()
         logMessage.value = JSON.stringify(result)
-        logger.info("wordpress users blogs=>", result)
+        logger.info("kms users blogs=>", result)
         break
       }
       case METHOD_GET_RECENT_POSTS_COUNT: {
         break
       }
       case METHOD_GET_RECENT_POSTS: {
-        const wordpressCfg = {}
-        const wordpressApiAdaptor = {}
-        const wordpressApi = Utils.blogApi(appInstance, wordpressApiAdaptor)
-        const wordpressPosts = await wordpressApi.getRecentPosts(10)
-        logMessage.value = JSON.stringify(wordpressPosts)
-        logger.info("wordpress recent post=>", wordpressPosts)
         break
       }
       case METHOD_NEW_POST: {
@@ -276,7 +287,7 @@ const wordpressHandleApi = async () => {
     </div>
 
     <div class="item">
-      <el-button type="primary" :loading="isLoading" @click="wordpressHandleApi">开始测试wordpress</el-button>
+      <el-button type="primary" :loading="isLoading" @click="kmsHandleApi">开始测试kms</el-button>
     </div>
 
     <div class="item"><el-button>入参</el-button></div>

@@ -29,6 +29,7 @@ import Home from "~/src/pages/Home.vue"
 const ApiTest = () => import("~/src/pages/ApiTest.vue")
 const SiyuanTest = () => import("~/src/components/test/SiyuanTest.vue")
 const WordpressTest = () => import("~/src/components/test/WordpressTest.vue")
+const YuqueTest = () => import("~/src/components/test/YuqueTest.vue")
 
 const routes: RouteRecordRaw[] = [
   { path: "/", component: Home },
@@ -39,6 +40,7 @@ const routes: RouteRecordRaw[] = [
       { path: "", component: SiyuanTest },
       { path: "siyuan", component: SiyuanTest },
       { path: "wordpress", component: WordpressTest },
+      { path: "yuque", component: YuqueTest },
     ],
   },
 ]

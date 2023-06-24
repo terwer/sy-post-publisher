@@ -60,7 +60,6 @@ const createVueApp = async () => {
 
   // appInstance
   const appInstance = new AppInstance()
-  await appInstance.init()
   app.provide(InjectKeys.APP_INSTANCE, appInstance)
   logger.info("appInstance provided=>", appInstance)
 

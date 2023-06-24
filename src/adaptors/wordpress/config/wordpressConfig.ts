@@ -23,34 +23,50 @@
  * questions.
  */
 
-import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { DeviceDetection } from "zhi-device"
-import xmlbuilder2 from "xmlbuilder2"
-import { Deserializer, Serializer, SimpleXmlRpcClient, XmlrpcUtil } from "simple-xmlrpc"
-import fetch from "cross-fetch"
+import { BlogConfig } from "zhi-blog-api"
 
 /**
- * 应用实例
+ * WordPress 配置
+ *
+ * @author terwer
+ * @since 1.0.0
  */
-export class AppInstance {
-  public logger
-  public deviceType
+class WordpressConfig extends BlogConfig {
+  /**
+   * API 地址
+   */
+  public override apiUrl = ""
 
-  public fetch
-  public xmlbuilder2
-  public simpleXmlrpc
+  /**
+   * 用户名
+   */
+  public override username = ""
 
-  constructor() {
-    this.logger = createAppLogger("app-instance")
-    this.deviceType = DeviceDetection.getDevice()
+  /**
+   * 密码
+   */
+  public override password = ""
 
-    this.fetch = fetch
-    this.xmlbuilder2 = xmlbuilder2
-    this.simpleXmlrpc = {
-      SimpleXmlRpcClient: SimpleXmlRpcClient,
-      Serializer: Serializer,
-      Deserializer: Deserializer,
-      XmlrpcUtil: XmlrpcUtil,
-    }
+  /**
+   * 代理地址
+   */
+  public override middlewareUrl = ""
+
+  /**
+   * WordPress 配置项
+   *
+   * @param apiUrl API 地址
+   * @param username 用户名
+   * @param password 密码
+   * @param middlewareUrl 代理地址
+   */
+  constructor(apiUrl: string, username: string, password: string, middlewareUrl?: string) {
+    super()
+    this.apiUrl = apiUrl
+    this.username = username
+    this.password = password
+    this.middlewareUrl = middlewareUrl
   }
 }
+
+export { WordpressConfig }

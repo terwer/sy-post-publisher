@@ -48,10 +48,6 @@ export class Utils {
       throw new Error(`ApiAdaptor must implements BlogApi => ${this.getObjectName(apiAdaptor)}`)
     }
 
-    if (apiAdaptor.init) {
-      apiAdaptor.init(appInstance)
-    }
-
     return new BlogAdaptor(apiAdaptor)
   }
 

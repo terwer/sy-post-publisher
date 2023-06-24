@@ -23,34 +23,11 @@
  * questions.
  */
 
-import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { DeviceDetection } from "zhi-device"
-import xmlbuilder2 from "xmlbuilder2"
-import { Deserializer, Serializer, SimpleXmlRpcClient, XmlrpcUtil } from "simple-xmlrpc"
-import fetch from "cross-fetch"
+import { BlogPlaceholder } from "zhi-blog-api"
 
 /**
- * 应用实例
+ * WordPress 操作提示
  */
-export class AppInstance {
-  public logger
-  public deviceType
+class WordpressPlaceholder extends BlogPlaceholder {}
 
-  public fetch
-  public xmlbuilder2
-  public simpleXmlrpc
-
-  constructor() {
-    this.logger = createAppLogger("app-instance")
-    this.deviceType = DeviceDetection.getDevice()
-
-    this.fetch = fetch
-    this.xmlbuilder2 = xmlbuilder2
-    this.simpleXmlrpc = {
-      SimpleXmlRpcClient: SimpleXmlRpcClient,
-      Serializer: Serializer,
-      Deserializer: Deserializer,
-      XmlrpcUtil: XmlrpcUtil,
-    }
-  }
-}
+export { WordpressPlaceholder }

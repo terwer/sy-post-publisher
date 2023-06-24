@@ -38,19 +38,21 @@ chrome.runtime.onInstalled.addListener(async () => {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   switch (request.type) {
-    // case "fetchChromeXmlrpc":
-    //   ;(async () => {
-    //     let resText
-    //     try {
-    //       const response = await fetch(request.apiUrl, request.fetchCORSParams)
-    //       resText = await response.text()
-    //       // console.log("chrome.runtime.onMessage.addListener fetchChromeXmlrpc response:", resText)
-    //     } catch (e) {
-    //       console.error("chrome.runtime fetchChromeXmlrpc request error", e)
-    //     }
-    //     sendResponse(resText)
-    //   })()
-    //   break
+    case "fetchChromeXmlrpc":
+      ;(async () => {
+        let resText
+        try {
+          console.log("chrome.runtime fetchChromeXmlrpc apiUrl", request.apiUrl)
+          console.log("chrome.runtime fetchChromeXmlrpc fetchCORSOptions", request.fetchCORSParams)
+          const response = await fetch(request.apiUrl, request.fetchCORSParams)
+          resText = await response.text()
+          // console.log("chrome.runtime.onMessage.addListener fetchChromeXmlrpc response:", resText)
+        } catch (e) {
+          console.error("chrome.runtime fetchChromeXmlrpc request error", e)
+        }
+        sendResponse(resText)
+      })()
+      break
     case "fetchChromeJson":
       ;(async () => {
         let resJson
@@ -81,5 +83,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       break
   }
 
-  return true // keep the messaging channel open for sendResponse
+  // keep the messaging channel open for sendResponse
+  return true
 })

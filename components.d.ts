@@ -10,6 +10,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ChangeLocal: typeof import('./src/components/set/preference/ChangeLocal.vue')['default']
+    CnblogsTest: typeof import('./src/components/test/CnblogsTest.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElForm: typeof import('element-plus/es')['ElForm']
@@ -20,11 +21,16 @@ declare module '@vue/runtime-core' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     GeneralSetting: typeof import('./src/components/set/GeneralSetting.vue')['default']
+    HexoTest: typeof import('./src/components/test/HexoTest.vue')['default']
+    HugoTest: typeof import('./src/components/test/HugoTest.vue')['default']
     PublishIndex: typeof import('./src/components/publish/PublishIndex.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SetIndex: typeof import('./src/components/set/SetIndex.vue')['default']
     SiyuanTest: typeof import('./src/components/test/SiyuanTest.vue')['default']
+    TypechoTest: typeof import('./src/components/test/TypechoTest.vue')['default']
+    VitepressTest: typeof import('./src/components/test/VitepressTest.vue')['default']
     WordpressTest: typeof import('./src/components/test/WordpressTest.vue')['default']
+    YuqueTest: typeof import('./src/components/test/YuqueTest.vue')['default']
   }
 }

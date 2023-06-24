@@ -30,7 +30,7 @@
         <span class="text"> &copy;2011-{{ nowYear }} </span>
         <span class="text s-dark" @click="goGithub()">&nbsp;sy-post-publisher&nbsp;</span>
 
-        <span class="text">v{{ v }}&nbsp;</span>
+        <span class="text" @click="goToApiTest">v{{ v }}&nbsp;</span>
 
         <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
 
@@ -77,6 +77,8 @@ import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import SetIndex from "~/src/components/set/SetIndex.vue"
 import { DateUtil } from "zhi-common"
 import { useSiyuanDevice } from "~/src/composables/useSiyuanDevice.ts"
+import { useRouter } from "vue-router"
+import { TabsPaneContext } from "element-plus"
 
 const logger = createAppLogger("default-footer")
 const { t } = useVueI18n()
@@ -92,6 +94,7 @@ const generalSettingFormVisible = ref(false)
 
 const v = ref(version)
 const nowYear = DateUtil.nowYear()
+const router = useRouter()
 
 const goGithub = () => {
   window.open("https://github.com/terwer/sy-post-publisher")
@@ -101,11 +104,15 @@ const goAbout = () => {
   window.open("https://blog.terwer.space/about")
 }
 
+const goToApiTest = () => {
+  router.push({ path: "/test" })
+}
+
 const newWin = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const rt = chrome.runtime as any
-  const url = rt.getURL("/index.html")
+  const url = rt.getURL("/index.html#/")
   window.open(url)
 }
 
