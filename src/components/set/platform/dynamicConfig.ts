@@ -60,6 +60,11 @@ export class DynamicConfig {
   platformName: string
 
   /**
+   * 是否授权
+   */
+  isAuth: boolean
+
+  /**
    * YAML转换器
    */
   yamlConverter?: YamlConvertAdaptor
@@ -68,6 +73,7 @@ export class DynamicConfig {
     this.platformType = platformType
     this.platformKey = platformKey
     this.platformName = platformName
+    this.isAuth = false
   }
 }
 

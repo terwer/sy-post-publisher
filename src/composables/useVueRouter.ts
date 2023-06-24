@@ -29,6 +29,7 @@ import SetIndex from "~/src/components/set/SetIndex.vue"
 import GeneralSetting from "~/src/components/set/GeneralSetting.vue"
 import PlatformSetting from "~/src/components/set/PlatformSetting.vue"
 import PublishSetting from "~/src/components/set/PublishSetting.vue"
+import SinglePlatformSetting from "~/src/components/set/SinglePlatformSetting.vue"
 
 const ApiTest = () => import("~/src/pages/ApiTest.vue")
 const SiyuanTest = () => import("~/src/components/test/SiyuanTest.vue")
@@ -58,6 +59,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/setting/platform",
     component: PlatformSetting,
+  },
+  {
+    path: "/setting/platform/single",
+    component: SinglePlatformSetting,
   },
   {
     path: "/setting/publish",

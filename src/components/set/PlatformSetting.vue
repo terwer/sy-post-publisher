@@ -24,12 +24,13 @@
   -->
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue"
+import { onMounted, reactive, ref, toRaw } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import {
   DynamicConfig,
   DynamicJsonCfg,
   getDefaultPlatformName,
+  getDynSwitchKey,
   getNewPlatformKey,
   getSubtypeList,
   isDynamicKeyExists,
@@ -45,7 +46,7 @@ import { JsonUtil } from "zhi-common"
 
 const logger = createAppLogger("platform-setting")
 const { t } = useVueI18n()
-const { getSetting, updateSetting } = useSettingStore()
+const { getSetting, updateSetting, checkKeyExists, deleteKey } = useSettingStore()
 
 let setting
 const showForm = ref(true)
@@ -116,10 +117,10 @@ const validateForm = (formEl) => {
   const switchKey = "switch-" + pkey
   const postidKey = "custom-" + pkey + "-post-id"
   // 保证文章绑定id的key不重复
-  // if (checkKeyExists(pkey) || checkKeyExists(switchKey) || checkKeyExists(postidKey)) {
-  //   ElMessage.error(t("dynamic.platform.opt.key.exist"))
-  //   return false
-  // }
+  if (checkKeyExists(pkey) || checkKeyExists(switchKey) || checkKeyExists(postidKey)) {
+    ElMessage.error(t("dynamic.platform.opt.key.exist"))
+    return false
+  }
 
   return true
 }
@@ -142,7 +143,7 @@ const submitForm = async (formEl) => {
     return
   }
 
-  // 保存配置
+  // 生成要保存的配置
   const newCfg = new DynamicConfig(formData.ptype, formData.dynCfg.platformKey, formData.dynCfg.platformName)
   if (formData.ptype === PlatformType.Github) {
     newCfg.subPlatformType = formData.subtype
@@ -150,53 +151,53 @@ const submitForm = async (formEl) => {
     newCfg.subPlatformType = SubPlatformType.NONE
   }
   formData.dynamicConfigArray.push(newCfg)
+
+  // 转换格式并保存
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
   setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+  const switchKey = getDynSwitchKey(newCfg.platformKey)
+  // 默认启用
+  setting[switchKey] = "true"
+  setting[newCfg.platformKey] = "{}"
   await updateSetting(setting)
 
   // 重新加载列表
   reloadTable()
-
   ElMessage.success(t("main.opt.success"))
 }
 
 const tableData = []
 const num = ref(0)
-const currentRow = ref()
-const currentTip = ref(t("dynamic.platform.opt.item.select"))
 
-const handleCurrentChange = (val: any) => {
-  currentRow.value = val
-  currentTip.value = t("dynamic.platform.opt.item.select.tip") + currentRow.value.platformName
-  logger.debug(currentRow.value)
-}
-
-const delRow = async () => {
+const delRow = async (row) => {
   ElMessageBox.confirm(t("dynamic.platform.opt.del.confirm"), t("main.opt.warning"), {
     confirmButtonText: t("main.opt.ok"),
     cancelButtonText: t("main.opt.cancel"),
     type: "warning",
   })
     .then(async () => {
-      if (!currentRow.value || !currentRow.value.platformKey) {
+      const currentRow = toRaw(row)
+      console.log(row)
+      if (!currentRow) {
         ElMessage.error(t("dynamic.platform.opt.item.no.select.tip"))
         return
       }
 
       for (let i = 0; i < formData.dynamicConfigArray.length; i++) {
-        // logUtil.logInfo(currentRow.value.platformKey)
-        // logUtil.logInfo(formData.dynamicConfigArray[i].platformKey)
-        // logUtil.logInfo("------------------------")
-        if (currentRow.value.platformKey === formData.dynamicConfigArray[i].platformKey) {
+        if (currentRow.platformKey === formData.dynamicConfigArray[i].platformKey) {
           formData.dynamicConfigArray.splice(i, 1)
         }
       }
 
-      setDynamicJsonCfg(formData.dynamicConfigArray)
+      // 转换格式并保存
+      const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
+      setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+      deleteKey(getDynSwitchKey(currentRow.platformKey))
+      deleteKey(currentRow.platformKey)
+      await updateSetting(setting)
 
       // 重新加载列表
       reloadTable()
-
       ElMessage.success(t("main.opt.success"))
     })
     .catch(() => {
@@ -205,6 +206,21 @@ const delRow = async () => {
       //   message: t("main.opt.failure"),
       // })
     })
+}
+
+const handleEdit = (row) => {
+  row.isAuth = true
+}
+
+const handleStatus = async (row) => {
+  const isEnable = setting[getDynSwitchKey(row.platformKey)] === "true"
+  if (isEnable) {
+    setting[getDynSwitchKey(row.platformKey)] = "false"
+  } else {
+    setting[getDynSwitchKey(row.platformKey)] = "true"
+  }
+  await updateSetting(setting)
+  reloadTable()
 }
 
 const reloadTable = () => {
@@ -290,11 +306,11 @@ onMounted(async () => {
               </el-select>
             </el-form-item>
 
-            <el-form-item :label="formData.ptype + t('dynamic.platform.name')" prop="platformName" v-if="showForm">
+            <el-form-item v-if="showForm" :label="formData.ptype + t('dynamic.platform.name')" prop="platformName">
               <el-input v-model="formData.dynCfg.platformName" :placeholder="t('dynamic.platform.name.tip')" />
             </el-form-item>
 
-            <el-form-item :label="formData.ptype + t('dynamic.platform.key')" prop="platformKey" v-if="false">
+            <el-form-item v-if="false" :label="formData.ptype + t('dynamic.platform.key')" prop="platformKey">
               {{ formData.dynCfg.platformKey }}
             </el-form-item>
 
@@ -307,25 +323,48 @@ onMounted(async () => {
         <!-- 动态列表 -->
         <el-main class="dyn-table-list">
           <el-form-item>
-            <el-table
-              :key="num"
-              :data="tableData"
-              border
-              stripe
-              highlight-current-row
-              empty-text="暂无数据"
-              @current-change="handleCurrentChange"
-            >
+            <el-table :key="num" :data="tableData" border stripe highlight-current-row empty-text="暂无数据">
+              <!--
               <el-table-column prop="platformType" :label="t('dynamic.platform.type')" />
               <el-table-column prop="subPlatformType" :label="t('dynamic.platform.subtype')" />
-              <el-table-column prop="platformKey" :label="t('dynamic.platform.key')" />
-              <el-table-column prop="platformName" :label="t('dynamic.platform.name')" />
+              -->
+              <el-table-column prop="platformKey" :label="t('dynamic.platform.key')" width="180" />
+              <el-table-column prop="platformName" :label="t('dynamic.platform.name')" width="180" />
+              <el-table-column align="center">
+                <template #header>
+                  <div style="text-align: center">授权状态</div>
+                </template>
+                <template #default="scope">
+                  <el-text :type="scope.row.isAuth ? 'success' : 'danger'">
+                    {{ scope.row.isAuth ? "已授权" : "未授权" }}</el-text
+                  >
+                </template>
+              </el-table-column>
+              <el-table-column align="center">
+                <template #header>
+                  <div style="text-align: center">启用状态</div>
+                </template>
+                <template #default="scope">
+                  <el-text :type="setting[getDynSwitchKey(scope.row.platformKey)] === 'true' ? 'success' : 'danger'">
+                    {{ setting[getDynSwitchKey(scope.row.platformKey)] === "true" ? "已启用" : "已禁用" }}</el-text
+                  >
+                </template>
+              </el-table-column>
+              <el-table-column align="center" width="200">
+                <template #header>
+                  <div style="text-align: center">操作</div>
+                </template>
+                <template #default="scope">
+                  <el-button size="small" type="primary" @click="handleEdit(scope.row)"> 配置 </el-button>
+                  <el-button size="small" @click="handleStatus(scope.row)">
+                    {{ setting[getDynSwitchKey(scope.row.platformKey)] === "true" ? "禁用" : "启用" }}</el-button
+                  >
+                  <el-button size="small" type="danger" @click="delRow(scope.row)">
+                    {{ t("dynamic.platform.opt.del.select") }}
+                  </el-button>
+                </template>
+              </el-table-column>
             </el-table>
-          </el-form-item>
-
-          <el-form-item>
-            <el-alert class="top-version-tip" :title="currentTip" type="info" :closable="false" v-if="currentRow" />
-            <el-button type="danger" @click="delRow">{{ t("dynamic.platform.opt.del.select") }} </el-button>
           </el-form-item>
         </el-main>
       </el-container>

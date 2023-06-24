@@ -48,5 +48,37 @@ export const useSettingStore = defineStore("setting", () => {
     settingRef.value = { ...settingRef.value, ...setting }
   }
 
-  return { getSetting, updateSetting }
+  const checkKeyExists = (targetKey: string): boolean => {
+    const obj = settingRef.value
+    if (!obj) {
+      return false
+    }
+
+    // 遍历所有属性名，检查是否存在目标属性
+    for (const key in obj) {
+      if (key === targetKey) {
+        return true
+      }
+    }
+
+    // 如果以上情况都不符合，则说明不存在目标属性
+    return false
+  }
+
+  const deleteKey = (targetKey: string): void => {
+    const obj = settingRef.value
+    if (!obj) {
+      return
+    }
+
+    // 遍历所有属性名，检查是否存在目标属性
+    for (const key in obj) {
+      if (key === targetKey) {
+        delete obj[key]
+        return
+      }
+    }
+  }
+
+  return { getSetting, updateSetting, checkKeyExists, deleteKey }
 })

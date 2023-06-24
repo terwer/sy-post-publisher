@@ -235,7 +235,7 @@ export default {
   "dynamic.platform.opt.noselect": "请选择平台类型",
   "dynamic.platform.opt.key.exist": "平台key已经存在",
   "dynamic.platform.opt.del.confirm": "删除此平台将会彻底移除此平台相关配置信息，是否继续？",
-  "dynamic.platform.opt.del.select": "删除选中",
+  "dynamic.platform.opt.del.select": "删除",
   "dynamic.platform.opt.item.select": "未选择",
   "dynamic.platform.opt.item.select.tip": "当前选择的是：",
   "dynamic.platform.opt.item.no.select.tip": "请选择要删除的行",

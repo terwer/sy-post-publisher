@@ -233,7 +233,7 @@ export default {
   "dynamic.platform.opt.add": "Submit",
   "dynamic.platform.opt.noselect": "Please select platform type",
   "dynamic.platform.opt.key.exist": "Platform key exists",
-  "dynamic.platform.opt.del.select": "Delete selected",
+  "dynamic.platform.opt.del.select": "Delete",
   "dynamic.platform.opt.del.confirm":
     "Deleting this platform will completely remove the relevant configuration information of this platform. Do you continue?",
   "dynamic.platform.opt.item.select": "Item no select",
