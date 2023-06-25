@@ -224,6 +224,7 @@ export default {
   "dynamic.platform.subtype": "Platform subtype",
   "dynamic.platform.type.metaweblog": "metaweblog API",
   "dynamic.platform.type.wordpress": "Wordpress",
+  "dynamic.platform.type.common": "Common",
   "dynamic.platform.type.custom": "Custom",
   "dynamic.platform.key": "Platform key",
   "dynamic.platform.key.tip": "The unique logo of the platform, cannot be repeated, for example: myblog",

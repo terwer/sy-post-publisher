@@ -25,12 +25,58 @@
 
 <script setup lang="ts">
 import MetaweblogSetting from "~/src/components/set/singleplatform/MetaweblogSetting.vue"
+import { useRoute, useRouter } from "vue-router"
+import { reactive, ref } from "vue"
+import { useVueI18n } from "~/src/composables/useVueI18n.ts"
+import { ArrowLeft } from "@element-plus/icons-vue"
+
+// uses
+const { t } = useVueI18n()
+const router = useRouter()
+const route = useRoute()
+const { query } = useRoute()
+
+// datas
+const params = reactive(route.params)
+const showBack = ref(query.showBack === "true")
+console.log(params)
+console.log(showBack.value)
+
+// methods
+const onBack = () => {
+  router.back()
+}
 </script>
 
 <template>
-  <div>
-    <metaweblog-setting />
+  <div id="page-body">
+    <div v-if="showBack" class="page-head">
+      <el-page-header :icon="ArrowLeft" title="返回" @click="onBack">
+        <template #content>
+          <div class="flex items-center">
+            <span class="text-large font-600 mr-3">Picgo 设置</span>
+          </div>
+        </template>
+      </el-page-header>
+    </div>
+
+    <div class="page-content-box">
+      <metaweblog-setting />
+    </div>
   </div>
 </template>
 
-<style scoped lang="stylus"></style>
+<style scoped lang="stylus">
+#page-body {
+  min-width: 600px !important;
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+.page-head{
+  margin-bottom: 16px;
+  margin-left: 20px;
+}
+.page-content-box {
+  padding: 0 20px;
+}
+</style>

@@ -27,6 +27,7 @@
 import { onMounted, reactive, ref, toRaw } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import {
+  AuthMode,
   DynamicConfig,
   DynamicJsonCfg,
   getDefaultPlatformName,
@@ -43,6 +44,8 @@ import { ElMessage, ElMessageBox, FormRules } from "element-plus"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { JsonUtil } from "zhi-common"
+import { ElementPlus } from "@element-plus/icons-vue"
+import { BrowserUtil } from "zhi-device"
 
 const logger = createAppLogger("platform-setting")
 const { t } = useVueI18n()
@@ -51,19 +54,21 @@ const { getSetting, updateSetting, checkKeyExists, deleteKey } = useSettingStore
 let setting
 const showForm = ref(true)
 // 默认支持jekyll
-const defaultGithubSubtype = SubPlatformType.Github_Jekyll
+const defaultGithubSubtype = SubPlatformType.Common_Zhihu
 
 const formRef = ref()
 const formData = reactive({
   subtype: defaultGithubSubtype,
-  ptype: PlatformType.Github,
+  ptype: PlatformType.Common,
   dynCfg: new DynamicConfig(
-    PlatformType.Github,
-    getNewPlatformKey(PlatformType.Github, defaultGithubSubtype),
-    "Jekyll-1"
+    PlatformType.Common,
+    getNewPlatformKey(PlatformType.Common, defaultGithubSubtype),
+    "Zhihu-1"
   ),
   subtypeOptions: [],
   dynamicConfigArray: [],
+  authMode: AuthMode.API,
+  isEnabled: false,
 })
 const rules = reactive<FormRules>({
   platformName: [
@@ -74,16 +79,26 @@ const rules = reactive<FormRules>({
   ],
 })
 
-const onSubPlatformTypeChange = (val) => {
+const handleSubPlatformTypeChange = (val) => {
   formData.subtype = val
   logger.debug(formData.subtype)
 
-  onPlatformTypeChange(formData.ptype)
+  onPlatformChange(formData.ptype)
 }
 
-const onPlatformTypeChange = (val) => {
+const handlePlatformChange = (val) => {
+  // 切换默认选中第一项
+  formData.subtypeOptions = getSubtypeList(val)
+  if (formData.subtypeOptions.length > 0) {
+    formData.subtype = formData.subtypeOptions[0]
+  }
+  onPlatformChange(val)
+}
+
+const onPlatformChange = (val) => {
   formData.ptype = val
   formData.subtypeOptions = getSubtypeList(val)
+
   const pname = getDefaultPlatformName(
     val,
     formData.subtype,
@@ -150,14 +165,17 @@ const submitForm = async (formEl) => {
   } else {
     newCfg.subPlatformType = SubPlatformType.NONE
   }
+  newCfg.authMode = formData.authMode
+
   formData.dynamicConfigArray.push(newCfg)
 
   // 转换格式并保存
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
   setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
   const switchKey = getDynSwitchKey(newCfg.platformKey)
-  // 默认启用
-  setting[switchKey] = "true"
+  // 默认启用禁用
+  setting[switchKey] = String(formData.isEnabled)
+  // 初始化一个空配置
   setting[newCfg.platformKey] = "{}"
   await updateSetting(setting)
 
@@ -220,7 +238,7 @@ const handleStatus = async (row) => {
     setting[getDynSwitchKey(row.platformKey)] = "true"
   }
   await updateSetting(setting)
-  reloadTable()
+  BrowserUtil.reloadPage(500)
 }
 
 const reloadTable = () => {
@@ -237,7 +255,8 @@ const initPage = async () => {
   logger.info("get setting from platform setting", setting)
 
   const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
-  formData.subtypeOptions = getSubtypeList(PlatformType.Github)
+  // 默认展示通用平台
+  formData.subtypeOptions = getSubtypeList(PlatformType.Common)
   formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
 
   // 重新加载列表
@@ -260,7 +279,7 @@ onMounted(async () => {
   <div class="platform-setting">
     <el-container>
       <el-container>
-        <el-header height="300px" class="publish-dyn-header">
+        <el-header class="publish-dyn-header">
           <el-form ref="formRef" label-width="165px" :model="formData.dynCfg" :rules="rules">
             <el-alert class="top-version-tip" :title="t('dynamic.platform.tip')" type="info" :closable="false" />
 
@@ -268,26 +287,32 @@ onMounted(async () => {
             <el-form-item :label="t('dynamic.platform.type')">
               <el-button-group>
                 <el-button
+                  :type="formData.ptype === PlatformType.Common ? 'primary' : ''"
+                  @click="handlePlatformChange(PlatformType.Common)"
+                >
+                  {{ t("dynamic.platform.type.common") }}
+                </el-button>
+                <el-button
                   :type="formData.ptype === PlatformType.Github ? 'primary' : ''"
-                  @click="onPlatformTypeChange(PlatformType.Github)"
+                  @click="handlePlatformChange(PlatformType.Github)"
                 >
                   {{ t("dynamic.platform.type.github") }}
                 </el-button>
                 <el-button
                   :type="formData.ptype === PlatformType.Metaweblog ? 'primary' : ''"
-                  @click="onPlatformTypeChange(PlatformType.Metaweblog)"
+                  @click="handlePlatformChange(PlatformType.Metaweblog)"
                 >
                   {{ t("dynamic.platform.type.metaweblog") }}
                 </el-button>
                 <el-button
                   :type="formData.ptype === PlatformType.Wordpress ? 'primary' : ''"
-                  @click="onPlatformTypeChange(PlatformType.Wordpress)"
+                  @click="handlePlatformChange(PlatformType.Wordpress)"
                 >
                   {{ t("dynamic.platform.type.wordpress") }}
                 </el-button>
                 <el-button
                   :type="formData.ptype === PlatformType.Custom ? 'primary' : ''"
-                  @click="onPlatformTypeChange(PlatformType.Custom)"
+                  @click="handlePlatformChange(PlatformType.Custom)"
                 >
                   {{ t("dynamic.platform.type.custom") }}
                 </el-button>
@@ -301,7 +326,12 @@ onMounted(async () => {
 
             <!-- 平台名称 -->
             <el-form-item v-if="formData.subtypeOptions.length > 0 && showForm">
-              <el-select v-model="formData.subtype" class="m-2" placeholder="Select" @change="onSubPlatformTypeChange">
+              <el-select
+                v-model="formData.subtype"
+                class="m-2"
+                placeholder="Select"
+                @change="handleSubPlatformTypeChange"
+              >
                 <el-option v-for="item in formData.subtypeOptions" :key="item" :label="item" :value="item" />
               </el-select>
             </el-form-item>
@@ -312,6 +342,17 @@ onMounted(async () => {
 
             <el-form-item v-if="false" :label="formData.ptype + t('dynamic.platform.key')" prop="platformKey">
               {{ formData.dynCfg.platformKey }}
+            </el-form-item>
+
+            <el-form-item v-if="showForm" label="授权方式">
+              <el-select v-model="formData.authMode">
+                <el-option :value="AuthMode.API" label="API授权" />
+                <el-option :value="AuthMode.WEBSITE" label="网页授权" />
+              </el-select>
+            </el-form-item>
+
+            <el-form-item v-if="showForm" label="是否启用">
+              <el-switch v-model="formData.isEnabled" />
             </el-form-item>
 
             <el-form-item v-if="showForm">
@@ -330,6 +371,16 @@ onMounted(async () => {
               -->
               <el-table-column prop="platformKey" :label="t('dynamic.platform.key')" width="120" />
               <el-table-column prop="platformName" :label="t('dynamic.platform.name')" width="120" />
+              <el-table-column align="center">
+                <template #header>
+                  <div style="text-align: center">授权方式</div>
+                </template>
+                <template #default="scope">
+                  <el-text :type="scope.row.authMode === AuthMode.WEBSITE ? 'success' : 'primary'">
+                    {{ scope.row.authMode === AuthMode.WEBSITE ? "网页授权" : "API授权" }}
+                  </el-text>
+                </template>
+              </el-table-column>
               <el-table-column align="center">
                 <template #header>
                   <div style="text-align: center">授权状态</div>
@@ -379,25 +430,25 @@ onMounted(async () => {
               <el-icon>
                 <ElementPlus />
               </el-icon>
-              Element-Plus
+              知乎
             </el-text>
             <el-text>
               <el-icon>
                 <ElementPlus />
               </el-icon>
-              Element-Plus2
+              CSDN
             </el-text>
             <el-text>
               <el-icon>
                 <ElementPlus />
               </el-icon>
-              Element-Plus3
+              博客园
             </el-text>
             <el-text>
               <el-icon>
                 <ElementPlus />
               </el-icon>
-              Element-Plus4
+              简书
             </el-text>
           </el-space>
         </el-scrollbar>
@@ -408,9 +459,7 @@ onMounted(async () => {
 
 <style scoped lang="stylus">
 .publish-dyn-header
-  height 300px !important
-
-//.dyn-table-list
+  height 332px !important
 
 .platform-define
   .platform-box

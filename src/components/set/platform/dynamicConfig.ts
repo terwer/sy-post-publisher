@@ -65,6 +65,11 @@ export class DynamicConfig {
   isAuth: boolean
 
   /**
+   * 授权模式
+   */
+  authMode: AuthMode
+
+  /**
    * YAML转换器
    */
   yamlConverter?: YamlConvertAdaptor
@@ -74,7 +79,16 @@ export class DynamicConfig {
     this.platformKey = platformKey
     this.platformName = platformName
     this.isAuth = false
+    this.authMode = AuthMode.API
   }
+}
+
+/**
+ * 授权模式
+ */
+export enum AuthMode {
+  API = "api",
+  WEBSITE = "web",
 }
 
 /**
@@ -85,14 +99,22 @@ export enum PlatformType {
    * Metaweblog
    */
   Metaweblog = "Metaweblog",
+
   /**
    * WordPress
    */
   Wordpress = "Wordpress",
+
   /**
    * GitHub(Hugo、Hexo、Jekyll、Vuepress、Vitepress、Nuxt content、Next.js)
    */
   Github = "Github",
+
+  /**
+   * 通用平台(zhihu)
+   */
+  Common = "Common",
+
   /**
    * 自定义
    */
@@ -101,10 +123,12 @@ export enum PlatformType {
 
 /**
  * 平台子类型
+ *
  * @since 0.1.0+
  * @author terwer
  */
 export enum SubPlatformType {
+  // Github 子平台
   Github_Hugo = "Hugo",
   Github_Hexo = "Hexo",
   Github_Jekyll = "Jekyll",
@@ -114,6 +138,15 @@ export enum SubPlatformType {
   Github_Vitepress = "Vitepress",
   Github_Nuxt = "Nuxt",
   Github_Next = "Next",
+
+  // Common
+  Common_Zhihu = "Zhihu",
+  Common_CSDN = "CSDN",
+  Common_Yuque = "Yuque",
+
+  // Metaweblog
+  Metaweblog_Typecho = "Typecho",
+
   NONE = "none",
 }
 
@@ -144,6 +177,14 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
       subtypeList.push(SubPlatformType.Github_Vitepress)
       subtypeList.push(SubPlatformType.Github_Nuxt)
       subtypeList.push(SubPlatformType.Github_Next)
+      break
+    case PlatformType.Common:
+      subtypeList.push(SubPlatformType.Common_Zhihu)
+      subtypeList.push(SubPlatformType.Common_CSDN)
+      subtypeList.push(SubPlatformType.Common_Yuque)
+      break
+    case PlatformType.Metaweblog:
+      subtypeList.push(SubPlatformType.Metaweblog_Typecho)
       break
     default:
       break

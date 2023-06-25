@@ -17,7 +17,7 @@ export const useSettingStore = defineStore("setting", () => {
 
   const getSettingRef = computed(async () => {
     const setting = await commonStore.get()
-    logger.info("get data from setting=>", setting)
+    logger.debug("get data from setting=>", setting)
     settingRef.value = setting
     return setting
   })
@@ -43,7 +43,7 @@ export const useSettingStore = defineStore("setting", () => {
    * @param setting - 需要修改的配置
    */
   const updateSetting = async (setting: Partial<typeof SypConfig>) => {
-    logger.info("update setting=>", setting)
+    logger.debug("update setting=>", setting)
     await commonStore.set(setting)
     settingRef.value = { ...settingRef.value, ...setting }
   }

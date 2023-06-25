@@ -21,11 +21,13 @@ const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
 }
 
 const getDefineEnv = () => {
+  const isServe = process.env.IS_SERVE
   const mode = process.env.NODE_ENV
+  console.log("isServe=>", isServe)
   console.log("mode=>", mode)
 
   const defaultEnv = {
-    DEV_MODE: `${isWatch}`,
+    DEV_MODE: `${isWatch || isServe}`,
     APP_BASE: `${appBase}`,
     NODE_ENV: "development",
     VITE_DEFAULT_TYPE: `siyuan`,

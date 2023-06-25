@@ -71,7 +71,7 @@ class CommonStorage implements StorageLikeAsync {
       // 如果当前运行在思源笔记中，则直接返回 null
       try {
         ret = (await this.kernelApi.getFile(key, "text")) ?? ""
-        this.logger.info(`Use SiYuan Api LocalStorageAdaptor to getItem - Retrieving '${key}', Value: ${ret}`)
+        this.logger.debug(`Use SiYuan Api LocalStorageAdaptor to getItem - Retrieving '${key}', Value: ${ret}`)
       } catch (error) {
         this.logger.error(`Failed to get value for key '${key}' from SiYuan Api LocalStorageAdaptor. Error:`, error)
       }
@@ -80,7 +80,7 @@ class CommonStorage implements StorageLikeAsync {
         const win = SiyuanDevice.siyuanWindow()
         const value = win.localStorage.getItem(key)
         ret = value ?? ""
-        this.logger.info(`Use Browser LocalStorageAdaptor to getItem - Retrieving '${key}', Value: ${ret}`)
+        this.logger.debug(`Use Browser LocalStorageAdaptor to getItem - Retrieving '${key}', Value: ${ret}`)
       } catch (error) {
         this.logger.error(`Failed to get value for key '${key}' from Browser LocalStorageAdaptor. Error:`, error)
       }
@@ -90,7 +90,7 @@ class CommonStorage implements StorageLikeAsync {
     if (StrUtil.isEmptyString(ret)) {
       ret = "{}"
     }
-    this.logger.info(`Final getItem - '${key}', Value: '${ret}'`)
+    this.logger.debug(`Final getItem - '${key}', Value: '${ret}'`)
     return ret
   }
 
@@ -116,11 +116,11 @@ class CommonStorage implements StorageLikeAsync {
     if (this.storageViaSiyuanApi) {
       // 如果当前运行在思源笔记中，则直接返回空字符串
       await this.kernelApi.saveTextData(key, value)
-      this.logger.info(`Use SiYuan Api LocalStorageAdaptor to setItem - Key '${key}', Value: '${value}'`)
+      this.logger.debug(`Use SiYuan Api LocalStorageAdaptor to setItem - Key '${key}', Value: '${value}'`)
     } else {
       const win = SiyuanDevice.siyuanWindow()
       win.localStorage.setItem(key, value)
-      this.logger.info(`Use Browser LocalStorageAdaptor to setItem - Key '${key}', Value: '${value}'`)
+      this.logger.debug(`Use Browser LocalStorageAdaptor to setItem - Key '${key}', Value: '${value}'`)
     }
   }
 }

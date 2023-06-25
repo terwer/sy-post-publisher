@@ -24,51 +24,17 @@
   -->
 
 <script setup lang="ts">
-import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import PublishTips from "~/src/components/publish/form/PublishTips.vue"
-import PublishTitle from "~/src/components/publish/form/PublishTitle.vue"
-import PublishPlatform from "~/src/components/publish/form/PublishPlatform.vue"
-import PublishTags from "~/src/components/publish/form/PublishTags.vue"
 
-const logger = createAppLogger("publisher-index")
 const { t } = useVueI18n()
 </script>
 
 <template>
-  <div id="publish-index">
-    <el-container>
-      <el-main>
-        <!-- 提示 -->
-        <publish-tips />
-
-        <!-- 表单数据 -->
-        <div class="publish-form">
-          <el-form label-width="100px">
-            <!-- 文章标题 -->
-            <publish-title />
-            <el-divider border-style="dashed" />
-
-            <!-- 分发平台 -->
-            <publish-platform />
-            <el-divider border-style="dashed" />
-
-            <!--
-            ----------------------------------------------------------------------
-            -->
-            <!-- 标签  -->
-            <publish-tags />
-
-            <!-- 发布 -->
-            <el-form-item>
-              <el-button type="primary">{{ t("main.publish") }}</el-button>
-              <el-button>{{ t("main.cancel") }}</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-main>
-    </el-container>
+  <div class="form-post-title">
+    <el-form-item :label="t('main.title')">
+      <el-input />
+    </el-form-item>
   </div>
 </template>
 
-<style lang="stylus" scoped></style>
+<style scoped lang="stylus"></style>

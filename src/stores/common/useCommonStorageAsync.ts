@@ -65,7 +65,7 @@ export const useCommonStorageAsync = <T extends string | number | boolean | obje
       if (ObjectUtil.isEmptyObject(ret)) {
         logger.info("Initial data not found in common storage. Setting initial value...")
         await commonStorage.setItem(commonStorage.key, serializer.write(initialValue))
-        logger.info("Initial value set:", initialValue)
+        logger.debug("Initial value set:", initialValue)
         ret = initialValue
       }
       return ret

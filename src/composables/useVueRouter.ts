@@ -61,7 +61,8 @@ const routes: RouteRecordRaw[] = [
     component: PlatformSetting,
   },
   {
-    path: "/setting/platform/single",
+    name: "setting-platform-single",
+    path: "/setting/platform/single/:key",
     component: SinglePlatformSetting,
   },
   {
