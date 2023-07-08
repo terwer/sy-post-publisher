@@ -24,15 +24,28 @@
   -->
 
 <script setup lang="ts">
-import { reactive } from "vue"
+import { onMounted, reactive } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { ElementPlus } from "@element-plus/icons-vue"
+import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { SypConfig } from "~/syp.config.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
+import { JsonUtil } from "zhi-common"
+import { DynamicConfig, DynamicJsonCfg } from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
+import { useRouter } from "vue-router"
+
+const logger = createAppLogger("publish-setting")
 
 // uses
 const { t } = useVueI18n()
+const router = useRouter()
+const { getSetting, updateSetting } = useSettingStore()
 
 // datas
 const formData = reactive({
+  setting: {} as typeof SypConfig,
+
   showPlatformList: false,
   platformTypeList: [
     {
@@ -46,6 +59,8 @@ const formData = reactive({
       description: t("setting.platform.wordpress.desc"),
     },
   ],
+
+  dynamicConfigArray: [] as DynamicConfig[],
 })
 
 // methods
@@ -59,6 +74,25 @@ const handleHidePlatform = () => {
 const handleAddPlatformStep = () => {
   alert(111)
 }
+
+const handleSinglePlatformSetting = (key: string) => {
+  router.push({ path: `/setting/platform/single/${key}` })
+}
+
+const initPage = async () => {
+  formData.setting = await getSetting()
+  logger.info("get setting from platform setting", formData.setting)
+
+  const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
+  // 默认展示通用平台
+  formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
+  logger.debug("dynamic init page=>", formData.dynamicConfigArray)
+}
+
+// lifecycles
+onMounted(async () => {
+  await initPage()
+})
 </script>
 
 <template>
@@ -71,8 +105,18 @@ const handleAddPlatformStep = () => {
               <el-text type="info"> {{ t("service.tab.publish.setting") }} </el-text>
             </template>
           </el-menu-item>
-          <el-menu-item class="left-menu-item">
-            <template #title>Zhihu</template>
+          <el-menu-item
+            v-for="dc in formData.dynamicConfigArray"
+            :key="dc.platformKey"
+            class="left-menu-item"
+            @click="handleSinglePlatformSetting(dc.platformKey)"
+          >
+            <template #title>
+              <el-icon>
+                <ElementPlus />
+              </el-icon>
+              {{ dc.platformName }}
+            </template>
           </el-menu-item>
           <el-menu-item class="left-menu-item" @click="handleShowPlatform">
             <template #title>
@@ -108,7 +152,32 @@ const handleAddPlatformStep = () => {
             </el-row>
           </div>
           <div v-else>
-            <div class="right-setting-tips">在这里可以添加您想要发布的平台。直接点击左侧 + 按钮即可</div>
+            <div class="publish-setting">
+              <el-row>
+                <el-col>
+                  <div class="right-setting-tips">
+                    在这里可以进行发布配置，直接点击左侧菜单或者下列图标均可进行配置。
+                  </div>
+                  <div class="right-setting-tips">
+                    <el-text type="danger">如需新增平台，直接点击左侧 + 按钮即可。</el-text>
+                  </div>
+                  <div class="right-setting-tips">
+                    目前支持 网页授权 和 API 授权两种方式，API授权 复杂点但是相对稳定，网页授权
+                    简单但是可能会失效。惊喜：网页授权模式 100% 兼容
+                    <a href="https://www.wechatsync.com/" target="_blank">wechatsync</a>， 没想到吧~
+                  </div>
+                  <div class="right-setting-tips">如需兼容其他平台，请<a href="#" class="ml-1">联系我</a></div>
+                </el-col>
+              </el-row>
+              <el-row :gutter="20" class="platform-list">
+                <el-col v-for="platform in formData.dynamicConfigArray" :key="platform.platformKey" :span="6">
+                  <div class="platform-item" @click="handleSinglePlatformSetting(platform.platformKey)">
+                    <img src="/images/wordpress-logo.svg" height="45" alt="WordPress" />
+                    <span class="text">{{ platform.platformType }}</span>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
           </div>
         </div>
       </el-col>

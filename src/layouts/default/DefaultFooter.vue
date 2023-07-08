@@ -80,7 +80,6 @@ import SetIndex from "~/src/components/set/SetIndex.vue"
 import { DateUtil } from "zhi-common"
 import { useSiyuanDevice } from "~/src/composables/useSiyuanDevice.ts"
 import { useRouter } from "vue-router"
-import { TabsPaneContext } from "element-plus"
 
 const logger = createAppLogger("default-footer")
 const { t } = useVueI18n()

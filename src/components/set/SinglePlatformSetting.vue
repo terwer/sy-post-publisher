@@ -24,7 +24,7 @@
   -->
 
 <script setup lang="ts">
-import MetaweblogSetting from "~/src/components/set/singleplatform/MetaweblogSetting.vue"
+import MetaweblogSetting from "~/src/components/set/publish/singleplatform/MetaweblogSetting.vue"
 import { useRoute, useRouter } from "vue-router"
 import { reactive, ref } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
