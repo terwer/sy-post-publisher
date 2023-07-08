@@ -24,89 +24,194 @@
   -->
 
 <script setup lang="ts">
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
-import { onBeforeMount, reactive } from "vue"
-import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { JsonUtil } from "zhi-common"
-import { AuthMode, DynamicConfig, DynamicJsonCfg } from "~/src/components/set/platform/dynamicConfig.ts"
-import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
-import { useRouter } from "vue-router"
-import { ElMessage } from "element-plus"
-
-const logger = createAppLogger("publish-setting")
+import { reactive } from "vue"
+import { useVueI18n } from "~/src/composables/useVueI18n.ts"
+import { ElementPlus } from "@element-plus/icons-vue"
 
 // uses
-const { getSetting, updateSetting } = useSettingStore()
-const router = useRouter()
+const { t } = useVueI18n()
 
 // datas
-let setting
 const formData = reactive({
-  dynamicConfigArray: <DynamicConfig[]>[],
+  showPlatformList: false,
+  platformTypeList: [
+    {
+      type: t("setting.platform.universal"),
+      img: "./images/universal.webp",
+      description: t("setting.platform.universal.desc"),
+    },
+    {
+      type: t("setting.platform.wordpress"),
+      img: "./images/wordpress-logo.svg",
+      description: t("setting.platform.wordpress.desc"),
+    },
+  ],
 })
 
 // methods
-const handlePublishSetting = (platform: DynamicConfig) => {
-  if (platform.authMode === AuthMode.WEBSITE) {
-    ElMessage.warning("打开网页窗口进行网页授权")
-  } else {
-    // API 模式
-    router.push({
-      name: "setting-platform-single",
-      path: "/setting/platform/single",
-      params: { key: platform.platformKey },
-      query: { showBack: "true" },
-    })
-  }
+const handleShowPlatform = () => {
+  formData.showPlatformList = true
+}
+const handleHidePlatform = () => {
+  formData.showPlatformList = false
 }
 
-const initPage = async () => {
-  setting = await getSetting()
-  logger.debug("get setting from platform setting", setting)
-  const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
-  formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
-  logger.debug("get dynamic config array=>", formData.dynamicConfigArray)
+const handleAddPlatformStep = () => {
+  alert(111)
 }
-
-onBeforeMount(async () => {
-  await initPage()
-})
 </script>
 
 <template>
-  <div class="publish-setting">
-    <el-row>
-      <el-col>
-        目前支持以下平台，直接点击图标可进入当前平台配置页面，目前前支持 网页授权 和 API 授权两种方式，API授权
-        复杂点但是相对稳定，网页授权 简单但是可能会失效。惊喜：网页授权模式 100% 兼容
-        <a href="https://www.wechatsync.com/" target="_blank">wechatsync</a>， 没想到吧~
+  <div>
+    <el-row :gutter="20" class="row-item">
+      <el-col :span="2" class="col-item">
+        <el-menu class="publish-setting-left-menu">
+          <el-menu-item class="left-menu-item menu-item-selected" @click="handleHidePlatform">
+            <template #title>
+              <el-text type="info"> {{ t("service.tab.publish.setting") }} </el-text>
+            </template>
+          </el-menu-item>
+          <el-menu-item class="left-menu-item">
+            <template #title>Zhihu</template>
+          </el-menu-item>
+          <el-menu-item class="left-menu-item" @click="handleShowPlatform">
+            <template #title>
+              <el-text type="primary"> + {{ t("setting.platform.add") }} </el-text>
+            </template>
+          </el-menu-item>
+        </el-menu>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col> 可在平台配置导入更多预置平台，如需兼容其他平台，请<a href="#faq" class="ml-1">联系我</a> </el-col>
-    </el-row>
-    <el-row :gutter="20" class="platform-list">
-      <el-col v-for="platform in formData.dynamicConfigArray" :span="6">
-        <div class="platform-item" @click="handlePublishSetting(platform)">
-          <img src="../../assets/images/wordpress-logo.svg" height="45" alt="WordPress" />
-          <span class="text">{{ platform.platformType }}</span>
+      <el-col :span="18" class="col-item">
+        <div class="publish-setting-right-content">
+          <div v-if="formData.showPlatformList">
+            <el-row :gutter="20" class="row-item">
+              <el-col
+                v-for="p in formData.platformTypeList"
+                :key="p.type"
+                :span="24"
+                class="col-item"
+                @click="handleAddPlatformStep"
+              >
+                <el-card class="platform-right-card">
+                  <img :src="p.img" class="image" alt="" />
+                  <div class="right-card-text">
+                    <span>{{ p.type }}</span>
+                    <div>
+                      <div class="text-desc">{{ p.description }}</div>
+                      <div class="add-btn">
+                        <el-button size="small" type="primary">{{ t("setting.platform.add.this") }}</el-button>
+                      </div>
+                    </div>
+                  </div>
+                </el-card>
+              </el-col>
+            </el-row>
+          </div>
+          <div v-else>
+            <div class="right-setting-tips">在这里可以添加您想要发布的平台。直接点击左侧 + 按钮即可</div>
+          </div>
         </div>
       </el-col>
-      <el-col :span="6">
-        <div><img src="../../assets/images/weixin.png" width="45" alt="微信公众号" /></div>
-      </el-col>
-      <el-col :span="6">
-        <div><img src="../../assets/images/toutiao.png" width="45" alt="今日头条" /></div>
-      </el-col>
-      <el-col :span="6">
-        <div><img src="../../assets/images/zhihu.png" width="45" alt="知乎" /></div>
+      <el-col :span="4" class="col-item">
+        <el-scrollbar class="platform-define">
+          <div>
+            <el-text class="platform-title" type="primary"> 请点击图标快速新增预置的发布服务 </el-text>
+          </div>
+          <el-space direction="horizontal" class="platform-box">
+            <el-text class="define-item">
+              <el-icon>
+                <ElementPlus />
+              </el-icon>
+              知乎
+            </el-text>
+            <el-text class="define-item">
+              <el-icon>
+                <ElementPlus />
+              </el-icon>
+              CSDN
+            </el-text>
+            <el-text class="define-item">
+              <el-icon>
+                <ElementPlus />
+              </el-icon>
+              博客园
+            </el-text>
+            <el-text class="define-item">
+              <el-icon>
+                <ElementPlus />
+              </el-icon>
+              简书
+            </el-text>
+            <el-text class="define-item">
+              <el-icon>
+                <ElementPlus />
+              </el-icon>
+              Typecho
+            </el-text>
+            <el-text class="define-item">
+              <el-icon>
+                <ElementPlus />
+              </el-icon>
+              微信公众号
+            </el-text>
+          </el-space>
+        </el-scrollbar>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <style scoped lang="stylus">
-.publish-setting
-  .platform-list
-    font-size 16px
+.publish-setting-left-menu
+  text-align center
+  .left-menu-item
+    justify-content center
+  .menu-item-selected
+    background var(--el-color-primary-light-7)
+
+.publish-setting-right-content
+  .right-setting-tips
+    text-align left
+    padding-left 10px
+    padding-right 10px
+
+.row-item
+  margin 0 !important
+  padding 0 !important
+  text-align center
+.col-item
+  margin 0 !important
+  padding 0 !important
+.platform-right-card
+  margin 0
+  margin-left 10px
+  margin-right 10px
+  margin-bottom 10px
+  padding 0
+  img
+    width 160px
+    height 160px
+  .right-card-text
+    padding 0 10px 10px 10px
+    display inline-block
+    vertical-align top
+    line-height 32px
+    width calc(100% - 180px)
+    .text-desc
+      font-size 12px
+      line-height 18px
+    .add-btn
+      margin-top 12px
+
+.platform-define
+  text-align left
+  .platform-box
+    margin-top 10px
+    flex-wrap wrap
+    .define-item
+      cursor pointer
+      min-width 100px
+      padding-bottom 6px
+      &:hover
+        color var(--el-color-primary)
 </style>

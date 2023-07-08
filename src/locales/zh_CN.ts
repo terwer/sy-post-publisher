@@ -34,7 +34,7 @@ export default {
   "service.tab.platform.setting": "平台配置",
   "service.tab.post.bind": "文章绑定",
   "service.tab.service.switch": "服务开关",
-  "service.tab.change.local": "个性设置",
+  "service.tab.change.local": "偏好设置",
   "main.publish.editmode": "编辑模式",
   "main.publish.editmode.simple": "简洁模式",
   "main.publish.editmode.complex": "详细模式",
@@ -469,4 +469,12 @@ export default {
   "setting.main.background": "挂件背景",
   "setting.main.background.tip": "支持16进制和rgb，例如：#000000，未设置或者留空不变。如果新窗口设置，请重新刷新文档。",
   "setting.picgo.manage": "图床管理",
+  "setting.platform.add": "新增平台",
+  "setting.platform.add.this": "新增此平台",
+  "setting.platform.universal": "通用平台",
+  "setting.platform.universal.desc":
+    "目前支持的通用平台有：知乎、语雀、CSDN、简书等，点击右侧图标快速添加，或者点击下方按钮自定义添加",
+  "setting.platform.wordpress": "WordPress",
+  "setting.platform.wordpress.desc":
+    "WordPress是一个以PHP和MySQL为平台的自由开源的博客软件和内容管理系统。它具有插件架构和模板系统，同时也是最受欢迎的网站内容管理系统。点击右侧图标快速添加，或者点击下方按钮自定义添加",
 }

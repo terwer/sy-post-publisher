@@ -481,4 +481,12 @@ export default {
   "setting.main.background.tip":
     "Support hexadecimal and RGB, for example: #000000, no settings or staying empty unchanged",
   "setting.picgo.manage": "Picture manage",
+  "setting.platform.add": "Add platform",
+  "setting.platform.add.this": "Add this platform",
+  "setting.platform.universal": "Universal platform",
+  "setting.platform.universal.desc":
+    "Currently supported general platforms include Zhihu, Yuque, CSDN, etc. Click the icon to quickly add, or click the button below to customize and add",
+  "setting.platform.wordpress": "WordPress",
+  "setting.platform.wordpress.desc":
+    "WordPress is a free and open source blog software and Content management system based on PHP and MySQL. WordPress has a plugin architecture and template system. As of April 2018, over 30.6% of the top 10 million websites used WordPress. WordPress is the most popular website Content management system. Approximately 40% of global websites (7500 million) are built using WordPress. WordPress is currently the most popular blog system on the Internet. WordPress stands out in the most famous stage of online publishing. Today, it is used on over 70 million sites.",
 }

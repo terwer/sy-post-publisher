@@ -25,9 +25,8 @@
 
 import { createRouter, createWebHashHistory, Router, RouteRecordRaw } from "vue-router"
 import Home from "~/src/pages/Home.vue"
-import SetIndex from "~/src/components/set/SetIndex.vue"
+import Setting from "~/src/pages/Setting.vue"
 import GeneralSetting from "~/src/components/set/GeneralSetting.vue"
-import PlatformSetting from "~/src/components/set/PlatformSetting.vue"
 import PublishSetting from "~/src/components/set/PublishSetting.vue"
 import SinglePlatformSetting from "~/src/components/set/SinglePlatformSetting.vue"
 
@@ -50,15 +49,11 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/setting",
-    component: SetIndex,
+    component: Setting,
   },
   {
-    path: "/setting/general",
-    component: GeneralSetting,
-  },
-  {
-    path: "/setting/platform",
-    component: PlatformSetting,
+    path: "/setting/publish",
+    component: PublishSetting,
   },
   {
     name: "setting-platform-single",
@@ -66,8 +61,8 @@ const routes: RouteRecordRaw[] = [
     component: SinglePlatformSetting,
   },
   {
-    path: "/setting/publish",
-    component: PublishSetting,
+    path: "/setting/general",
+    component: GeneralSetting,
   },
 ]
 
