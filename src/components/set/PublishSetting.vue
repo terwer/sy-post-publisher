@@ -31,7 +31,12 @@ import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { SypConfig } from "~/syp.config.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { JsonUtil } from "zhi-common"
-import { DynamicConfig, DynamicJsonCfg, PlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import {
+  AuthMode,
+  DynamicConfig,
+  DynamicJsonCfg,
+  PlatformType,
+} from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { useRouter } from "vue-router"
 
@@ -108,7 +113,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
+  <div class="publish-setting-body">
     <el-row :gutter="20" class="row-item">
       <el-col :span="2" class="col-item">
         <el-menu class="publish-setting-left-menu">
@@ -168,13 +173,35 @@ onMounted(async () => {
                   <div class="platform-item">
                     <img src="/images/wordpress-logo.svg" height="45" alt="WordPress" />
                     <div class="item-right">
-                      <div class="text">{{ platform.platformName }}</div>
+                      <div class="text">
+                        <el-badge
+                          :value="platform.isAuth ? '已授权' : '未授权'"
+                          class="badge-item"
+                          :type="platform.isAuth ? 'success' : 'warning'"
+                        >
+                          <span>{{ platform.platformName }}</span>
+                          <el-text
+                            :type="platform.authMode === AuthMode.API ? 'primary' : 'info'"
+                            class="auth-mode-text"
+                          >
+                            {{ platform.authMode === AuthMode.API ? "API授权" : "网页授权" }}
+                          </el-text>
+                        </el-badge>
+                      </div>
                       <div class="actions">
-                        <el-switch size="small" class="action-btn"></el-switch>
-                        <el-text class="action-btn" @click="handleSinglePlatformSetting(platform.platformKey)">
-                          <el-icon>
-                            <Tools />
-                          </el-icon>
+                        <el-switch
+                          v-model="platform.isEnabled"
+                          inline-prompt
+                          size="small"
+                          class="action-btn action-switch"
+                          active-text="已启用"
+                          inactive-text="未启用"
+                        ></el-switch>
+                        <el-text
+                          class="action-btn action-setting"
+                          @click="handleSinglePlatformSetting(platform.platformKey)"
+                        >
+                          <el-icon> <Tools /> </el-icon>设置
                         </el-text>
                       </div>
                     </div>
@@ -194,6 +221,15 @@ onMounted(async () => {
                           <div>{{ t("setting.platform.right.tips4") }}</div>
                         </div>
                       </div>
+                    </div>
+
+                    <div class="tips-form">
+                      <a
+                        href="https://terwergreen.feishu.cn/share/base/form/shrcnGRdThUiqnhBg15xgclMM0c"
+                        target="_blank"
+                      >
+                        发布工具平台适配跟踪表
+                      </a>
                     </div>
                   </div>
                 </el-col>
@@ -252,19 +288,31 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="stylus">
+.publish-setting-body
+  margin-left 10px
+  margin-top 10px
+
 .publish-setting-left-menu
   text-align center
   .left-menu-item
     justify-content center
+    height 36px
   .menu-item-selected
     color var(--el-fill-color-blank)
     background var(--el-color-primary)
+
+html[class="dark"]
+  .menu-item-selected
+    color var(--el-button-text-color)
 
 .publish-setting-right-content
   .right-setting-tips
     text-align left
     padding-left 10px
     padding-right 10px
+  .tips-form
+    font-size 12px
+    margin-top 14px
 
 .publish-right-setting
   .platform-list
@@ -272,7 +320,7 @@ onMounted(async () => {
     margin-left 6px !important
     margin-right 6px !important
     .platform-item-box
-      margin-bottom 16px
+      margin-bottom 28px
       text-align left
       .platform-item
         img
@@ -286,9 +334,19 @@ onMounted(async () => {
             color var(--el-button-text-color)
             font-size 12px
             margin-bottom 2px
+            .auth-mode-text
+              font-size 12px
+              margin-left 16px
           .actions
             .action-btn
               margin-right 10px
+            .action-switch
+              font-size 12px
+            .action-setting
+              font-size 12px
+              cursor pointer
+              &:hover
+                color var(--el-color-primary)
 
 .row-item
   margin 0 !important

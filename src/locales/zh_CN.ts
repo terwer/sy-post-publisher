@@ -478,9 +478,9 @@ export default {
   "setting.platform.wordpress.desc":
     "WordPress是一个以PHP和MySQL为平台的自由开源的博客软件和内容管理系统。它具有插件架构和模板系统，同时也是最受欢迎的网站内容管理系统。点击右侧图标快速添加，或者点击下方按钮自定义添加",
   "setting.platform.right.tips0": "特别提示：",
-  "setting.platform.right.tips1": "1、在这里可以进行发布配置，直接点击 [左侧菜单] 或者 [列表图标] 均可进行配置。",
+  "setting.platform.right.tips1": "1、在这里可以进行发布配置，直接点击 [设置图标] 即可进行配置。",
   "setting.platform.right.tips2": "2、如需新增平台，直接点击左侧 + 按钮即可。",
   "setting.platform.right.tips3":
-    "3、目前支持 网页授权 和 API 授权两种方式，API授权 复杂点但是相对稳定，网页授权简单但是可能会失效。惊喜：网页授权模式 100% 兼容",
-  "setting.platform.right.tips4": "4、如需兼容其他平台，请联系我",
+    "3、目前支持 网页授权 和 API 授权两种方式，API授权 复杂点但是相对稳定，网页授权简单但是可能会失效。惊喜：网页授权模式 100% 兼容 wechatsync 。",
+  "setting.platform.right.tips4": "4、如需兼容其他平台，请联系我：youweics@163.com 或者填写下面的表单。",
 }

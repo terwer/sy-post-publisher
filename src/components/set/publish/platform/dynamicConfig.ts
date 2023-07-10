@@ -45,6 +45,7 @@ export class DynamicConfig {
 
   /**
    * 子平台类型(细分子类型)
+   *
    * @since 0.1.0+
    */
   subPlatformType?: SubPlatformType
@@ -58,6 +59,18 @@ export class DynamicConfig {
    * 平台名称
    */
   platformName: string
+
+  /**
+   * 平台图标
+   *
+   * @since 0.9.0+
+   */
+  platformIcon?: string
+
+  /**
+   * 是否授权
+   */
+  isEnabled: boolean
 
   /**
    * 是否授权
@@ -79,6 +92,7 @@ export class DynamicConfig {
     this.platformKey = platformKey
     this.platformName = platformName
     this.isAuth = false
+    this.isEnabled = false
     this.authMode = AuthMode.API
   }
 }
