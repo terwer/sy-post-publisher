@@ -51,20 +51,9 @@
           {{ t("blog.newwin.open") }}
         </span>
 
-        <span class="text">.</span>
-        <span class="text s-dark" @click="openGeneralSetting()">
-          {{ t("setting.blog.index") }}
-        </span>
-
         <!--
         -----------------------------------------------------------------------------
         -->
-        <!-- 思源地址设置弹窗 -->
-
-        <!-- 通用设置弹窗 -->
-        <el-dialog v-model="generalSettingFormVisible" :title="t('setting.blog.index')">
-          <set-index />
-        </el-dialog>
       </div>
     </div>
   </div>
@@ -76,7 +65,6 @@ import { ref } from "vue"
 import { version } from "../../../package.json"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import SetIndex from "~/src/components/set/SetIndex.vue"
 import { DateUtil } from "zhi-common"
 import { useSiyuanDevice } from "~/src/composables/useSiyuanDevice.ts"
 import { useRouter } from "vue-router"
@@ -89,9 +77,6 @@ const toggleDark = useToggle(isDark)
 
 const { isInChromeExtension } = useSiyuanDevice()
 const isChromeExtension = isInChromeExtension()
-
-const transportFormVisible = ref(false)
-const generalSettingFormVisible = ref(false)
 
 const v = ref(version)
 const nowYear = DateUtil.nowYear()
@@ -115,14 +100,6 @@ const newWin = () => {
   const rt = chrome.runtime as any
   const url = rt.getURL("/index.html#/")
   window.open(url)
-}
-
-const openTransportSetting = () => {
-  transportFormVisible.value = true
-}
-
-const openGeneralSetting = () => {
-  generalSettingFormVisible.value = true
 }
 </script>
 

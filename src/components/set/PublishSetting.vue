@@ -26,12 +26,12 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { ElementPlus } from "@element-plus/icons-vue"
+import { ElementPlus, Tools } from "@element-plus/icons-vue"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { SypConfig } from "~/syp.config.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { JsonUtil } from "zhi-common"
-import { DynamicConfig, DynamicJsonCfg } from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import { DynamicConfig, DynamicJsonCfg, PlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { useRouter } from "vue-router"
 
@@ -47,14 +47,17 @@ const formData = reactive({
   setting: {} as typeof SypConfig,
 
   showPlatformList: false,
+  showBundledList: false,
   platformTypeList: [
     {
-      type: t("setting.platform.universal"),
+      type: PlatformType.Common,
+      title: t("setting.platform.universal"),
       img: "./images/universal.webp",
       description: t("setting.platform.universal.desc"),
     },
     {
-      type: t("setting.platform.wordpress"),
+      type: PlatformType.Wordpress,
+      title: t("setting.platform.wordpress"),
       img: "./images/wordpress-logo.svg",
       description: t("setting.platform.wordpress.desc"),
     },
@@ -66,9 +69,11 @@ const formData = reactive({
 // methods
 const handleShowPlatform = () => {
   formData.showPlatformList = true
+  formData.showBundledList = true
 }
 const handleHidePlatform = () => {
   formData.showPlatformList = false
+  formData.showBundledList = false
 }
 
 const handleAddPlatformStep = () => {
@@ -86,6 +91,13 @@ const initPage = async () => {
   const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
   // 默认展示通用平台
   formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
+  // test start
+  for (let i = 0; i < 20; i++) {
+    var newCfg = dynJsonCfg.totalCfg[0]
+    newCfg.platformKey = newCfg.platformKey + i
+    formData.dynamicConfigArray.push(newCfg)
+  }
+  // test end
   logger.debug("dynamic init page=>", formData.dynamicConfigArray)
 }
 
@@ -100,32 +112,25 @@ onMounted(async () => {
     <el-row :gutter="20" class="row-item">
       <el-col :span="2" class="col-item">
         <el-menu class="publish-setting-left-menu">
-          <el-menu-item class="left-menu-item menu-item-selected" @click="handleHidePlatform">
+          <el-menu-item
+            :class="formData.showPlatformList ? 'left-menu-item' : 'left-menu-item menu-item-selected'"
+            @click="handleHidePlatform"
+          >
             <template #title>
-              <el-text type="info"> {{ t("service.tab.publish.setting") }} </el-text>
+              <span> {{ t("service.tab.publish.setting") }} </span>
             </template>
           </el-menu-item>
           <el-menu-item
-            v-for="dc in formData.dynamicConfigArray"
-            :key="dc.platformKey"
-            class="left-menu-item"
-            @click="handleSinglePlatformSetting(dc.platformKey)"
+            :class="!formData.showPlatformList ? 'left-menu-item' : 'left-menu-item menu-item-selected'"
+            @click="handleShowPlatform"
           >
             <template #title>
-              <el-icon>
-                <ElementPlus />
-              </el-icon>
-              {{ dc.platformName }}
-            </template>
-          </el-menu-item>
-          <el-menu-item class="left-menu-item" @click="handleShowPlatform">
-            <template #title>
-              <el-text type="primary"> + {{ t("setting.platform.add") }} </el-text>
+              <span> + {{ t("setting.platform.add") }} </span>
             </template>
           </el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :span="18" class="col-item">
+      <el-col :span="formData.showBundledList ? 18 : 22" class="col-item">
         <div class="publish-setting-right-content">
           <div v-if="formData.showPlatformList">
             <el-row :gutter="20" class="row-item">
@@ -139,7 +144,7 @@ onMounted(async () => {
                 <el-card class="platform-right-card">
                   <img :src="p.img" class="image" alt="" />
                   <div class="right-card-text">
-                    <span>{{ p.type }}</span>
+                    <span>{{ p.title }}</span>
                     <div>
                       <div class="text-desc">{{ p.description }}</div>
                       <div class="add-btn">
@@ -152,28 +157,44 @@ onMounted(async () => {
             </el-row>
           </div>
           <div v-else>
-            <div class="publish-setting">
+            <div class="publish-right-setting">
+              <el-row :gutter="20" class="platform-list">
+                <el-col
+                  v-for="platform in formData.dynamicConfigArray"
+                  :key="platform.platformKey"
+                  :span="6"
+                  class="platform-item-box"
+                >
+                  <div class="platform-item">
+                    <img src="/images/wordpress-logo.svg" height="45" alt="WordPress" />
+                    <div class="item-right">
+                      <div class="text">{{ platform.platformName }}</div>
+                      <div class="actions">
+                        <el-switch size="small" class="action-btn"></el-switch>
+                        <el-text class="action-btn" @click="handleSinglePlatformSetting(platform.platformKey)">
+                          <el-icon>
+                            <Tools />
+                          </el-icon>
+                        </el-text>
+                      </div>
+                    </div>
+                  </div>
+                </el-col>
+              </el-row>
               <el-row>
                 <el-col>
                   <div class="right-setting-tips">
-                    在这里可以进行发布配置，直接点击左侧菜单或者下列图标均可进行配置。
-                  </div>
-                  <div class="right-setting-tips">
-                    <el-text type="danger">如需新增平台，直接点击左侧 + 按钮即可。</el-text>
-                  </div>
-                  <div class="right-setting-tips">
-                    目前支持 网页授权 和 API 授权两种方式，API授权 复杂点但是相对稳定，网页授权
-                    简单但是可能会失效。惊喜：网页授权模式 100% 兼容
-                    <a href="https://www.wechatsync.com/" target="_blank">wechatsync</a>， 没想到吧~
-                  </div>
-                  <div class="right-setting-tips">如需兼容其他平台，请<a href="#" class="ml-1">联系我</a></div>
-                </el-col>
-              </el-row>
-              <el-row :gutter="20" class="platform-list">
-                <el-col v-for="platform in formData.dynamicConfigArray" :key="platform.platformKey" :span="6">
-                  <div class="platform-item" @click="handleSinglePlatformSetting(platform.platformKey)">
-                    <img src="/images/wordpress-logo.svg" height="45" alt="WordPress" />
-                    <span class="text">{{ platform.platformType }}</span>
+                    <div class="el-alert el-alert--warning is-light" role="alert">
+                      <div class="el-alert__content">
+                        <div class="el-alert__title">
+                          <div>{{ t("setting.platform.right.tips0") }}</div>
+                          <div>{{ t("setting.platform.right.tips1") }}</div>
+                          <div>{{ t("setting.platform.right.tips2") }}</div>
+                          <div>{{ t("setting.platform.right.tips3") }}</div>
+                          <div>{{ t("setting.platform.right.tips4") }}</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </el-col>
               </el-row>
@@ -181,7 +202,7 @@ onMounted(async () => {
           </div>
         </div>
       </el-col>
-      <el-col :span="4" class="col-item">
+      <el-col v-if="formData.showBundledList" :span="4" class="col-item">
         <el-scrollbar class="platform-define">
           <div>
             <el-text class="platform-title" type="primary"> 请点击图标快速新增预置的发布服务 </el-text>
@@ -236,13 +257,38 @@ onMounted(async () => {
   .left-menu-item
     justify-content center
   .menu-item-selected
-    background var(--el-color-primary-light-7)
+    color var(--el-fill-color-blank)
+    background var(--el-color-primary)
 
 .publish-setting-right-content
   .right-setting-tips
     text-align left
     padding-left 10px
     padding-right 10px
+
+.publish-right-setting
+  .platform-list
+    margin-bottom 10px
+    margin-left 6px !important
+    margin-right 6px !important
+    .platform-item-box
+      margin-bottom 16px
+      text-align left
+      .platform-item
+        img
+          width 25px
+          height 25px
+        .item-right
+          display inline-block
+          margin-left 10px
+          text-align left
+          .text
+            color var(--el-button-text-color)
+            font-size 12px
+            margin-bottom 2px
+          .actions
+            .action-btn
+              margin-right 10px
 
 .row-item
   margin 0 !important

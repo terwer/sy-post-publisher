@@ -489,4 +489,11 @@ export default {
   "setting.platform.wordpress": "WordPress",
   "setting.platform.wordpress.desc":
     "WordPress is a free and open source blog software and Content management system based on PHP and MySQL. WordPress has a plugin architecture and template system. As of April 2018, over 30.6% of the top 10 million websites used WordPress. WordPress is the most popular website Content management system. Approximately 40% of global websites (7500 million) are built using WordPress. WordPress is currently the most popular blog system on the Internet. WordPress stands out in the most famous stage of online publishing. Today, it is used on over 70 million sites.",
+  "setting.platform.right.tips0": "Special Notes:",
+  "setting.platform.right.tips1":
+    "1. You can publish the configuration here, and you can directly click the menu or the following icons to configure it.",
+  "setting.platform.right.tips2": "2. If you need to add a new platform, click the left button directly.",
+  "setting.platform.right.tips3":
+    "3. At present, we support webpage authorization and API authorization. The complex points of API authorization are relatively stable. The webpage authorization is simple but may fail. Surprise: Webpage authorization mode 100 compatible",
+  "setting.platform.right.tips4": "4. If you need to be compatible with other platforms, please contact me",
 }
