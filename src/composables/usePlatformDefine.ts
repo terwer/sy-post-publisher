@@ -52,7 +52,7 @@ export const usePlatformDefine = () => {
     {
       type: PlatformType.Metaweblog,
       title: t("setting.platform.metaweblog"),
-      img: "./images/metaweblog.jpg",
+      img: "./images/xmlrpc.png",
       description: t("setting.platform.metaweblog.desc"),
     },
     {
@@ -61,12 +61,12 @@ export const usePlatformDefine = () => {
       img: "./images/wordpress-logo.svg",
       description: t("setting.platform.wordpress.desc"),
     },
-    // {
-    //   type: PlatformType.Custom,
-    //   title: t("setting.platform.other"),
-    //   img: "./images/other-platform.png",
-    //   description: t("setting.platform.other.desc"),
-    // },
+    {
+      type: PlatformType.Custom,
+      title: t("setting.platform.custom"),
+      img: "./images/http.png",
+      description: t("setting.platform.custom.desc"),
+    },
   ]
 
   const prePlatformList: DynamicConfig[] = [

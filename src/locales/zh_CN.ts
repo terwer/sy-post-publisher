@@ -473,16 +473,18 @@ export default {
   "setting.platform.add.this": "新增此平台",
   "setting.platform.universal": "通用平台",
   "setting.platform.universal.desc":
-    "目前支持的通用平台有：知乎、语雀、CSDN、简书等，点击右侧图标快速添加，或者点击下方按钮自定义添加",
+    "目前支持的通用平台有：知乎、语雀、CSDN、简书等，需要使用网页授权，完全兼容 WeChatSync 。",
   "setting.platform.wordpress": "WordPress",
   "setting.platform.wordpress.desc":
-    "WordPress是一个以PHP和MySQL为平台的自由开源的博客软件和内容管理系统。它具有插件架构和模板系统，同时也是最受欢迎的网站内容管理系统。点击右侧图标快速添加，或者点击下方按钮自定义添加",
+    "Wordpress 通过Xmlrpc API支持，采用 API 授权。WordPress是一个以PHP和MySQL为平台的自由开源的博客软件和内容管理系统。它具有插件架构和模板系统，同时也是最受欢迎的网站内容管理系统。点击右侧图标快速添加，或者点击下方按钮自定义添加",
   "setting.platform.github": "Github",
   "setting.platform.github.desc":
-    "GitHub 是一个使用 Git 进行软件开发和版本控制的平台和基于云的服务，允许开发人员存储和管理他们的代码。",
+    "目前支持Github发布的的平台有：Hexo、Hugo、Jekyll、Vitepress等，采用 API 授权。GitHub 是一个使用 Git 进行软件开发和版本控制的平台和基于云的服务，允许开发人员存储和管理他们的代码。",
   "setting.platform.metaweblog": "Metaweblog",
   "setting.platform.metaweblog.desc":
-    "MetaWeblog API是由软件开发人员Dave Winer创建的应用程序编程接口，它允许使用 Web 服务写入、编辑和删除。该 API 作为XML-RPC Web 服务实现，具有三个方法，其名称描述了其功能：metaweblog.newPost()、metaweblog.getPost() 和 metaweblog.editPost()。这些方法采用指定博客作者的用户名和密码以及与单个博客条目相关的信息的参数。",
+    "目前支持Metaweblog的平台有：博客园、Typecho等，采用 API 授权。MetaWeblog API是由软件开发人员Dave Winer创建的应用程序编程接口，它允许使用 Web 服务写入、编辑和删除。该 API 作为XML-RPC Web 服务实现，具有三个方法，其名称描述了其功能：metaweblog.newPost()、metaweblog.getPost() 和 metaweblog.editPost()。这些方法采用指定博客作者的用户名和密码以及与单个博客条目相关的信息的参数。",
+  "setting.platform.custom": "自定义 HTTP 协议",
+  "setting.platform.custom.desc": "自定义HTTP协议，敬请期待",
   "setting.platform.right.tips0": "特别提示：",
   "setting.platform.right.tips1": "1、在这里可以进行发布配置，直接点击 [设置图标] 即可进行配置。",
   "setting.platform.right.tips2": "2、如需新增平台，直接点击左侧 + 按钮即可。",

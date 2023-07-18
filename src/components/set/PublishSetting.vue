@@ -24,9 +24,9 @@
   -->
 
 <script setup lang="ts">
-import { onMounted, reactive } from "vue"
+import { markRaw, onMounted, reactive } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { ElementPlus, Tools } from "@element-plus/icons-vue"
+import { Tools, Delete } from "@element-plus/icons-vue"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { SypConfig } from "~/syp.config.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
@@ -40,6 +40,7 @@ import {
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { useRouter } from "vue-router"
 import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
+import { ElMessage, ElMessageBox } from "element-plus"
 
 const logger = createAppLogger("publish-setting")
 
@@ -68,6 +69,10 @@ const handleHidePlatform = () => {
 }
 
 const handleAddPlatformStep = (type: PlatformType) => {
+  if (type === PlatformType.Custom) {
+    ElMessage.error("自定义 HTTP 协议暂未实现，敬请期待")
+    return
+  }
   router.push({
     path: `/setting/platform/quickadd/${type}`,
     query: {
@@ -83,6 +88,22 @@ const handleSinglePlatformSetting = (key: string) => {
       showBack: "true",
     },
   })
+}
+
+const handleSinglePlatformDelete = (cfg: DynamicConfig) => {
+  ElMessageBox.confirm(`确认要删除【${cfg.platformName}】吗，所有与此平台相关的配置都将永久删除？`, "温馨提示", {
+    type: "error",
+    icon: markRaw(Delete),
+    confirmButtonText: t("main.opt.ok"),
+    cancelButtonText: t("main.opt.cancel"),
+  })
+    .then((action) => {
+      ElMessage({
+        type: "info",
+        message: `action: ${action}`,
+      })
+    })
+    .catch(() => {})
 }
 
 const initPage = async () => {
@@ -192,6 +213,9 @@ onMounted(async () => {
                         >
                           <el-icon> <Tools /> </el-icon>设置
                         </el-text>
+                        <el-text class="action-btn action-del" @click="handleSinglePlatformDelete(platform)">
+                          <el-icon> <Delete /> </el-icon>删除
+                        </el-text>
                       </div>
                     </div>
                   </div>
@@ -287,6 +311,12 @@ html[class="dark"]
             .action-switch
               font-size 12px
             .action-setting
+              font-size 12px
+              cursor pointer
+              &:hover
+                color var(--el-color-primary)
+            .action-del
+              color red
               font-size 12px
               cursor pointer
               &:hover

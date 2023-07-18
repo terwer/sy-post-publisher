@@ -489,6 +489,14 @@ export default {
   "setting.platform.wordpress": "WordPress",
   "setting.platform.wordpress.desc":
     "WordPress is a free and open source blog software and Content management system based on PHP and MySQL. WordPress has a plugin architecture and template system. As of April 2018, over 30.6% of the top 10 million websites used WordPress. WordPress is the most popular website Content management system. Approximately 40% of global websites (7500 million) are built using WordPress. WordPress is currently the most popular blog system on the Internet. WordPress stands out in the most famous stage of online publishing. Today, it is used on over 70 million sites.",
+  "setting.platform.github": "Github",
+  "setting.platform.github.desc":
+    "At present, the platforms that support Github release are: Hexo, Hugo, Jekyll, Vitepress, etc., using API authorization. GitHub is a platform and cloud-based service that uses Git for software development and version control, allowing developers to store and manage their code.",
+  "setting.platform.metaweblog": "Metaweblog",
+  "setting.platform.metaweblog.desc":
+    "At present, the platforms that support Metaweblog are: Blog Park, Typecho, etc., using API authorization. The MetaWeblog API is an application programming interface created by software developer Dave Winer that allows writing, editing, and deletion using Web services. The API is implemented as an XML-RPC Web service with three methods whose names describe its functionality: metaweblog.newPost(), metaweblog.getPost(), and metaweblog.editPost(). These methods take parameters that specify the username and password of the blogger and information related to a single blog entry.",
+  "setting.platform.custom": "Customization",
+  "setting.platform.custom.desc": "Customize the HTTP protocol, stay tuned",
   "setting.platform.right.tips0": "Special Notes:",
   "setting.platform.right.tips1":
     "1. You can publish the configuration here, and you can directly click the menu or the following icons to configure it.",
