@@ -52,7 +52,6 @@ const formData = reactive({
   setting: {} as typeof SypConfig,
 
   showPlatformList: false,
-  showBundledList: false,
   platformTypeList: [
     {
       type: PlatformType.Common,
@@ -74,19 +73,28 @@ const formData = reactive({
 // methods
 const handleShowPlatform = () => {
   formData.showPlatformList = true
-  formData.showBundledList = true
 }
 const handleHidePlatform = () => {
   formData.showPlatformList = false
-  formData.showBundledList = false
 }
 
 const handleAddPlatformStep = () => {
-  alert(111)
+  const type = PlatformType.Common
+  router.push({
+    path: `/setting/platform/quickadd/${type}`,
+    query: {
+      showBack: "true",
+    },
+  })
 }
 
 const handleSinglePlatformSetting = (key: string) => {
-  router.push({ path: `/setting/platform/single/${key}` })
+  router.push({
+    path: `/setting/platform/single/${key}`,
+    query: {
+      showBack: "true",
+    },
+  })
 }
 
 const initPage = async () => {
@@ -135,7 +143,7 @@ onMounted(async () => {
           </el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :span="formData.showBundledList ? 18 : 22" class="col-item">
+      <el-col :span="22" class="col-item">
         <div class="publish-setting-right-content">
           <div v-if="formData.showPlatformList">
             <el-row :gutter="20" class="row-item">
@@ -238,51 +246,6 @@ onMounted(async () => {
           </div>
         </div>
       </el-col>
-      <el-col v-if="formData.showBundledList" :span="4" class="col-item">
-        <el-scrollbar class="platform-define">
-          <div>
-            <el-text class="platform-title" type="primary"> 请点击图标快速新增预置的发布服务 </el-text>
-          </div>
-          <el-space direction="horizontal" class="platform-box">
-            <el-text class="define-item">
-              <el-icon>
-                <ElementPlus />
-              </el-icon>
-              知乎
-            </el-text>
-            <el-text class="define-item">
-              <el-icon>
-                <ElementPlus />
-              </el-icon>
-              CSDN
-            </el-text>
-            <el-text class="define-item">
-              <el-icon>
-                <ElementPlus />
-              </el-icon>
-              博客园
-            </el-text>
-            <el-text class="define-item">
-              <el-icon>
-                <ElementPlus />
-              </el-icon>
-              简书
-            </el-text>
-            <el-text class="define-item">
-              <el-icon>
-                <ElementPlus />
-              </el-icon>
-              Typecho
-            </el-text>
-            <el-text class="define-item">
-              <el-icon>
-                <ElementPlus />
-              </el-icon>
-              微信公众号
-            </el-text>
-          </el-space>
-        </el-scrollbar>
-      </el-col>
     </el-row>
   </div>
 </template>
@@ -375,16 +338,4 @@ html[class="dark"]
       line-height 18px
     .add-btn
       margin-top 12px
-
-.platform-define
-  text-align left
-  .platform-box
-    margin-top 10px
-    flex-wrap wrap
-    .define-item
-      cursor pointer
-      min-width 100px
-      padding-bottom 6px
-      &:hover
-        color var(--el-color-primary)
 </style>

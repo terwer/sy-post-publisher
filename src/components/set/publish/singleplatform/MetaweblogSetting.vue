@@ -25,7 +25,7 @@
 
 <template>
   <el-form label-width="120px">
-    <el-alert class="top-version-tip" :title="apiTypeInfo + blogName" type="info" :closable="false" />
+    <el-alert :title="apiTypeInfo + blogName" type="info" :closable="false" />
     <el-form-item :label="t('setting.blog.url')">
       <el-input v-model="home" :placeholder="props.cfg?.placeholder.homePlaceholder" />
     </el-form-item>
@@ -36,8 +36,8 @@
 
     <el-form-item :label="t('setting.blog.password')">
       <el-input
-        type="password"
         v-model="password"
+        type="password"
         show-password
         :placeholder="props.cfg?.placeholder.passwordPlaceholder"
       />
@@ -90,10 +90,6 @@ let setting
 const { getSetting, updateSetting, checkKeyExists, deleteKey } = useSettingStore()
 
 const props = defineProps({
-  isReload: {
-    type: Boolean,
-    default: false,
-  },
   apiType: {
     type: String,
     default: "",

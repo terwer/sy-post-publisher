@@ -28,7 +28,9 @@ import Home from "~/src/pages/Home.vue"
 import Setting from "~/src/pages/Setting.vue"
 import GeneralSetting from "~/src/components/set/GeneralSetting.vue"
 import PublishSetting from "~/src/components/set/PublishSetting.vue"
-import SinglePlatformSetting from "~/src/components/set/SinglePlatformSetting.vue"
+import SettingEntry from "~/src/components/set/publish/singleplatform/SettingEntry.vue"
+import PlatformAddForm from "~/src/components/set/publish/PlatformAddForm.vue"
+import PlatformQuickAdd from "~/src/components/set/publish/PlatformQuickAdd.vue"
 
 const ApiTest = () => import("~/src/pages/ApiTest.vue")
 const SiyuanTest = () => import("~/src/components/test/SiyuanTest.vue")
@@ -56,9 +58,17 @@ const routes: RouteRecordRaw[] = [
     component: PublishSetting,
   },
   {
+    path: "/setting/platform/quickadd/:type",
+    component: PlatformQuickAdd,
+  },
+  {
+    path: "/setting/platform/add/:type",
+    component: PlatformAddForm,
+  },
+  {
     name: "setting-platform-single",
     path: "/setting/platform/single/:key",
-    component: SinglePlatformSetting,
+    component: SettingEntry,
   },
   {
     path: "/setting/general",

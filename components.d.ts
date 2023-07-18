@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BackPage: typeof import('./src/components/common/BackPage.vue')['default']
     ChangeLocal: typeof import('./src/components/set/preference/ChangeLocal.vue')['default']
     CnblogsTest: typeof import('./src/components/test/CnblogsTest.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']
@@ -30,7 +31,6 @@ declare module '@vue/runtime-core' {
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElRow: typeof import('element-plus/es')['ElRow']
-    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSpace: typeof import('element-plus/es')['ElSpace']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
@@ -44,6 +44,7 @@ declare module '@vue/runtime-core' {
     KmsTest: typeof import('./src/components/test/kmsTest.vue')['default']
     MetaweblogSetting: typeof import('./src/components/set/publish/singleplatform/MetaweblogSetting.vue')['default']
     PlatformAddForm: typeof import('./src/components/set/publish/PlatformAddForm.vue')['default']
+    PlatformQuickAdd: typeof import('./src/components/set/publish/PlatformQuickAdd.vue')['default']
     PublishIndex: typeof import('./src/components/publish/PublishIndex.vue')['default']
     PublishPlatform: typeof import('./src/components/publish/form/PublishPlatform.vue')['default']
     PublishSetting: typeof import('./src/components/set/PublishSetting.vue')['default']
@@ -53,7 +54,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SetIndex: typeof import('./src/components/set/SetIndex.vue')['default']
-    SinglePlatformSetting: typeof import('./src/components/set/SinglePlatformSetting.vue')['default']
+    SettingEntry: typeof import('./src/components/set/publish/singleplatform/SettingEntry.vue')['default']
     SiyuanTest: typeof import('./src/components/test/SiyuanTest.vue')['default']
     TypechoTest: typeof import('./src/components/test/TypechoTest.vue')['default']
     VitepressTest: typeof import('./src/components/test/VitepressTest.vue')['default']
