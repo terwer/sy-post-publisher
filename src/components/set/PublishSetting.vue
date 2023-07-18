@@ -39,6 +39,7 @@ import {
 } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { useRouter } from "vue-router"
+import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
 
 const logger = createAppLogger("publish-setting")
 
@@ -46,26 +47,14 @@ const logger = createAppLogger("publish-setting")
 const { t } = useVueI18n()
 const router = useRouter()
 const { getSetting, updateSetting } = useSettingStore()
+const { platformTypeList } = usePlatformDefine()
 
 // datas
 const formData = reactive({
   setting: {} as typeof SypConfig,
 
   showPlatformList: false,
-  platformTypeList: [
-    {
-      type: PlatformType.Common,
-      title: t("setting.platform.universal"),
-      img: "./images/universal.webp",
-      description: t("setting.platform.universal.desc"),
-    },
-    {
-      type: PlatformType.Wordpress,
-      title: t("setting.platform.wordpress"),
-      img: "./images/wordpress-logo.svg",
-      description: t("setting.platform.wordpress.desc"),
-    },
-  ],
+  platformTypeList: platformTypeList,
 
   dynamicConfigArray: [] as DynamicConfig[],
 })
@@ -78,8 +67,7 @@ const handleHidePlatform = () => {
   formData.showPlatformList = false
 }
 
-const handleAddPlatformStep = () => {
-  const type = PlatformType.Common
+const handleAddPlatformStep = (type: PlatformType) => {
   router.push({
     path: `/setting/platform/quickadd/${type}`,
     query: {
@@ -104,13 +92,6 @@ const initPage = async () => {
   const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
   // 默认展示通用平台
   formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
-  // test start
-  for (let i = 0; i < 20; i++) {
-    var newCfg = dynJsonCfg.totalCfg[0]
-    newCfg.platformKey = newCfg.platformKey + i
-    formData.dynamicConfigArray.push(newCfg)
-  }
-  // test end
   logger.debug("dynamic init page=>", formData.dynamicConfigArray)
 }
 
@@ -152,7 +133,7 @@ onMounted(async () => {
                 :key="p.type"
                 :span="24"
                 class="col-item"
-                @click="handleAddPlatformStep"
+                @click="handleAddPlatformStep(p.type)"
               >
                 <el-card class="platform-right-card">
                   <img :src="p.img" class="image" alt="" />

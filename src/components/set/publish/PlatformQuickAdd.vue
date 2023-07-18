@@ -41,7 +41,7 @@ const params = reactive(route.params)
 
 // methods
 const handleAddPlatform = () => {
-  const type = PlatformType.Common
+  const type = params.type
   router.push({
     path: `/setting/platform/add/${type}`,
     query: {

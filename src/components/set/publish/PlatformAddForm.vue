@@ -47,16 +47,13 @@ const { query } = useRoute()
 
 // datas
 const params = reactive(route.params)
+const ptype = params.type as PlatformType
 
 const formRef = ref()
 const formData = reactive({
-  ptype: PlatformType.Common,
-  subtype: SubPlatformType.Common_Zhihu,
-  dynCfg: new DynamicConfig(
-    PlatformType.Common,
-    getNewPlatformKey(PlatformType.Common, SubPlatformType.Common_Zhihu),
-    "Zhihu-1"
-  ),
+  ptype: ptype,
+  subtype: SubPlatformType.NONE,
+  dynCfg: new DynamicConfig(ptype, getNewPlatformKey(ptype, SubPlatformType.NONE), "None-1"),
   subtypeOptions: [],
   authMode: AuthMode.API,
   isEnabled: false,
