@@ -26,6 +26,8 @@ dist-ssr
 # Scripts
 venv
 __pycache__
+cookie.txt
+token.txt
 
 # ext
 extension
