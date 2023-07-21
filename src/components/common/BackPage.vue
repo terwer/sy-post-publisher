@@ -48,8 +48,6 @@ const props = defineProps({
 // datas
 const params = reactive(route.params)
 const showBack = ref(query.showBack === "true")
-console.log(params)
-console.log(showBack.value)
 
 const onBack = () => {
   router.back()
@@ -73,4 +71,7 @@ const onBack = () => {
   </div>
 </template>
 
-<style scoped lang="stylus"></style>
+<style scoped lang="stylus">
+#page-body
+  margin 10px 20px
+</style>

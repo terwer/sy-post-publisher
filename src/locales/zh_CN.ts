@@ -473,7 +473,7 @@ export default {
   "setting.platform.add.this": "新增此平台",
   "setting.platform.universal": "通用平台",
   "setting.platform.universal.desc":
-    "目前支持的通用平台有：知乎、语雀、CSDN、简书等，需要使用网页授权，完全兼容 WeChatSync 。",
+    "目前支持的通用平台有：知乎、语雀、CSDN、简书等，部分平台（例如语雀）需要使用API授权，其他平台使用网页授权，网页授权模式完全兼容 WeChatSync 。",
   "setting.platform.wordpress": "WordPress",
   "setting.platform.wordpress.desc":
     "Wordpress 通过Xmlrpc API支持，采用 API 授权。WordPress是一个以PHP和MySQL为平台的自由开源的博客软件和内容管理系统。它具有插件架构和模板系统，同时也是最受欢迎的网站内容管理系统。点击右侧图标快速添加，或者点击下方按钮自定义添加",

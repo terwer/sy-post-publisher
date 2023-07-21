@@ -25,19 +25,26 @@
 
 <script setup lang="ts">
 import { ElementPlus } from "@element-plus/icons-vue"
-import { PlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import { DynamicConfig, PlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { useRoute, useRouter } from "vue-router"
 import BackPage from "~/src/components/common/BackPage.vue"
 import { reactive } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
+import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
 
 // uses
 const { t } = useVueI18n()
 const router = useRouter()
 const route = useRoute()
+const { getPlatformType, getPrePlatformList } = usePlatformDefine()
 
 // datas
 const params = reactive(route.params)
+
+const formData = reactive({
+  ptype: {} as any,
+  pre: <DynamicConfig[]>[],
+})
 
 // methods
 const handleAddPlatform = () => {
@@ -49,14 +56,26 @@ const handleAddPlatform = () => {
     },
   })
 }
+
+const initPage = () => {
+  const type = params.type as PlatformType
+  formData.ptype = getPlatformType(type)
+  formData.pre = getPrePlatformList(type)
+
+  console.log("formDta=>", formData)
+}
+initPage()
 </script>
 
 <template>
   <back-page :title="'新增平台 - ' + params.type">
     <el-card class="platform-add-card">
-      <div class="platform-title">通用平台</div>
+      <div class="platform-title">{{ formData.ptype.title }}</div>
       <div class="platform-desc">
-        目前支持的通用平台有：知乎、语雀、csdn等，点击图标快速添加，或者点击下方按钮自定义添加
+        <p>{{ formData.ptype.description }}</p>
+        <p>
+          <el-alert class="desc-tip" type="warning" title="点击图标快速添加，或者点击下方按钮自定义添加"></el-alert>
+        </p>
       </div>
       <div class="icon-list">
         <el-space direction="horizontal" class="platform-box">
@@ -99,10 +118,45 @@ const handleAddPlatform = () => {
         </el-space>
       </div>
       <div class="add-action">
-        <el-button type="primary" size="small" @click="handleAddPlatform">添加自定义通用平台对接</el-button>
+        <el-button type="primary" size="large" @click="handleAddPlatform">添加自定义通用平台对接</el-button>
       </div>
     </el-card>
   </back-page>
 </template>
 
-<style scoped lang="stylus"></style>
+<style scoped lang="stylus">
+.platform-add-card
+  margin-top 16px
+  height 100%
+  .platform-title
+    font-size 24px
+    font-weight 600
+    margin-bottom 12px
+  .platform-desc
+    font-size 14px
+    margin-bottom 12px
+    min-height 60px
+    .desc-tip
+      padding-left 0
+  .icon-list
+    text-align center
+    margin 10px 0
+    margin-bottom 24px
+    min-height 180px
+    gap 10px
+    .define-item
+      color var(--el-color-primary)
+      cursor pointer
+      font-size 32px
+      padding 10px
+      &:hover
+        color var(--el-color-primary-light-3)
+      :deep(.el-icon)
+        width 32px
+        height 32px
+      :deep(.el-icon svg)
+        width 32px
+        height 32px
+  .add-action
+    text-align center
+</style>

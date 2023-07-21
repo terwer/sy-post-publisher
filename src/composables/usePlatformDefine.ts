@@ -79,8 +79,7 @@ export const usePlatformDefine = () => {
   /**
    * 根据键获取平台类型
    *
-   * @param {string} key - 平台类型的键
-   * @returns {Object} - 平台类型对象
+   * @param key - 平台类型的键
    */
   const getPlatformType = (key) => {
     return platformTypeList.find((platformType) => platformType.type === key)
@@ -88,16 +87,22 @@ export const usePlatformDefine = () => {
 
   /**
    * 根据类型获取预定义平台
-   *
-   * @returns {Object} - 预定义平台对象
    */
-  const getPrePlatform = (key: string) => {
+  const getPrePlatformList = (type: PlatformType): DynamicConfig[] => {
+    return prePlatformList.filter((platform) => platform.platformType === type)
+  }
+
+  /**
+   * 根据类型获取预定义平台
+   */
+  const getPrePlatform = (key: string): DynamicConfig => {
     return prePlatformList.find((platform) => platform.platformKey === key)
   }
 
   return {
     platformTypeList,
     getPlatformType,
+    getPrePlatformList,
     getPrePlatform,
   }
 }
