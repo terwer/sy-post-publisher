@@ -20,6 +20,7 @@ module.exports = {
     semi: "off",
     quotes: "off",
     "no-undef": "off",
+    "vue/no-v-htm": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-var-requires": "off",

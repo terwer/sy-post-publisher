@@ -61,7 +61,7 @@ export class DynamicConfig {
   platformName: string
 
   /**
-   * 平台图标
+   * 平台图标(svg代码)
    *
    * @since 0.9.0+
    */
@@ -87,13 +87,22 @@ export class DynamicConfig {
    */
   yamlConverter?: YamlConvertAdaptor
 
-  constructor(platformType: PlatformType, platformKey: string, platformName: string) {
+  constructor(
+    platformType: PlatformType,
+    platformKey: string,
+    platformName: string,
+    subPlatformType?: SubPlatformType,
+    platformIcon?: string
+  ) {
     this.platformType = platformType
     this.platformKey = platformKey
     this.platformName = platformName
     this.isAuth = false
     this.isEnabled = false
     this.authMode = AuthMode.API
+
+    this.subPlatformType = subPlatformType
+    this.platformIcon = platformIcon
   }
 }
 
@@ -146,8 +155,6 @@ export enum SubPlatformType {
   Github_Hugo = "Hugo",
   Github_Hexo = "Hexo",
   Github_Jekyll = "Jekyll",
-  // Github_giteePages = "giteePages",
-  // Github_codingPages = "codingPages",
   Github_Vuepress = "Vuepress",
   Github_Vitepress = "Vitepress",
   Github_Nuxt = "Nuxt",
@@ -159,6 +166,7 @@ export enum SubPlatformType {
   Common_Yuque = "Yuque",
 
   // Metaweblog
+  Metaweblog_Cnblogs = "Cnblogs",
   Metaweblog_Typecho = "Typecho",
 
   NONE = "none",

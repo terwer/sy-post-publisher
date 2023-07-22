@@ -1,44 +1,69 @@
+import { DynamicConfig, PlatformType, SubPlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import { svgIcons } from "~/src/utils/svgIcons.ts"
+
 export const pre = {
-  commonCfg: [],
-  githubCfg: [
+  commonCfg: <DynamicConfig[]>[
     {
-      platformType: "Github",
-      subPlatformType: "Github_Hugo",
-      platformKey: "githubHugo-zdlc6l",
-      platformName: "Docsy",
+      platformType: PlatformType.Common,
+      subPlatformType: SubPlatformType.Common_Zhihu,
+      platformKey: "commonZhihu-1u5c1v",
+      platformName: "知乎",
+      platformIcon: svgIcons.iconIFZhihu,
+    },
+  ],
+  githubCfg: <DynamicConfig[]>[
+    {
+      platformType: PlatformType.Github,
+      subPlatformType: SubPlatformType.Github_Hexo,
+      platformKey: "githubHexo",
+      platformName: "Hexo",
+      platformIcon: svgIcons.iconIFHexo,
     },
     {
-      platformType: "Github",
-      subPlatformType: "Github_Vitepress",
+      platformType: PlatformType.Github,
+      subPlatformType: SubPlatformType.Github_Hugo,
+      platformKey: "githubHugo-zdlc6l",
+      platformName: "Hugo",
+      platformIcon: svgIcons.iconIFHugo,
+    },
+    {
+      platformType: PlatformType.Github,
+      subPlatformType: SubPlatformType.Github_Vitepress,
       platformKey: "githubVitepress-mhxj3",
       platformName: "Vitepress",
+      platformIcon: svgIcons.iconIFVue,
     },
     {
-      platformType: "Github",
-      subPlatformType: "Github_Nuxt",
+      platformType: PlatformType.Github,
+      subPlatformType: SubPlatformType.Github_Nuxt,
       platformKey: "githubNuxt-z1xcb7x",
       platformName: "Nuxt content",
-    },
-    {
-      platformType: "Github",
-      subPlatformType: "Github_Next",
-      platformKey: "githubNext-ziz9v8",
-      platformName: "Nextra",
+      platformIcon: svgIcons.iconIFNuxt,
     },
   ],
-  metaweblogCfg: [
+  metaweblogCfg: <DynamicConfig[]>[
     {
-      platformType: "Metaweblog",
-      subPlatformType: "none",
-      platformKey: "metaweblog-zahrlw",
-      platformName: "开源中国",
+      platformType: PlatformType.Metaweblog,
+      subPlatformType: SubPlatformType.Metaweblog_Cnblogs,
+      platformKey: "Cnblogs",
+      platformName: "Cnblogs",
+      platformIcon: svgIcons.iconIFCnblogs
     },
     {
-      platformType: "Metaweblog",
-      subPlatformType: "none",
+      platformType: PlatformType.Metaweblog,
+      subPlatformType: SubPlatformType.Metaweblog_Typecho,
       platformKey: "metaweblog-22pamt",
       platformName: "Typecho",
+      platformIcon: svgIcons.iconIFTypecho
     },
   ],
-  wordpressCfg: [],
+  wordpressCfg: <DynamicConfig[]>[
+    {
+      platformType: PlatformType.Wordpress,
+      subPlatformType: SubPlatformType.NONE,
+      platformKey: "Wordpress",
+      platformName: "Wordpress",
+      platformIcon: svgIcons.iconIFWordpress,
+    },
+  ],
 }

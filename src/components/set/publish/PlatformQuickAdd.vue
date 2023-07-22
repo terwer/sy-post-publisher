@@ -31,6 +31,7 @@ import BackPage from "~/src/components/common/BackPage.vue"
 import { reactive } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
+import { svgIcons } from "../../../utils/svgIcons.ts"
 
 // uses
 const { t } = useVueI18n()
@@ -79,41 +80,11 @@ initPage()
       </div>
       <div class="icon-list">
         <el-space direction="horizontal" class="platform-box">
-          <el-text class="define-item">
-            <el-icon>
-              <ElementPlus />
-            </el-icon>
-            知乎
-          </el-text>
-          <el-text class="define-item">
-            <el-icon>
-              <ElementPlus />
-            </el-icon>
-            CSDN
-          </el-text>
-          <el-text class="define-item">
-            <el-icon>
-              <ElementPlus />
-            </el-icon>
-            博客园
-          </el-text>
-          <el-text class="define-item">
-            <el-icon>
-              <ElementPlus />
-            </el-icon>
-            简书
-          </el-text>
-          <el-text class="define-item">
-            <el-icon>
-              <ElementPlus />
-            </el-icon>
-            Typecho
-          </el-text>
-          <el-text class="define-item">
-            <el-icon>
-              <ElementPlus />
-            </el-icon>
-            微信公众号
+          <el-text class="define-item" v-for="preItem in formData.pre">
+            <i class="el-icon">
+              <span v-html="preItem?.platformIcon"></span>
+            </i>
+            {{ preItem.platformName }}
           </el-text>
         </el-space>
       </div>
@@ -125,6 +96,7 @@ initPage()
 </template>
 
 <style scoped lang="stylus">
+$icon_size = 32px
 .platform-add-card
   margin-top 16px
   height 100%
@@ -146,17 +118,21 @@ initPage()
     gap 10px
     .define-item
       color var(--el-color-primary)
+      //color var(--el-button-bg-color)
       cursor pointer
-      font-size 32px
+      font-size $icon_size
       padding 10px
       &:hover
         color var(--el-color-primary-light-3)
       :deep(.el-icon)
-        width 32px
-        height 32px
+        //color var(--el-color-primary)
+        width $icon_size
+        height $icon_size
+        margin-right -4px
+        vertical-align middle
       :deep(.el-icon svg)
-        width 32px
-        height 32px
+        width $icon_size
+        height $icon_size
   .add-action
     text-align center
 </style>

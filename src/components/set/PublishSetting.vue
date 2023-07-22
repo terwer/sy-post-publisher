@@ -41,6 +41,7 @@ import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { useRouter } from "vue-router"
 import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
 import { ElMessage, ElMessageBox } from "element-plus"
+import { svgIcons } from "~/src/utils/svgIcons.ts"
 
 const logger = createAppLogger("publish-setting")
 
@@ -104,6 +105,10 @@ const handleSinglePlatformDelete = (cfg: DynamicConfig) => {
       })
     })
     .catch(() => {})
+}
+
+const handleChangeName = (cfg: DynamicConfig) => {
+  alert("修改平台名称")
 }
 
 const initPage = async () => {
@@ -190,6 +195,9 @@ onMounted(async () => {
                           :type="platform.isAuth ? 'success' : 'warning'"
                         >
                           <span>{{ platform.platformName }}</span>
+                          <span class="name-edit" @click="handleChangeName(platform)">
+                            <el-icon> <span v-html="svgIcons.iconIFEdit"></span> </el-icon>
+                          </span>
                           <el-text
                             :type="platform.authMode === AuthMode.API ? 'primary' : 'info'"
                             class="auth-mode-text"
@@ -305,6 +313,10 @@ html[class="dark"]
             .auth-mode-text
               font-size 12px
               margin-left 16px
+          .name-edit
+            color var(--el-color-primary)
+            margin-left 4px
+            cursor pointer
           .actions
             .action-btn
               margin-right 10px
