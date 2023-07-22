@@ -27,7 +27,7 @@
 
 <template>
   <div class="publish-tips">
-    <el-alert :closable="false" title="多平台文章分发" class="top-version-tip" type="info" />
+    <el-alert :closable="false" title="多平台文章分发" class="top-tip" type="info" />
   </div>
 </template>
 

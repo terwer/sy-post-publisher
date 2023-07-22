@@ -48,22 +48,24 @@ const formData = reactive({
 })
 
 // methods
-const handleAddPlatform = () => {
+const handleAddPlatform = (cfg?: DynamicConfig) => {
   const type = params.type
-  router.push({
+  const query = {
     path: `/setting/platform/add/${type}`,
     query: {
       showBack: "true",
+      key: cfg?.platformKey,
+      sub: cfg?.subPlatformType,
     },
-  })
+  }
+
+  router.push(query)
 }
 
 const initPage = () => {
   const type = params.type as PlatformType
   formData.ptype = getPlatformType(type)
   formData.pre = getPrePlatformList(type)
-
-  console.log("formDta=>", formData)
 }
 initPage()
 </script>
@@ -80,7 +82,7 @@ initPage()
       </div>
       <div class="icon-list">
         <el-space direction="horizontal" class="platform-box">
-          <el-text class="define-item" v-for="preItem in formData.pre">
+          <el-text class="define-item" v-for="preItem in formData.pre" @click="handleAddPlatform(preItem)">
             <i class="el-icon">
               <span v-html="preItem?.platformIcon"></span>
             </i>
@@ -89,7 +91,9 @@ initPage()
         </el-space>
       </div>
       <div class="add-action">
-        <el-button type="primary" size="large" @click="handleAddPlatform">添加自定义通用平台对接</el-button>
+        <el-button type="primary" size="large" @click="handleAddPlatform">
+          添加自定义 {{ formData.ptype.title }} 对接
+        </el-button>
       </div>
     </el-card>
   </back-page>

@@ -28,14 +28,26 @@ import { reactive, ref } from "vue"
 import {
   AuthMode,
   DynamicConfig,
+  DynamicJsonCfg,
+  getDynSwitchKey,
   getNewPlatformKey,
+  getSubtypeList,
+  isDynamicKeyExists,
   PlatformType,
+  setDynamicJsonCfg,
   SubPlatformType,
 } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useRoute, useRouter } from "vue-router"
 import BackPage from "~/src/components/common/BackPage.vue"
+import { svgIcons } from "~/src/utils/svgIcons.ts"
+import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
+import { JsonUtil } from "zhi-common"
+import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
+import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { ElMessage, FormRules } from "element-plus"
+import { SypConfig } from "~/syp.config.ts"
 
 const logger = createAppLogger("platform-add-form")
 
@@ -44,6 +56,8 @@ const { t } = useVueI18n()
 const router = useRouter()
 const route = useRoute()
 const { query } = useRoute()
+const { getPrePlatform } = usePlatformDefine()
+const { getSetting, updateSetting, checkKeyExists } = useSettingStore()
 
 // datas
 const params = reactive(route.params)
@@ -51,18 +65,47 @@ const ptype = params.type as PlatformType
 
 const formRef = ref()
 const formData = reactive({
+  setting: {} as typeof SypConfig,
+
   ptype: ptype,
-  subtype: SubPlatformType.NONE,
-  dynCfg: new DynamicConfig(ptype, getNewPlatformKey(ptype, SubPlatformType.NONE), "None-1"),
+  subtype: undefined,
   subtypeOptions: [],
-  authMode: AuthMode.API,
-  isEnabled: false,
+  dynCfg: new DynamicConfig(ptype, getNewPlatformKey(ptype, undefined), "None-1"),
+
+  dynamicConfigArray: [] as DynamicConfig[],
+})
+const formValidateRules = reactive<FormRules>({
+  platformName: [
+    {
+      required: true,
+      message: () => t("form.validate.name.required"),
+    },
+  ],
+  authMode: [
+    {
+      required: true,
+      message: () => t("form.validate.name.required"),
+    },
+  ],
 })
 
-const handleSubPlatformTypeChange = () => {}
-
 const validateForm = (formEl) => {
-  return false
+  if (!formData.subtype) {
+    ElMessage.error("请选择子平台类型")
+    return false
+  }
+
+  // 平台key必须唯一
+  const pkey = formData.dynCfg.platformKey
+  // 保证开关变量key不重复
+  const switchKey = "switch-" + pkey
+  const postidKey = "custom-" + pkey + "-post-id"
+  // 保证文章绑定id的key不重复
+  if (checkKeyExists(pkey) || checkKeyExists(switchKey) || checkKeyExists(postidKey)) {
+    ElMessage.error(t("dynamic.platform.opt.key.exist"))
+    return false
+  }
+  return true
 }
 const submitForm = async (formEl) => {
   if (!formEl) return
@@ -81,33 +124,107 @@ const submitForm = async (formEl) => {
   if (!result) {
     return
   }
+
+  const newCfg = formData.dynCfg
+  formData.dynamicConfigArray.push(newCfg)
+
+  // 转换格式并保存
+  const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
+  formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+  const switchKey = getDynSwitchKey(newCfg.platformKey)
+  // 默认启用禁用
+  formData.setting[switchKey] = String(newCfg.isEnabled)
+  // 初始化一个空配置
+  formData.setting[newCfg.platformKey] = "{}"
+  await updateSetting(formData.setting)
+
+  // 重新加载列表
+  ElMessage.success(t("main.opt.success"))
+  // 返回
+  await router.push({
+    path: `/setting/publish`,
+  })
 }
+
+const handleSubPlatformTypeChange = async () => {
+  await initForm(formData.ptype, formData.subtype)
+}
+
+const initForm = async (ptype: PlatformType, subtype: SubPlatformType) => {
+  const pkey = query.key as string
+
+  formData.setting = await getSetting()
+  const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
+  formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
+
+  if (pkey && subtype) {
+    formData.subtype = subtype
+
+    // 如果pkey对应的配置存在，初始化新的
+    const pkeyExist = isDynamicKeyExists(formData.dynamicConfigArray, pkey)
+    if (pkeyExist) {
+      const newKey = getNewPlatformKey(ptype, subtype)
+      formData.dynCfg = new DynamicConfig(ptype, newKey, newKey, subtype, svgIcons.iconEPPlus)
+      logger.debug("pkey already exists, initialize the new one")
+    } else {
+      // 否则查询
+      formData.dynCfg = getPrePlatform(pkey)
+      logger.debug("Initialized via pkey")
+    }
+  } else if (subtype) {
+    // 子类型初始化
+    formData.subtype = subtype
+    const newKey = getNewPlatformKey(ptype, subtype)
+    formData.dynCfg = new DynamicConfig(ptype, newKey, newKey, subtype, svgIcons.iconEPPlus)
+    logger.debug("Initialized by subtype")
+  } else {
+    // 需要选择子类型
+    formData.subtypeOptions = getSubtypeList(ptype)
+    const newKey = getNewPlatformKey(ptype, subtype)
+    formData.dynCfg = new DynamicConfig(ptype, newKey, newKey, subtype, svgIcons.iconEPPlus)
+    logger.debug("Initialize by selecting a subtype")
+  }
+}
+
+const initPage = async () => {
+  const ptype = params.type as PlatformType
+  const subtype = query.sub as SubPlatformType
+
+  await initForm(ptype, subtype)
+}
+
+initPage()
 </script>
 
 <template>
-  <back-page :title="'新增自定义平台 - ' + params.type">
-    <el-form ref="formRef" label-width="165px" :model="formData.dynCfg">
-      <el-alert :title="'当前平台类型为 ' + params.type" type="info" :closable="false" />
+  <back-page :title="'新增自定义平台 - ' + ptype">
+    <el-form ref="formRef" label-width="100px" :model="formData.dynCfg" :rules="formValidateRules">
+      <el-alert class="top-tip" :title="'当前平台类型为=>' + ptype" type="warning" :closable="false" />
       <!-- 子平台名称 -->
-      <el-form-item v-if="formData.subtypeOptions.length > 0">
-        <el-select v-model="formData.subtype" class="m-2" placeholder="Select" @change="handleSubPlatformTypeChange">
+      <el-form-item v-if="formData.subtypeOptions.length > 0" label="子平台类型">
+        <el-select v-model="formData.subtype" class="m-2" placeholder="请选择" @change="handleSubPlatformTypeChange">
           <el-option v-for="item in formData.subtypeOptions" :key="item" :label="item" :value="item" />
         </el-select>
       </el-form-item>
+      <el-alert v-else class="top-tip" :title="'子平台类型为=>' + formData.subtype" type="warning" :closable="false" />
       <!-- 平台key -->
-      <el-form-item v-if="false" :label="formData.ptype + t('dynamic.platform.key')" prop="platformKey">
+      <el-form-item :label="t('dynamic.platform.key')" prop="platformKey">
         {{ formData.dynCfg.platformKey }}
       </el-form-item>
+      <!-- 是否启用 -->
+      <el-form-item label="平台名称" prop="platformName">
+        <el-input v-model="formData.dynCfg.platformName" />
+      </el-form-item>
       <!-- 授权方式 -->
-      <el-form-item label="授权方式">
-        <el-select v-model="formData.authMode">
+      <el-form-item label="授权方式" prop="authMode">
+        <el-select v-model="formData.dynCfg.authMode" placeholder="请选择">
           <el-option :value="AuthMode.API" label="API授权" />
           <el-option :value="AuthMode.WEBSITE" label="网页授权" />
         </el-select>
       </el-form-item>
       <!-- 是否启用 -->
       <el-form-item label="是否启用">
-        <el-switch v-model="formData.isEnabled" />
+        <el-switch v-model="formData.dynCfg.isEnabled" />
       </el-form-item>
 
       <el-form-item>
@@ -117,4 +234,8 @@ const submitForm = async (formEl) => {
   </back-page>
 </template>
 
-<style scoped lang="stylus"></style>
+<style scoped lang="stylus">
+.top-tip
+  margin 10px 0
+  padding-left 0
+</style>

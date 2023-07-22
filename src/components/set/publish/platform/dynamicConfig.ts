@@ -29,16 +29,6 @@ import { StrUtil } from "zhi-common"
 
 export class DynamicConfig {
   /**
-   * 用于文章绑定的临时变量
-   */
-  posid?: any
-
-  /**
-   * 用于平台开关的临时变量
-   */
-  modelValue?: any
-
-  /**
    * 动态平台类型(通用类型)
    */
   platformType: PlatformType
@@ -92,7 +82,8 @@ export class DynamicConfig {
     platformKey: string,
     platformName: string,
     subPlatformType?: SubPlatformType,
-    platformIcon?: string
+    platformIcon?: string,
+    yamlConverter?: YamlConvertAdaptor
   ) {
     this.platformType = platformType
     this.platformKey = platformKey
@@ -103,6 +94,7 @@ export class DynamicConfig {
 
     this.subPlatformType = subPlatformType
     this.platformIcon = platformIcon
+    this.yamlConverter = yamlConverter
   }
 }
 
@@ -151,6 +143,11 @@ export enum PlatformType {
  * @author terwer
  */
 export enum SubPlatformType {
+  // Common
+  Common_Zhihu = "Zhihu",
+  Common_CSDN = "CSDN",
+  Common_Yuque = "Yuque",
+
   // Github 子平台
   Github_Hugo = "Hugo",
   Github_Hexo = "Hexo",
@@ -160,14 +157,15 @@ export enum SubPlatformType {
   Github_Nuxt = "Nuxt",
   Github_Next = "Next",
 
-  // Common
-  Common_Zhihu = "Zhihu",
-  Common_CSDN = "CSDN",
-  Common_Yuque = "Yuque",
-
   // Metaweblog
   Metaweblog_Cnblogs = "Cnblogs",
   Metaweblog_Typecho = "Typecho",
+
+  // WordPress
+  Wordpress_Wordpress = "Wordpress",
+
+  // Custom
+  Custom_Custom = "Custom",
 
   NONE = "none",
 }
@@ -177,9 +175,11 @@ export enum SubPlatformType {
  */
 export interface DynamicJsonCfg {
   totalCfg: DynamicConfig[]
+  commonCfg: DynamicConfig[]
   githubCfg: DynamicConfig[]
   metaweblogCfg: DynamicConfig[]
   wordpressCfg: DynamicConfig[]
+  customCfg: DynamicConfig[]
 }
 
 /**
@@ -189,24 +189,29 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
   const subtypeList: SubPlatformType[] = []
 
   switch (ptype) {
-    case PlatformType.Github:
-      subtypeList.push(SubPlatformType.Github_Hugo)
-      subtypeList.push(SubPlatformType.Github_Hexo)
-      subtypeList.push(SubPlatformType.Github_Jekyll)
-      // subtypeList.push(SubPlatformType.Github_giteePages)
-      // subtypeList.push(SubPlatformType.Github_codingPages)
-      subtypeList.push(SubPlatformType.Github_Vuepress)
-      subtypeList.push(SubPlatformType.Github_Vitepress)
-      subtypeList.push(SubPlatformType.Github_Nuxt)
-      subtypeList.push(SubPlatformType.Github_Next)
-      break
     case PlatformType.Common:
       subtypeList.push(SubPlatformType.Common_Zhihu)
       subtypeList.push(SubPlatformType.Common_CSDN)
       subtypeList.push(SubPlatformType.Common_Yuque)
       break
+    case PlatformType.Github:
+      subtypeList.push(SubPlatformType.Github_Hexo)
+      subtypeList.push(SubPlatformType.Github_Hugo)
+      subtypeList.push(SubPlatformType.Github_Jekyll)
+      subtypeList.push(SubPlatformType.Github_Vuepress)
+      subtypeList.push(SubPlatformType.Github_Vitepress)
+      subtypeList.push(SubPlatformType.Github_Nuxt)
+      subtypeList.push(SubPlatformType.Github_Next)
+      break
     case PlatformType.Metaweblog:
+      subtypeList.push(SubPlatformType.Metaweblog_Cnblogs)
       subtypeList.push(SubPlatformType.Metaweblog_Typecho)
+      break
+    case PlatformType.Wordpress:
+      subtypeList.push(SubPlatformType.Wordpress_Wordpress)
+      break
+    case PlatformType.Custom:
+      subtypeList.push(SubPlatformType.Custom_Custom)
       break
     default:
       break
@@ -222,13 +227,18 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
  */
 export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJsonCfg {
   const totalCfg: DynamicConfig[] = dynamicConfigArray
+  const commonCfg: DynamicConfig[] = []
   const githubCfg: DynamicConfig[] = []
   const metaweblogCfg: DynamicConfig[] = []
   const wordpressCfg: DynamicConfig[] = []
+  const customCfg: DynamicConfig[] = []
 
   // 按照类型组装便于后面数据使用
   totalCfg.forEach((item) => {
     switch (item.platformType) {
+      case PlatformType.Common:
+        commonCfg.push(item)
+        break
       case PlatformType.Github:
         githubCfg.push(item)
         break
@@ -238,6 +248,9 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
       case PlatformType.Wordpress:
         wordpressCfg.push(item)
         break
+      case PlatformType.Custom:
+        customCfg.push(item)
+        break
       default:
         break
     }
@@ -245,9 +258,11 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
 
   const dynamicJsonCfg: DynamicJsonCfg = {
     totalCfg,
+    commonCfg,
     githubCfg,
     metaweblogCfg,
     wordpressCfg,
+    customCfg
   }
 
   return dynamicJsonCfg
@@ -287,25 +302,6 @@ export function isDynamicKeyExists(dynamicConfigArray: DynamicConfig[], key: str
     }
   }
   return flag
-}
-
-/**
- * 生成默认的平台名
- * @param ptype 平台
- * @param subtype 子平台
- * @param isShowSubtype 是否显示子平台
- */
-export function getDefaultPlatformName(ptype: PlatformType, subtype: SubPlatformType, isShowSubtype: boolean): string {
-  if (PlatformType.Github === ptype && SubPlatformType.NONE === subtype) {
-    return ""
-  }
-
-  let pname: string = ptype
-  if (isShowSubtype) {
-    pname = subtype
-  }
-  pname = pname + "-1"
-  return pname
 }
 
 // =====================

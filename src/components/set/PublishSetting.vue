@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { markRaw, onMounted, reactive } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { Tools, Delete } from "@element-plus/icons-vue"
+import { Delete, Tools } from "@element-plus/icons-vue"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { SypConfig } from "~/syp.config.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
@@ -55,7 +55,7 @@ const { platformTypeList } = usePlatformDefine()
 const formData = reactive({
   setting: {} as typeof SypConfig,
 
-  showPlatformList: false,
+  showAdd: false,
   platformTypeList: platformTypeList,
 
   dynamicConfigArray: [] as DynamicConfig[],
@@ -63,10 +63,10 @@ const formData = reactive({
 
 // methods
 const handleShowPlatform = () => {
-  formData.showPlatformList = true
+  formData.showAdd = true
 }
 const handleHidePlatform = () => {
-  formData.showPlatformList = false
+  formData.showAdd = false
 }
 
 const handleAddPlatformStep = (type: PlatformType) => {
@@ -133,7 +133,7 @@ onMounted(async () => {
       <el-col :span="2" class="col-item">
         <el-menu class="publish-setting-left-menu">
           <el-menu-item
-            :class="formData.showPlatformList ? 'left-menu-item' : 'left-menu-item menu-item-selected'"
+            :class="formData.showAdd ? 'left-menu-item' : 'left-menu-item menu-item-selected'"
             @click="handleHidePlatform"
           >
             <template #title>
@@ -141,7 +141,7 @@ onMounted(async () => {
             </template>
           </el-menu-item>
           <el-menu-item
-            :class="!formData.showPlatformList ? 'left-menu-item' : 'left-menu-item menu-item-selected'"
+            :class="!formData.showAdd ? 'left-menu-item' : 'left-menu-item menu-item-selected'"
             @click="handleShowPlatform"
           >
             <template #title>
@@ -152,7 +152,7 @@ onMounted(async () => {
       </el-col>
       <el-col :span="22" class="col-item">
         <div class="publish-setting-right-content">
-          <div v-if="formData.showPlatformList">
+          <div v-if="formData.showAdd">
             <el-row :gutter="20" class="row-item">
               <el-col
                 v-for="p in formData.platformTypeList"
@@ -176,6 +176,9 @@ onMounted(async () => {
               </el-col>
             </el-row>
           </div>
+          <div v-else-if="formData.dynamicConfigArray.length === 0">
+            <el-alert class="no-tip" type="error" :title="t('platform.must.select.one')"></el-alert>
+          </div>
           <div v-else>
             <div class="publish-right-setting">
               <el-row :gutter="20" class="platform-list">
@@ -186,7 +189,9 @@ onMounted(async () => {
                   class="platform-item-box"
                 >
                   <div class="platform-item">
-                    <img src="/images/wordpress-logo.svg" height="45" alt="WordPress" />
+                    <el-icon class="item-left-icon">
+                      <span class="item-icon" v-html="platform.platformIcon"></span>
+                    </el-icon>
                     <div class="item-right">
                       <div class="text">
                         <el-badge
@@ -216,12 +221,17 @@ onMounted(async () => {
                           inactive-text="未启用"
                         ></el-switch>
                         <el-text
+                          v-if="platform.isEnabled && platform.authMode === AuthMode.API"
                           class="action-btn action-setting"
                           @click="handleSinglePlatformSetting(platform.platformKey)"
                         >
                           <el-icon> <Tools /> </el-icon>设置
                         </el-text>
-                        <el-text class="action-btn action-del" @click="handleSinglePlatformDelete(platform)">
+                        <el-text
+                          v-if="!platform.isEnabled"
+                          class="action-btn action-del"
+                          @click="handleSinglePlatformDelete(platform)"
+                        >
                           <el-icon> <Delete /> </el-icon>删除
                         </el-text>
                       </div>
@@ -264,6 +274,8 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="stylus">
+$icon_size = 32px
+
 .publish-setting-body
   margin-left 10px
   margin-top 10px
@@ -289,6 +301,10 @@ html[class="dark"]
   .tips-form
     font-size 12px
     margin-top 14px
+  .no-tip
+    margin 0 10px
+    padding-left 0
+    width calc(100% - 30px)
 
 .publish-right-setting
   .platform-list
@@ -299,9 +315,15 @@ html[class="dark"]
       margin-bottom 28px
       text-align left
       .platform-item
-        img
-          width 25px
-          height 25px
+        .item-left-icon
+          //color var(--el-color-primary)
+          width $icon_size
+          height $icon_size
+          margin-top -14px
+          vertical-align middle
+          :deep(.item-icon svg)
+            width $icon_size
+            height $icon_size
         .item-right
           display inline-block
           margin-left 10px
