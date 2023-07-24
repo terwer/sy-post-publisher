@@ -45,6 +45,7 @@ declare module '@vue/runtime-core' {
     MetaweblogSetting: typeof import('./src/components/set/publish/singleplatform/MetaweblogSetting.vue')['default']
     PlatformAddForm: typeof import('./src/components/set/publish/PlatformAddForm.vue')['default']
     PlatformQuickAdd: typeof import('./src/components/set/publish/PlatformQuickAdd.vue')['default']
+    PlatformUpdateForm: typeof import('./src/components/set/publish/PlatformUpdateForm.vue')['default']
     PublishIndex: typeof import('./src/components/publish/PublishIndex.vue')['default']
     PublishPlatform: typeof import('./src/components/publish/form/PublishPlatform.vue')['default']
     PublishSetting: typeof import('./src/components/set/PublishSetting.vue')['default']

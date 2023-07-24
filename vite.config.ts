@@ -54,7 +54,8 @@ const args = minimist(process.argv.slice(2))
 const debugMode = true
 const isWatch = args.watch || args.w || false
 const isDev = isWatch || debugMode
-const devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
+// const devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
+const devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/widgets/sy-post-publisher"
 const distDir = isWatch ? devDistDir : "./dist"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
 const isStaticBuild = process.env.BUILD_TYPE === "static"

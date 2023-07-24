@@ -33,9 +33,13 @@ import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { JsonUtil } from "zhi-common"
 import {
   AuthMode,
+  deletePlatformByKey,
   DynamicConfig,
   DynamicJsonCfg,
+  getDynSwitchKey,
   PlatformType,
+  replacePlatformByKey,
+  setDynamicJsonCfg,
 } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { useRouter } from "vue-router"
@@ -98,17 +102,43 @@ const handleSinglePlatformDelete = (cfg: DynamicConfig) => {
     confirmButtonText: t("main.opt.ok"),
     cancelButtonText: t("main.opt.cancel"),
   })
-    .then((action) => {
-      ElMessage({
-        type: "info",
-        message: `action: ${action}`,
-      })
+    .then(async () => {
+      formData.dynamicConfigArray = deletePlatformByKey(formData.dynamicConfigArray, cfg.platformKey)
+      // 替换删除后的平台配置
+      const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
+      formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+      // 删除状态
+      const switchKey = getDynSwitchKey(cfg.platformKey)
+      delete formData.setting[switchKey]
+      // 删除配置
+      delete formData.setting[cfg.platformKey]
+      await updateSetting(formData.setting)
+
+      // 重新加载列表
+      await initPage()
+      ElMessage.success(t("main.opt.success"))
     })
     .catch(() => {})
 }
 
-const handleChangeName = (cfg: DynamicConfig) => {
-  alert("修改平台名称")
+const handleChangePlatformDefine = (cfg: DynamicConfig) => {
+  router.push({
+    path: `/setting/platform/update/${cfg.platformKey}`,
+    query: {
+      showBack: "true",
+    },
+  })
+}
+
+const handlePlatformEnabled = async (cfg: DynamicConfig) => {
+  formData.dynamicConfigArray = replacePlatformByKey(formData.dynamicConfigArray, cfg.platformKey, cfg)
+  // 替换删除后的平台配置
+  const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
+  formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+  // 更新状态
+  const switchKey = getDynSwitchKey(cfg.platformKey)
+  formData.setting[switchKey] = cfg.isEnabled
+  await updateSetting(formData.setting)
 }
 
 const initPage = async () => {
@@ -185,7 +215,7 @@ onMounted(async () => {
                 <el-col
                   v-for="platform in formData.dynamicConfigArray"
                   :key="platform.platformKey"
-                  :span="6"
+                  :span="11"
                   class="platform-item-box"
                 >
                   <div class="platform-item">
@@ -200,7 +230,7 @@ onMounted(async () => {
                           :type="platform.isAuth ? 'success' : 'warning'"
                         >
                           <span>{{ platform.platformName }}</span>
-                          <span class="name-edit" @click="handleChangeName(platform)">
+                          <span class="name-edit" @click="handleChangePlatformDefine(platform)">
                             <el-icon> <span v-html="svgIcons.iconIFEdit"></span> </el-icon>
                           </span>
                           <el-text
@@ -219,20 +249,27 @@ onMounted(async () => {
                           class="action-btn action-switch"
                           active-text="已启用"
                           inactive-text="未启用"
+                          @change="handlePlatformEnabled(platform)"
                         ></el-switch>
                         <el-text
                           v-if="platform.isEnabled && platform.authMode === AuthMode.API"
                           class="action-btn action-setting"
                           @click="handleSinglePlatformSetting(platform.platformKey)"
                         >
-                          <el-icon> <Tools /> </el-icon>设置
+                          <el-icon>
+                            <Tools />
+                          </el-icon>
+                          设置
                         </el-text>
                         <el-text
                           v-if="!platform.isEnabled"
                           class="action-btn action-del"
                           @click="handleSinglePlatformDelete(platform)"
                         >
-                          <el-icon> <Delete /> </el-icon>删除
+                          <el-icon>
+                            <Delete />
+                          </el-icon>
+                          删除
                         </el-text>
                       </div>
                     </div>
@@ -282,9 +319,11 @@ $icon_size = 32px
 
 .publish-setting-left-menu
   text-align center
+
   .left-menu-item
     justify-content center
     height 36px
+
   .menu-item-selected
     color var(--el-fill-color-blank)
     background var(--el-color-primary)
@@ -298,9 +337,11 @@ html[class="dark"]
     text-align left
     padding-left 10px
     padding-right 10px
+
   .tips-form
     font-size 12px
     margin-top 14px
+
   .no-tip
     margin 0 10px
     padding-left 0
@@ -311,9 +352,11 @@ html[class="dark"]
     margin-bottom 10px
     margin-left 6px !important
     margin-right 6px !important
+
     .platform-item-box
       margin-bottom 28px
       text-align left
+
       .platform-item
         .item-left-icon
           //color var(--el-color-primary)
@@ -321,38 +364,49 @@ html[class="dark"]
           height $icon_size
           margin-top -14px
           vertical-align middle
+
           :deep(.item-icon svg)
             width $icon_size
             height $icon_size
+
         .item-right
           display inline-block
           margin-left 10px
           text-align left
+
           .text
             color var(--el-button-text-color)
             font-size 12px
             margin-bottom 2px
+
             .auth-mode-text
               font-size 12px
               margin-left 16px
+
           .name-edit
             color var(--el-color-primary)
             margin-left 4px
             cursor pointer
+
           .actions
             .action-btn
               margin-right 10px
+
             .action-switch
               font-size 12px
+
             .action-setting
               font-size 12px
               cursor pointer
+
               &:hover
                 color var(--el-color-primary)
+
             .action-del
               color red
               font-size 12px
               cursor pointer
+
               &:hover
                 color var(--el-color-primary)
 
@@ -360,27 +414,33 @@ html[class="dark"]
   margin 0 !important
   padding 0 !important
   text-align center
+
 .col-item
   margin 0 !important
   padding 0 !important
+
 .platform-right-card
   margin 0
   margin-left 10px
   margin-right 10px
   margin-bottom 10px
   padding 0
+
   img
     width 160px
     height 160px
+
   .right-card-text
     padding 0 10px 10px 10px
     display inline-block
     vertical-align top
     line-height 32px
     width calc(100% - 180px)
+
     .text-desc
       font-size 12px
       line-height 18px
+
     .add-btn
       margin-top 12px
 </style>

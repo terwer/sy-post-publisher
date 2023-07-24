@@ -30,6 +30,7 @@ import GeneralSetting from "~/src/components/set/GeneralSetting.vue"
 import PublishSetting from "~/src/components/set/PublishSetting.vue"
 import SettingEntry from "~/src/components/set/publish/singleplatform/SettingEntry.vue"
 import PlatformAddForm from "~/src/components/set/publish/PlatformAddForm.vue"
+import PlatformUpdateForm from "~/src/components/set/publish/PlatformUpdateForm.vue"
 import PlatformQuickAdd from "~/src/components/set/publish/PlatformQuickAdd.vue"
 
 const ApiTest = () => import("~/src/pages/ApiTest.vue")
@@ -64,6 +65,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/setting/platform/add/:type",
     component: PlatformAddForm,
+  },
+  {
+    path: "/setting/platform/update/:key",
+    component: PlatformUpdateForm,
   },
   {
     name: "setting-platform-single",

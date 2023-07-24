@@ -24,56 +24,50 @@
   -->
 
 <script setup lang="ts">
+import BackPage from "~/src/components/common/BackPage.vue"
 import { reactive, ref } from "vue"
+import { useVueI18n } from "~/src/composables/useVueI18n.ts"
+import { useRoute, useRouter } from "vue-router"
 import {
   AuthMode,
   DynamicConfig,
   DynamicJsonCfg,
+  getDynCfgByKey,
   getDynSwitchKey,
   getNewPlatformKey,
-  getSubtypeList,
-  isDynamicKeyExists,
   PlatformType,
+  replacePlatformByKey,
   setDynamicJsonCfg,
-  SubPlatformType,
 } from "~/src/components/set/publish/platform/dynamicConfig.ts"
-import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { useRoute, useRouter } from "vue-router"
-import BackPage from "~/src/components/common/BackPage.vue"
-import { svgIcons } from "~/src/utils/svgIcons.ts"
-import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
-import { JsonUtil, StrUtil } from "zhi-common"
+import { JsonUtil } from "zhi-common"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
-import { ElMessage, FormRules } from "element-plus"
 import { SypConfig } from "~/syp.config.ts"
+import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
+import { ElMessage, FormRules } from "element-plus"
 
-const logger = createAppLogger("platform-add-form")
+const logger = createAppLogger("platform-update-form")
 
 // uses
 const { t } = useVueI18n()
 const router = useRouter()
 const route = useRoute()
-const { query } = useRoute()
-const { getPlatformType, getPrePlatform } = usePlatformDefine()
-const { getSetting, updateSetting, checkKeyExists } = useSettingStore()
+const { getSetting, updateSetting } = useSettingStore()
 
 // datas
 const params = reactive(route.params)
-const ptype = params.type as PlatformType
+const key = params.key as string
 
 const formRef = ref()
 const formData = reactive({
+  key: key,
+
+  dynCfg: new DynamicConfig(PlatformType.Common, getNewPlatformKey(PlatformType.Common, undefined), "None-1"),
+
   setting: {} as typeof SypConfig,
-
-  ptype: ptype,
-  subtype: undefined,
-  subtypeOptions: [],
-  dynCfg: new DynamicConfig(ptype, getNewPlatformKey(ptype, undefined), "None-1"),
-
   dynamicConfigArray: [] as DynamicConfig[],
 })
+
 const formValidateRules = reactive<FormRules>({
   platformName: [
     {
@@ -94,25 +88,10 @@ const formValidateRules = reactive<FormRules>({
     },
   ],
 })
-
 const validateForm = (formEl) => {
-  if (!formData.subtype) {
-    ElMessage.error("请选择子平台类型")
-    return false
-  }
-
-  // 平台key必须唯一
-  const pkey = formData.dynCfg.platformKey
-  // 保证开关变量key不重复
-  const switchKey = "switch-" + pkey
-  const postidKey = "custom-" + pkey + "-post-id"
-  // 保证文章绑定id的key不重复
-  if (checkKeyExists(pkey) || checkKeyExists(switchKey) || checkKeyExists(postidKey)) {
-    ElMessage.error(t("dynamic.platform.opt.key.exist"))
-    return false
-  }
   return true
 }
+
 const submitForm = async (formEl) => {
   if (!formEl) return
   if (!validateForm(formEl)) {
@@ -132,7 +111,7 @@ const submitForm = async (formEl) => {
   }
 
   const newCfg = formData.dynCfg
-  formData.dynamicConfigArray.push(newCfg)
+  replacePlatformByKey(formData.dynamicConfigArray, key, newCfg)
 
   // 转换格式并保存
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
@@ -140,8 +119,9 @@ const submitForm = async (formEl) => {
   const switchKey = getDynSwitchKey(newCfg.platformKey)
   // 默认启用禁用
   formData.setting[switchKey] = String(newCfg.isEnabled)
-  // 初始化一个空配置
-  formData.setting[newCfg.platformKey] = "{}"
+  // 更新配置
+  // let newSetting = formData.setting[newCfg.platformKey]
+  // formData.setting[newCfg.platformKey] = newSetting
   await updateSetting(formData.setting)
 
   // 重新加载列表
@@ -152,78 +132,35 @@ const submitForm = async (formEl) => {
   })
 }
 
-const handleSubPlatformTypeChange = async () => {
-  await initForm(formData.ptype, formData.subtype)
-}
-
-const initForm = async (ptype: PlatformType, subtype: SubPlatformType) => {
-  const pkey = query.key as string
-
+const initForm = async (key: string) => {
   formData.setting = await getSetting()
   const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
   formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
 
-  if (!formData.ptype) {
-    ElMessage.error("平台类型不能为空")
-    return
-  }
-  const platform = getPlatformType(formData.ptype)
-  let svgIcon = StrUtil.isEmptyString(platform.img)
-    ? svgIcons.iconEPPlus
-    : `<img src="${platform.img}" alt="platform-icon" class="img-platform-icon" style="width: 32px;height: 32px;"/>`
-
-  if (pkey && subtype) {
-    formData.subtype = subtype
-
-    // 如果pkey对应的配置存在，初始化新的
-    const pkeyExist = isDynamicKeyExists(formData.dynamicConfigArray, pkey)
-    if (pkeyExist) {
-      const preTmpl = getPrePlatform(pkey)
-      svgIcon = preTmpl.platformIcon
-      const newKey = getNewPlatformKey(ptype, subtype)
-      formData.dynCfg = new DynamicConfig(ptype, newKey, newKey, subtype, svgIcon)
-      logger.debug("pkey already exists, initialize the new one")
-    } else {
-      // 否则查询
-      formData.dynCfg = getPrePlatform(pkey)
-      logger.debug("Initialized via pkey")
-    }
-  } else if (subtype) {
-    // 子类型初始化
-    formData.subtype = subtype
-    const newKey = getNewPlatformKey(ptype, subtype)
-    formData.dynCfg = new DynamicConfig(ptype, newKey, newKey, subtype, svgIcon)
-    logger.debug("Initialized by subtype")
-  } else {
-    // 需要选择子类型
-    formData.subtypeOptions = getSubtypeList(ptype)
-    const newKey = getNewPlatformKey(ptype, subtype)
-    formData.dynCfg = new DynamicConfig(ptype, newKey, newKey, subtype, svgIcon)
-    logger.debug("Initialize by selecting a subtype")
-  }
+  formData.dynCfg = getDynCfgByKey(formData.dynamicConfigArray, key)
 }
-
 const initPage = async () => {
-  const ptype = params.type as PlatformType
-  const subtype = query.sub as SubPlatformType
-
-  await initForm(ptype, subtype)
+  await initForm(formData.key)
 }
 
 initPage()
 </script>
 
 <template>
-  <back-page :title="'新增自定义平台 - ' + ptype">
-    <el-form class="add-form" ref="formRef" label-width="100px" :model="formData.dynCfg" :rules="formValidateRules">
-      <el-alert class="top-tip" :title="'当前平台类型为=>' + ptype" type="warning" :closable="false" />
-      <!-- 子平台名称 -->
-      <el-form-item v-if="formData.subtypeOptions.length > 0" label="子平台类型">
-        <el-select v-model="formData.subtype" class="m-2" placeholder="请选择" @change="handleSubPlatformTypeChange">
-          <el-option v-for="item in formData.subtypeOptions" :key="item" :label="item" :value="item" />
-        </el-select>
-      </el-form-item>
-      <el-alert v-else class="top-tip" :title="'子平台类型为=>' + formData.subtype" type="warning" :closable="false" />
+  <back-page :title="'修改平台定义 - ' + key">
+    <el-form class="update-form" ref="formRef" label-width="100px" :model="formData.dynCfg" :rules="formValidateRules">
+      <el-alert
+        class="top-tip"
+        :title="'当前平台类型为=>' + formData.dynCfg.platformKey"
+        type="warning"
+        :closable="false"
+      />
+      <el-alert
+        class="top-tip"
+        :title="'子平台类型为=>' + formData.dynCfg.subPlatformType"
+        type="warning"
+        :closable="false"
+      />
       <!-- 平台key -->
       <el-form-item :label="t('dynamic.platform.key')" prop="platformKey">
         {{ formData.dynCfg.platformKey }}
@@ -258,7 +195,7 @@ initPage()
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm(formRef)">{{ t("dynamic.platform.opt.add") }} </el-button>
+        <el-button type="primary" @click="submitForm(formRef)">{{ t("dynamic.platform.opt.add") }}</el-button>
       </el-form-item>
     </el-form>
   </back-page>
@@ -271,13 +208,14 @@ $icon_size = 32px
   margin 10px 0
   padding-left 0
 
-.add-form
+.update-form
   :deep(.el-icon)
     //color var(--el-color-primary)
     width $icon_size
     height $icon_size
     margin-right -4px
     vertical-align middle
+
   :deep(.el-icon svg)
     width $icon_size
     height $icon_size

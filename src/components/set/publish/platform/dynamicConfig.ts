@@ -262,7 +262,7 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
     githubCfg,
     metaweblogCfg,
     wordpressCfg,
-    customCfg
+    customCfg,
   }
 
   return dynamicJsonCfg
@@ -304,6 +304,47 @@ export function isDynamicKeyExists(dynamicConfigArray: DynamicConfig[], key: str
   return flag
 }
 
+/**
+ * 通过平台key查询平台
+ */
+export function getDynCfgByKey(dynamicConfigArray: DynamicConfig[], key: string): DynamicConfig {
+  for (let i = 0; i < dynamicConfigArray.length; i++) {
+    if (dynamicConfigArray[i].platformKey === key) {
+      return dynamicConfigArray[i]
+    }
+  }
+  return null
+}
+
+/**
+ * 根据平台key替换平台配置
+ * 
+ * @param dynamicConfigArray 动态配置数组
+ * @param key 平台key
+ * @param newConfig 新的平台配置
+ * @returns 替换后的动态配置数组
+ */
+export function replacePlatformByKey(dynamicConfigArray: DynamicConfig[], key: string, newConfig: DynamicConfig): DynamicConfig[] {
+  const newArray = [...dynamicConfigArray]
+  for (let i = 0; i < newArray.length; i++) {
+    if (newArray[i].platformKey === key) {
+      newArray[i] = newConfig
+      break
+    }
+  }
+  return newArray
+}
+
+/**
+ * 从dynamicConfigArray数组中删除匹配给定key的元素
+ *
+ * @param dynamicConfigArray - 要删除元素的数组
+ * @param key - 要匹配的键
+ * @returns 删除元素后的新数组
+ */
+export function deletePlatformByKey(dynamicConfigArray: any[], key: string): any[] {
+  return dynamicConfigArray.filter(item => item.platformKey !== key);
+}
 // =====================
 // 动态平台开关key规则
 // =====================
