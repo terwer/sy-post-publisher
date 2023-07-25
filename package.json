@@ -6,6 +6,7 @@
   "scripts": {
     "serve": "bash scripts/serve.sh",
     "dev": "BUILD_TYPE=siyuan vite build --watch",
+    "devWin":"cmd /C \"set BUILD_TYPE=siyuan && vite build --watch\"",
     "build": "BUILD_TYPE=siyuan vite build",
     "staticBuild": "BUILD_TYPE=static vite build",
     "vercelBuild": "BUILD_TYPE=vercel vite build",
