@@ -61,5 +61,6 @@ declare module '@vue/runtime-core' {
     VitepressTest: typeof import('./src/components/test/VitepressTest.vue')['default']
     WordpressTest: typeof import('./src/components/test/WordpressTest.vue')['default']
     YuqueTest: typeof import('./src/components/test/YuqueTest.vue')['default']
+    ZhihuTest: typeof import('./src/components/test/ZhihuTest.vue')['default']
   }
 }

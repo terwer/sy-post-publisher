@@ -77,7 +77,7 @@
 import { onMounted, ref } from "vue"
 import { ElMessage } from "element-plus"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { MetaweblogConfig } from "~/src/adaptors/base/metaweblog/config/MetaweblogConfig.ts"
+import { MetaweblogConfig } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogConfig.ts"
 import { PageTypeEnum } from "zhi-blog-api"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"

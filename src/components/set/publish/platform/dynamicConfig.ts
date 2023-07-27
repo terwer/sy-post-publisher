@@ -271,6 +271,29 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
 // =====================
 // 动态平台key规则
 // =====================
+export function getSubPlatformTypeByKey(key: string): SubPlatformType {
+  const keyParts = key.split("-")
+  let subtype = ""
+
+  if (keyParts.length > 0) {
+    const subPlatformParts = keyParts[0].split("_")
+    subtype = subPlatformParts.length > 1 ? subPlatformParts[1] : subPlatformParts[0]
+  } else {
+    throw new Error("Invalid platform key")
+  }
+
+  const enumValues = Object.values(SubPlatformType)
+  const foundType = enumValues.find(
+    (value) => typeof value === "string" && value.toLowerCase() === subtype.toLowerCase()
+  )
+
+  if (foundType) {
+    return foundType as SubPlatformType
+  }
+
+  throw new Error("Invalid platform key")
+}
+
 /**
  * 生成新的平台key
  *
@@ -280,12 +303,12 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
  * @param subtype 子平台类型
  */
 export function getNewPlatformKey(ptype: PlatformType, subtype: SubPlatformType): string {
-  let ret
+  let ret: any
   const newId = idUtil.newID()
   ret = ptype.toLowerCase()
 
   if (!StrUtil.isEmptyString(subtype) && SubPlatformType.NONE !== subtype) {
-    ret = [ret, StrUtil.upperFirst(subtype)].join("")
+    ret = [ret, "_", StrUtil.upperFirst(subtype)].join("")
   }
   return [ret, "-", newId].join("")
 }
@@ -318,13 +341,17 @@ export function getDynCfgByKey(dynamicConfigArray: DynamicConfig[], key: string)
 
 /**
  * 根据平台key替换平台配置
- * 
+ *
  * @param dynamicConfigArray 动态配置数组
  * @param key 平台key
  * @param newConfig 新的平台配置
  * @returns 替换后的动态配置数组
  */
-export function replacePlatformByKey(dynamicConfigArray: DynamicConfig[], key: string, newConfig: DynamicConfig): DynamicConfig[] {
+export function replacePlatformByKey(
+  dynamicConfigArray: DynamicConfig[],
+  key: string,
+  newConfig: DynamicConfig
+): DynamicConfig[] {
   const newArray = [...dynamicConfigArray]
   for (let i = 0; i < newArray.length; i++) {
     if (newArray[i].platformKey === key) {
@@ -343,8 +370,9 @@ export function replacePlatformByKey(dynamicConfigArray: DynamicConfig[], key: s
  * @returns 删除元素后的新数组
  */
 export function deletePlatformByKey(dynamicConfigArray: any[], key: string): any[] {
-  return dynamicConfigArray.filter(item => item.platformKey !== key);
+  return dynamicConfigArray.filter((item) => item.platformKey !== key)
 }
+
 // =====================
 // 动态平台开关key规则
 // =====================

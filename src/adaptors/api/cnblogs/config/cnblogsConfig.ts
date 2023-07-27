@@ -23,72 +23,50 @@
  * questions.
  */
 
-import { BlogConfig, PageType, PageTypeEnum } from "zhi-blog-api"
-import { MetaweblogPlaceholder } from "~/src/adaptors/base/metaweblog/config/MetaweblogPlaceholder.ts"
+import { BlogConfig } from "zhi-blog-api"
 
 /**
- * Metaweblog配置类
+ * 博客园配置
+ *
+ * @author terwer
+ * @since 0.9.0
  */
-export class MetaweblogConfig extends BlogConfig {
+class CnblogsConfig extends BlogConfig {
   /**
-   * 首页
-   */
-  public override home = ""
-
-  /**
-   * API地址
+   * API 地址
    */
   public override apiUrl = ""
+
   /**
    * 用户名
    */
   public override username = ""
+
   /**
    * 密码
    */
   public override password = ""
 
   /**
-   * 是否发布
+   * 代理地址
    */
-  public override apiStatus = false
+  public override middlewareUrl = ""
 
   /**
-   * 博客名（API获取）
+   * 博客园配置项
+   *
+   * @param apiUrl API 地址
+   * @param username 用户名
+   * @param password 密码
+   * @param middlewareUrl 代理地址
    */
-  public override blogName = ""
-
-  /**
-   * 文章别名key
-   */
-  public override posidKey = ""
-
-  /**
-   * 文章预览链接
-   */
-  public override previewUrl = ""
-
-  /**
-   * 文章类型
-   */
-  public override pageType = PageTypeEnum.Markdown
-
-  /**
-   * 操作提示
-   */
-  public override placeholder = {} as MetaweblogPlaceholder
-
-  constructor(home: string, apiUrl: string, username: string, password: string) {
+  constructor(apiUrl: string, username: string, password: string, middlewareUrl?: string) {
     super()
-    this.home = home
     this.apiUrl = apiUrl
     this.username = username
     this.password = password
-    this.apiStatus = false
-    this.blogName = ""
-    this.posidKey = ""
-    this.previewUrl = ""
-    this.pageType = PageTypeEnum.Markdown
-    this.placeholder = new MetaweblogPlaceholder()
+    this.middlewareUrl = middlewareUrl
   }
 }
+
+export { CnblogsConfig }

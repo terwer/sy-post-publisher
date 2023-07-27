@@ -31,8 +31,9 @@ import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 import { SimpleXmlRpcClient } from "simple-xmlrpc"
 import { MediaObject } from "zhi-blog-api"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
+import Adaptors from "~/src/adaptors"
 
-const logger = createAppLogger("wordpress-test")
+const logger = createAppLogger("cnblogs-test")
 
 const params = ref("{}")
 const showParamFile = ref(false)
@@ -178,10 +179,10 @@ const onImageSelect = async (event: Event) => {
   }
 }
 
-const wordpressHandleApi = async () => {
+const cnblogsHandleApi = async () => {
   isLoading.value = true
   logMessage.value = ""
-  logMessage.value = "wordpress requesting..."
+  logMessage.value = "cnblogs requesting..."
   try {
     // appInstance
     const appInstance = new AppInstance()
@@ -189,9 +190,10 @@ const wordpressHandleApi = async () => {
 
     switch (methodOption.value) {
       case METHOD_GET_USERS_BLOGS: {
-        const cnblogsCfg = {}
-        const cnblogsApiAdaptor = {}
+        const key = "metaweblog_Cnblogs"
+        const cnblogsApiAdaptor = await Adaptors.getAdaptor(key)
         const cnblogsApi = Utils.blogApi(appInstance, cnblogsApiAdaptor)
+        logger.info("cnblogsApi=>", cnblogsApi)
         const result = await cnblogsApi.getUsersBlogs()
         logMessage.value = JSON.stringify(result)
         logger.info("cnblogs users blogs=>", result)
@@ -238,7 +240,7 @@ const wordpressHandleApi = async () => {
         const client = new SimpleXmlRpcClient(xmlrpcApiUrl, "", {})
         const result = await client.methodCall("metaWeblog.newMediaObject", ["", "terwer", "123456", metadata])
         logMessage.value = JSON.stringify(result)
-        logger.info("wordpress new mediaObject result=>", result)
+        logger.info("cnblogs new mediaObject result=>", result)
         break
       }
       default:
@@ -255,7 +257,7 @@ const wordpressHandleApi = async () => {
 </script>
 
 <template>
-  <div id="wordpress-test">
+  <div id="cnblogs-test">
     <div class="method-list">
       <el-select v-model="methodOption" class="m-2" placeholder="请选择方法名称" @change="onMethodChange">
         <el-option v-for="item in methodOptions.options" :key="item.value" :label="item.label" :value="item.value" />
@@ -263,7 +265,7 @@ const wordpressHandleApi = async () => {
     </div>
 
     <div class="item">
-      <el-button type="primary" :loading="isLoading" @click="wordpressHandleApi">开始测试wordpress</el-button>
+      <el-button type="primary" :loading="isLoading" @click="cnblogsHandleApi">开始测试cnblogs</el-button>
     </div>
 
     <div class="item"><el-button>入参</el-button></div>
@@ -278,7 +280,7 @@ const wordpressHandleApi = async () => {
 </template>
 
 <style lang="stylus" scoped>
-#wordpress-test
+#cnblogs-test
   margin 16px 20px
   .item
     margin-bottom 8px

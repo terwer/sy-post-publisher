@@ -23,21 +23,3 @@
  * questions.
  */
 
-import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { useSiyuanApi } from "~/src/composables/api/useSiyuanApi.ts"
-
-/**
- * 文档相关
- */
-export const usePostApi = () => {
-  const logger = createAppLogger("use-post")
-  const { blogApi } = useSiyuanApi()
-
-  const getPost = async (id: string, useSlug?: boolean, skipBody?: boolean) => {
-    logger.info("Loading post from remote api...")
-    const postid = id.replace(/\.html$/, "")
-    return await blogApi.getPost(postid, useSlug, skipBody)
-  }
-
-  return { getPost }
-}

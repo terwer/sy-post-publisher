@@ -11,7 +11,7 @@ export const pre = {
     {
       platformType: PlatformType.Common,
       subPlatformType: SubPlatformType.Common_Zhihu,
-      platformKey: "commonZhihu-1u5c1v",
+      platformKey: "common_Zhihu",
       platformName: "知乎",
       platformIcon: svgIcons.iconIFZhihu,
       authMode: AuthMode.WEBSITE,
@@ -22,55 +22,69 @@ export const pre = {
     {
       platformType: PlatformType.Github,
       subPlatformType: SubPlatformType.Github_Hexo,
-      platformKey: "githubHexo",
+      platformKey: "github_Hexo",
       platformName: "Hexo",
       platformIcon: svgIcons.iconIFHexo,
+      authMode: AuthMode.API,
+      isEnabled: false
     },
     {
       platformType: PlatformType.Github,
       subPlatformType: SubPlatformType.Github_Hugo,
-      platformKey: "githubHugo-zdlc6l",
+      platformKey: "github_Hugo",
       platformName: "Hugo",
       platformIcon: svgIcons.iconIFHugo,
+      authMode: AuthMode.API,
+      isEnabled: false
     },
     {
       platformType: PlatformType.Github,
       subPlatformType: SubPlatformType.Github_Vitepress,
-      platformKey: "githubVitepress-mhxj3",
+      platformKey: "github_Vitepress",
       platformName: "Vitepress",
       platformIcon: svgIcons.iconIFVue,
+      authMode: AuthMode.API,
+      isEnabled: false
     },
     {
       platformType: PlatformType.Github,
       subPlatformType: SubPlatformType.Github_Nuxt,
-      platformKey: "githubNuxt-z1xcb7x",
-      platformName: "Nuxt content",
+      platformKey: "github_Nuxt",
+      platformName: "Nuxt",
       platformIcon: svgIcons.iconIFNuxt,
+      authMode: AuthMode.API,
+      isEnabled: false
     },
   ],
   metaweblogCfg: <DynamicConfig[]>[
     {
       platformType: PlatformType.Metaweblog,
       subPlatformType: SubPlatformType.Metaweblog_Cnblogs,
-      platformKey: "Cnblogs",
-      platformName: "Cnblogs",
+      platformKey: "metaweblog_Cnblogs",
+      platformName: "博客园",
       platformIcon: svgIcons.iconIFCnblogs,
+      authMode: AuthMode.API,
+      isEnabled: false
     },
     {
       platformType: PlatformType.Metaweblog,
       subPlatformType: SubPlatformType.Metaweblog_Typecho,
-      platformKey: "metaweblog-22pamt",
+      platformKey: "metaweblog_Typecho",
       platformName: "Typecho",
       platformIcon: svgIcons.iconIFTypecho,
+      authMode: AuthMode.API,
+      isEnabled: false
     },
   ],
   wordpressCfg: <DynamicConfig[]>[
     {
       platformType: PlatformType.Wordpress,
       subPlatformType: SubPlatformType.Wordpress_Wordpress,
-      platformKey: "Wordpress",
+      platformKey: "wordpress_Wordpress",
       platformName: "Wordpress",
       platformIcon: svgIcons.iconIFWordpress,
+      authMode: AuthMode.API,
+      isEnabled: false
     },
   ],
 }

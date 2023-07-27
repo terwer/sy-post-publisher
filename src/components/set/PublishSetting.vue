@@ -86,13 +86,18 @@ const handleAddPlatformStep = (type: PlatformType) => {
   })
 }
 
-const handleSinglePlatformSetting = (key: string) => {
-  router.push({
-    path: `/setting/platform/single/${key}`,
-    query: {
-      showBack: "true",
-    },
-  })
+const handleSinglePlatformSetting = async (cfg: DynamicConfig) => {
+  if (cfg.authMode === AuthMode.API) {
+    const key = cfg.platformKey
+    router.push({
+      path: `/setting/platform/single/${key}`,
+      query: {
+        showBack: "true",
+      },
+    })
+  } else {
+    await handleOpenBrowserAuth(cfg)
+  }
 }
 
 const handleSinglePlatformDelete = (cfg: DynamicConfig) => {
@@ -139,6 +144,14 @@ const handlePlatformEnabled = async (cfg: DynamicConfig) => {
   const switchKey = getDynSwitchKey(cfg.platformKey)
   formData.setting[switchKey] = cfg.isEnabled
   await updateSetting(formData.setting)
+}
+
+const handleOpenBrowserAuth = async (cfg: DynamicConfig) => {
+  alert("handleOpenBrowserAuth")
+}
+
+const handleImportPre = () => {
+  alert(111)
 }
 
 const initPage = async () => {
@@ -225,9 +238,9 @@ onMounted(async () => {
                     <div class="item-right">
                       <div class="text">
                         <el-badge
-                          :value="platform.isAuth ? '已授权' : '未授权'"
+                          :value="platform.isAuth ? '已授权' : platform.authMode === AuthMode.API ? '设置无效' : '没有授权'"
                           class="badge-item"
-                          :type="platform.isAuth ? 'success' : 'warning'"
+                          :type="platform.isAuth ? 'success' : 'error'"
                         >
                           <span>{{ platform.platformName }}</span>
                           <span class="name-edit" @click="handleChangePlatformDefine(platform)">
@@ -252,14 +265,14 @@ onMounted(async () => {
                           @change="handlePlatformEnabled(platform)"
                         ></el-switch>
                         <el-text
-                          v-if="platform.isEnabled && platform.authMode === AuthMode.API"
+                          v-if="platform.isEnabled"
                           class="action-btn action-setting"
-                          @click="handleSinglePlatformSetting(platform.platformKey)"
+                          @click="handleSinglePlatformSetting(platform)"
                         >
                           <el-icon>
                             <Tools />
                           </el-icon>
-                          设置
+                          {{ platform.authMode === AuthMode.API ? "设置" : "授权" }}
                         </el-text>
                         <el-text
                           v-if="!platform.isEnabled"
@@ -278,6 +291,10 @@ onMounted(async () => {
               </el-row>
               <el-row>
                 <el-col>
+                  <div class="import-pre-action" @click="handleImportPre">
+                    <el-button size="small" type="primary">导入预定义平台</el-button>
+                  </div>
+
                   <div class="right-setting-tips">
                     <div class="el-alert el-alert--warning is-light" role="alert">
                       <div class="el-alert__content">
@@ -337,6 +354,10 @@ html[class="dark"]
     text-align left
     padding-left 10px
     padding-right 10px
+
+  .import-pre-action
+    text-align left
+    margin-left 20px
 
   .tips-form
     font-size 12px

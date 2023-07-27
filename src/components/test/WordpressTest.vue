@@ -31,8 +31,8 @@ import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 import { SimpleXmlRpcClient } from "simple-xmlrpc"
 import { MediaObject } from "zhi-blog-api"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { WordpressConfig } from "~/src/adaptors/wordpress/config/wordpressConfig.ts"
-import { WordpressApiAdaptor } from "~/src/adaptors/wordpress/adaptor/wordpressApiAdaptor.ts"
+import { WordpressConfig } from "~/src/adaptors/api/wordpress/config/wordpressConfig.ts"
+import { WordpressApiAdaptor } from "~/src/adaptors/api/wordpress/adaptor/wordpressApiAdaptor.ts"
 
 const logger = createAppLogger("wordpress-test")
 

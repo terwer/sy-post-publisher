@@ -70,6 +70,7 @@ const formData = reactive({
   ptype: ptype,
   subtype: undefined,
   subtypeOptions: [],
+  isPre: false,
   dynCfg: new DynamicConfig(ptype, getNewPlatformKey(ptype, undefined), "None-1"),
 
   dynamicConfigArray: [] as DynamicConfig[],
@@ -186,6 +187,7 @@ const initForm = async (ptype: PlatformType, subtype: SubPlatformType) => {
     } else {
       // 否则查询
       formData.dynCfg = getPrePlatform(pkey)
+      formData.isPre = true
       logger.debug("Initialized via pkey")
     }
   } else if (subtype) {
@@ -216,6 +218,7 @@ initPage()
 <template>
   <back-page :title="'新增自定义平台 - ' + ptype">
     <el-form class="add-form" ref="formRef" label-width="100px" :model="formData.dynCfg" :rules="formValidateRules">
+      <el-alert v-if="formData.isPre" class="top-tip" title="当前为初次添加，将导入该平台的预定义模板；如果再次添加，将生成可修改的新实例" type="error" :closable="false" />
       <el-alert class="top-tip" :title="'当前平台类型为=>' + ptype" type="warning" :closable="false" />
       <!-- 子平台名称 -->
       <el-form-item v-if="formData.subtypeOptions.length > 0" label="子平台类型">
@@ -230,11 +233,13 @@ initPage()
       </el-form-item>
       <!-- 平台名称 -->
       <el-form-item label="平台名称" prop="platformName">
-        <el-input v-model="formData.dynCfg.platformName" />
+        <span v-if="formData.isPre">{{ formData.dynCfg.platformName }}</span>
+        <el-input v-else v-model="formData.dynCfg.platformName" />
       </el-form-item>
       <!-- 平台图标 -->
       <el-form-item label="平台图标" prop="platformIcon">
         <el-input
+          v-if="!formData.isPre"
           v-model="formData.dynCfg.platformIcon"
           style="width: 75%; margin-right: 16px"
           placeholder="直接粘贴svg代码或者img标签代码"
@@ -247,14 +252,15 @@ initPage()
       </el-form-item>
       <!-- 授权方式 -->
       <el-form-item label="授权方式" prop="authMode">
-        <el-select v-model="formData.dynCfg.authMode" placeholder="请选择">
+        <span v-if="formData.isPre">{{ formData.dynCfg.authMode === AuthMode.API ? "API授权" : "网页授权" }}</span>
+        <el-select v-else v-model="formData.dynCfg.authMode" placeholder="请选择">
           <el-option :value="AuthMode.API" label="API授权" />
           <el-option :value="AuthMode.WEBSITE" label="网页授权" />
         </el-select>
       </el-form-item>
       <!-- 是否启用 -->
       <el-form-item label="是否启用">
-        <el-switch v-model="formData.dynCfg.isEnabled" />
+        <el-switch v-model="formData.dynCfg.isEnabled" :disabled="formData.isPre" />
       </el-form-item>
 
       <el-form-item>

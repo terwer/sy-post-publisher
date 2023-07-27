@@ -24,8 +24,8 @@
  */
 
 import { BlogApi, CategoryInfo, Post, UserBlog } from "zhi-blog-api"
-import { YuqueApi } from "~/src/adaptors/yuque/adaptor/yuqueApi.ts"
-import { YuqueConfig } from "~/src/adaptors/yuque/config/yuqueConfig.ts"
+import { YuqueApi } from "~/src/adaptors/api/yuque/adaptor/yuqueApi.ts"
+import { YuqueConfig } from "~/src/adaptors/api/yuque/config/yuqueConfig.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { StrUtil } from "zhi-common"
 

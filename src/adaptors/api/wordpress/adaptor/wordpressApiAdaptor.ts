@@ -24,11 +24,11 @@
  */
 
 import { BlogApi, UserBlog } from "zhi-blog-api"
-import { WordpressConfig } from "~/src/adaptors/wordpress/config/wordpressConfig.ts"
+import { WordpressConfig } from "~/src/adaptors/api/wordpress/config/wordpressConfig.ts"
 import { CommonXmlrpcClient } from "zhi-xmlrpc-middleware"
 import { AppInstance } from "~/src/appInstance.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { WordpressConstants } from "~/src/adaptors/wordpress/wordpressConstants.ts"
+import { WordpressConstants } from "~/src/adaptors/api/wordpress/wordpressConstants.ts"
 
 /**
  * WordPress API 适配器

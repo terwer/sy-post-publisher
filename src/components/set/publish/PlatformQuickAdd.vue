@@ -24,14 +24,12 @@
   -->
 
 <script setup lang="ts">
-import { ElementPlus } from "@element-plus/icons-vue"
 import { DynamicConfig, PlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { useRoute, useRouter } from "vue-router"
 import BackPage from "~/src/components/common/BackPage.vue"
 import { reactive } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
-import { svgIcons } from "../../../utils/svgIcons.ts"
 
 // uses
 const { t } = useVueI18n()

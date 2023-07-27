@@ -35,8 +35,10 @@ import PlatformQuickAdd from "~/src/components/set/publish/PlatformQuickAdd.vue"
 
 const ApiTest = () => import("~/src/pages/ApiTest.vue")
 const SiyuanTest = () => import("~/src/components/test/SiyuanTest.vue")
+const CnblogsTest = () => import("~/src/components/test/CnblogsTest.vue")
 const WordpressTest = () => import("~/src/components/test/WordpressTest.vue")
 const YuqueTest = () => import("~/src/components/test/YuqueTest.vue")
+const ZhihuTest = () => import("~/src/components/test/ZhihuTest.vue")
 
 const routes: RouteRecordRaw[] = [
   { path: "/", component: Home },
@@ -46,8 +48,10 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: "", component: SiyuanTest },
       { path: "siyuan", component: SiyuanTest },
+      { path: "cnblogs", component: CnblogsTest },
       { path: "wordpress", component: WordpressTest },
       { path: "yuque", component: YuqueTest },
+      { path: "zhihu", component: ZhihuTest },
     ],
   },
   {

@@ -47,10 +47,16 @@ const changeTab = (tab: TabsPaneContext, event: Event) => {
       <el-tab-pane label="Siyuan" name="siyuan">
         <router-view></router-view>
       </el-tab-pane>
+      <el-tab-pane label="Cnblogs" name="cnblogs">
+        <router-view></router-view>
+      </el-tab-pane>
       <el-tab-pane label="Wordpress" name="wordpress">
         <router-view></router-view>
       </el-tab-pane>
       <el-tab-pane label="Yuque" name="yuque">
+        <router-view></router-view>
+      </el-tab-pane>
+      <el-tab-pane label="Zhihu" name="zhihu">
         <router-view></router-view>
       </el-tab-pane>
     </el-tabs>
