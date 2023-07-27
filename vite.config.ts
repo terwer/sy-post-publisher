@@ -9,6 +9,7 @@ import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import { nodePolyfills } from "vite-plugin-node-polyfills"
+import os from "os"
 
 const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
   if (isSiyuanBuild) {
@@ -54,8 +55,13 @@ const args = minimist(process.argv.slice(2))
 const debugMode = true
 const isWatch = args.watch || args.w || false
 const isDev = isWatch || debugMode
-// const devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
-const devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/widgets/sy-post-publisher"
+let devDistDir
+if (os.platform() === "win32") {
+  devDistDir = path.join(os.homedir(), "Documents", "SiYuan", "data", "widgets", "sy-post-publisher")
+} else {
+  devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
+  // devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/widgets/sy-post-publisher"
+}
 const distDir = isWatch ? devDistDir : "./dist"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
 const isStaticBuild = process.env.BUILD_TYPE === "static"
