@@ -33,6 +33,8 @@ import { CnblogsConstants } from "~/src/adaptors/api/cnblogs/cnblogsConstants.ts
 /**
  * 博客园 API 适配器
  *
+ * @see [博客园 API 文档](https://rpc.cnblogs.com/metaweblog/tangyouwei)
+ *
  * @author terwer
  * @version 0.9.0
  * @since 0.9.0

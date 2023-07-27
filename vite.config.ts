@@ -57,10 +57,11 @@ const isWatch = args.watch || args.w || false
 const isDev = isWatch || debugMode
 let devDistDir
 if (os.platform() === "win32") {
-  devDistDir = path.join(os.homedir(), "Documents", "SiYuan", "data", "widgets", "sy-post-publisher")
+  // devDistDir = path.join(os.homedir(), "Documents", "SiYuan", "data", "widgets", "sy-post-publisher")
+  devDistDir = path.join(os.homedir(), "Documents", "testdoc", "data", "widgets", "sy-post-publisher")
 } else {
-  devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
-  // devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/widgets/sy-post-publisher"
+  // devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
+  devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/widgets/sy-post-publisher"
 }
 const distDir = isWatch ? devDistDir : "./dist"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"

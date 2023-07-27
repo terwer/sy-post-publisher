@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "serve": "bash scripts/serve.sh",
+    "serveWin": "scripts\\serve.cmd",
     "dev": "BUILD_TYPE=siyuan vite build --watch",
     "devWin":"cmd /C \"set BUILD_TYPE=siyuan && vite build --watch\"",
     "build": "BUILD_TYPE=siyuan vite build",

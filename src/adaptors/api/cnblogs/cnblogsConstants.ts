@@ -31,7 +31,9 @@
  * @since 0.9.0
  */
 class CnblogsConstants {
-  public static METHOD_GET_USERS_BLOGS = "metaWeblog.getUsersBlogs"
+  // 博客园不支持 metaWeblog.getUsersBlogs
+  // 博客园只支持 blogger.getUsersBlogs
+  public static METHOD_GET_USERS_BLOGS = "blogger.getUsersBlogs"
 }
 
 export { CnblogsConstants }

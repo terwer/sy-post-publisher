@@ -25,7 +25,7 @@
 
 import { PostForm } from "~/src/models/postForm.ts"
 import { YamlFormatObj } from "~/src/models/yamlFormatObj.ts"
-import { GithubConfig } from "~/src/adaptors/base/github/config/GithubConfig.ts"
+import { GithubConfig } from "~/src/adaptors/api/base/github/config/GithubConfig.ts"
 
 export interface IYamlConvertAdaptor {
   convertToYaml(postForm: PostForm, githubCfg?: GithubConfig): YamlFormatObj
