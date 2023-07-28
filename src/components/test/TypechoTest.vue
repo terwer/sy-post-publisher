@@ -31,8 +31,9 @@ import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 import { SimpleXmlRpcClient } from "simple-xmlrpc"
 import { MediaObject } from "zhi-blog-api"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
+import Adaptors from "~/src/adaptors"
 
-const logger = createAppLogger("wordpress-test")
+const logger = createAppLogger("typecho-test")
 
 const params = ref("{}")
 const showParamFile = ref(false)
@@ -178,10 +179,10 @@ const onImageSelect = async (event: Event) => {
   }
 }
 
-const wordpressHandleApi = async () => {
+const typechoHandleApi = async () => {
   isLoading.value = true
   logMessage.value = ""
-  logMessage.value = "wordpress requesting..."
+  logMessage.value = "typecho requesting..."
   try {
     // appInstance
     const appInstance = new AppInstance()
@@ -189,8 +190,8 @@ const wordpressHandleApi = async () => {
 
     switch (methodOption.value) {
       case METHOD_GET_USERS_BLOGS: {
-        const typechoCfg = {}
-        const typechoApiAdaptor = {}
+        const key = "metaweblog_Typecho"
+        const typechoApiAdaptor = await Adaptors.getAdaptor(key)
         const typechoApi = Utils.blogApi(appInstance, typechoApiAdaptor)
         const result = await typechoApi.getUsersBlogs()
         logMessage.value = JSON.stringify(result)
@@ -238,7 +239,7 @@ const wordpressHandleApi = async () => {
         const client = new SimpleXmlRpcClient(xmlrpcApiUrl, "", {})
         const result = await client.methodCall("metaWeblog.newMediaObject", ["", "terwer", "123456", metadata])
         logMessage.value = JSON.stringify(result)
-        logger.info("wordpress new mediaObject result=>", result)
+        logger.info("typecho new mediaObject result=>", result)
         break
       }
       default:
@@ -255,7 +256,7 @@ const wordpressHandleApi = async () => {
 </script>
 
 <template>
-  <div id="wordpress-test">
+  <div id="typecho-test">
     <div class="method-list">
       <el-select v-model="methodOption" class="m-2" placeholder="请选择方法名称" @change="onMethodChange">
         <el-option v-for="item in methodOptions.options" :key="item.value" :label="item.label" :value="item.value" />
@@ -263,7 +264,7 @@ const wordpressHandleApi = async () => {
     </div>
 
     <div class="item">
-      <el-button type="primary" :loading="isLoading" @click="wordpressHandleApi">开始测试wordpress</el-button>
+      <el-button type="primary" :loading="isLoading" @click="typechoHandleApi">开始测试typecho</el-button>
     </div>
 
     <div class="item"><el-button>入参</el-button></div>
@@ -278,7 +279,7 @@ const wordpressHandleApi = async () => {
 </template>
 
 <style lang="stylus" scoped>
-#wordpress-test
+#typecho-test
   margin 16px 20px
   .item
     margin-bottom 8px

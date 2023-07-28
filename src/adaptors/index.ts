@@ -23,12 +23,12 @@
  * questions.
  */
 
-import { BlogAdaptor } from "zhi-blog-api"
-import { useSiyuanApi } from "~/src/composables/api/useSiyuanApi.ts"
-import { getSubPlatformTypeByKey, SubPlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
-import { useCnblogsApi } from "~/src/composables/api/useCnblogsApi.ts"
-import { createAppLogger } from "~/src/utils/appLogger.ts"
+import {BlogAdaptor} from "zhi-blog-api"
+import {getSubPlatformTypeByKey, SubPlatformType} from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import {useCnblogsApi} from "~/src/composables/api/useCnblogsApi.ts"
+import {createAppLogger} from "~/src/utils/appLogger.ts"
 import {useWordpressApi} from "~/src/composables/api/useWordpressApi.ts";
+import {useTypechoApi} from "~/src/composables/api/useTypechoApi.ts";
 
 /**
  * 适配器统一入口
@@ -56,6 +56,11 @@ class Adaptors {
       }
       case SubPlatformType.Wordpress_Wordpress:{
         const { blogApi } = await useWordpressApi(key)
+        blogAdaptor = blogApi
+        break
+      }
+      case SubPlatformType.Metaweblog_Typecho:{
+        const { blogApi } = await useTypechoApi(key)
         blogAdaptor = blogApi
         break
       }

@@ -58,6 +58,7 @@ declare module '@vue/runtime-core' {
     SetIndex: typeof import('./src/components/set/SetIndex.vue')['default']
     SettingEntry: typeof import('./src/components/set/publish/singleplatform/SettingEntry.vue')['default']
     SiyuanTest: typeof import('./src/components/test/SiyuanTest.vue')['default']
+    TypechoSetting: typeof import('./src/components/set/publish/singleplatform/metaweblog/TypechoSetting.vue')['default']
     TypechoTest: typeof import('./src/components/test/TypechoTest.vue')['default']
     VitepressTest: typeof import('./src/components/test/VitepressTest.vue')['default']
     WordpressSetting: typeof import('./src/components/set/publish/singleplatform/metaweblog/WordpressSetting.vue')['default']

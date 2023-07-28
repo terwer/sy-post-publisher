@@ -37,6 +37,7 @@ const ApiTest = () => import("~/src/pages/ApiTest.vue")
 const SiyuanTest = () => import("~/src/components/test/SiyuanTest.vue")
 const CnblogsTest = () => import("~/src/components/test/CnblogsTest.vue")
 const WordpressTest = () => import("~/src/components/test/WordpressTest.vue")
+const TypechoTest = () => import("~/src/components/test/TypechoTest.vue")
 const YuqueTest = () => import("~/src/components/test/YuqueTest.vue")
 const ZhihuTest = () => import("~/src/components/test/ZhihuTest.vue")
 
@@ -50,6 +51,7 @@ const routes: RouteRecordRaw[] = [
       { path: "siyuan", component: SiyuanTest },
       { path: "cnblogs", component: CnblogsTest },
       { path: "wordpress", component: WordpressTest },
+      { path: "typecho", component: TypechoTest },
       { path: "yuque", component: YuqueTest },
       { path: "zhihu", component: ZhihuTest },
     ],

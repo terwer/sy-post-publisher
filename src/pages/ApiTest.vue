@@ -53,6 +53,9 @@ const changeTab = (tab: TabsPaneContext, event: Event) => {
       <el-tab-pane label="Wordpress" name="wordpress">
         <router-view></router-view>
       </el-tab-pane>
+      <el-tab-pane label="Typecho" name="typecho">
+        <router-view></router-view>
+      </el-tab-pane>
       <el-tab-pane label="Yuque" name="yuque">
         <router-view></router-view>
       </el-tab-pane>
