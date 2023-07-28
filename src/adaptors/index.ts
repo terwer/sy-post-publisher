@@ -28,6 +28,7 @@ import { useSiyuanApi } from "~/src/composables/api/useSiyuanApi.ts"
 import { getSubPlatformTypeByKey, SubPlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { useCnblogsApi } from "~/src/composables/api/useCnblogsApi.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
+import {useWordpressApi} from "~/src/composables/api/useWordpressApi.ts";
 
 /**
  * 适配器统一入口
@@ -50,6 +51,11 @@ class Adaptors {
     switch (type) {
       case SubPlatformType.Metaweblog_Cnblogs: {
         const { blogApi } = await useCnblogsApi(key)
+        blogAdaptor = blogApi
+        break
+      }
+      case SubPlatformType.Wordpress_Wordpress:{
+        const { blogApi } = await useWordpressApi(key)
         blogAdaptor = blogApi
         break
       }

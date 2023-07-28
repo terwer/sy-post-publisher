@@ -78,6 +78,11 @@ export class MetaweblogConfig extends BlogConfig {
    */
   public override placeholder = {} as MetaweblogPlaceholder
 
+  /**
+   * 跨域请求代理
+   */
+  public override middlewareUrl = ""
+
   constructor(home: string, apiUrl: string, username: string, password: string, middlewareUrl?: string) {
     super()
     this.home = home

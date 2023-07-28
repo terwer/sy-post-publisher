@@ -265,7 +265,7 @@ export default {
   "setting.blog.siyuan.apiurl": "思源笔记的API地址，包括端口，例如：http://127.0.0.1:6806",
   "setting.blog.siyuan.current.apiurl": "当前API地址=>",
   "setting.blog.middlewareUrl": "跨域请求代理",
-  "setting.blog.middlewareUrl.tip": "某些场景下需要（例如Firefox插件、自部署模式），其他情况可忽略",
+  "setting.blog.middlewareUrl.tip": "某些场景下需要（例如自部署模式，Nginx伺服等、vite开发环境伺服等），其他情况可忽略",
   "setting.blog.middlewareUrl.my.tip":
     "如果没有部署代理，可以使用我的共享地址：https://api.terwer.space/api/middleware 。出于性能考虑，建议自己部署一份，请使用 https://github.com/terwer/node-metaweblog-api-adaptor 此项目进行部署。",
   "setting.conf.export": "导出配置",

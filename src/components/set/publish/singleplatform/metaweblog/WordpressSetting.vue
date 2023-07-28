@@ -22,12 +22,15 @@
   - or visit www.terwer.space if you need additional information or have any
   - questions.
   -->
+
 <script lang="ts" setup>
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { useCnblogsApi } from "~/src/composables/api/useCnblogsApi.ts"
 import MetaweblogSetting from "~/src/components/set/publish/singleplatform/MetaweblogSetting.vue"
-import { CnblogsPlaceholder } from "~/src/adaptors/api/cnblogs/config/cnblogsPlaceholder.ts"
-import { CnblogsConfig } from "~/src/adaptors/api/cnblogs/config/cnblogsConfig.ts"
+import { useWordpressApi } from "~/src/composables/api/useWordpressApi.ts"
+import { WordpressConfig } from "~/src/adaptors/api/wordpress/config/wordpressConfig.ts"
+import { WordpressPlaceholder } from "~/src/adaptors/api/wordpress/config/wordpressPlaceholder.ts"
+import WordpressUtils from "~/src/adaptors/api/wordpress/wordpressUtils.ts"
+import { StrUtil } from "zhi-common"
 
 const props = defineProps({
   apiType: {
@@ -36,19 +39,29 @@ const props = defineProps({
   },
 })
 
-const { t } = useVueI18n()
-const { cfg } = await useCnblogsApi(props.apiType)
+// 处理事件的方法
+const onHomeChange = (value: string, cfg: WordpressConfig) => {
+  const { home, apiUrl } = WordpressUtils.parseHomeAndUrl(value)
+  cfg.home = home
+  cfg.apiUrl = apiUrl
 
-const cnblogsCfg = cfg as CnblogsConfig
-const cnblogsPlaceholder = new CnblogsPlaceholder()
-cnblogsPlaceholder.homePlaceholder = t("setting.cnblogs.home.tip")
-cnblogsPlaceholder.usernamePlaceholder = t("setting.cnblogs.username.tip")
-cnblogsPlaceholder.passwordPlaceholder = t("setting.cnblogs.password.tip")
-cnblogsPlaceholder.apiUrlPlaceholder = t("setting.cnblogs.apiUrl.tip")
-cnblogsPlaceholder.previewUrlPlaceholder = t("setting.cnblogs.previewUrl.tip")
-cnblogsCfg.placeholder = cnblogsPlaceholder
+  if (StrUtil.isEmptyString(cfg.home)) {
+    cfg.apiUrl = ""
+  }
+}
+
+const { t } = useVueI18n()
+const { cfg } = await useWordpressApi(props.apiType)
+const wpCfg = cfg as WordpressConfig
+const wpPlaceholder = new WordpressPlaceholder()
+wpPlaceholder.homePlaceholder = t("setting.wordpress.home.tip")
+wpPlaceholder.usernamePlaceholder = t("setting.wordpress.username.tip")
+wpPlaceholder.passwordPlaceholder = t("setting.wordpress.password.tip")
+wpPlaceholder.apiUrlPlaceholder = t("setting.wordpress.apiUrl.tip")
+wpPlaceholder.previewUrlPlaceholder = t("setting.wordpress.previewUrl.tip")
+wpCfg.placeholder = wpPlaceholder
 </script>
 
 <template>
-  <metaweblog-setting :api-type="props.apiType" :cfg="cnblogsCfg" />
+  <metaweblog-setting :api-type="props.apiType" :cfg="wpCfg" @onHomeChange="onHomeChange" />
 </template>

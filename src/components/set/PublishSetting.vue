@@ -114,9 +114,6 @@ const handleSinglePlatformDelete = (cfg: DynamicConfig) => {
       formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
       // 删除配置
       delete formData.setting[cfg.platformKey]
-      // 删除文章key
-      const postidKey = getDynPostidKey(cfg.platformKey)
-      delete formData.setting[postidKey]
       await updateSetting(formData.setting)
 
       // 重新加载列表
@@ -240,7 +237,7 @@ onMounted(async () => {
                             platform.isAuth ? '已授权' : platform.authMode === AuthMode.API ? '设置无效' : '没有授权'
                           "
                           class="badge-item"
-                          :type="platform.isAuth ? 'success' : 'error'"
+                          :type="platform.isAuth ? 'success' : 'danger'"
                         >
                           <span>{{ platform.platformName }}</span>
                           <span class="name-edit" @click="handleChangePlatformDefine(platform)">

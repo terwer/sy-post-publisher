@@ -23,7 +23,9 @@
  * questions.
  */
 
-import { BlogConfig } from "zhi-blog-api"
+import { MetaweblogConfig } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogConfig.ts"
+import { PageTypeEnum } from "zhi-blog-api"
+import WordpressUtils from "~/src/adaptors/api/wordpress/wordpressUtils.ts"
 
 /**
  * WordPress 配置
@@ -31,7 +33,7 @@ import { BlogConfig } from "zhi-blog-api"
  * @author terwer
  * @since 1.0.0
  */
-class WordpressConfig extends BlogConfig {
+class WordpressConfig extends MetaweblogConfig {
   /**
    * API 地址
    */
@@ -55,17 +57,19 @@ class WordpressConfig extends BlogConfig {
   /**
    * WordPress 配置项
    *
-   * @param apiUrl API 地址
+   * @param homeAddr WordPress 主页
    * @param username 用户名
    * @param password 密码
    * @param middlewareUrl 代理地址
    */
-  constructor(apiUrl: string, username: string, password: string, middlewareUrl?: string) {
-    super()
+  constructor(homeAddr: string, username: string, password: string, middlewareUrl?: string) {
+    super(homeAddr, "", username, password, middlewareUrl)
+
+    const { home, apiUrl } = WordpressUtils.parseHomeAndUrl(homeAddr)
+    this.home = home
     this.apiUrl = apiUrl
-    this.username = username
-    this.password = password
-    this.middlewareUrl = middlewareUrl
+    this.previewUrl = "/?p=[postid]"
+    this.pageType = PageTypeEnum.Markdown
   }
 }
 

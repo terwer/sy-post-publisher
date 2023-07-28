@@ -28,7 +28,8 @@ const getDefineEnv = () => {
   console.log("mode=>", mode)
 
   const defaultEnv = {
-    DEV_MODE: `${isWatch || isServe}`,
+    // DEV_MODE: `${isWatch || isServe}`,
+    DEV_MODE: `false`,
     APP_BASE: `${appBase}`,
     NODE_ENV: "development",
     VITE_DEFAULT_TYPE: `siyuan`,

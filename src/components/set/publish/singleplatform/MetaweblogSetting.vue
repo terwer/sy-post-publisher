@@ -63,6 +63,8 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(["onHomeChange"])
+
 const apiTypeInfo = ref(t("setting.blog.platform.support.metaweblog") + props.apiType + " ")
 
 const isLoading = ref(false)
@@ -125,6 +127,12 @@ const saveConf = async (hideTip?: any) => {
   }
 }
 
+const handleHomeChange = (value: string | number): void => {
+  if (emit) {
+    emit("onHomeChange", value, formData.cfg)
+  }
+}
+
 const initConf = async () => {
   formData.setting = await getSetting()
   const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
@@ -156,7 +164,11 @@ onMounted(async () => {
     <el-alert :closable="false" :title="apiTypeInfo + formData.cfg.blogName" class="top-tip" type="info" />
     <!-- 首页 -->
     <el-form-item :label="t('setting.blog.url')">
-      <el-input v-model="formData.cfg.home" :placeholder="props.cfg?.placeholder.homePlaceholder" />
+      <el-input
+        v-model="formData.cfg.home"
+        :placeholder="props.cfg?.placeholder.homePlaceholder"
+        @input="handleHomeChange"
+      />
     </el-form-item>
     <!-- API 地址 -->
     <el-form-item :label="t('setting.blog.apiurl')">
@@ -185,6 +197,16 @@ onMounted(async () => {
         <el-radio :label="PageTypeEnum.Html" size="large">HTML</el-radio>
         <el-radio :label="PageTypeEnum.Kramdown" size="large">Kramdown</el-radio>
       </el-radio-group>
+    </el-form-item>
+    <!-- 跨域代理地址 -->
+    <el-form-item :label="t('setting.blog.middlewareUrl')">
+      <el-input v-model="formData.cfg.middlewareUrl" :placeholder="t('setting.blog.middlewareUrl.tip')" />
+      <el-alert
+        :closable="false"
+        :title="t('setting.blog.middlewareUrl.my.tip')"
+        class="top-tip"
+        type="warning"
+      ></el-alert>
     </el-form-item>
     <!-- 校验 -->
     <el-form-item>

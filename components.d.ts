@@ -60,6 +60,7 @@ declare module '@vue/runtime-core' {
     SiyuanTest: typeof import('./src/components/test/SiyuanTest.vue')['default']
     TypechoTest: typeof import('./src/components/test/TypechoTest.vue')['default']
     VitepressTest: typeof import('./src/components/test/VitepressTest.vue')['default']
+    WordpressSetting: typeof import('./src/components/set/publish/singleplatform/metaweblog/WordpressSetting.vue')['default']
     WordpressTest: typeof import('./src/components/test/WordpressTest.vue')['default']
     YuqueTest: typeof import('./src/components/test/YuqueTest.vue')['default']
     ZhihuTest: typeof import('./src/components/test/ZhihuTest.vue')['default']

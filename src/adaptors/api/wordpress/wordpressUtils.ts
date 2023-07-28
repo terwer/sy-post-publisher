@@ -23,29 +23,34 @@
  * questions.
  */
 
-import {PageTypeEnum} from "zhi-blog-api"
-import {MetaweblogConfig} from "~/src/adaptors/api/base/metaweblog/config/MetaweblogConfig.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 
 /**
- * 博客园配置
- *
- * @author terwer
- * @since 0.9.0
+ * 用于处理WordPress相关操作的实用工具类
  */
-class CnblogsConfig extends MetaweblogConfig {
+class WordpressUtils {
+  private static logger = createAppLogger("wordpress-utils")
+
   /**
-   * 博客园配置项
+   * 解析给定的主页地址并生成相应的apiUrl地址
    *
-   * @param apiUrl API 地址
-   * @param username 用户名
-   * @param password 密码
-   * @param middlewareUrl 代理地址
+   * @param home - 主页地址
    */
-  constructor(apiUrl: string, username: string, password: string, middlewareUrl?: string) {
-    super("https://www.cnblogs.com/[your-blog-name]", apiUrl, username, password, middlewareUrl)
-    this.previewUrl = "/p/[postid].html"
-    this.pageType = PageTypeEnum.Markdown
+  public static parseHomeAndUrl(home: string): { home: string; apiUrl: string } {
+    this.logger.debug(`Parsing Home address: ${home}`)
+    // 解析主页地址
+    let apiUrl = ""
+    if (home.endsWith("/xmlrpc.php")) {
+      apiUrl = home
+      home = home.replace("/xmlrpc.php", "")
+    } else {
+      home = home.replace(/\/$/, "")
+      apiUrl = `${home}/xmlrpc.php`
+    }
+
+    this.logger.debug(`Parse result: home=${home}, apiUrl=${apiUrl}`)
+    return { home, apiUrl }
   }
 }
 
-export { CnblogsConfig }
+export default WordpressUtils

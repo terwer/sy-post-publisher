@@ -23,11 +23,11 @@
  * questions.
  */
 
-import { BlogPlaceholder } from "zhi-blog-api"
+import { MetaweblogPlaceholder } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogPlaceholder.ts"
 
 /**
  * WordPress 操作提示
  */
-class WordpressPlaceholder extends BlogPlaceholder {}
+class WordpressPlaceholder extends MetaweblogPlaceholder {}
 
 export { WordpressPlaceholder }
