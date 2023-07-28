@@ -33,7 +33,7 @@ export const useSettingStore = defineStore("setting", () => {
       logger.info(`Loaded setting from remote api`)
       return setting ?? {}
     }
-    logger.info(`Loaded setting from cached.`)
+    logger.info(`Loaded setting from cache.`)
     return settingRef.value ?? {}
   }
 

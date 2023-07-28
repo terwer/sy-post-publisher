@@ -26,32 +26,23 @@
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
+import { YuqueConfig } from "~/src/adaptors/api/yuque/config/yuqueConfig.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { JsonUtil, ObjectUtil } from "zhi-common"
-import { WordpressConfig } from "~/src/adaptors/api/wordpress/config/wordpressConfig.ts"
-import { WordpressApiAdaptor } from "~/src/adaptors/api/wordpress/adaptor/wordpressApiAdaptor.ts"
 import { getDynPostidKey } from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import { YuqueApiAdaptor } from "~/src/adaptors/api/yuque/adaptor/yuqueApiAdaptor.ts"
 
-/**
- * 使用Wordpress API的自定义hook
- *
- * @param key 配置键值，可选参数
- * @param newCfg
- * @author terwer
- * @version 0.9.0
- * @since 0.9.0
- */
-export const useWordpressApi = async (key?: string, newCfg?: WordpressConfig) => {
+const useYuqueApi = async (key: string, newCfg?: YuqueConfig) => {
   // 创建应用日志记录器
-  const logger = createAppLogger("use-wordpress-api")
+  const logger = createAppLogger("use-yuque-api")
 
-  // 记录开始使用Wordpress API
-  logger.info("Start using Wordpress API...")
+  // 记录开始使用 Yuque API
+  logger.info("Start using Yuque API...")
 
   // 创建应用实例
   const appInstance = new AppInstance()
 
-  let cfg: WordpressConfig
+  let cfg: YuqueConfig
   if (newCfg) {
     logger.info("Initialize with the latest newCfg passed in...")
     cfg = newCfg
@@ -59,18 +50,18 @@ export const useWordpressApi = async (key?: string, newCfg?: WordpressConfig) =>
     // 从配置中获取数据
     const { getSetting } = useSettingStore()
     const setting = await getSetting()
-    cfg = JsonUtil.safeParse<WordpressConfig>(setting[key], {} as WordpressConfig)
+    cfg = JsonUtil.safeParse<YuqueConfig>(setting[key], {} as YuqueConfig)
+
     // 如果配置为空，则使用默认的环境变量值，并记录日志
     if (ObjectUtil.isEmptyObject(cfg)) {
-      // 从环境变量获取Wordpress API的URL、用户名、认证令牌和中间件URL
-      const wordpressApiUrl = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_API_URL, "http://your-wordpress-home.com")
-      const wordpressUsername = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_USERNAME, "")
-      const wordpressAuthToken = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_AUTH_TOKEN, "")
+      // 从环境变量获取 Yuque API 的 URL、认证令牌和其他配置信息
+      const yuqueUsername = Utils.emptyOrDefault(process.env.VITE_YUQUE_USERNAME, "")
+      const yuqueAuthToken = Utils.emptyOrDefault(process.env.VITE_YUQUE_AUTH_TOKEN, "")
       const middlewareUrl = Utils.emptyOrDefault(
         process.env.VITE_MIDDLEWARE_URL,
-        "http://localhost:3000/api/middleware"
+        "https://api.terwer.space/api/middleware"
       )
-      cfg = new WordpressConfig(wordpressApiUrl, wordpressUsername, wordpressAuthToken, middlewareUrl)
+      cfg = new YuqueConfig(yuqueUsername, yuqueAuthToken, middlewareUrl)
       // 默认值
       cfg.posidKey = getDynPostidKey(key)
       logger.info("Configuration is empty, using default environment variables.")
@@ -79,12 +70,14 @@ export const useWordpressApi = async (key?: string, newCfg?: WordpressConfig) =>
     }
   }
 
-  // 创建Wordpress API适配器
-  const blogApi = new WordpressApiAdaptor(appInstance, cfg)
-  logger.info("Wordpress API created successfully.", cfg)
+  // 创建 Yuque API 适配器
+  const blogApi = new YuqueApiAdaptor(appInstance, cfg)
+  logger.info("Yuque API created successfully.", cfg)
 
   return {
     cfg,
     blogApi,
   }
 }
+
+export { useYuqueApi }

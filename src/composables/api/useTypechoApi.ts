@@ -36,11 +36,12 @@ import { TypechoApiAdaptor } from "~/src/adaptors/api/typecho/adaptor/typechoApi
  * 使用Typecho API的自定义hook
  *
  * @param key 配置键值，可选参数
+ * @param newCfg
  * @author terwer
  * @version 0.9.0
  * @since 0.9.0
  */
-export const useTypechoApi = async (key?: string) => {
+export const useTypechoApi = async (key?: string, newCfg?: TypechoConfig) => {
   // 创建应用日志记录器
   const logger = createAppLogger("use-typecho-api")
 
@@ -50,30 +51,36 @@ export const useTypechoApi = async (key?: string) => {
   // 创建应用实例
   const appInstance = new AppInstance()
 
-  // 从环境变量获取Typecho API的URL、用户名、认证令牌和中间件URL
-  const typechoApiUrl = Utils.emptyOrDefault(process.env.VITE_TYPECHO_API_URL, "http://your-typecho-home.com/")
-  const typechoUsername = Utils.emptyOrDefault(process.env.VITE_TYPECHO_USERNAME, "")
-  const typechoAuthToken = Utils.emptyOrDefault(process.env.VITE_TYPECHO_AUTH_TOKEN, "")
-  const middlewareUrl = Utils.emptyOrDefault(process.env.VITE_MIDDLEWARE_URL, "http://localhost:3000/api/middleware")
-
-  // 从配置中获取数据
-  const { getSetting } = useSettingStore()
-  const setting = await getSetting()
-  let cfg: TypechoConfig = JsonUtil.safeParse<TypechoConfig>(setting[key], {} as TypechoConfig)
-  // 如果配置为空，则使用默认的环境变量值，并记录日志
-  if (ObjectUtil.isEmptyObject(cfg)) {
-    cfg = new TypechoConfig(typechoApiUrl, typechoUsername, typechoAuthToken, middlewareUrl)
-    logger.debug("Configuration is empty, using default environment variables.")
+  let cfg: TypechoConfig
+  if (newCfg) {
+    logger.info("Initialize with the latest newCfg passed in...")
+    cfg = newCfg
   } else {
-    logger.info("Using configuration from settings...")
+    // 从配置中获取数据
+    const { getSetting } = useSettingStore()
+    const setting = await getSetting()
+    cfg = JsonUtil.safeParse<TypechoConfig>(setting[key], {} as TypechoConfig)
+    // 如果配置为空，则使用默认的环境变量值，并记录日志
+    if (ObjectUtil.isEmptyObject(cfg)) {
+      // 从环境变量获取Typecho API的URL、用户名、认证令牌和中间件URL
+      const typechoApiUrl = Utils.emptyOrDefault(process.env.VITE_TYPECHO_API_URL, "http://your-typecho-home.com/")
+      const typechoUsername = Utils.emptyOrDefault(process.env.VITE_TYPECHO_USERNAME, "")
+      const typechoAuthToken = Utils.emptyOrDefault(process.env.VITE_TYPECHO_AUTH_TOKEN, "")
+      const middlewareUrl = Utils.emptyOrDefault(
+        process.env.VITE_MIDDLEWARE_URL,
+        "http://localhost:3000/api/middleware"
+      )
+      cfg = new TypechoConfig(typechoApiUrl, typechoUsername, typechoAuthToken, middlewareUrl)
+      // 默认值
+      cfg.posidKey = getDynPostidKey(key)
+      logger.info("Configuration is empty, using default environment variables.")
+    } else {
+      logger.info("Using configuration from settings...")
+    }
   }
-  // 默认值
-  cfg.posidKey = getDynPostidKey(key)
 
   // 创建Typecho API适配器
   const blogApi = new TypechoApiAdaptor(appInstance, cfg)
-
-  // 记录Typecho API创建成功
   logger.info("Typecho API created successfully.", cfg)
 
   return {

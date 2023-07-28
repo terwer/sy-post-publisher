@@ -23,12 +23,13 @@
  * questions.
  */
 
-import {BlogAdaptor} from "zhi-blog-api"
-import {getSubPlatformTypeByKey, SubPlatformType} from "~/src/components/set/publish/platform/dynamicConfig.ts"
-import {useCnblogsApi} from "~/src/composables/api/useCnblogsApi.ts"
-import {createAppLogger} from "~/src/utils/appLogger.ts"
-import {useWordpressApi} from "~/src/composables/api/useWordpressApi.ts";
-import {useTypechoApi} from "~/src/composables/api/useTypechoApi.ts";
+import { BlogAdaptor, BlogConfig } from "zhi-blog-api"
+import { getSubPlatformTypeByKey, SubPlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import { useCnblogsApi } from "~/src/composables/api/useCnblogsApi.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
+import { useWordpressApi } from "~/src/composables/api/useWordpressApi.ts"
+import { useTypechoApi } from "~/src/composables/api/useTypechoApi.ts"
+import { useYuqueApi } from "~/src/composables/api/useYuqueApi.ts"
 
 /**
  * 适配器统一入口
@@ -43,24 +44,30 @@ class Adaptors {
    * 根据平台key查找适配器
    *
    * @param key
+   * @param newCfg
    */
-  public static async getAdaptor(key: string): Promise<BlogAdaptor> {
+  public static async getAdaptor(key: string, newCfg?: any): Promise<BlogAdaptor> {
     let blogAdaptor = null
     const type: SubPlatformType = getSubPlatformTypeByKey(key)
 
     switch (type) {
+      case SubPlatformType.Common_Yuque: {
+        const { blogApi } = await useYuqueApi(key, newCfg)
+        blogAdaptor = blogApi
+        break
+      }
       case SubPlatformType.Metaweblog_Cnblogs: {
-        const { blogApi } = await useCnblogsApi(key)
+        const { blogApi } = await useCnblogsApi(key, newCfg)
         blogAdaptor = blogApi
         break
       }
-      case SubPlatformType.Wordpress_Wordpress:{
-        const { blogApi } = await useWordpressApi(key)
+      case SubPlatformType.Metaweblog_Typecho: {
+        const { blogApi } = await useTypechoApi(key, newCfg)
         blogAdaptor = blogApi
         break
       }
-      case SubPlatformType.Metaweblog_Typecho:{
-        const { blogApi } = await useTypechoApi(key)
+      case SubPlatformType.Wordpress_Wordpress: {
+        const { blogApi } = await useWordpressApi(key, newCfg)
         blogAdaptor = blogApi
         break
       }

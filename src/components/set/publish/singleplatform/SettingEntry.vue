@@ -32,6 +32,7 @@ import { getSubPlatformTypeByKey, SubPlatformType } from "~/src/components/set/p
 import CnblogsSetting from "~/src/components/set/publish/singleplatform/metaweblog/CnblogsSetting.vue"
 import WordpressSetting from "~/src/components/set/publish/singleplatform/metaweblog/WordpressSetting.vue"
 import TypechoSetting from "~/src/components/set/publish/singleplatform/metaweblog/TypechoSetting.vue"
+import YuqueSetting from "~/src/components/set/publish/singleplatform/commonblog/YuqueSetting.vue"
 
 // uses
 const { t } = useVueI18n()
@@ -45,7 +46,8 @@ const subtype = getSubPlatformTypeByKey(apiType)
 
 <template>
   <back-page :title="t('setting.entry.title') + apiType">
-    <cnblogs-setting v-if="subtype === SubPlatformType.Metaweblog_Cnblogs" :api-type="apiType" />
+    <yuque-setting v-if="subtype === SubPlatformType.Common_Yuque" :api-type="apiType" />
+    <cnblogs-setting v-else-if="subtype === SubPlatformType.Metaweblog_Cnblogs" :api-type="apiType" />
     <wordpress-setting v-else-if="subtype === SubPlatformType.Wordpress_Wordpress" :api-type="apiType" />
     <typecho-setting v-else-if="subtype === SubPlatformType.Metaweblog_Typecho" :api-type="apiType" />
     <span v-else>

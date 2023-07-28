@@ -17,6 +17,15 @@ export const pre = {
       authMode: AuthMode.WEBSITE,
       isEnabled: false
     },
+    {
+      platformType: PlatformType.Common,
+      subPlatformType: SubPlatformType.Common_Yuque,
+      platformKey: "common_Yuque",
+      platformName: "语雀",
+      platformIcon: svgIcons.iconIFYuque,
+      authMode: AuthMode.API,
+      isEnabled: false
+    },
   ],
   githubCfg: <DynamicConfig[]>[
     {

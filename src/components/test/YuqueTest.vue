@@ -35,8 +35,9 @@ import { Base64 } from "js-base64"
 import { CommonFetchClient } from "zhi-fetch-middleware"
 import { YuqueConfig } from "~/src/adaptors/api/yuque/config/yuqueConfig.ts"
 import { YuqueApiAdaptor } from "~/src/adaptors/api/yuque/adaptor/yuqueApiAdaptor.ts"
+import Adaptors from "~/src/adaptors"
 
-const logger = createAppLogger("wordpress-test")
+const logger = createAppLogger("yuque-test")
 
 const params = ref("{}")
 const showParamFile = ref(false)
@@ -185,7 +186,7 @@ const onImageSelect = async (event: Event) => {
 const yuqueHandleApi = async () => {
   isLoading.value = true
   logMessage.value = ""
-  logMessage.value = "wordpress requesting..."
+  logMessage.value = "yuque requesting..."
   try {
     // appInstance
     const appInstance = new AppInstance()
@@ -193,16 +194,8 @@ const yuqueHandleApi = async () => {
 
     switch (methodOption.value) {
       case METHOD_GET_USERS_BLOGS: {
-        // const middlewareUrl = "http://127.0.0.1:3000/api/middleware"
-        const middlewareUrl = "https://api.terwer.space/api/middleware"
-        const yuqueCfg = new YuqueConfig(
-          "https://www.yuque.com/api/v2",
-          "terwer",
-          "JJWN5QEz5vwBdkbMgutoNNRouyz4MnxLbSVbz9Pc",
-          middlewareUrl
-        )
-        // yuqueCfg.blogid = "terwer/note"
-        const yuqueApiAdaptor = new YuqueApiAdaptor(appInstance, yuqueCfg)
+        const key = "common_Yuque"
+        const yuqueApiAdaptor = await Adaptors.getAdaptor(key)
         const yuqueApi = Utils.blogApi(appInstance, yuqueApiAdaptor)
         const result = await yuqueApi.getUsersBlogs()
         logMessage.value = JSON.stringify(result)
@@ -250,7 +243,7 @@ const yuqueHandleApi = async () => {
         const client = new SimpleXmlRpcClient(xmlrpcApiUrl, "", {})
         const result = await client.methodCall("metaWeblog.newMediaObject", ["", "terwer", "123456", metadata])
         logMessage.value = JSON.stringify(result)
-        logger.info("wordpress new mediaObject result=>", result)
+        logger.info("yuque new mediaObject result=>", result)
         break
       }
       default:
@@ -267,7 +260,7 @@ const yuqueHandleApi = async () => {
 </script>
 
 <template>
-  <div id="wordpress-test">
+  <div id="yuque-test">
     <div class="method-list">
       <el-select v-model="methodOption" class="m-2" placeholder="请选择方法名称" @change="onMethodChange">
         <el-option v-for="item in methodOptions.options" :key="item.value" :label="item.label" :value="item.value" />
@@ -290,7 +283,7 @@ const yuqueHandleApi = async () => {
 </template>
 
 <style lang="stylus" scoped>
-#wordpress-test
+#yuque-test
   margin 16px 20px
   .item
     margin-bottom 8px

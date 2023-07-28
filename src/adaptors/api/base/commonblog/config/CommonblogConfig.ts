@@ -1,3 +1,7 @@
+import { BlogConfig, PageTypeEnum } from "zhi-blog-api"
+import { MetaweblogPlaceholder } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogPlaceholder.ts"
+import { CommonblogPlaceholder } from "~/src/adaptors/api/base/commonblog/config/CommonblogPlaceholder.ts"
+
 /*
  * Copyright (c) 2023, Terwer . All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -22,14 +26,7 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-
-import { BlogConfig, PageTypeEnum } from "zhi-blog-api"
-import { MetaweblogPlaceholder } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogPlaceholder.ts"
-
-/**
- * Metaweblog配置类
- */
-export class MetaweblogConfig extends BlogConfig {
+export class CommonblogConfig extends BlogConfig {
   /**
    * 首页
    */
@@ -79,19 +76,24 @@ export class MetaweblogConfig extends BlogConfig {
   public override pageType = PageTypeEnum.Markdown
 
   /**
-   * 操作提示
+   * token设置地址
    */
-  public override placeholder = {} as MetaweblogPlaceholder
+  public override tokenSettingUrl = ""
 
   /**
-   * 跨域请求代理
+   * 操作提示
+   */
+  public override placeholder = {} as CommonblogPlaceholder
+
+  /**
+   * 代理地址
    */
   public override middlewareUrl = ""
 
   /**
-   * 是否展示Token设置地址
+   * 是否启用用户名
    */
-  public showTokenTip = false
+  public usernameEnabled = false
 
   constructor(home: string, apiUrl: string, username: string, password: string, middlewareUrl?: string) {
     super()
@@ -107,5 +109,6 @@ export class MetaweblogConfig extends BlogConfig {
     this.pageType = PageTypeEnum.Markdown
     this.placeholder = new MetaweblogPlaceholder()
     this.middlewareUrl = middlewareUrl
+    this.usernameEnabled = false
   }
 }

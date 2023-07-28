@@ -24,27 +24,28 @@
   -->
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { MetaweblogConfig } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogConfig.ts"
-import { PageTypeEnum } from "zhi-blog-api"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { AppInstance } from "~/src/appInstance.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { JsonUtil, ObjectUtil } from "zhi-common"
+import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { reactive, ref } from "vue"
 import {
   DynamicConfig,
   DynamicJsonCfg,
   getDynCfgByKey,
-  setDynamicJsonCfg,
+  setDynamicJsonCfg
 } from "~/src/components/set/publish/platform/dynamicConfig.ts"
-import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { SypConfig } from "~/syp.config.ts"
-import Adaptors from "~/src/adaptors"
-import { Utils } from "~/src/utils/utils.ts"
-import { AppInstance } from "~/src/appInstance.ts"
-import { ElMessage } from "element-plus"
+import { CommonblogConfig } from "~/src/adaptors/api/base/commonblog/config/CommonblogConfig.ts"
+import { onMounted } from "vue"
+import { JsonUtil, ObjectUtil } from "zhi-common"
+import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
+import { PageTypeEnum, PasswordType } from "zhi-blog-api"
+import Adaptors from "~/src/adaptors";
+import {Utils} from "~/src/utils/utils.ts";
+import {ElMessage} from "element-plus";
 
-const logger = createAppLogger("metaweblog-setting")
+const logger = createAppLogger("commonblog-setting")
 // appInstance
 const appInstance = new AppInstance()
 
@@ -57,32 +58,32 @@ const props = defineProps({
     default: "",
   },
   cfg: {
-    // 必须继承MetaweblogConfig
+    // 必须继承BlogConfig
     type: Object,
     default: null,
   },
 })
 
-const emit = defineEmits(["onHomeChange"])
-
-const apiTypeInfo = ref(t("setting.blog.platform.support.metaweblog") + props.apiType + " ")
+const apiTypeInfo = ref(t("setting.blog.platform.support.common") + props.apiType + " ")
 
 const isLoading = ref(false)
 const formData = reactive({
-  cfg: {} as MetaweblogConfig,
+  cfg: {} as CommonblogConfig,
 
   dynCfg: {} as DynamicConfig,
   setting: {} as typeof SypConfig,
   dynamicConfigArray: [] as DynamicConfig[],
 })
 
+
 const valiConf = async () => {
   isLoading.value = true
 
   let errMsg: any
   try {
-    const metaweblogApiAdaptor = await Adaptors.getAdaptor(props.apiType, formData.cfg as any)
-    const api = Utils.blogApi(appInstance, metaweblogApiAdaptor)
+    const commonblogApiAdaptor = await Adaptors.getAdaptor(props.apiType, formData.cfg as any)
+    logger.debug("commonblogApiAdaptor=>", commonblogApiAdaptor)
+    const api = Utils.blogApi(appInstance, commonblogApiAdaptor)
     const usersBlogs = await api.getUsersBlogs()
     if (usersBlogs && usersBlogs.length > 0) {
       const userBlog = usersBlogs[0]
@@ -112,11 +113,11 @@ const valiConf = async () => {
   await saveConf(true)
 
   isLoading.value = false
-  logger.debug("Metaweblog通用Setting验证完毕")
+  logger.debug("Commonblog通用Setting验证完毕")
 }
 
 const saveConf = async (hideTip?: any) => {
-  logger.debug("Metaweblog通用Setting保存配置")
+  logger.debug("Commonblog通用Setting保存配置")
   // 平台使用配置
   formData.setting[props.apiType] = formData.cfg
   // 平台基本配置
@@ -129,11 +130,6 @@ const saveConf = async (hideTip?: any) => {
   }
 }
 
-const handleHomeChange = (value: string | number): void => {
-  if (emit) {
-    emit("onHomeChange", value, formData.cfg)
-  }
-}
 
 const initConf = async () => {
   formData.setting = await getSetting()
@@ -141,12 +137,12 @@ const initConf = async () => {
   formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
   formData.dynCfg = getDynCfgByKey(formData.dynamicConfigArray, props.apiType)
 
-  logger.debug("Metaweblog通用Setting配置初始化")
-  let conf = props.cfg as MetaweblogConfig
+  logger.debug("Commonblog通用Setting配置初始化")
+  let conf = props.cfg as CommonblogConfig
   // 如果没有配置。读取默认配置
   if (ObjectUtil.isEmptyObject(conf)) {
     const apiConf = formData.setting[props.apiType]
-    conf = JsonUtil.safeParse<MetaweblogConfig>(apiConf, {} as MetaweblogConfig)
+    conf = JsonUtil.safeParse<CommonblogConfig>(apiConf, {} as CommonblogConfig)
   }
 
   if (conf) {
@@ -165,30 +161,43 @@ onMounted(async () => {
   <el-form label-width="120px">
     <el-alert :closable="false" :title="apiTypeInfo + formData.cfg.blogName" class="top-tip" type="info" />
     <!-- 首页 -->
-    <el-form-item :label="t('setting.blog.url')">
-      <el-input
-        v-model="formData.cfg.home"
-        :placeholder="props.cfg?.placeholder.homePlaceholder"
-        @input="handleHomeChange"
-      />
+    <el-form-item :label="t('setting.common.home')">
+      <el-input v-model="formData.cfg.home" :placeholder="props.cfg?.placeholder.homePlaceholder" />
     </el-form-item>
     <!-- API 地址 -->
-    <el-form-item :label="t('setting.blog.apiurl')">
+    <el-form-item :label="t('setting.common.apiurl')">
       <el-input v-model="formData.cfg.apiUrl" :placeholder="props.cfg?.placeholder.apiUrlPlaceholder" />
     </el-form-item>
     <!-- 登录名 -->
-    <el-form-item :label="t('setting.blog.username')">
+    <el-form-item :label="t('setting.common.username')" v-if="props.cfg.usernameEnabled">
       <el-input v-model="formData.cfg.username" :placeholder="props.cfg?.placeholder.usernamePlaceholder" />
     </el-form-item>
     <!-- 密码 -->
-    <el-form-item :label="t('setting.blog.password')">
+    <el-form-item
+      :label="t('setting.common.password')"
+      v-if="props.cfg.passwordType === PasswordType.PasswordType_Password"
+    >
       <el-input
-        v-model="formData.cfg.password"
         type="password"
+        v-model="formData.cfg.password"
         show-password
-        :placeholder="props.cfg?.placeholder.passwordPlaceholder"
+        :placeholder="props.cfg.placeholder.passwordPlaceholder"
       />
-      <a v-if="formData.cfg.showTokenTip" :href="props.cfg.tokenSettingUrl" target="_blank">{{ t("setting.common.token.gen") }}：{{ props.cfg.tokenSettingUrl }}</a>
+      <a :href="props.cfg.tokenSettingUrl" target="_blank"
+        >{{ t("setting.common.username.gen") }}：{{ props.cfg.tokenSettingUrl }}</a
+      >
+    </el-form-item>
+    <!-- token -->
+    <el-form-item v-else :label="t('setting.common.token')">
+      <el-input
+        type="password"
+        v-model="formData.cfg.password"
+        show-password
+        :placeholder="props.cfg.placeholder.passwordPlaceholder"
+      />
+      <a :href="props.cfg.tokenSettingUrl" target="_blank"
+        >{{ t("setting.common.token.gen") }}：{{ props.cfg.tokenSettingUrl }}</a
+      >
     </el-form-item>
     <!-- 预览地址 -->
     <el-form-item :label="t('setting.blog.previewUrl')">

@@ -43,8 +43,11 @@ class CnblogsConfig extends MetaweblogConfig {
    */
   constructor(apiUrl: string, username: string, password: string, middlewareUrl?: string) {
     super("https://www.cnblogs.com/[your-blog-name]", apiUrl, username, password, middlewareUrl)
+
+    this.tokenSettingUrl = "https://i.cnblogs.com/settings"
     this.previewUrl = "/p/[postid].html"
     this.pageType = PageTypeEnum.Markdown
+    this.showTokenTip = true
   }
 }
 

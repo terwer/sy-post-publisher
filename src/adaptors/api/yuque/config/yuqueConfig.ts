@@ -23,43 +23,21 @@
  * questions.
  */
 
-import { BlogConfig } from "zhi-blog-api"
+import { PageTypeEnum, PasswordType } from "zhi-blog-api"
+import { CommonblogConfig } from "~/src/adaptors/api/base/commonblog/config/CommonblogConfig.ts"
 
 /**
  * Yuque 配置
  */
-class YuqueConfig extends BlogConfig {
-  /**
-   * API 地址
-   */
-  public override apiUrl = ""
+class YuqueConfig extends CommonblogConfig {
+  constructor(username: string, password: string, middlewareUrl?: string) {
+    super("https://www.yuque.com/", "https://www.yuque.com/api/v2", username, password, middlewareUrl)
 
-  /**
-   * 用户名
-   */
-  public override username = ""
-
-  /**
-   * 密码
-   */
-  public override password = ""
-
-  /**
-   * 标识
-   */
-  public override blogid = ""
-
-  /**
-   * 代理地址
-   */
-  public override middlewareUrl = ""
-
-  constructor(apiUrl: string, username: string, password: string, middlewareUrl?: string) {
-    super()
-    this.apiUrl = apiUrl
-    this.username = username
-    this.password = password
-    this.middlewareUrl = middlewareUrl
+    this.tokenSettingUrl = "https://www.yuque.com/settings/tokens"
+    this.previewUrl = "/[notebook]/[postid]"
+    this.pageType = PageTypeEnum.Markdown
+    this.usernameEnabled = true
+    this.passwordType = PasswordType.PasswordType_Token
   }
 }
 

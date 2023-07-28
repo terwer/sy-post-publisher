@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     ChangeLocal: typeof import('./src/components/set/preference/ChangeLocal.vue')['default']
     CnblogsSetting: typeof import('./src/components/set/publish/singleplatform/metaweblog/CnblogsSetting.vue')['default']
     CnblogsTest: typeof import('./src/components/test/CnblogsTest.vue')['default']
+    CommonBlogSetting: typeof import('./src/components/set/publish/singleplatform/CommonBlogSetting.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -63,6 +64,7 @@ declare module '@vue/runtime-core' {
     VitepressTest: typeof import('./src/components/test/VitepressTest.vue')['default']
     WordpressSetting: typeof import('./src/components/set/publish/singleplatform/metaweblog/WordpressSetting.vue')['default']
     WordpressTest: typeof import('./src/components/test/WordpressTest.vue')['default']
+    YuqueSetting: typeof import('./src/components/set/publish/singleplatform/commonblog/YuqueSetting.vue')['default']
     YuqueTest: typeof import('./src/components/test/YuqueTest.vue')['default']
     ZhihuTest: typeof import('./src/components/test/ZhihuTest.vue')['default']
   }
