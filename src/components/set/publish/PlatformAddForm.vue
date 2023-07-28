@@ -29,6 +29,7 @@ import {
   AuthMode,
   DynamicConfig,
   DynamicJsonCfg,
+  getDynPostidKey,
   getNewPlatformKey,
   getSubtypeList,
   isDynamicKeyExists,
@@ -103,11 +104,9 @@ const validateForm = (formEl) => {
 
   // 平台key必须唯一
   const pkey = formData.dynCfg.platformKey
-  // 保证开关变量key不重复
-  const switchKey = "switch-" + pkey
-  const postidKey = "custom-" + pkey + "-post-id"
+  const postidKey = getDynPostidKey(pkey)
   // 保证文章绑定id的key不重复
-  if (checkKeyExists(pkey) || checkKeyExists(switchKey) || checkKeyExists(postidKey)) {
+  if (checkKeyExists(pkey) || checkKeyExists(postidKey)) {
     ElMessage.error(t("dynamic.platform.opt.key.exist"))
     return false
   }
@@ -139,6 +138,8 @@ const submitForm = async (formEl) => {
   formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
   // 初始化一个空配置
   formData.setting[newCfg.platformKey] = "{}"
+  const postidKey = getDynPostidKey(newCfg.platformKey)
+  formData.setting[postidKey] = ""
   await updateSetting(formData.setting)
 
   // 重新加载列表
