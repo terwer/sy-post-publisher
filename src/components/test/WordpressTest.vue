@@ -31,8 +31,7 @@ import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 import { SimpleXmlRpcClient } from "simple-xmlrpc"
 import { MediaObject } from "zhi-blog-api"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { WordpressConfig } from "~/src/adaptors/api/wordpress/config/wordpressConfig.ts"
-import { WordpressApiAdaptor } from "~/src/adaptors/api/wordpress/adaptor/wordpressApiAdaptor.ts"
+import Adaptors from "~/src/adaptors"
 
 const logger = createAppLogger("wordpress-test")
 
@@ -191,13 +190,8 @@ const wordpressHandleApi = async () => {
 
     switch (methodOption.value) {
       case METHOD_GET_USERS_BLOGS: {
-        const wordpressCfg = new WordpressConfig(
-          "http://127.0.0.1:8000/xmlrpc.php",
-          "terwer",
-          "123456",
-          "http://127.0.0.1:3000/api/middleware"
-        )
-        const wordpressApiAdaptor = new WordpressApiAdaptor(appInstance, wordpressCfg)
+        const key = "wordpress_Wordpress"
+        const wordpressApiAdaptor = await Adaptors.getAdaptor(key)
         const wordpressApi = Utils.blogApi(appInstance, wordpressApiAdaptor)
         const result = await wordpressApi.getUsersBlogs()
         logMessage.value = JSON.stringify(result)
@@ -208,8 +202,8 @@ const wordpressHandleApi = async () => {
         break
       }
       case METHOD_GET_RECENT_POSTS: {
-        const wordpressCfg = {}
-        const wordpressApiAdaptor = {}
+        const key = "wordpress_Wordpress"
+        const wordpressApiAdaptor = await Adaptors.getAdaptor(key)
         const wordpressApi = Utils.blogApi(appInstance, wordpressApiAdaptor)
         const wordpressPosts = await wordpressApi.getRecentPosts(10)
         logMessage.value = JSON.stringify(wordpressPosts)

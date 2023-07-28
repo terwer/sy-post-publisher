@@ -146,7 +146,7 @@ const handleOpenBrowserAuth = async (cfg: DynamicConfig) => {
 }
 
 const handleImportPre = () => {
-  alert(111)
+  ElMessage.info("开发中，敬请期待，您可以自行前往 [新增平台] 选择添加")
 }
 
 const initPage = async () => {
