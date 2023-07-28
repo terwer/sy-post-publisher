@@ -1,5 +1,5 @@
 <!--
-  - Copyright (c) 2023, Terwer . All rights reserved.
+  - Copyright (c) 2022-2023, Terwer . All rights reserved.
   - DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
   -
   - This code is free software; you can redistribute it and/or modify it
@@ -22,36 +22,34 @@
   - or visit www.terwer.space if you need additional information or have any
   - questions.
   -->
-
-<script setup lang="ts">
-import BackPage from "~/src/components/common/BackPage.vue"
-import { reactive } from "vue"
-import { useRoute } from "vue-router"
+<script lang="ts" setup>
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { getSubPlatformTypeByKey, SubPlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
-import CnblogsSetting from "~/src/components/set/publish/singleplatform/metaweblog/CnblogsSetting.vue"
+import { useCnblogsApi } from "~/src/composables/api/useCnblogsApi.ts"
+import MetaweblogSetting from "~/src/components/set/publish/singleplatform/MetaweblogSetting.vue"
+import { MetaweblogPlaceholder } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogPlaceholder.ts"
+import { CnblogsConfig } from "~/src/adaptors/api/cnblogs/config/cnblogsConfig.ts"
+import { MetaweblogConfig } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogConfig.ts"
 
-// uses
+const props = defineProps({
+  apiType: {
+    type: String,
+    default: "",
+  },
+})
+
 const { t } = useVueI18n()
-const route = useRoute()
+const { cfg } = await useCnblogsApi(props.apiType)
 
-// datas
-const params = reactive(route.params)
-const apiType = params.key as string
-const subtype = getSubPlatformTypeByKey(apiType)
+const cnblogsCfg = cfg as MetaweblogConfig
+const cnblogsPlaceholder = new MetaweblogPlaceholder()
+cnblogsPlaceholder.homePlaceholder = t("setting.cnblogs.home.tip")
+cnblogsPlaceholder.usernamePlaceholder = t("setting.cnblogs.username.tip")
+cnblogsPlaceholder.passwordPlaceholder = t("setting.cnblogs.password.tip")
+cnblogsPlaceholder.apiUrlPlaceholder = t("setting.cnblogs.apiUrl.tip")
+cnblogsPlaceholder.previewUrlPlaceholder = t("setting.cnblogs.previewUrl.tip")
+cnblogsCfg.placeholder = cnblogsPlaceholder
 </script>
 
 <template>
-  <back-page :title="t('setting.entry.title') + apiType">
-    <cnblogs-setting v-if="subtype === SubPlatformType.Metaweblog_Cnblogs" :api-type="apiType" />
-    <span v-else>
-      <el-alert :closable="false" :title="t('setting.entry.not.supported')" class="top-tip" type="error" />
-    </span>
-  </back-page>
+  <metaweblog-setting :api-type="props.apiType" :cfg="cfg" />
 </template>
-
-<style lang="stylus" scoped>
-.top-tip
-  margin 10px 0
-  padding-left 0
-</style>

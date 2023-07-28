@@ -28,25 +28,58 @@ import { Utils } from "~/src/utils/utils.ts"
 import { CnblogsConfig } from "~/src/adaptors/api/cnblogs/config/cnblogsConfig.ts"
 import { CnblogsApiAdaptor } from "~/src/adaptors/api/cnblogs/adaptor/cnblogsApiAdaptor.ts"
 import { AppInstance } from "~/src/appInstance.ts"
+import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { JsonUtil, ObjectUtil } from "zhi-common"
+import {getDynPostidKey} from "~/src/components/set/publish/platform/dynamicConfig.ts";
 
+/**
+ * 使用Cnblogs API的自定义hook
+ *
+ * @param key 配置键值，可选参数
+ * @author terwer
+ * @version 0.9.0
+ * @since 0.9.0
+ */
 export const useCnblogsApi = async (key?: string) => {
+  // 创建应用日志记录器
   const logger = createAppLogger("use-cnblogs-api")
+
+  // 记录开始使用Cnblogs API
+  logger.info("Start using Cnblogs API...")
+
+  // 创建应用实例
   const appInstance = new AppInstance()
 
-  const cnblogsApiUrl = Utils.emptyOrDefault(process.env.VITE_CNBLOGS_API_URL, "")
+  // 从环境变量获取Cnblogs API的URL、用户名、认证令牌和中间件URL
+  const cnblogsApiUrl = Utils.emptyOrDefault(process.env.VITE_CNBLOGS_API_URL, "https://rpc.cnblogs.com/metaweblog/[yourname]")
   const cnblogsUsername = Utils.emptyOrDefault(process.env.VITE_CNBLOGS_USERNAME, "")
   const cnblogsAuthToken = Utils.emptyOrDefault(process.env.VITE_CNBLOGS_AUTH_TOKEN, "")
-  const middlewareUrl = Utils.emptyOrDefault(process.env.VITE_MIDDLEWARE_URL, "")
+  const middlewareUrl = Utils.emptyOrDefault(process.env.VITE_MIDDLEWARE_URL, "https://api.terwer.space/api/middleware")
 
-  // 从配置取数据
-  // const { getSetting } = useSettingStore()
-  // const setting = await getSetting()
-  // const cfg = setting[key] as BlogConfig
+  // 从配置中获取数据
+  const { getSetting } = useSettingStore()
+  const setting = await getSetting()
+  let cfg = JsonUtil.safeParse<CnblogsConfig>(setting[key], {} as CnblogsConfig)
 
-  const cnblogsConfig = new CnblogsConfig(cnblogsApiUrl, cnblogsUsername, cnblogsAuthToken, middlewareUrl)
-  const blogApi = new CnblogsApiAdaptor(appInstance, cnblogsConfig)
+  // 如果配置为空，则使用默认的环境变量值，并记录日志
+  if (ObjectUtil.isEmptyObject(cfg)) {
+    cfg = new CnblogsConfig(cnblogsApiUrl, cnblogsUsername, cnblogsAuthToken, middlewareUrl)
+    logger.debug("Configuration is empty, using default environment variables.")
+  } else {
+    logger.info("Using configuration from settings...")
+  }
+  // 默认值
+  cfg.posidKey = getDynPostidKey(key)
+
+
+  // 创建Cnblogs API适配器
+  const blogApi = new CnblogsApiAdaptor(appInstance, cfg)
+
+  // 记录Cnblogs API创建成功
+  logger.info("Cnblogs API created successfully.")
 
   return {
+    cfg,
     blogApi,
   }
 }

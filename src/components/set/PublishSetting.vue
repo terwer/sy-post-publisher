@@ -36,7 +36,6 @@ import {
   deletePlatformByKey,
   DynamicConfig,
   DynamicJsonCfg,
-  getDynSwitchKey,
   PlatformType,
   replacePlatformByKey,
   setDynamicJsonCfg,
@@ -112,9 +111,6 @@ const handleSinglePlatformDelete = (cfg: DynamicConfig) => {
       // 替换删除后的平台配置
       const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
       formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
-      // 删除状态
-      const switchKey = getDynSwitchKey(cfg.platformKey)
-      delete formData.setting[switchKey]
       // 删除配置
       delete formData.setting[cfg.platformKey]
       await updateSetting(formData.setting)
@@ -141,8 +137,6 @@ const handlePlatformEnabled = async (cfg: DynamicConfig) => {
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
   formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
   // 更新状态
-  const switchKey = getDynSwitchKey(cfg.platformKey)
-  formData.setting[switchKey] = cfg.isEnabled
   await updateSetting(formData.setting)
 }
 

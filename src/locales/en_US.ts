@@ -504,4 +504,6 @@ export default {
   "setting.platform.right.tips3":
     "3. At present, we support webpage authorization and API authorization. The complex points of API authorization are relatively stable. The webpage authorization is simple but may fail. Surprise: Webpage authorization mode 100 compatible",
   "setting.platform.right.tips4": "4. If you need to be compatible with other platforms, please contact me",
+  "setting.entry.title": "Platform Unified Settings - ",
+  "setting.entry.not.supported": "Unsupported platforms",
 }

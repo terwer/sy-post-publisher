@@ -29,7 +29,6 @@ import {
   AuthMode,
   DynamicConfig,
   DynamicJsonCfg,
-  getDynSwitchKey,
   getNewPlatformKey,
   getSubtypeList,
   isDynamicKeyExists,
@@ -138,9 +137,6 @@ const submitForm = async (formEl) => {
   // 转换格式并保存
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
   formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
-  const switchKey = getDynSwitchKey(newCfg.platformKey)
-  // 默认启用禁用
-  formData.setting[switchKey] = String(newCfg.isEnabled)
   // 初始化一个空配置
   formData.setting[newCfg.platformKey] = "{}"
   await updateSetting(formData.setting)
@@ -218,7 +214,13 @@ initPage()
 <template>
   <back-page :title="'新增自定义平台 - ' + ptype">
     <el-form class="add-form" ref="formRef" label-width="100px" :model="formData.dynCfg" :rules="formValidateRules">
-      <el-alert v-if="formData.isPre" class="top-tip" title="当前为初次添加，将导入该平台的预定义模板；如果再次添加，将生成可修改的新实例" type="error" :closable="false" />
+      <el-alert
+        v-if="formData.isPre"
+        class="top-tip"
+        title="当前为初次添加，将导入该平台的预定义模板；如果再次添加，将生成可修改的新实例"
+        type="error"
+        :closable="false"
+      />
       <el-alert class="top-tip" :title="'当前平台类型为=>' + ptype" type="warning" :closable="false" />
       <!-- 子平台名称 -->
       <el-form-item v-if="formData.subtypeOptions.length > 0" label="子平台类型">

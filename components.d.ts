@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BackPage: typeof import('./src/components/common/BackPage.vue')['default']
     ChangeLocal: typeof import('./src/components/set/preference/ChangeLocal.vue')['default']
+    CnblogsSetting: typeof import('./src/components/set/publish/singleplatform/metaweblog/CnblogsSetting.vue')['default']
     CnblogsTest: typeof import('./src/components/test/CnblogsTest.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']
     ElBadge: typeof import('element-plus/es')['ElBadge']

@@ -23,71 +23,33 @@
   - questions.
   -->
 
-<template>
-  <el-form label-width="120px">
-    <el-alert :title="apiTypeInfo + blogName" type="info" :closable="false" />
-    <el-form-item :label="t('setting.blog.url')">
-      <el-input v-model="home" :placeholder="props.cfg?.placeholder.homePlaceholder" />
-    </el-form-item>
-
-    <el-form-item :label="t('setting.blog.username')">
-      <el-input v-model="username" :placeholder="props.cfg?.placeholder.usernamePlaceholder" />
-    </el-form-item>
-
-    <el-form-item :label="t('setting.blog.password')">
-      <el-input
-        v-model="password"
-        type="password"
-        show-password
-        :placeholder="props.cfg?.placeholder.passwordPlaceholder"
-      />
-    </el-form-item>
-
-    <el-form-item :label="t('setting.blog.apiurl')">
-      <el-input v-model="apiUrl" :placeholder="props.cfg?.placeholder.apiUrlPlaceholder" />
-    </el-form-item>
-
-    <el-form-item :label="t('setting.blog.previewUrl')">
-      <el-input v-model="previewUrl" :placeholder="props.cfg?.placeholder.previewUrlPlaceholder" />
-    </el-form-item>
-
-    <el-form-item :label="t('setting.blog.pageType')">
-      <el-radio-group v-model="ptype" class="ml-4">
-        <el-radio :label="0" size="large">Markdown</el-radio>
-        <el-radio :label="1" size="large">HTML</el-radio>
-      </el-radio-group>
-    </el-form-item>
-
-    <el-form-item>
-      <el-button type="primary" :loading="isLoading" @click="valiConf">
-        {{ isLoading ? t("setting.blog.vali.ing") : t("setting.blog.vali") }}
-      </el-button>
-      <el-alert :title="t('setting.blog.vali.tip.metaweblog')" type="warning" :closable="false" v-if="!apiStatus" />
-      <el-alert :title="t('setting.blog.vali.ok.metaweblog')" type="success" :closable="false" v-if="apiStatus" />
-    </el-form-item>
-
-    <el-form-item>
-      <el-button type="primary" @click="saveConf">{{ t("setting.blog.save") }} </el-button>
-      <el-button>{{ t("setting.blog.cancel") }}</el-button>
-    </el-form-item>
-  </el-form>
-</template>
-
 <script lang="ts" setup>
-import { onMounted, ref } from "vue"
-import { ElMessage } from "element-plus"
+import { onMounted, reactive, ref } from "vue"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { MetaweblogConfig } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogConfig.ts"
 import { PageTypeEnum } from "zhi-blog-api"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { JsonUtil, ObjectUtil } from "zhi-common"
+import {
+  DynamicConfig,
+  DynamicJsonCfg,
+  getDynCfgByKey,
+  setDynamicJsonCfg,
+} from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
+import { SypConfig } from "~/syp.config.ts"
+import Adaptors from "~/src/adaptors"
+import { Utils } from "~/src/utils/utils.ts"
+import { AppInstance } from "~/src/appInstance.ts"
+import { ElMessage } from "element-plus"
 
 const logger = createAppLogger("metaweblog-setting")
+// appInstance
+const appInstance = new AppInstance()
 
 const { t } = useVueI18n()
-let setting
-const { getSetting, updateSetting, checkKeyExists, deleteKey } = useSettingStore()
+const { getSetting, updateSetting } = useSettingStore()
 
 const props = defineProps({
   apiType: {
@@ -95,89 +57,68 @@ const props = defineProps({
     default: "",
   },
   cfg: {
-    type: MetaweblogConfig,
+    // 必须继承MetaweblogConfig
+    type: Object,
     default: null,
   },
 })
 
-const ptypeMd = PageTypeEnum.Markdown.toString()
-
-const home = ref("")
-const apiUrl = ref("")
-const previewUrl = ref("")
-const username = ref("")
-const password = ref("")
-const ptype = ref(ptypeMd)
+const apiTypeInfo = ref(t("setting.blog.platform.support.metaweblog") + props.apiType + " ")
 
 const isLoading = ref(false)
-const apiStatus = ref(false)
-const blogName = ref("")
+const formData = reactive({
+  cfg: {} as MetaweblogConfig,
 
-const apiTypeInfo = ref(t("setting.blog.platform.support.metaweblog") + props.apiType + " ")
+  dynCfg: {} as DynamicConfig,
+  setting: {} as typeof SypConfig,
+  dynamicConfigArray: [] as DynamicConfig[],
+})
 
 const valiConf = async () => {
   isLoading.value = true
 
-  let errMsg
+  let errMsg: any
   try {
-    // 先保存
-    await saveConf(true)
+    const metaweblogApiAdaptor = await Adaptors.getAdaptor(props.apiType)
+    const api = Utils.blogApi(appInstance, metaweblogApiAdaptor)
+    const usersBlogs = await api.getUsersBlogs()
+    if (usersBlogs && usersBlogs.length > 0) {
+      const userBlog = usersBlogs[0]
 
-    // 读取最新配置
-    setting = await getSetting()
-    const apiConf = setting[props.apiType]
-    const cfg = JsonUtil.safeParse<MetaweblogConfig>(apiConf, {} as MetaweblogConfig)
+      formData.cfg.blogName = userBlog.blogName
+      formData.cfg.apiStatus = true
+      formData.dynCfg.isAuth = true
+    } else {
+      formData.cfg.apiStatus = false
+    }
 
-    // const api = new API(props.apiType)
-    // const usersBlogs = await api.getUsersBlogs()
-    // if (usersBlogs && usersBlogs.length > 0) {
-    //   const userBlog = usersBlogs[0]
-    //
-    //   cfg.blogName = userBlog.blogName
-    //   blogName.value = userBlog.blogName
-    //
-    //   cfg.apiStatus = true
-    //   apiStatus.value = true
-    // } else {
-    //   cfg.apiStatus = false
-    //   apiStatus.value = false
-    // }
-
+    // isAuth和apiStatus同步
+    formData.dynCfg.isAuth = formData.cfg.apiStatus
     // 刷新状态
-    setting[props.apiType] = JSON.stringify(cfg)
-    await updateSetting(setting)
+    await saveConf(true)
   } catch (e) {
     errMsg = e
     console.error(e)
   }
 
-  if (!apiStatus.value) {
+  if (!formData.cfg.apiStatus) {
     ElMessage.error(t("setting.blog.vali.error") + "=>" + errMsg)
   } else {
     ElMessage.success(t("main.opt.success"))
   }
 
   isLoading.value = false
-
   logger.debug("Metaweblog通用Setting验证完毕")
 }
 
-const saveConf = async (hideTip) => {
+const saveConf = async (hideTip?: any) => {
   logger.debug("Metaweblog通用Setting保存配置")
-
-  const cfg = props.cfg
-  cfg.home = home.value
-  cfg.username = username.value
-  cfg.password = password.value
-  cfg.apiUrl = apiUrl.value
-  cfg.previewUrl = previewUrl.value
-  cfg.blogName = blogName.value
-  cfg.pageType = ptype.value as PageTypeEnum
-
-  cfg.apiStatus = apiStatus.value
-
-  setting[props.apiType] = JSON.stringify(cfg)
-  await updateSetting(setting)
+  // 平台使用配置
+  formData.setting[props.apiType] = formData.cfg
+  // 平台基本配置
+  const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
+  formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+  await updateSetting(formData.setting)
 
   if (hideTip !== true) {
     ElMessage.success(t("main.opt.success"))
@@ -185,26 +126,22 @@ const saveConf = async (hideTip) => {
 }
 
 const initConf = async () => {
+  formData.setting = await getSetting()
+  const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
+  formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
+  formData.dynCfg = getDynCfgByKey(formData.dynamicConfigArray, props.apiType)
+
   logger.debug("Metaweblog通用Setting配置初始化")
-  setting = await getSetting()
-  const apiConf = setting[props.apiType]
-  let conf = JsonUtil.safeParse<MetaweblogConfig>(apiConf, {} as MetaweblogConfig)
+  let conf = props.cfg as MetaweblogConfig
   // 如果没有配置。读取默认配置
   if (ObjectUtil.isEmptyObject(conf)) {
-    conf = props.cfg
+    const apiConf = formData.setting[props.apiType]
+    conf = JsonUtil.safeParse<MetaweblogConfig>(apiConf, {} as MetaweblogConfig)
   }
+
   if (conf) {
     logger.debug("get setting conf=>", conf)
-
-    home.value = conf.home
-    apiUrl.value = conf.apiUrl
-    previewUrl.value = conf.previewUrl
-    username.value = conf.username
-    password.value = conf.password
-    blogName.value = conf.blogName
-    ptype.value = conf.pageType
-
-    apiStatus.value = conf.apiStatus
+    formData.cfg = conf
   }
 }
 
@@ -213,3 +150,70 @@ onMounted(async () => {
   await initConf()
 })
 </script>
+
+<template>
+  <el-form label-width="120px">
+    <el-alert :closable="false" :title="apiTypeInfo + formData.cfg.blogName" class="top-tip" type="info" />
+    <!-- 首页 -->
+    <el-form-item :label="t('setting.blog.url')">
+      <el-input v-model="formData.cfg.home" :placeholder="props.cfg?.placeholder.homePlaceholder" />
+    </el-form-item>
+    <!-- API 地址 -->
+    <el-form-item :label="t('setting.blog.apiurl')">
+      <el-input v-model="formData.cfg.apiUrl" :placeholder="props.cfg?.placeholder.apiUrlPlaceholder" />
+    </el-form-item>
+    <!-- 登录名 -->
+    <el-form-item :label="t('setting.blog.username')">
+      <el-input v-model="formData.cfg.username" :placeholder="props.cfg?.placeholder.usernamePlaceholder" />
+    </el-form-item>
+    <!-- 密码 -->
+    <el-form-item :label="t('setting.blog.password')">
+      <el-input
+        v-model="formData.cfg.password"
+        type="password"
+        show-password
+        :placeholder="props.cfg?.placeholder.passwordPlaceholder"
+      />
+    </el-form-item>
+    <!-- 预览地址 -->
+    <el-form-item :label="t('setting.blog.previewUrl')">
+      <el-input v-model="formData.cfg.previewUrl" :placeholder="props.cfg?.placeholder.previewUrlPlaceholder" />
+    </el-form-item>
+    <el-form-item :label="t('setting.blog.pageType')">
+      <el-radio-group v-model="formData.cfg.pageType" class="ml-4">
+        <el-radio :label="PageTypeEnum.Markdown" size="large">Markdown</el-radio>
+        <el-radio :label="PageTypeEnum.Html" size="large">HTML</el-radio>
+        <el-radio :label="PageTypeEnum.Kramdown" size="large">Kramdown</el-radio>
+      </el-radio-group>
+    </el-form-item>
+    <!-- 校验 -->
+    <el-form-item>
+      <el-button type="primary" :loading="isLoading" @click="valiConf">
+        {{ isLoading ? t("setting.blog.vali.ing") : t("setting.blog.vali") }}
+      </el-button>
+      <el-alert
+        :title="t('setting.blog.vali.tip.metaweblog')"
+        type="warning"
+        :closable="false"
+        v-if="!formData.cfg.apiStatus"
+      />
+      <el-alert
+        :title="t('setting.blog.vali.ok.metaweblog')"
+        type="success"
+        :closable="false"
+        v-if="formData.cfg.apiStatus"
+      />
+    </el-form-item>
+    <!-- 保存 -->
+    <el-form-item>
+      <el-button type="primary" @click="saveConf">{{ t("setting.blog.save") }}</el-button>
+      <el-button>{{ t("setting.blog.cancel") }}</el-button>
+    </el-form-item>
+  </el-form>
+</template>
+
+<style lang="stylus" scoped>
+.top-tip
+  margin 10px 0
+  padding-left 0
+</style>

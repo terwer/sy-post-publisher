@@ -27,6 +27,7 @@ import { BlogAdaptor } from "zhi-blog-api"
 import { useSiyuanApi } from "~/src/composables/api/useSiyuanApi.ts"
 import { getSubPlatformTypeByKey, SubPlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { useCnblogsApi } from "~/src/composables/api/useCnblogsApi.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 
 /**
  * 适配器统一入口
@@ -35,6 +36,8 @@ import { useCnblogsApi } from "~/src/composables/api/useCnblogsApi.ts"
  * @since 0.9.0
  */
 class Adaptors {
+  private static logger = createAppLogger("adaptors")
+
   /**
    * 根据平台key查找适配器
    *
@@ -47,7 +50,6 @@ class Adaptors {
     switch (type) {
       case SubPlatformType.Metaweblog_Cnblogs: {
         const { blogApi } = await useCnblogsApi(key)
-        console.log("blogApi=>", blogApi)
         blogAdaptor = blogApi
         break
       }
@@ -55,7 +57,7 @@ class Adaptors {
         break
       }
     }
-
+    this.logger.debug(`get blogAdaptor from key ${key}=>`, blogAdaptor)
     return blogAdaptor
   }
 }

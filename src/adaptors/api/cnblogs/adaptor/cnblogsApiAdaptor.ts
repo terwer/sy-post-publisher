@@ -60,12 +60,12 @@ class CnblogsApiAdaptor extends BlogApi {
 
   public override async getUsersBlogs(): Promise<Array<UserBlog>> {
     let result: UserBlog[] = []
-    result = await this.wordpressCall(CnblogsConstants.METHOD_GET_USERS_BLOGS, [])
+    result = await this.cnblogsCall(CnblogsConstants.METHOD_GET_USERS_BLOGS, [])
     this.logger.debug("getUsersBlogs=>", result)
     return result
   }
 
-  private async wordpressCall(method: string, params: string[]) {
+  private async cnblogsCall(method: string, params: string[]) {
     const parameters = ["cnblogs", this.cfg.username, this.cfg.password]
     params.forEach((param) => parameters.push(param))
     return await this.commonXmlrpcClient.methodCall(method, parameters, this.cfg.middlewareUrl)

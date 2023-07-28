@@ -374,57 +374,6 @@ export function deletePlatformByKey(dynamicConfigArray: any[], key: string): any
 }
 
 // =====================
-// 动态平台开关key规则
-// =====================
-interface SwitchItem {
-  switchKey: string
-  switchValue: boolean
-}
-
-export function getDynSwitchKey(platformKey: string): string {
-  return "switch-" + platformKey
-}
-
-/**
- * 平台开关启用状态值
- * @param platformKey
- */
-export function getDynSwitchActive(platformKey: string): string {
-  return platformKey + "_true"
-}
-
-/**
- * 平台开关禁用状态值
- * @param platformKey
- */
-export function getDynSwitchInactive(platformKey: string): string {
-  return platformKey + "_false"
-}
-
-/**
- * 组装Switch显示值
- * @param switchItem 开关
- */
-export function getDynSwitchModelValue(switchItem: SwitchItem): string {
-  return switchItem.switchKey + "_" + switchItem.switchValue.toString()
-}
-
-/**
- * 解析选中项
- * @param selectedText 选中的值
- */
-export function getSwitchItem(selectedText: string): SwitchItem {
-  const valArr = selectedText.split("_")
-  const switchKey = getDynSwitchKey(valArr[0])
-  const switchStatus = valArr[1] === "true"
-
-  return {
-    switchKey,
-    switchValue: switchStatus,
-  }
-}
-
-// =====================
 // 动态平台文章ID规则
 // =====================
 /**

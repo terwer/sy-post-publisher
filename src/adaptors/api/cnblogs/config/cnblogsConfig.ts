@@ -23,7 +23,8 @@
  * questions.
  */
 
-import { BlogConfig } from "zhi-blog-api"
+import {PageTypeEnum} from "zhi-blog-api"
+import {MetaweblogConfig} from "~/src/adaptors/api/base/metaweblog/config/MetaweblogConfig.ts"
 
 /**
  * 博客园配置
@@ -31,27 +32,7 @@ import { BlogConfig } from "zhi-blog-api"
  * @author terwer
  * @since 0.9.0
  */
-class CnblogsConfig extends BlogConfig {
-  /**
-   * API 地址
-   */
-  public override apiUrl = ""
-
-  /**
-   * 用户名
-   */
-  public override username = ""
-
-  /**
-   * 密码
-   */
-  public override password = ""
-
-  /**
-   * 代理地址
-   */
-  public override middlewareUrl = ""
-
+class CnblogsConfig extends MetaweblogConfig {
   /**
    * 博客园配置项
    *
@@ -61,11 +42,9 @@ class CnblogsConfig extends BlogConfig {
    * @param middlewareUrl 代理地址
    */
   constructor(apiUrl: string, username: string, password: string, middlewareUrl?: string) {
-    super()
-    this.apiUrl = apiUrl
-    this.username = username
-    this.password = password
-    this.middlewareUrl = middlewareUrl
+    super("https://www.cnblogs.com/[yourname]", apiUrl, username, password, middlewareUrl)
+    this.previewUrl = "/p/[postid].html"
+    this.pageType = PageTypeEnum.Markdown
   }
 }
 

@@ -33,7 +33,6 @@ import {
   DynamicConfig,
   DynamicJsonCfg,
   getDynCfgByKey,
-  getDynSwitchKey,
   getNewPlatformKey,
   PlatformType,
   replacePlatformByKey,
@@ -116,9 +115,6 @@ const submitForm = async (formEl) => {
   // 转换格式并保存
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
   formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
-  const switchKey = getDynSwitchKey(newCfg.platformKey)
-  // 默认启用禁用
-  formData.setting[switchKey] = String(newCfg.isEnabled)
   // 更新配置
   // let newSetting = formData.setting[newCfg.platformKey]
   // formData.setting[newCfg.platformKey] = newSetting

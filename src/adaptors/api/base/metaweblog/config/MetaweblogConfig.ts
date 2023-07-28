@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { BlogConfig, PageType, PageTypeEnum } from "zhi-blog-api"
+import { BlogConfig, PageTypeEnum } from "zhi-blog-api"
 import { MetaweblogPlaceholder } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogPlaceholder.ts"
 
 /**
@@ -78,7 +78,7 @@ export class MetaweblogConfig extends BlogConfig {
    */
   public override placeholder = {} as MetaweblogPlaceholder
 
-  constructor(home: string, apiUrl: string, username: string, password: string) {
+  constructor(home: string, apiUrl: string, username: string, password: string, middlewareUrl?: string) {
     super()
     this.home = home
     this.apiUrl = apiUrl
@@ -90,5 +90,6 @@ export class MetaweblogConfig extends BlogConfig {
     this.previewUrl = ""
     this.pageType = PageTypeEnum.Markdown
     this.placeholder = new MetaweblogPlaceholder()
+    this.middlewareUrl = middlewareUrl
   }
 }
