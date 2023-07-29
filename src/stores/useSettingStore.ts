@@ -3,9 +3,6 @@ import { SypConfig } from "~/syp.config.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useCommonStorageAsync } from "~/src/stores/common/useCommonStorageAsync.ts"
 import { computed, ref } from "vue"
-import { StrUtil } from "zhi-common"
-import { version } from "~/package.json"
-import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 
 /**
  * 设置配置存储

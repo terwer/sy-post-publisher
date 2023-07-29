@@ -56,13 +56,12 @@ const isServe = process.env.IS_SERVE
 const isWatch = args.watch || args.w || false
 // const isDev = isServe || isWatch || debugMode
 const isDev = false
-let devDistDir: string
-if (os.platform() === "win32") {
-  // devDistDir = path.join(os.homedir(), "Documents", "SiYuan", "data", "widgets", "sy-post-publisher")
-  devDistDir = path.join(os.homedir(), "Documents", "testdoc", "data", "widgets", "sy-post-publisher")
-} else {
-  // devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
-  devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/widgets/sy-post-publisher"
+const isWindows = process.platform === "win32"
+let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/widgets/sy-post-publisher"
+// let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
+if (isWindows) {
+  devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\test\\data\\widgets\\sy-post-publisher"
+  // devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\public\widgets\sy-post-publisher"
 }
 const distDir = isWatch ? devDistDir : "./dist"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
