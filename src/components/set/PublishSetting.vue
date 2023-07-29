@@ -111,7 +111,7 @@ const handleSinglePlatformDelete = (cfg: DynamicConfig) => {
       formData.dynamicConfigArray = deletePlatformByKey(formData.dynamicConfigArray, cfg.platformKey)
       // 替换删除后的平台配置
       const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
-      formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+      formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
       // 删除配置
       delete formData.setting[cfg.platformKey]
       deleteKey(cfg.platformKey)
@@ -137,7 +137,7 @@ const handlePlatformEnabled = async (cfg: DynamicConfig) => {
   formData.dynamicConfigArray = replacePlatformByKey(formData.dynamicConfigArray, cfg.platformKey, cfg)
   // 替换删除后的平台配置
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
-  formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+  formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
   // 更新状态
   await updateSetting(formData.setting)
 }
@@ -160,9 +160,14 @@ const handleOpenBrowserAuth = async (cfg: DynamicConfig) => {
 }
 
 const handleValidateWebAuth = (cfg: DynamicConfig) => {
-  // ElMessage.info("验证中，请关注状态，没有授权表示不可用，已授权表示该平台可正常使用...")
-  ElMessage.success("验证成功，该平台可正常使用")
-  // ElMessage.error(("验证失败，该平台将不可用"))
+  const cookieCb = async (coo) => {
+    ElMessage.info("验证中，请关注状态，没有授权表示不可用，已授权表示该平台可正常使用...")
+    console.log("coo=>", coo)
+
+    // ElMessage.success("验证成功，该平台可正常使用")
+    // ElMessage.error(("验证失败，该平台将不可用"))
+  }
+  openBrowserWindow(cfg.authUrl, cookieCb)
 }
 
 const handleImportPre = () => {

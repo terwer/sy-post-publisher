@@ -29,7 +29,7 @@ interface ISypConfig {
   // version?: ""
   lang?: "zh_CN" | "en_US"
   // 平台总的集合
-  [DYNAMIC_CONFIG_KEY]?: string
+  [DYNAMIC_CONFIG_KEY]?: any
 
   // [平台key1]: {平台配置1}
   // [平台key2]: {平台配置2}

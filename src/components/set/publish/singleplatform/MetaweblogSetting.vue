@@ -121,7 +121,7 @@ const saveConf = async (hideTip?: any) => {
   formData.setting[props.apiType] = formData.cfg
   // 平台基本配置
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
-  formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+  formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
   await updateSetting(formData.setting)
 
   if (hideTip !== true) {

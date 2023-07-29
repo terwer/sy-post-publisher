@@ -132,7 +132,7 @@ const submitForm = async (formEl) => {
 
   // 转换格式并保存
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
-  formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
+  formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
   // 初始化一个空配置
   formData.setting[newCfg.platformKey] = "{}"
   await updateSetting(formData.setting)

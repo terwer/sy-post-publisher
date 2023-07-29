@@ -23,16 +23,148 @@
  * questions.
  */
 import { useSiyuanDevice } from "~/src/composables/useSiyuanDevice.ts"
+import { StrUtil } from "zhi-common"
+import { BrowserUtil, SiyuanDevice } from "zhi-device"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
+
+const logger = createAppLogger("widget-utils")
 
 /**
  * 打开网页弹窗
  */
-export const openBrowserWindow = (url: string) => {
+export const openBrowserWindow = (url: string, cookieCb?: any) => {
   const { isInSiyuanWidget } = useSiyuanDevice()
 
   if (isInSiyuanWidget()) {
-    alert(`${url}=>当前挂件模式`)
+    const isDev = false
+    const isModel = false
+    const isShow = !cookieCb
+    doOpenBrowserWindow(url, undefined, undefined, isDev, isModel, isShow, cookieCb)
   } else {
     window.open(url)
+  }
+}
+
+/**
+ * 打开新窗口
+ *
+ * 示例：
+ *
+ * ```
+ * ## development
+ * openBrowserWindow("https://www.baidu.com", undefined, undefined, true, false)
+ * openBrowserWindow("https://www.baidu.com", { "key1": "value1", "key2": "value2" }, undefined, true, false)
+ *
+ * ## production
+ * openBrowserWindow("https://www.baidu.com")
+ * ```
+ *
+ * @param url - url
+ * @param params - 参数
+ * @param win - 父窗口
+ * @param isDev - 是否打开开发者工具
+ * @param modal - 是否模态
+ * @param isShow - 是否显示
+ * @param cookieCallback - 窗口关闭回调
+ */
+const doOpenBrowserWindow = (
+  url: string,
+  params?: Record<string, string>,
+  win?: any,
+  isDev = false,
+  modal = false,
+  isShow = true,
+  cookieCallback
+) => {
+  try {
+    if (StrUtil.isEmptyString(url)) {
+      logger.error("Url cannot be empty")
+      return
+    }
+
+    const { isInSiyuanWidget } = useSiyuanDevice()
+    if (!BrowserUtil.isElectron() && !isInSiyuanWidget) {
+      logger.info("BrowserWindow can ony be available in siyuan Electron environment")
+      return
+    }
+
+    if (params) {
+      Object.keys(params).forEach((key: string) => {
+        const value = params[key]
+        url = BrowserUtil.setUrlParameter(url, key, value)
+      })
+    }
+
+    logger.info(StrUtil.f("Opening a new BrowserWindow from url => {0}", url))
+
+    const mainWin = win ?? SiyuanDevice.siyuanWindow()
+    const { app, BrowserWindow, getCurrentWindow } = mainWin.require("@electron/remote")
+    const remote = mainWin.require("@electron/remote").require("@electron/remote/main")
+    const mainWindow = getCurrentWindow()
+    const newWindow = new BrowserWindow({
+      parent: mainWindow,
+      width: 900,
+      height: 750,
+      show: isShow,
+      resizable: true,
+      modal: modal,
+      icon: SiyuanDevice.browserJoinPath(
+        SiyuanDevice.siyuanWindow().siyuan.config.system.appDir,
+        "stage",
+        "icon-large.png"
+      ),
+      titleBarOverlay: {
+        color: "#cccccca5",
+        symbolColor: "black",
+      },
+      webPreferences: {
+        nativeWindowOpen: true,
+        nodeIntegration: true,
+        webviewTag: true,
+        webSecurity: false,
+        contextIsolation: false,
+      },
+    })
+
+    newWindow.webContents.userAgent = `SiYuan/${app.getVersion()} https://b3log.org/siyuan Electron`
+    // 允许
+    remote.enable(newWindow.webContents)
+    if (isDev) {
+      newWindow.webContents.openDevTools()
+    }
+
+    // 监听 close 事件
+    newWindow.on("close", (evt) => {
+      logger.info("窗口关闭事件触发")
+    })
+    newWindow.loadURL(url)
+
+    // 读取指定域的所有 Cookie
+    if (cookieCallback) {
+      const readCookies = () => {
+        // https://www.electronjs.org/zh/docs/latest/api/session
+        const ses = newWindow.webContents.session
+
+        // 设置将要读取的域名
+        const domain = "zhihu.com"
+
+        ses.cookies
+          .get({ domain })
+          .then((cookies) => {
+            logger.info(`读取cookie事件触发，准备读取 ${domain} 下的所有 Cookie`)
+            cookieCallback(cookies)
+          })
+          .catch((error) => {
+            console.error(`读取 Cookie 失败：${error}`)
+          })
+      }
+      readCookies()
+      // 将窗口隐藏起来
+      newWindow.once("ready-to-show", () => {
+        newWindow.hide()
+      })
+    }
+  } catch (e) {
+    logger.error("Open browser window failed", e)
   }
 }
