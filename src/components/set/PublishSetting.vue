@@ -46,6 +46,9 @@ import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { svgIcons } from "~/src/utils/svgIcons.ts"
 import { openBrowserWindow } from "~/src/utils/widgetUtils.ts"
+import Adaptors from "~/src/adaptors"
+import { Utils } from "~/src/utils/utils.ts"
+import { AppInstance } from "~/src/appInstance.ts"
 
 const logger = createAppLogger("publish-setting")
 
@@ -160,14 +163,24 @@ const handleOpenBrowserAuth = async (cfg: DynamicConfig) => {
 }
 
 const handleValidateWebAuth = (cfg: DynamicConfig) => {
-  const cookieCb = async (coo) => {
+  // 设置将要读取的域名
+  const domain = cfg.domain
+  const cookieCb = async (domain: string, coo: any) => {
     ElMessage.info("验证中，请关注状态，没有授权表示不可用，已授权表示该平台可正常使用...")
-    console.log("coo=>", coo)
+    console.log("get cookie result=>", coo)
 
-    // ElMessage.success("验证成功，该平台可正常使用")
-    // ElMessage.error(("验证失败，该平台将不可用"))
+    const appInstance = new AppInstance()
+    const apiAdaptor = await Adaptors.getAdaptor(cfg.platformKey)
+    const api = Utils.webApi(appInstance, apiAdaptor)
+    const result = await api.getMetaData()
+    logger.info("get meta data=>", result)
+    if (result.flag) {
+      ElMessage.success("验证成功，该平台可正常使用")
+    } else {
+      ElMessage.error("验证失败，该平台将不可用")
+    }
   }
-  openBrowserWindow(cfg.authUrl, cookieCb)
+  openBrowserWindow(cfg.authUrl, domain, cookieCb)
 }
 
 const handleImportPre = () => {
@@ -357,8 +370,8 @@ onMounted(async () => {
                           {{ platform.authMode === AuthMode.API ? "设置" : platform.isAuth ? "再次授权" : "授权" }}
                         </el-text>
                         <el-text
-                          class="action-btn action-web-auth"
                           v-if="platform.isEnabled && platform.authMode === AuthMode.WEBSITE && !platform.isAuth"
+                          class="action-btn action-web-auth"
                           @click="handleValidateWebAuth(platform)"
                         >
                           <el-icon>

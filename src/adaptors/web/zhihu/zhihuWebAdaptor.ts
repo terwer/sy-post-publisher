@@ -24,7 +24,7 @@
  */
 
 import { WebApi } from "zhi-blog-api"
-import { JsonUtil } from "zhi-common"
+import { JsonUtil, StrUtil } from "zhi-common"
 
 /**
  * 知乎网页授权适配器
@@ -41,7 +41,9 @@ class ZhihuWebAdaptor extends WebApi {
     const resText = await fetchResponse.text()
     // console.log(res);
     const res = JsonUtil.safeParse<any>(resText, {} as any)
+    const flag = res.uid ? true : false
     return {
+      flag: flag,
       uid: res.uid,
       title: res.name,
       avatar: res.avatar_url,

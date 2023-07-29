@@ -48,8 +48,8 @@ dependencies:
     specifier: ^3.1.1
     version: 3.1.1
   zhi-blog-api:
-    specifier: ^1.18.0
-    version: 1.18.0
+    specifier: ^1.18.1
+    version: 1.18.1
   zhi-common:
     specifier: ^1.11.5
     version: 1.11.5
@@ -66,11 +66,11 @@ dependencies:
     specifier: ^0.4.2
     version: 0.4.2
   zhi-siyuan-api:
-    specifier: ^1.27.7
-    version: 1.27.7
+    specifier: ^1.27.8
+    version: 1.27.8
   zhi-wechatsync-middleware:
-    specifier: ^0.1.7
-    version: 0.1.7
+    specifier: ^0.1.8
+    version: 0.1.8
   zhi-xmlrpc-middleware:
     specifier: ^0.2.19
     version: 0.2.19
@@ -78,7 +78,7 @@ dependencies:
 devDependencies:
   '@terwer/eslint-config-custom':
     specifier: ^1.3.6
-    version: 1.3.6(@nuxt/eslint-config@0.1.1)(@typescript-eslint/eslint-plugin@5.62.0)(astro-eslint-parser@0.13.3)(eslint-config-prettier@8.9.0)(eslint-config-turbo@1.10.12)(eslint-plugin-prettier@4.2.1)(eslint-plugin-svelte@2.32.4)(eslint-plugin-vue@9.15.1)(eslint@8.46.0)(prettier-plugin-svelte@2.10.1)(prettier@2.8.8)(typescript@5.1.6)
+    version: 1.3.6(@nuxt/eslint-config@0.1.1)(@typescript-eslint/eslint-plugin@5.62.0)(astro-eslint-parser@0.13.3)(eslint-config-prettier@8.9.0)(eslint-config-turbo@1.10.12)(eslint-plugin-prettier@4.2.1)(eslint-plugin-svelte@2.32.4)(eslint-plugin-vue@9.16.0)(eslint@8.46.0)(prettier-plugin-svelte@2.10.1)(prettier@2.8.8)(typescript@5.1.6)
   '@types/node':
     specifier: ^18.17.1
     version: 18.17.1
@@ -2073,7 +2073,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.46.0)(typescript@4.9.5)
       '@typescript-eslint/parser': 5.62.0(eslint@8.46.0)(typescript@4.9.5)
       eslint: 8.46.0
-      eslint-plugin-vue: 9.15.1(eslint@8.46.0)
+      eslint-plugin-vue: 9.16.0(eslint@8.46.0)
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -2266,7 +2266,7 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@terwer/eslint-config-custom@1.3.6(@nuxt/eslint-config@0.1.1)(@typescript-eslint/eslint-plugin@5.62.0)(astro-eslint-parser@0.13.3)(eslint-config-prettier@8.9.0)(eslint-config-turbo@1.10.12)(eslint-plugin-prettier@4.2.1)(eslint-plugin-svelte@2.32.4)(eslint-plugin-vue@9.15.1)(eslint@8.46.0)(prettier-plugin-svelte@2.10.1)(prettier@2.8.8)(typescript@5.1.6):
+  /@terwer/eslint-config-custom@1.3.6(@nuxt/eslint-config@0.1.1)(@typescript-eslint/eslint-plugin@5.62.0)(astro-eslint-parser@0.13.3)(eslint-config-prettier@8.9.0)(eslint-config-turbo@1.10.12)(eslint-plugin-prettier@4.2.1)(eslint-plugin-svelte@2.32.4)(eslint-plugin-vue@9.16.0)(eslint@8.46.0)(prettier-plugin-svelte@2.10.1)(prettier@2.8.8)(typescript@5.1.6):
     resolution: {integrity: sha512-W0dFSTYfkzpp71LW8cDZUgLrNa004KDctojbiQrJrF4FIDmlwND/LyPUqfe1Eg8sulB5qkNX9qMgFWZ4SAVXBQ==}
     peerDependencies:
       '@nuxt/eslint-config': ^0.1.1
@@ -2290,7 +2290,7 @@ packages:
       eslint-config-turbo: 1.10.12(eslint@8.46.0)
       eslint-plugin-prettier: 4.2.1(eslint-config-prettier@8.9.0)(eslint@8.46.0)(prettier@2.8.8)
       eslint-plugin-svelte: 2.32.4(eslint@8.46.0)(svelte@4.1.1)
-      eslint-plugin-vue: 9.15.1(eslint@8.46.0)
+      eslint-plugin-vue: 9.16.0(eslint@8.46.0)
       prettier: 2.8.8
       prettier-plugin-svelte: 2.10.1(prettier@2.8.8)(svelte@4.1.1)
       typescript: 5.1.6
@@ -4944,8 +4944,8 @@ packages:
       eslint: 8.46.0
     dev: true
 
-  /eslint-plugin-vue@9.15.1(eslint@8.46.0):
-    resolution: {integrity: sha512-CJE/oZOslvmAR9hf8SClTdQ9JLweghT6JCBQNrT2Iel1uVw0W0OLJxzvPd6CxmABKCvLrtyDnqGV37O7KQv6+A==}
+  /eslint-plugin-vue@9.16.0(eslint@8.46.0):
+    resolution: {integrity: sha512-SonAuvQXFm9HBV9ww/YkYZVYPMR8ptxxuJwcKGnG9A65SyvNANP9MKlfnC49L6DIwt/YEQZwZWEMHOkL1d5s1A==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
@@ -9647,8 +9647,8 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zhi-blog-api@1.18.0:
-    resolution: {integrity: sha512-9B8msbNsfjSnzWx+7jWa1jaaGT8Qz6LbTt+F2ymnXwmpprJ+3niNNt/9iq3fY+apuOiKRWPdYuYAUD5YIJT4Jw==}
+  /zhi-blog-api@1.18.1:
+    resolution: {integrity: sha512-6Mqa7UWKjyjUdJVjwxLTbhRQFlx1Z9prSjBQrchw3vgufpkd9yCePXDkVb7KDCY2SguHTsfsnQlx0DVKuALk+A==}
     dependencies:
       zhi-lib-base: 0.4.2
     dev: false
@@ -9684,18 +9684,18 @@ packages:
     resolution: {integrity: sha512-kfKgN4hb5efUf+k5Y9028CVV1p/hsnK0NbRsxI3uwJoTlHfTBjfi6ZfrkhDn+XEnEYeWidO75sx4RdcnT7C3KA==}
     dev: false
 
-  /zhi-siyuan-api@1.27.7:
-    resolution: {integrity: sha512-oQspqaQn3ql13T4JUJ5YQCRaYPh87NXTcYJDpwrmzdi37ieXTBTw8F4ugl22xAfELIfxEVuSV/2Cx05kjZSmGw==}
+  /zhi-siyuan-api@1.27.8:
+    resolution: {integrity: sha512-urQk/XCYGfi/7/y7SHo4ghhORkqAcOO1+QPFDbktAhMXH7u6HGkFqUS42nQgaziBHYOrTUwIjvxQHfaKM1IhHw==}
     dependencies:
-      zhi-blog-api: 1.18.0
+      zhi-blog-api: 1.18.1
       zhi-common: 1.11.5
       zhi-lib-base: 0.4.2
     dev: false
 
-  /zhi-wechatsync-middleware@0.1.7:
-    resolution: {integrity: sha512-sqLLgkyyzVHyr5QF6XIoB3crIe4fVo0MgDojYz0XxI2CvqvoN16Xy1tPDx5aI0rIhDISclvSs+wHrXJjfaMPbw==}
+  /zhi-wechatsync-middleware@0.1.8:
+    resolution: {integrity: sha512-+zm39HyYsqAsl/Gyechd3KBnJO2AWHFHsokixSfno2osKS2XZwnTxRPrwI5AEu+r5Ra6nh63i4ssgss/XPokMg==}
     dependencies:
-      zhi-blog-api: 1.18.0
+      zhi-blog-api: 1.18.1
       zhi-common: 1.11.5
       zhi-lib-base: 0.4.2
     dev: false

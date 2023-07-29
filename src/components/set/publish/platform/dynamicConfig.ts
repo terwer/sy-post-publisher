@@ -78,6 +78,16 @@ export class DynamicConfig {
   authUrl?: string
 
   /**
+   * 域名
+   */
+  domain?: string
+
+  /**
+   * cookie
+   */
+  cookie?: string
+
+  /**
    * YAML转换器
    */
   yamlConverter?: YamlConvertAdaptor

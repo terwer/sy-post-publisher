@@ -96,6 +96,7 @@ export const pre = {
       platformIcon: svgIcons.iconIFZhihu,
       authMode: AuthMode.WEBSITE,
       authUrl: "https://www.zhihu.com/signin",
+      domain: "zhihu.com",
       isEnabled: false,
     },
   ],

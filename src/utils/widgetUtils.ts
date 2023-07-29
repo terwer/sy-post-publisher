@@ -32,14 +32,14 @@ const logger = createAppLogger("widget-utils")
 /**
  * 打开网页弹窗
  */
-export const openBrowserWindow = (url: string, cookieCb?: any) => {
+export const openBrowserWindow = (url: string, domain?: string, cookieCb?: any) => {
   const { isInSiyuanWidget } = useSiyuanDevice()
 
   if (isInSiyuanWidget()) {
     const isDev = false
     const isModel = false
     const isShow = !cookieCb
-    doOpenBrowserWindow(url, undefined, undefined, isDev, isModel, isShow, cookieCb)
+    doOpenBrowserWindow(url, undefined, undefined, isDev, isModel, isShow, domain, cookieCb)
   } else {
     window.open(url)
   }
@@ -65,6 +65,7 @@ export const openBrowserWindow = (url: string, cookieCb?: any) => {
  * @param isDev - 是否打开开发者工具
  * @param modal - 是否模态
  * @param isShow - 是否显示
+ * @param domain - 域名
  * @param cookieCallback - 窗口关闭回调
  */
 const doOpenBrowserWindow = (
@@ -74,7 +75,8 @@ const doOpenBrowserWindow = (
   isDev = false,
   modal = false,
   isShow = true,
-  cookieCallback
+  domain = "",
+  cookieCallback = undefined
 ) => {
   try {
     if (StrUtil.isEmptyString(url)) {
@@ -134,7 +136,7 @@ const doOpenBrowserWindow = (
     }
 
     // 监听 close 事件
-    newWindow.on("close", (evt) => {
+    newWindow.on("close", (evt: any) => {
       logger.info("窗口关闭事件触发")
     })
     newWindow.loadURL(url)
@@ -144,25 +146,19 @@ const doOpenBrowserWindow = (
       const readCookies = () => {
         // https://www.electronjs.org/zh/docs/latest/api/session
         const ses = newWindow.webContents.session
-
-        // 设置将要读取的域名
-        const domain = "zhihu.com"
-
         ses.cookies
           .get({ domain })
-          .then((cookies) => {
+          .then((cookies: any) => {
             logger.info(`读取cookie事件触发，准备读取 ${domain} 下的所有 Cookie`)
-            cookieCallback(cookies)
+            cookieCallback(domain, cookies)
           })
-          .catch((error) => {
+          .catch((error: any) => {
             console.error(`读取 Cookie 失败：${error}`)
           })
       }
       readCookies()
-      // 将窗口隐藏起来
-      newWindow.once("ready-to-show", () => {
-        newWindow.hide()
-      })
+      newWindow.hide()
+      newWindow.close()
     }
   } catch (e) {
     logger.error("Open browser window failed", e)
