@@ -144,8 +144,6 @@ export enum PlatformType {
  */
 export enum SubPlatformType {
   // Common
-  Common_Zhihu = "Zhihu",
-  Common_CSDN = "CSDN",
   Common_Yuque = "Yuque",
 
   // Github 子平台
@@ -165,7 +163,8 @@ export enum SubPlatformType {
   Wordpress_Wordpress = "Wordpress",
 
   // Custom
-  Custom_Custom = "Custom",
+  Custom_Zhihu = "Zhihu",
+  Custom_CSDN = "CSDN",
 
   NONE = "none",
 }
@@ -190,8 +189,6 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
 
   switch (ptype) {
     case PlatformType.Common:
-      subtypeList.push(SubPlatformType.Common_Zhihu)
-      subtypeList.push(SubPlatformType.Common_CSDN)
       subtypeList.push(SubPlatformType.Common_Yuque)
       break
     case PlatformType.Github:
@@ -211,7 +208,8 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
       subtypeList.push(SubPlatformType.Wordpress_Wordpress)
       break
     case PlatformType.Custom:
-      subtypeList.push(SubPlatformType.Custom_Custom)
+      subtypeList.push(SubPlatformType.Custom_Zhihu)
+      subtypeList.push(SubPlatformType.Custom_CSDN)
       break
     default:
       break

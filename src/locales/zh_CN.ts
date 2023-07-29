@@ -473,7 +473,7 @@ export default {
   "setting.platform.add.this": "新增此平台",
   "setting.platform.universal": "通用平台",
   "setting.platform.universal.desc":
-    "目前支持的通用平台有：知乎、语雀、CSDN、简书等，部分平台（例如语雀）需要使用API授权，其他平台使用网页授权，网页授权模式完全兼容 WeChatSync 。",
+    "目前支持的通用平台有：语雀，采用API授权。这些平台通常提供了现代化的REST API，可以方便的进行集成。",
   "setting.platform.wordpress": "WordPress",
   "setting.platform.wordpress.desc":
     "Wordpress 通过Xmlrpc API支持，采用 API 授权。WordPress是一个以PHP和MySQL为平台的自由开源的博客软件和内容管理系统。它具有插件架构和模板系统，同时也是最受欢迎的网站内容管理系统。点击右侧图标快速添加，或者点击下方按钮自定义添加",
@@ -484,13 +484,22 @@ export default {
   "setting.platform.metaweblog.desc":
     "目前支持Metaweblog的平台有：博客园、Typecho等，采用 API 授权。MetaWeblog API是由软件开发人员Dave Winer创建的应用程序编程接口，它允许使用 Web 服务写入、编辑和删除。该 API 作为XML-RPC Web 服务实现，具有三个方法，其名称描述了其功能：metaweblog.newPost()、metaweblog.getPost() 和 metaweblog.editPost()。这些方法采用指定博客作者的用户名和密码以及与单个博客条目相关的信息的参数。",
   "setting.platform.custom": "自定义 HTTP 协议",
-  "setting.platform.custom.desc": "自定义HTTP协议，敬请期待",
+  "setting.platform.custom.desc": "目前支持自定义HTTP协议的平台有：知乎、CSDN、简书、掘金等，采用网页授权。自定义HTTP协议通过类似 WeChatSync 的方式实现。",
   "setting.platform.right.tips0": "特别提示：",
   "setting.platform.right.tips1": "1、在这里可以进行发布配置，直接点击 [设置图标] 即可进行配置。",
   "setting.platform.right.tips2": "2、如需新增平台，直接点击左侧 + 按钮即可。",
   "setting.platform.right.tips3":
-    "3、目前支持 网页授权 和 API 授权两种方式，API授权 复杂点但是相对稳定，网页授权简单但是可能会失效。惊喜：网页授权模式 100% 兼容 wechatsync 。",
+    "3、目前支持 网页授权 和 API 授权两种方式，API授权 复杂点但是相对稳定，网页授权简单但是可能会失效。网页授权模式实现思路类似 wechatsync 。",
   "setting.platform.right.tips4": "4、如需兼容其他平台，请联系我：youweics@163.com 或者填写下面的表单。",
   "setting.entry.title": "平台统一设置 - ",
   "setting.entry.not.supported": "不支持的平台",
+  "setting.upgrade.syp.tip1": "准备开始迁移...",
+  "setting.upgrade.syp.tip2": "迁移成功.",
+  "setting.upgrade.syp.tip3": "已经是最新，无需迁移.",
+  "setting.upgrade.syp.tip4": "迁移失败，错误如下",
+  "setting.upgrade.syp.tip5": "迁移操作完成.",
+  "setting.upgrade.syp.doTip1": "检测配置文件是否为最新版本",
+  "setting.upgrade.syp.doTip2": "检测到旧配置，准备升级配置文件",
+  "setting.upgrade.syp.doTip3": "旧配置升级",
+  "setting.upgrade.syp.doTip4": "没有版本更新，跳过升级",
 }

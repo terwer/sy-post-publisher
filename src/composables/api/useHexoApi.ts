@@ -23,6 +23,3 @@
  * questions.
  */
 
-class GithubConfig {}
-
-export { GithubConfig }

@@ -23,17 +23,3 @@
  * questions.
  */
 
-import { BlogApi } from "zhi-blog-api"
-
-/**
- * Github API 适配器
- *
- * @author terwer
- * @version 0.9.0
- * @since 0.9.0
- */
-class GithubApiAdaptor extends BlogApi {
-
-}
-
-export { GithubApiAdaptor }

@@ -129,7 +129,7 @@ const submitForm = async (formEl) => {
 const initForm = async (key: string) => {
   formData.setting = await getSetting()
   const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
-  formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
+  formData.dynamicConfigArray = dynJsonCfg?.totalCfg || []
 
   formData.dynCfg = getDynCfgByKey(formData.dynamicConfigArray, key)
 }

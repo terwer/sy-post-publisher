@@ -51,6 +51,9 @@ class Adaptors {
     const type: SubPlatformType = getSubPlatformTypeByKey(key)
 
     switch (type) {
+      case SubPlatformType.Common_Zhihu:{
+        break
+      }
       case SubPlatformType.Common_Yuque: {
         const { blogApi } = await useYuqueApi(key, newCfg)
         blogAdaptor = blogApi

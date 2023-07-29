@@ -155,7 +155,7 @@ const initForm = async (ptype: PlatformType, subtype: SubPlatformType) => {
 
   formData.setting = await getSetting()
   const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
-  formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
+  formData.dynamicConfigArray = dynJsonCfg?.totalCfg || []
 
   if (!formData.ptype) {
     ElMessage.error("平台类型不能为空")

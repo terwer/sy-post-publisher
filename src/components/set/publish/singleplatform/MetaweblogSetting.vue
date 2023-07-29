@@ -138,7 +138,7 @@ const handleHomeChange = (value: string | number): void => {
 const initConf = async () => {
   formData.setting = await getSetting()
   const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
-  formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
+  formData.dynamicConfigArray = dynJsonCfg?.totalCfg || []
   formData.dynCfg = getDynCfgByKey(formData.dynamicConfigArray, props.apiType)
 
   logger.debug("Metaweblog通用Setting配置初始化")

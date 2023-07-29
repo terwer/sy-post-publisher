@@ -24,7 +24,7 @@
   -->
 
 <script setup lang="ts">
-import { markRaw, onMounted, reactive } from "vue"
+import { markRaw, onMounted, reactive, ref } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { Delete, Tools } from "@element-plus/icons-vue"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
@@ -52,7 +52,7 @@ const logger = createAppLogger("publish-setting")
 // uses
 const { t } = useVueI18n()
 const router = useRouter()
-const { getSetting, updateSetting } = useSettingStore()
+const { getSetting, updateSetting, deleteKey, checkAndUpgradeSetting } = useSettingStore()
 const { platformTypeList } = usePlatformDefine()
 
 // datas
@@ -63,6 +63,10 @@ const formData = reactive({
   platformTypeList: platformTypeList,
 
   dynamicConfigArray: [] as DynamicConfig[],
+
+  isUpgradeLoading: false,
+  showLogMessage: false,
+  logMessage: "",
 })
 
 // methods
@@ -74,10 +78,6 @@ const handleHidePlatform = () => {
 }
 
 const handleAddPlatformStep = (type: PlatformType) => {
-  if (type === PlatformType.Custom) {
-    ElMessage.error("自定义 HTTP 协议暂未实现，敬请期待")
-    return
-  }
   router.push({
     path: `/setting/platform/quickadd/${type}`,
     query: {
@@ -89,7 +89,7 @@ const handleAddPlatformStep = (type: PlatformType) => {
 const handleSinglePlatformSetting = async (cfg: DynamicConfig) => {
   if (cfg.authMode === AuthMode.API) {
     const key = cfg.platformKey
-    router.push({
+    await router.push({
       path: `/setting/platform/single/${key}`,
       query: {
         showBack: "true",
@@ -114,6 +114,7 @@ const handleSinglePlatformDelete = (cfg: DynamicConfig) => {
       formData.setting[DYNAMIC_CONFIG_KEY] = JSON.stringify(dynJsonCfg)
       // 删除配置
       delete formData.setting[cfg.platformKey]
+      deleteKey(cfg.platformKey)
       await updateSetting(formData.setting)
 
       // 重新加载列表
@@ -149,13 +150,37 @@ const handleImportPre = () => {
   ElMessage.info("开发中，敬请期待，您可以自行前往 [新增平台] 选择添加")
 }
 
+const handleCheckAndUpgrade = async () => {
+  formData.isUpgradeLoading = true
+  formData.showLogMessage = true
+  formData.logMessage = ""
+
+  try {
+    formData.logMessage += `${t("setting.upgrade.syp.tip1")}`
+    const { isUpgrade, logText } = await checkAndUpgradeSetting(formData.setting)
+    formData.logMessage += logText
+    if (isUpgrade) {
+      formData.logMessage += `\n${t("setting.upgrade.syp.tip2")}`
+    } else {
+      formData.logMessage += `\n${t("setting.upgrade.syp.tip3")}`
+    }
+    ElMessage.success(t("main.opt.success"))
+  } catch (e) {
+    formData.logMessage += `\n${t("setting.upgrade.syp.tip4")}` + e
+    ElMessage.error(t("main.opt.failure") + "=>" + e)
+    logger.error(e)
+  }
+  formData.logMessage += `\n${t("setting.upgrade.syp.tip5")}`
+  formData.isUpgradeLoading = false
+}
+
 const initPage = async () => {
   formData.setting = await getSetting()
   logger.info("get setting from platform setting", formData.setting)
 
   const dynJsonCfg = JsonUtil.safeParse<DynamicJsonCfg>(formData.setting[DYNAMIC_CONFIG_KEY], {} as DynamicJsonCfg)
   // 默认展示通用平台
-  formData.dynamicConfigArray = dynJsonCfg.totalCfg || []
+  formData.dynamicConfigArray = dynJsonCfg?.totalCfg || []
   logger.debug("dynamic init page=>", formData.dynamicConfigArray)
 }
 
@@ -288,8 +313,25 @@ onMounted(async () => {
               </el-row>
               <el-row>
                 <el-col>
-                  <div class="import-pre-action" @click="handleImportPre">
-                    <el-button size="small" type="primary">导入预定义平台</el-button>
+                  <div class="import-pre-action">
+                    <el-button size="small" type="primary" @click="handleImportPre">导入预定义平台</el-button>
+                    <el-button
+                      size="small"
+                      type="danger"
+                      :loading="formData.isUpgradeLoading"
+                      @click="handleCheckAndUpgrade"
+                    >
+                      检测并迁移历史配置
+                    </el-button>
+                  </div>
+                  <div class="log-message-box">
+                    <el-input
+                      v-if="formData.showLogMessage"
+                      v-model="formData.logMessage"
+                      type="textarea"
+                      :rows="10"
+                      placeholder="日志信息"
+                    ></el-input>
                   </div>
 
                   <div class="right-setting-tips">
@@ -355,6 +397,9 @@ html[class="dark"]
   .import-pre-action
     text-align left
     margin-left 20px
+
+  .log-message-box
+    margin 10px 20px
 
   .tips-form
     font-size 12px

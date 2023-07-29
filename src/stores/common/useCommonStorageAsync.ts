@@ -52,7 +52,7 @@ export const useCommonStorageAsync = <T extends string | number | boolean | obje
     | "map"
     | "set"
     | "date"
-  logger.info(`It is detected that the serialization type is ${type}`)
+  logger.debug(`It is detected that the serialization type is ${type}`)
   const serializer = StorageSerializers[type]
 
   // 定义 commonStore 对象

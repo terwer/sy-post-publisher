@@ -21,15 +21,13 @@ const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
   }
 }
 
-const getDefineEnv = () => {
-  const isServe = process.env.IS_SERVE
+const getDefineEnv = (isDevMode: boolean) => {
   const mode = process.env.NODE_ENV
   console.log("isServe=>", isServe)
   console.log("mode=>", mode)
 
   const defaultEnv = {
-    // DEV_MODE: `${isWatch || isServe}`,
-    DEV_MODE: `false`,
+    DEV_MODE: `${isDevMode}`,
     APP_BASE: `${appBase}`,
     NODE_ENV: "development",
     VITE_DEFAULT_TYPE: `siyuan`,
@@ -53,10 +51,12 @@ const getDefineEnv = () => {
 }
 
 const args = minimist(process.argv.slice(2))
-const debugMode = true
+const debugMode = false
+const isServe = process.env.IS_SERVE
 const isWatch = args.watch || args.w || false
-const isDev = isWatch || debugMode
-let devDistDir
+// const isDev = isServe || isWatch || debugMode
+const isDev = false
+let devDistDir: string
 if (os.platform() === "win32") {
   // devDistDir = path.join(os.homedir(), "Documents", "SiYuan", "data", "widgets", "sy-post-publisher")
   devDistDir = path.join(os.homedir(), "Documents", "testdoc", "data", "widgets", "sy-post-publisher")
@@ -155,7 +155,7 @@ export default defineConfig({
   // https://vitejs.dev/guide/env-and-mode.html#env-files
   // https://github.com/vitejs/vite/discussions/3058#discussioncomment-2115319
   // 在这里自定义变量
-  define: getDefineEnv(),
+  define: getDefineEnv(isDev),
 
   resolve: {
     alias: {

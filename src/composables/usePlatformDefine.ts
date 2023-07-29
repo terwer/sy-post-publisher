@@ -74,6 +74,7 @@ export const usePlatformDefine = () => {
     ...pre.githubCfg,
     ...pre.metaweblogCfg,
     ...pre.wordpressCfg,
+    ...pre.customCfg
   ]
 
   /**

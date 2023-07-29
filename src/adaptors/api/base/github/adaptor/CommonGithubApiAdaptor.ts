@@ -23,25 +23,17 @@
  * questions.
  */
 
-import { PostForm } from "~/src/models/postForm.ts"
-import { YamlFormatObj } from "~/src/models/yamlFormatObj.ts"
-import { CommonGithubConfig } from "~/src/adaptors/api/base/github/config/CommonGithubConfig.ts"
-
-export interface IYamlConvertAdaptor {
-  convertToYaml(postForm: PostForm, githubCfg?: CommonGithubConfig): YamlFormatObj
-
-  convertToAttr(yamlObj: YamlFormatObj, githubCfg?: CommonGithubConfig): PostForm
-}
+import { BlogApi } from "zhi-blog-api"
 
 /**
- * YAML转换适配器
+ * Github API 适配器
+ *
+ * @author terwer
+ * @version 0.9.0
+ * @since 0.9.0
  */
-export class YamlConvertAdaptor implements IYamlConvertAdaptor {
-  convertToYaml(postForm: PostForm, githubCfg?: CommonGithubConfig): YamlFormatObj {
-    throw new Error("YamlConvertAdaptor.convertToYaml: 该功能未实现，请在子类重写该方法")
-  }
+class CommonGithubApiAdaptor extends BlogApi {
 
-  convertToAttr(yamlFormatObj: YamlFormatObj, githubCfg?: CommonGithubConfig): PostForm {
-    throw new Error("YamlConvertAdaptor.convertToAttr: 该功能未实现，请在子类重写该方法")
-  }
 }
+
+export { CommonGithubApiAdaptor }

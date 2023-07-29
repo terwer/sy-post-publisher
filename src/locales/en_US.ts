@@ -506,4 +506,13 @@ export default {
   "setting.platform.right.tips4": "4. If you need to be compatible with other platforms, please contact me",
   "setting.entry.title": "Platform Unified Settings - ",
   "setting.entry.not.supported": "Unsupported platforms",
+  "setting.upgrade.syp.tip1": "Ready to start migration ...",
+  "setting.upgrade.syp.tip2": "Migration successfully.",
+  "setting.upgrade.syp.tip3": "It is already the latest, no need to migrate.",
+  "setting.upgrade.syp.tip4": "Migration failed, the error is as follows",
+  "setting.upgrade.syp.tip5": "The migration operation is completed.",
+  "setting.upgrade.syp.doTip1": "Detect whether the configuration file is the latest version",
+  "setting.upgrade.syp.doTip2": "Detected old configuration, preparation to upgrade the configuration file",
+  "setting.upgrade.syp.doTip3": "Old configuration upgraded",
+  "setting.upgrade.syp.doTip4": "No update for version, skip upgrade",
 }

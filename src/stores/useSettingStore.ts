@@ -3,17 +3,22 @@ import { SypConfig } from "~/syp.config.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useCommonStorageAsync } from "~/src/stores/common/useCommonStorageAsync.ts"
 import { computed, ref } from "vue"
+import { StrUtil } from "zhi-common"
+import { version } from "~/package.json"
+import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 
 /**
  * 设置配置存储
  * https://pinia.vuejs.org/ssr/nuxt.html
+ * 从0.9.0+ 开始，配置文件变更为 /data/storage/syp/sy-p-plus-cfg.json ，旧数据会自动迁移
  */
 export const useSettingStore = defineStore("setting", () => {
   const logger = createAppLogger("use-setting-store")
-  const storageKey = "/data/storage/syp/sy-p-cfg.json"
+  const storageKey = "/data/storage/syp/sy-p-plus-cfg.json"
   const initialValue = SypConfig
   const { commonStore } = useCommonStorageAsync<typeof SypConfig>(storageKey, initialValue)
   const settingRef = ref<typeof SypConfig | null>(null)
+  const { t } = useVueI18n()
 
   const getSettingRef = computed(async () => {
     const setting = await commonStore.get()
@@ -80,5 +85,37 @@ export const useSettingStore = defineStore("setting", () => {
     }
   }
 
-  return { getSetting, updateSetting, checkKeyExists, deleteKey }
+  const checkAndUpgradeSetting = async (setting: Partial<typeof SypConfig>) => {
+    let isUpgrade = false
+    let logText = ""
+
+    const logMessage = (message: string) => {
+      logger.info(message)
+      logText += `\n${message}`
+    }
+
+    logMessage(t("setting.upgrade.syp.doTip1"))
+
+    if (StrUtil.isEmptyString(setting.version)) {
+      logMessage(t("setting.upgrade.syp.doTip2"))
+
+      // TODO 迁移旧配置
+      // 读取旧的配置文件
+      // 数据转换适配
+      // 更新最新版本号
+      logMessage("TODO，开发中，敬请期待")
+      // setting.version = version
+      //
+      // await updateSetting(setting)
+      //
+      // logMessage(t("setting.upgrade.syp.doTip3"))
+      // isUpgrade = true
+    } else {
+      logMessage(t("setting.upgrade.syp.doTip4"))
+    }
+
+    return { isUpgrade, logText }
+  }
+
+  return { getSetting, updateSetting, checkKeyExists, deleteKey, checkAndUpgradeSetting }
 })

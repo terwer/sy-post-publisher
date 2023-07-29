@@ -26,6 +26,7 @@
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 
 interface ISypConfig {
+  // version?: ""
   lang?: "zh_CN" | "en_US"
   // 平台总的集合
   [DYNAMIC_CONFIG_KEY]?: string

@@ -10,21 +10,12 @@ export const pre = {
   commonCfg: <DynamicConfig[]>[
     {
       platformType: PlatformType.Common,
-      subPlatformType: SubPlatformType.Common_Zhihu,
-      platformKey: "common_Zhihu",
-      platformName: "知乎",
-      platformIcon: svgIcons.iconIFZhihu,
-      authMode: AuthMode.WEBSITE,
-      isEnabled: false
-    },
-    {
-      platformType: PlatformType.Common,
       subPlatformType: SubPlatformType.Common_Yuque,
       platformKey: "common_Yuque",
       platformName: "语雀",
       platformIcon: svgIcons.iconIFYuque,
       authMode: AuthMode.API,
-      isEnabled: false
+      isEnabled: false,
     },
   ],
   githubCfg: <DynamicConfig[]>[
@@ -35,35 +26,35 @@ export const pre = {
       platformName: "Hexo",
       platformIcon: svgIcons.iconIFHexo,
       authMode: AuthMode.API,
-      isEnabled: false
+      isEnabled: false,
     },
-    {
-      platformType: PlatformType.Github,
-      subPlatformType: SubPlatformType.Github_Hugo,
-      platformKey: "github_Hugo",
-      platformName: "Hugo",
-      platformIcon: svgIcons.iconIFHugo,
-      authMode: AuthMode.API,
-      isEnabled: false
-    },
-    {
-      platformType: PlatformType.Github,
-      subPlatformType: SubPlatformType.Github_Vitepress,
-      platformKey: "github_Vitepress",
-      platformName: "Vitepress",
-      platformIcon: svgIcons.iconIFVue,
-      authMode: AuthMode.API,
-      isEnabled: false
-    },
-    {
-      platformType: PlatformType.Github,
-      subPlatformType: SubPlatformType.Github_Nuxt,
-      platformKey: "github_Nuxt",
-      platformName: "Nuxt",
-      platformIcon: svgIcons.iconIFNuxt,
-      authMode: AuthMode.API,
-      isEnabled: false
-    },
+    // {
+    //   platformType: PlatformType.Github,
+    //   subPlatformType: SubPlatformType.Github_Hugo,
+    //   platformKey: "github_Hugo",
+    //   platformName: "Hugo",
+    //   platformIcon: svgIcons.iconIFHugo,
+    //   authMode: AuthMode.API,
+    //   isEnabled: false
+    // },
+    // {
+    //   platformType: PlatformType.Github,
+    //   subPlatformType: SubPlatformType.Github_Vitepress,
+    //   platformKey: "github_Vitepress",
+    //   platformName: "Vitepress",
+    //   platformIcon: svgIcons.iconIFVue,
+    //   authMode: AuthMode.API,
+    //   isEnabled: false
+    // },
+    // {
+    //   platformType: PlatformType.Github,
+    //   subPlatformType: SubPlatformType.Github_Nuxt,
+    //   platformKey: "github_Nuxt",
+    //   platformName: "Nuxt",
+    //   platformIcon: svgIcons.iconIFNuxt,
+    //   authMode: AuthMode.API,
+    //   isEnabled: false
+    // },
   ],
   metaweblogCfg: <DynamicConfig[]>[
     {
@@ -73,7 +64,7 @@ export const pre = {
       platformName: "博客园",
       platformIcon: svgIcons.iconIFCnblogs,
       authMode: AuthMode.API,
-      isEnabled: false
+      isEnabled: false,
     },
     {
       platformType: PlatformType.Metaweblog,
@@ -82,7 +73,7 @@ export const pre = {
       platformName: "Typecho",
       platformIcon: svgIcons.iconIFTypecho,
       authMode: AuthMode.API,
-      isEnabled: false
+      isEnabled: false,
     },
   ],
   wordpressCfg: <DynamicConfig[]>[
@@ -93,6 +84,17 @@ export const pre = {
       platformName: "Wordpress",
       platformIcon: svgIcons.iconIFWordpress,
       authMode: AuthMode.API,
+      isEnabled: false,
+    },
+  ],
+  customCfg: <DynamicConfig[]>[
+    {
+      platformType: PlatformType.Custom,
+      subPlatformType: SubPlatformType.Custom_Zhihu,
+      platformKey: "custom_Zhihu",
+      platformName: "知乎",
+      platformIcon: svgIcons.iconIFZhihu,
+      authMode: AuthMode.WEBSITE,
       isEnabled: false
     },
   ],
