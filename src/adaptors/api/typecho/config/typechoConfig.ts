@@ -25,7 +25,7 @@
 
 import { MetaweblogConfig } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogConfig.ts"
 import { PageTypeEnum } from "zhi-blog-api"
-import TypechoUtils from "~/src/adaptors/api/Typecho/TypechoUtils.ts"
+import TypechoUtils from "~/src/adaptors/api/typecho/typechoUtils.ts"
 
 /**
  * Typecho 配置
@@ -34,26 +34,6 @@ import TypechoUtils from "~/src/adaptors/api/Typecho/TypechoUtils.ts"
  * @since 1.0.0
  */
 class TypechoConfig extends MetaweblogConfig {
-  /**
-   * API 地址
-   */
-  public override apiUrl = ""
-
-  /**
-   * 用户名
-   */
-  public override username = ""
-
-  /**
-   * 密码
-   */
-  public override password = ""
-
-  /**
-   * 代理地址
-   */
-  public override middlewareUrl = ""
-
   /**
    * Typecho 配置项
    *

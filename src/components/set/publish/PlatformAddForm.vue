@@ -29,7 +29,6 @@ import {
   AuthMode,
   DynamicConfig,
   DynamicJsonCfg,
-  getDynPostidKey,
   getNewPlatformKey,
   getSubtypeList,
   isDynamicKeyExists,
@@ -175,11 +174,15 @@ const initForm = async (ptype: PlatformType, subtype: SubPlatformType) => {
       const preTmpl = getPrePlatform(pkey)
       svgIcon = preTmpl.platformIcon
       const newKey = getNewPlatformKey(ptype, subtype)
-      formData.dynCfg = new DynamicConfig(ptype, newKey, newKey, subtype, svgIcon)
+      const newCfg = new DynamicConfig(ptype, newKey, newKey, subtype, svgIcon)
+      newCfg.authMode = preTmpl.authMode
+      newCfg.authUrl = preTmpl.authUrl ?? ""
+      formData.dynCfg = newCfg
       logger.debug("pkey already exists, initialize the new one")
     } else {
       // 否则查询
-      formData.dynCfg = getPrePlatform(pkey)
+      const preTmpl = getPrePlatform(pkey)
+      formData.dynCfg = preTmpl
       formData.isPre = true
       logger.debug("Initialized via pkey")
     }
@@ -236,7 +239,7 @@ initPage()
         <el-input v-else v-model="formData.dynCfg.platformName" />
       </el-form-item>
       <!-- 平台图标 -->
-      <el-form-item label="平台图标" prop="platformIcon">
+      <el-form-item label="平台图标" prop="platformIcon" class="cfg-icon">
         <el-input
           v-if="!formData.isPre"
           v-model="formData.dynCfg.platformIcon"
@@ -256,6 +259,10 @@ initPage()
           <el-option :value="AuthMode.API" label="API授权" />
           <el-option :value="AuthMode.WEBSITE" label="网页授权" />
         </el-select>
+      </el-form-item>
+      <!-- 登录地址 -->
+      <el-form-item v-if="formData.dynCfg.authMode === AuthMode.WEBSITE" label="登录地址" prop="authUrl">
+        <el-input v-model="formData.dynCfg.authUrl" placeholder="请输入该平台的网页登录地址" />
       </el-form-item>
       <!-- 是否启用 -->
       <el-form-item label="是否启用">
@@ -277,13 +284,14 @@ $icon_size = 32px
   padding-left 0
 
 .add-form
-  :deep(.el-icon)
-    //color var(--el-color-primary)
-    width $icon_size
-    height $icon_size
-    margin-right -4px
-    vertical-align middle
-  :deep(.el-icon svg)
-    width $icon_size
-    height $icon_size
+  .cfg-icon
+    :deep(.el-icon)
+      //color var(--el-color-primary)
+      width $icon_size
+      height $icon_size
+      margin-right -4px
+      vertical-align middle
+    :deep(.el-icon svg)
+      width $icon_size
+      height $icon_size
 </style>

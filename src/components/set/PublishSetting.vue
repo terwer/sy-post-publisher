@@ -24,19 +24,18 @@
   -->
 
 <script setup lang="ts">
-import { markRaw, onMounted, reactive, ref } from "vue"
+import { markRaw, onMounted, reactive } from "vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { Delete, Tools } from "@element-plus/icons-vue"
+import { Delete, Lock, Tools, WarningFilled } from "@element-plus/icons-vue"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { SypConfig } from "~/syp.config.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { JsonUtil } from "zhi-common"
+import { JsonUtil, StrUtil } from "zhi-common"
 import {
   AuthMode,
   deletePlatformByKey,
   DynamicConfig,
   DynamicJsonCfg,
-  getDynPostidKey,
   PlatformType,
   replacePlatformByKey,
   setDynamicJsonCfg,
@@ -46,13 +45,14 @@ import { useRouter } from "vue-router"
 import { usePlatformDefine } from "~/src/composables/usePlatformDefine.ts"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { svgIcons } from "~/src/utils/svgIcons.ts"
+import { openBrowserWindow } from "~/src/utils/widgetUtils.ts"
 
 const logger = createAppLogger("publish-setting")
 
 // uses
 const { t } = useVueI18n()
 const router = useRouter()
-const { getSetting, updateSetting, deleteKey, checkAndUpgradeSetting } = useSettingStore()
+const { getSetting, updateSetting, deleteKey } = useSettingStore()
 const { platformTypeList } = usePlatformDefine()
 
 // datas
@@ -143,11 +143,62 @@ const handlePlatformEnabled = async (cfg: DynamicConfig) => {
 }
 
 const handleOpenBrowserAuth = async (cfg: DynamicConfig) => {
-  alert("handleOpenBrowserAuth")
+  ElMessageBox.confirm(
+    `将打开 [${cfg.platformName}] 登录授权页面，您需要在新页面完成登录，然后点击验证查看授权结果，是否继续？`,
+    "网页授权",
+    {
+      type: "warning",
+      icon: markRaw(WarningFilled),
+      confirmButtonText: t("main.opt.ok"),
+      cancelButtonText: t("main.opt.cancel"),
+    }
+  )
+    .then(async () => {
+      openBrowserWindow(cfg.authUrl)
+    })
+    .catch(() => {})
+}
+
+const handleValidateWebAuth = (cfg: DynamicConfig) => {
+  // ElMessage.info("验证中，请关注状态，没有授权表示不可用，已授权表示该平台可正常使用...")
+  ElMessage.success("验证成功，该平台可正常使用")
+  // ElMessage.error(("验证失败，该平台将不可用"))
 }
 
 const handleImportPre = () => {
   ElMessage.info("开发中，敬请期待，您可以自行前往 [新增平台] 选择添加")
+}
+
+const checkAndUpgradeSetting = async (setting: Partial<typeof SypConfig>) => {
+  let isUpgrade = false
+  let logText = ""
+
+  const logMessage = (message: string) => {
+    logger.info(message)
+    logText += `\n${message}`
+  }
+
+  logMessage(t("setting.upgrade.syp.doTip1"))
+
+  if (StrUtil.isEmptyString(setting.version)) {
+    logMessage(t("setting.upgrade.syp.doTip2"))
+
+    // TODO 迁移旧配置
+    // 读取旧的配置文件
+    // 数据转换适配
+    // 更新最新版本号
+    logMessage("TODO，开发中，敬请期待")
+    // setting.version = version
+    //
+    // await updateSetting(setting)
+    //
+    // logMessage(t("setting.upgrade.syp.doTip3"))
+    // isUpgrade = true
+  } else {
+    logMessage(t("setting.upgrade.syp.doTip4"))
+  }
+
+  return { isUpgrade, logText }
 }
 
 const handleCheckAndUpgrade = async () => {
@@ -220,7 +271,7 @@ onMounted(async () => {
               <el-col
                 v-for="p in formData.platformTypeList"
                 :key="p.type"
-                :span="24"
+                :span="12"
                 class="col-item"
                 @click="handleAddPlatformStep(p.type)"
               >
@@ -288,13 +339,27 @@ onMounted(async () => {
                         ></el-switch>
                         <el-text
                           v-if="platform.isEnabled"
-                          class="action-btn action-setting"
+                          :class="
+                            platform.authMode === AuthMode.API
+                              ? 'action-btn action-setting'
+                              : 'action-btn action-web-setting'
+                          "
                           @click="handleSinglePlatformSetting(platform)"
                         >
                           <el-icon>
                             <Tools />
                           </el-icon>
-                          {{ platform.authMode === AuthMode.API ? "设置" : "授权" }}
+                          {{ platform.authMode === AuthMode.API ? "设置" : platform.isAuth ? "再次授权" : "授权" }}
+                        </el-text>
+                        <el-text
+                          class="action-btn action-web-auth"
+                          v-if="platform.isEnabled && platform.authMode === AuthMode.WEBSITE && !platform.isAuth"
+                          @click="handleValidateWebAuth(platform)"
+                        >
+                          <el-icon>
+                            <Lock />
+                          </el-icon>
+                          验证
                         </el-text>
                         <el-text
                           v-if="!platform.isEnabled"
@@ -461,12 +526,25 @@ html[class="dark"]
             .action-setting
               font-size 12px
               cursor pointer
+              &:hover
+                color var(--el-color-primary)
 
+            .action-web-setting
+              font-size 12px
+              cursor pointer
+              color var(--el-color-warning)
+              &:hover
+                color var(--el-color-primary)
+
+            .action-web-auth
+              font-size 12px
+              cursor pointer
+              color var(--el-color-error)
               &:hover
                 color var(--el-color-primary)
 
             .action-del
-              color red
+              color var(--el-color-error)
               font-size 12px
               cursor pointer
 

@@ -476,13 +476,13 @@ export default {
     "目前支持的通用平台有：语雀，采用API授权。这些平台通常提供了现代化的REST API，可以方便的进行集成。",
   "setting.platform.wordpress": "WordPress",
   "setting.platform.wordpress.desc":
-    "Wordpress 通过Xmlrpc API支持，采用 API 授权。WordPress是一个以PHP和MySQL为平台的自由开源的博客软件和内容管理系统。它具有插件架构和模板系统，同时也是最受欢迎的网站内容管理系统。点击右侧图标快速添加，或者点击下方按钮自定义添加",
+    "Wordpress 通过Xmlrpc API支持，采用 API 授权。WordPress是一个自由开源的博客软件和内容管理系统，具有数量众多的优质插件和主题。",
   "setting.platform.github": "Github",
   "setting.platform.github.desc":
-    "目前支持Github发布的的平台有：Hexo、Hugo、Jekyll、Vitepress等，采用 API 授权。GitHub 是一个使用 Git 进行软件开发和版本控制的平台和基于云的服务，允许开发人员存储和管理他们的代码。",
+    "目前支持Github发布的的平台有：Hexo、Hugo、Jekyll、Vitepress等，采用 API 授权。GitHub 是一个使用 Git 进行软件开发和版本控制的代码平台。",
   "setting.platform.metaweblog": "Metaweblog",
   "setting.platform.metaweblog.desc":
-    "目前支持Metaweblog的平台有：博客园、Typecho等，采用 API 授权。MetaWeblog API是由软件开发人员Dave Winer创建的应用程序编程接口，它允许使用 Web 服务写入、编辑和删除。该 API 作为XML-RPC Web 服务实现，具有三个方法，其名称描述了其功能：metaweblog.newPost()、metaweblog.getPost() 和 metaweblog.editPost()。这些方法采用指定博客作者的用户名和密码以及与单个博客条目相关的信息的参数。",
+    "目前支持Metaweblog的平台有：博客园、Typecho等，采用 API 授权。MetaWeblog API 作为XML-RPC Web 服务实现，是目前公认的开放博客标准。",
   "setting.platform.custom": "自定义 HTTP 协议",
   "setting.platform.custom.desc": "目前支持自定义HTTP协议的平台有：知乎、CSDN、简书、掘金等，采用网页授权。自定义HTTP协议通过类似 WeChatSync 的方式实现。",
   "setting.platform.right.tips0": "特别提示：",

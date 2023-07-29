@@ -73,6 +73,11 @@ export class DynamicConfig {
   authMode: AuthMode
 
   /**
+   * 登录地址，网页授权需要
+   */
+  authUrl?: string
+
+  /**
    * YAML转换器
    */
   yamlConverter?: YamlConvertAdaptor

@@ -35,26 +35,6 @@ import WordpressUtils from "~/src/adaptors/api/wordpress/wordpressUtils.ts"
  */
 class WordpressConfig extends MetaweblogConfig {
   /**
-   * API 地址
-   */
-  public override apiUrl = ""
-
-  /**
-   * 用户名
-   */
-  public override username = ""
-
-  /**
-   * 密码
-   */
-  public override password = ""
-
-  /**
-   * 代理地址
-   */
-  public override middlewareUrl = ""
-
-  /**
    * WordPress 配置项
    *
    * @param homeAddr WordPress 主页

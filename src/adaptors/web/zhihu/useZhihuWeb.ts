@@ -23,3 +23,16 @@
  * questions.
  */
 
+import { ZhihuWebAdaptor } from "~/src/adaptors/web/zhihu/zhihuWebAdaptor.ts"
+
+/**
+ * 用于获取ZhihuWeb的API的自定义Hook
+ */
+const useZhihuWeb = async () => {
+  const webApi = new ZhihuWebAdaptor()
+  return {
+    webApi,
+  }
+}
+
+export { useZhihuWeb }

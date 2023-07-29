@@ -30,7 +30,7 @@ import { StrUtil } from "zhi-common"
 import TypechoUtils from "~/src/adaptors/api/typecho/typechoUtils.ts"
 import { TypechoConfig } from "~/src/adaptors/api/typecho/config/typechoConfig.ts"
 import { TypechoPlaceholder } from "~/src/adaptors/api/typecho/config/typechoPlaceholder.ts"
-import { useTypechoApi } from "~/src/composables/api/useTypechoApi.ts"
+import { useTypechoApi } from "~/src/adaptors/api/typecho/useTypechoApi.ts"
 
 const props = defineProps({
   apiType: {

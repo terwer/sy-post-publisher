@@ -23,13 +23,14 @@
  * questions.
  */
 
-import { BlogAdaptor, BlogConfig } from "zhi-blog-api"
+import { BlogAdaptor, WebAdaptor } from "zhi-blog-api"
 import { getSubPlatformTypeByKey, SubPlatformType } from "~/src/components/set/publish/platform/dynamicConfig.ts"
-import { useCnblogsApi } from "~/src/composables/api/useCnblogsApi.ts"
+import { useCnblogsApi } from "~/src/adaptors/api/cnblogs/useCnblogsApi.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { useWordpressApi } from "~/src/composables/api/useWordpressApi.ts"
-import { useTypechoApi } from "~/src/composables/api/useTypechoApi.ts"
-import { useYuqueApi } from "~/src/composables/api/useYuqueApi.ts"
+import { useWordpressApi } from "~/src/adaptors/api/wordpress/useWordpressApi.ts"
+import { useTypechoApi } from "~/src/adaptors/api/typecho/useTypechoApi.ts"
+import { useYuqueApi } from "~/src/adaptors/api/yuque/useYuqueApi.ts"
+import { useZhihuWeb } from "~/src/adaptors/web/zhihu/useZhihuWeb.ts"
 
 /**
  * 适配器统一入口
@@ -46,14 +47,11 @@ class Adaptors {
    * @param key
    * @param newCfg
    */
-  public static async getAdaptor(key: string, newCfg?: any): Promise<BlogAdaptor> {
+  public static async getAdaptor(key: string, newCfg?: any): Promise<BlogAdaptor | WebAdaptor> {
     let blogAdaptor = null
     const type: SubPlatformType = getSubPlatformTypeByKey(key)
 
     switch (type) {
-      case SubPlatformType.Common_Zhihu:{
-        break
-      }
       case SubPlatformType.Common_Yuque: {
         const { blogApi } = await useYuqueApi(key, newCfg)
         blogAdaptor = blogApi
@@ -72,6 +70,11 @@ class Adaptors {
       case SubPlatformType.Wordpress_Wordpress: {
         const { blogApi } = await useWordpressApi(key, newCfg)
         blogAdaptor = blogApi
+        break
+      }
+      case SubPlatformType.Custom_Zhihu: {
+        const { webApi } = await useZhihuWeb()
+        blogAdaptor = webApi
         break
       }
       default: {

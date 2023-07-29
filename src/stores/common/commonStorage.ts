@@ -26,7 +26,7 @@
 import { StorageLikeAsync } from "@vueuse/core"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { StrUtil } from "zhi-common"
-import { useSiyuanApi } from "~/src/composables/api/useSiyuanApi.ts"
+import { useSiyuanApi } from "~/src/composables/useSiyuanApi.ts"
 import { SiyuanDevice } from "zhi-device"
 
 /**

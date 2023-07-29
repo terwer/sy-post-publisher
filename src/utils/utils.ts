@@ -25,7 +25,7 @@
 
 import { AppInstance } from "~/src/appInstance.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { BlogAdaptor } from "zhi-blog-api"
+import { BlogAdaptor, WebAdaptor } from "zhi-blog-api"
 import { StrUtil } from "zhi-common"
 
 /**
@@ -40,15 +40,28 @@ export class Utils {
 
   public static blogApi(appInstance: AppInstance, apiAdaptor: any) {
     if (!apiAdaptor) {
-      throw new Error("ApiAdaptor cannot be null")
+      throw new Error("apiAdaptor cannot be null")
     }
 
     if (!apiAdaptor.getUsersBlogs) {
-      this.logger.error("ApiAdaptor must implements BlogApi", apiAdaptor)
-      throw new Error(`ApiAdaptor must implements BlogApi => ${this.getObjectName(apiAdaptor)}`)
+      this.logger.error("apiAdaptor must implements BlogApi", apiAdaptor)
+      throw new Error(`apiAdaptor must implements BlogApi => ${this.getObjectName(apiAdaptor)}`)
     }
 
     return new BlogAdaptor(apiAdaptor)
+  }
+
+  public static webApi(appInstance: AppInstance, webAdaptor: any) {
+    if (!webAdaptor) {
+      throw new Error("webAdaptor cannot be null")
+    }
+
+    if (!webAdaptor.getMetaData) {
+      this.logger.error("webAdaptor must implements WebApi", webAdaptor)
+      throw new Error(`webAdaptor must implements WebApi => ${this.getObjectName(webAdaptor)}`)
+    }
+
+    return new WebAdaptor(webAdaptor)
   }
 
   private static getObjectName(obj) {
@@ -79,7 +92,7 @@ export class Utils {
     }
   }
 
-  public static emptyOrDefault(value, defaultValue) {
+  public static emptyOrDefault(value: any, defaultValue: any) {
     return StrUtil.isEmptyString(value) ? defaultValue : value
   }
 }

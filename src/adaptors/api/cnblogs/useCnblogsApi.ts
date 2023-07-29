@@ -24,16 +24,16 @@
  */
 
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
+import { CnblogsConfig } from "~/src/adaptors/api/cnblogs/config/cnblogsConfig.ts"
+import { CnblogsApiAdaptor } from "~/src/adaptors/api/cnblogs/adaptor/cnblogsApiAdaptor.ts"
+import { AppInstance } from "~/src/appInstance.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { JsonUtil, ObjectUtil } from "zhi-common"
-import { WordpressConfig } from "~/src/adaptors/api/wordpress/config/wordpressConfig.ts"
-import { WordpressApiAdaptor } from "~/src/adaptors/api/wordpress/adaptor/wordpressApiAdaptor.ts"
 import { getDynPostidKey } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 
 /**
- * 使用Wordpress API的自定义hook
+ * 使用Cnblogs API的自定义hook
  *
  * @param key 配置键值，可选参数
  * @param newCfg
@@ -41,17 +41,17 @@ import { getDynPostidKey } from "~/src/components/set/publish/platform/dynamicCo
  * @version 0.9.0
  * @since 0.9.0
  */
-export const useWordpressApi = async (key?: string, newCfg?: WordpressConfig) => {
+export const useCnblogsApi = async (key?: string, newCfg?: CnblogsConfig) => {
   // 创建应用日志记录器
-  const logger = createAppLogger("use-wordpress-api")
+  const logger = createAppLogger("use-cnblogs-api")
 
-  // 记录开始使用Wordpress API
-  logger.info("Start using Wordpress API...")
+  // 记录开始使用Cnblogs API
+  logger.info("Start using Cnblogs API...")
 
   // 创建应用实例
   const appInstance = new AppInstance()
 
-  let cfg: WordpressConfig
+  let cfg: CnblogsConfig
   if (newCfg) {
     logger.info("Initialize with the latest newCfg passed in...")
     cfg = newCfg
@@ -59,29 +59,35 @@ export const useWordpressApi = async (key?: string, newCfg?: WordpressConfig) =>
     // 从配置中获取数据
     const { getSetting } = useSettingStore()
     const setting = await getSetting()
-    cfg = JsonUtil.safeParse<WordpressConfig>(setting[key], {} as WordpressConfig)
+    cfg = JsonUtil.safeParse<CnblogsConfig>(setting[key], {} as CnblogsConfig)
     // 如果配置为空，则使用默认的环境变量值，并记录日志
     if (ObjectUtil.isEmptyObject(cfg)) {
-      // 从环境变量获取Wordpress API的URL、用户名、认证令牌和中间件URL
-      const wordpressApiUrl = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_API_URL, "http://your-wordpress-home.com")
-      const wordpressUsername = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_USERNAME, "")
-      const wordpressAuthToken = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_AUTH_TOKEN, "")
+      // 从环境变量获取Cnblogs API的URL、用户名、认证令牌和中间件URL
+      const cnblogsApiUrl = Utils.emptyOrDefault(
+        process.env.VITE_CNBLOGS_API_URL,
+        "https://rpc.cnblogs.com/metaweblog/[your-blog-name]"
+      )
+      const cnblogsUsername = Utils.emptyOrDefault(process.env.VITE_CNBLOGS_USERNAME, "")
+      const cnblogsAuthToken = Utils.emptyOrDefault(process.env.VITE_CNBLOGS_AUTH_TOKEN, "")
       const middlewareUrl = Utils.emptyOrDefault(
         process.env.VITE_MIDDLEWARE_URL,
-        "http://localhost:3000/api/middleware"
+        "https://api.terwer.space/api/middleware"
       )
-      cfg = new WordpressConfig(wordpressApiUrl, wordpressUsername, wordpressAuthToken, middlewareUrl)
+
+      cfg = new CnblogsConfig(cnblogsApiUrl, cnblogsUsername, cnblogsAuthToken, middlewareUrl)
       // 默认值
       cfg.posidKey = getDynPostidKey(key)
-      logger.info("Configuration is empty, using default environment variables.")
+      logger.debug("Configuration is empty, using default environment variables.")
     } else {
       logger.info("Using configuration from settings...")
     }
   }
 
-  // 创建Wordpress API适配器
-  const blogApi = new WordpressApiAdaptor(appInstance, cfg)
-  logger.info("Wordpress API created successfully.", cfg)
+  // 创建Cnblogs API适配器
+  const blogApi = new CnblogsApiAdaptor(appInstance, cfg)
+
+  // 记录Cnblogs API创建成功
+  logger.info("Cnblogs API created successfully.")
 
   return {
     cfg,

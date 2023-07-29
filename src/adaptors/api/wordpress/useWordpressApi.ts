@@ -27,13 +27,13 @@ import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
-import { TypechoConfig } from "~/src/adaptors/api/typecho/config/typechoConfig.ts"
 import { JsonUtil, ObjectUtil } from "zhi-common"
+import { WordpressConfig } from "~/src/adaptors/api/wordpress/config/wordpressConfig.ts"
+import { WordpressApiAdaptor } from "~/src/adaptors/api/wordpress/adaptor/wordpressApiAdaptor.ts"
 import { getDynPostidKey } from "~/src/components/set/publish/platform/dynamicConfig.ts"
-import { TypechoApiAdaptor } from "~/src/adaptors/api/typecho/adaptor/typechoApiAdaptor.ts"
 
 /**
- * 使用Typecho API的自定义hook
+ * 使用Wordpress API的自定义hook
  *
  * @param key 配置键值，可选参数
  * @param newCfg
@@ -41,17 +41,17 @@ import { TypechoApiAdaptor } from "~/src/adaptors/api/typecho/adaptor/typechoApi
  * @version 0.9.0
  * @since 0.9.0
  */
-export const useTypechoApi = async (key?: string, newCfg?: TypechoConfig) => {
+export const useWordpressApi = async (key?: string, newCfg?: WordpressConfig) => {
   // 创建应用日志记录器
-  const logger = createAppLogger("use-typecho-api")
+  const logger = createAppLogger("use-wordpress-api")
 
-  // 记录开始使用Typecho API
-  logger.info("Start using Typecho API...")
+  // 记录开始使用Wordpress API
+  logger.info("Start using Wordpress API...")
 
   // 创建应用实例
   const appInstance = new AppInstance()
 
-  let cfg: TypechoConfig
+  let cfg: WordpressConfig
   if (newCfg) {
     logger.info("Initialize with the latest newCfg passed in...")
     cfg = newCfg
@@ -59,18 +59,18 @@ export const useTypechoApi = async (key?: string, newCfg?: TypechoConfig) => {
     // 从配置中获取数据
     const { getSetting } = useSettingStore()
     const setting = await getSetting()
-    cfg = JsonUtil.safeParse<TypechoConfig>(setting[key], {} as TypechoConfig)
+    cfg = JsonUtil.safeParse<WordpressConfig>(setting[key], {} as WordpressConfig)
     // 如果配置为空，则使用默认的环境变量值，并记录日志
     if (ObjectUtil.isEmptyObject(cfg)) {
-      // 从环境变量获取Typecho API的URL、用户名、认证令牌和中间件URL
-      const typechoApiUrl = Utils.emptyOrDefault(process.env.VITE_TYPECHO_API_URL, "http://your-typecho-home.com/")
-      const typechoUsername = Utils.emptyOrDefault(process.env.VITE_TYPECHO_USERNAME, "")
-      const typechoAuthToken = Utils.emptyOrDefault(process.env.VITE_TYPECHO_AUTH_TOKEN, "")
+      // 从环境变量获取Wordpress API的URL、用户名、认证令牌和中间件URL
+      const wordpressApiUrl = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_API_URL, "http://your-wordpress-home.com")
+      const wordpressUsername = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_USERNAME, "")
+      const wordpressAuthToken = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_AUTH_TOKEN, "")
       const middlewareUrl = Utils.emptyOrDefault(
         process.env.VITE_MIDDLEWARE_URL,
-        "http://localhost:3000/api/middleware"
+        "https://api.terwer.space/api/middleware"
       )
-      cfg = new TypechoConfig(typechoApiUrl, typechoUsername, typechoAuthToken, middlewareUrl)
+      cfg = new WordpressConfig(wordpressApiUrl, wordpressUsername, wordpressAuthToken, middlewareUrl)
       // 默认值
       cfg.posidKey = getDynPostidKey(key)
       logger.info("Configuration is empty, using default environment variables.")
@@ -79,9 +79,9 @@ export const useTypechoApi = async (key?: string, newCfg?: TypechoConfig) => {
     }
   }
 
-  // 创建Typecho API适配器
-  const blogApi = new TypechoApiAdaptor(appInstance, cfg)
-  logger.info("Typecho API created successfully.", cfg)
+  // 创建Wordpress API适配器
+  const blogApi = new WordpressApiAdaptor(appInstance, cfg)
+  logger.info("Wordpress API created successfully.", cfg)
 
   return {
     cfg,

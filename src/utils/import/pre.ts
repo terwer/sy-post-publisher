@@ -95,7 +95,8 @@ export const pre = {
       platformName: "知乎",
       platformIcon: svgIcons.iconIFZhihu,
       authMode: AuthMode.WEBSITE,
-      isEnabled: false
+      authUrl: "https://www.zhihu.com/signin",
+      isEnabled: false,
     },
   ],
 }

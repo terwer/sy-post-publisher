@@ -22,4 +22,17 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
+import { useSiyuanDevice } from "~/src/composables/useSiyuanDevice.ts"
 
+/**
+ * 打开网页弹窗
+ */
+export const openBrowserWindow = (url: string) => {
+  const { isInSiyuanWidget } = useSiyuanDevice()
+
+  if (isInSiyuanWidget()) {
+    alert(`${url}=>当前挂件模式`)
+  } else {
+    window.open(url)
+  }
+}
