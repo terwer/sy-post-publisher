@@ -22,7 +22,7 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-import { WebApi, WebConfig } from "zhi-blog-api"
+import { ElectronCookie, WebApi, WebConfig } from "zhi-blog-api"
 import { SiyuanKernelApi } from "zhi-siyuan-api"
 import { CommonFetchClient } from "zhi-fetch-middleware"
 import { AppInstance } from "~/src/appInstance.ts"
@@ -68,6 +68,10 @@ export class WebAuthApi extends WebApi {
 
   public updateCfg(cfg: ZhihuConfig) {
     this.cfg = cfg
+  }
+
+  public async buildCookie(cookies: ElectronCookie[]): Promise<string> {
+    return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join(";")
   }
 
   // ================

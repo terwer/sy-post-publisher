@@ -28,47 +28,28 @@ import { WebAuthApi } from "~/src/adaptors/web/base/web/WebAuthApi.ts"
 /**
  * 知乎网页授权适配器
  *
- * @see [wechatsync zhihu adaptor](https://github.com/wechatsync/Wechatsync/blob/master/packages/%40wechatsync/drivers/src/zhihu.js)
+ * @see [wechatsync csdn adaptor](https://github.com/wechatsync/Wechatsync/blob/master/packages/@wechatsync/drivers/src/CSDN.js)
  * @author terwer
  * @version 0.9.0
  * @since 0.9.0
  */
-class ZhihuWebAdaptor extends WebAuthApi {
-  // /**
-  //  * 初始化知乎 API 适配器
-  //  *
-  //  * @param appInstance 应用实例
-  //  * @param cfg 配置项
-  //  */
-  // constructor(appInstance: AppInstance, cfg: ZhihuConfig) {
-  //   super(appInstance, cfg)
-  //
-  //   this.cfg = cfg
-  //   this.logger = createAppLogger("zhihu-web-adaptor")
-  // }
-
+class CsdnWebAdaptor extends WebAuthApi {
   public async getMetaData(): Promise<any> {
-    const res = await this.proxyFetch(
-      "https://www.zhihu.com/api/v4/me?include=account_status%2Cis_bind_phone%2Cis_force_renamed%2Cemail%2Crenamed_fullname"
-    )
-    const flag = !!res.uid
-    this.logger.info(`get zhihu metadata finished, flag => ${flag}`)
+    const res = await this.proxyFetch("https://bizapi.csdn.net/blog-console-api/v1/user/info")
+    const flag = !!res.data.csdnid
+    this.logger.info(`get csdn metadata finished, flag => ${flag}`)
     return {
       flag: flag,
-      uid: res.uid,
-      title: res.name,
-      avatar: res.avatar_url,
-      supportTypes: ["html"],
-      type: "zhihu",
-      displayName: "知乎",
-      home: "https://www.zhihu.com/settings/account",
-      icon: "https://static.zhihu.com/static/favicon.ico",
+      uid: res.data.csdnid,
+      title: res.data.username,
+      avatar: res.data.avatarurl,
+      type: "csdn",
+      displayName: "CSDN",
+      supportTypes: ["markdown", "html"],
+      home: "https://mp.csdn.net/",
+      icon: "https://g.csdnimg.cn/static/logo/favicon32.ico",
     }
   }
-
-  // public async getPreviewUrl(postid: string): Promise<string> {
-  //   return Promise.resolve(`https://zhuanlan.zhihu.com/p/${postid}`)
-  // }
 }
 
-export { ZhihuWebAdaptor }
+export { CsdnWebAdaptor }

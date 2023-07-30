@@ -174,7 +174,7 @@ export enum SubPlatformType {
 
   // Custom
   Custom_Zhihu = "Zhihu",
-  Custom_CSDN = "CSDN",
+  Custom_CSDN = "Csdn",
 
   NONE = "none",
 }
