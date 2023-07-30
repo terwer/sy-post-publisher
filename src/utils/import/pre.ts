@@ -133,5 +133,16 @@ export const pre = {
       domain: "juejin.cn",
       isEnabled: false,
     },
+    // {
+    //   platformType: PlatformType.Custom,
+    //   subPlatformType: SubPlatformType.Custom_Wechat,
+    //   platformKey: "custom_Wechat",
+    //   platformName: "微信公众号",
+    //   platformIcon: svgIcons.iconIFWechat,
+    //   authMode: AuthMode.WEBSITE,
+    //   authUrl: "https://mp.weixin.qq.com/",
+    //   domain: "qq.com",
+    //   isEnabled: false,
+    // },
   ],
 }

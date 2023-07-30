@@ -177,6 +177,7 @@ export enum SubPlatformType {
   Custom_CSDN = "Csdn",
   Custom_Jianshu = "Jianshu",
   Custom_Juejin = "Juejin",
+  Custom_Wechat = "Wechat",
 
   NONE = "none",
 }
@@ -221,9 +222,10 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
       break
     case PlatformType.Custom:
       subtypeList.push(SubPlatformType.Custom_Zhihu)
-      subtypeList.push(SubPlatformType.Custom_CSDN)
+      // subtypeList.push(SubPlatformType.Custom_CSDN)
       subtypeList.push(SubPlatformType.Custom_Jianshu)
       subtypeList.push(SubPlatformType.Custom_Juejin)
+      // subtypeList.push(SubPlatformType.Custom_Wechat)
       break
     default:
       break
