@@ -29,7 +29,7 @@ import { CnblogsConfig } from "~/src/adaptors/api/cnblogs/config/cnblogsConfig.t
 import { CnblogsApiAdaptor } from "~/src/adaptors/api/cnblogs/adaptor/cnblogsApiAdaptor.ts"
 import { AppInstance } from "~/src/appInstance.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
-import { JsonUtil, ObjectUtil } from "zhi-common"
+import {JsonUtil, ObjectUtil, StrUtil} from "zhi-common"
 import { getDynPostidKey } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 
 /**
@@ -75,11 +75,14 @@ export const useCnblogsApi = async (key?: string, newCfg?: CnblogsConfig) => {
       )
 
       cfg = new CnblogsConfig(cnblogsApiUrl, cnblogsUsername, cnblogsAuthToken, middlewareUrl)
-      // 默认值
-      cfg.posidKey = getDynPostidKey(key)
       logger.debug("Configuration is empty, using default environment variables.")
     } else {
       logger.info("Using configuration from settings...")
+    }
+    // 初始化posidKey
+    if (StrUtil.isEmptyString(cfg.posidKey)) {
+      // 默认值
+      cfg.posidKey = getDynPostidKey(key)
     }
   }
 

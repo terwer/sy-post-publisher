@@ -83,11 +83,6 @@ export class DynamicConfig {
   domain?: string
 
   /**
-   * cookie
-   */
-  cookie?: string
-
-  /**
    * YAML转换器
    */
   yamlConverter?: YamlConvertAdaptor

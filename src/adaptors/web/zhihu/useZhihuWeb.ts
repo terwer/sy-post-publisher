@@ -23,13 +23,53 @@
  * questions.
  */
 
-import { ZhihuWebAdaptor } from "~/src/adaptors/web/zhihu/zhihuWebAdaptor.ts"
+import { ZhihuWebAdaptor } from "~/src/adaptors/web/zhihu/adaptor/zhihuWebAdaptor.ts"
+import { ZhihuConfig } from "~/src/adaptors/web/zhihu/config/zhihuConfig.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
+import { AppInstance } from "~/src/appInstance.ts"
+import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
+import { Utils } from "~/src/utils/utils.ts"
+import { getDynPostidKey } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 
 /**
  * 用于获取ZhihuWeb的API的自定义Hook
  */
-const useZhihuWeb = async () => {
-  const webApi = new ZhihuWebAdaptor()
+const useZhihuWeb = async (key?: string, newCfg?: ZhihuConfig) => {
+  // 创建应用日志记录器
+  const logger = createAppLogger("use-zhihu-web")
+
+  // 记录开始使用Zhihu WebAuth
+  logger.info("Start using Zhihu WebAuth...")
+
+  // 创建应用实例
+  const appInstance = new AppInstance()
+  let cfg: ZhihuConfig
+  if (newCfg) {
+    logger.info("Initialize with the latest newCfg passed in...")
+    cfg = newCfg
+  } else {
+    // 从配置中获取数据
+    const { getSetting } = useSettingStore()
+    const setting = await getSetting()
+    cfg = JsonUtil.safeParse<ZhihuConfig>(setting[key], {} as ZhihuConfig)
+    // 如果配置为空，则使用默认的环境变量值，并记录日志
+    if (ObjectUtil.isEmptyObject(cfg)) {
+      // 从环境变量获取Zhihu的cookie
+      const zhihuCookie = Utils.emptyOrDefault(process.env.VITE_ZHIHU_AUTH_TOKEN, "")
+      cfg = new ZhihuConfig(zhihuCookie)
+      logger.debug("Configuration is empty, using default environment variables.")
+    } else {
+      logger.info("Using configuration from settings...")
+    }
+    // 初始化posidKey
+    if (StrUtil.isEmptyString(cfg.posidKey)) {
+      // 默认值
+      cfg.posidKey = getDynPostidKey(key)
+    }
+  }
+
+  const webApi = new ZhihuWebAdaptor(appInstance, cfg)
   return {
     webApi,
   }

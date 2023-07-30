@@ -23,37 +23,9 @@
  * questions.
  */
 
-import { WebApi } from "zhi-blog-api"
-import { JsonUtil, StrUtil } from "zhi-common"
+import { WebPlaceholder } from "zhi-blog-api"
 
 /**
- * 知乎网页授权适配器
- *
- * @author terwer
- * @version 0.9.0
- * @since 0.9.0
+ * 网页授权操作提示
  */
-class ZhihuWebAdaptor extends WebApi {
-  public async getMetaData(): Promise<object> {
-    const fetchResponse = await fetch(
-      "https://www.zhihu.com/api/v4/me?include=account_status%2Cis_bind_phone%2Cis_force_renamed%2Cemail%2Crenamed_fullname"
-    )
-    const resText = await fetchResponse.text()
-    // console.log(res);
-    const res = JsonUtil.safeParse<any>(resText, {} as any)
-    const flag = res.uid ? true : false
-    return {
-      flag: flag,
-      uid: res.uid,
-      title: res.name,
-      avatar: res.avatar_url,
-      supportTypes: ["html"],
-      type: "zhihu",
-      displayName: "知乎",
-      home: "https://www.zhihu.com/settings/account",
-      icon: "https://static.zhihu.com/static/favicon.ico",
-    }
-  }
-}
-
-export { ZhihuWebAdaptor }
+export class CommonWebPlaceholder extends WebPlaceholder {}

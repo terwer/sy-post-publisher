@@ -73,7 +73,7 @@ class Adaptors {
         break
       }
       case SubPlatformType.Custom_Zhihu: {
-        const { webApi } = await useZhihuWeb()
+        const { webApi } = await useZhihuWeb(key, newCfg)
         blogAdaptor = webApi
         break
       }

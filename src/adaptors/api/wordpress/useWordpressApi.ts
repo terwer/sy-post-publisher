@@ -27,7 +27,7 @@ import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
-import { JsonUtil, ObjectUtil } from "zhi-common"
+import {JsonUtil, ObjectUtil, StrUtil} from "zhi-common"
 import { WordpressConfig } from "~/src/adaptors/api/wordpress/config/wordpressConfig.ts"
 import { WordpressApiAdaptor } from "~/src/adaptors/api/wordpress/adaptor/wordpressApiAdaptor.ts"
 import { getDynPostidKey } from "~/src/components/set/publish/platform/dynamicConfig.ts"
@@ -71,11 +71,14 @@ export const useWordpressApi = async (key?: string, newCfg?: WordpressConfig) =>
         "https://api.terwer.space/api/middleware"
       )
       cfg = new WordpressConfig(wordpressApiUrl, wordpressUsername, wordpressAuthToken, middlewareUrl)
-      // 默认值
-      cfg.posidKey = getDynPostidKey(key)
       logger.info("Configuration is empty, using default environment variables.")
     } else {
       logger.info("Using configuration from settings...")
+    }
+    // 初始化posidKey
+    if (StrUtil.isEmptyString(cfg.posidKey)) {
+      // 默认值
+      cfg.posidKey = getDynPostidKey(key)
     }
   }
 

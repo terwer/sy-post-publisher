@@ -134,7 +134,7 @@ const submitForm = async (formEl) => {
   const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
   formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
   // 初始化一个空配置
-  formData.setting[newCfg.platformKey] = "{}"
+  formData.setting[newCfg.platformKey] = {}
   await updateSetting(formData.setting)
 
   // 重新加载列表

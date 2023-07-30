@@ -48,8 +48,8 @@ dependencies:
     specifier: ^3.1.1
     version: 3.1.1
   zhi-blog-api:
-    specifier: ^1.18.1
-    version: 1.18.1
+    specifier: ^1.20.0
+    version: 1.20.0
   zhi-common:
     specifier: ^1.11.5
     version: 1.11.5
@@ -66,11 +66,11 @@ dependencies:
     specifier: ^0.4.2
     version: 0.4.2
   zhi-siyuan-api:
-    specifier: ^1.27.8
-    version: 1.27.8
+    specifier: ^1.28.1
+    version: 1.28.1
   zhi-wechatsync-middleware:
-    specifier: ^0.1.8
-    version: 0.1.8
+    specifier: ^0.1.12
+    version: 0.1.12
   zhi-xmlrpc-middleware:
     specifier: ^0.2.19
     version: 0.2.19
@@ -9647,8 +9647,8 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zhi-blog-api@1.18.1:
-    resolution: {integrity: sha512-6Mqa7UWKjyjUdJVjwxLTbhRQFlx1Z9prSjBQrchw3vgufpkd9yCePXDkVb7KDCY2SguHTsfsnQlx0DVKuALk+A==}
+  /zhi-blog-api@1.20.0:
+    resolution: {integrity: sha512-Dw/lYg+njnfcasi62FA6jgInCyktvIQV9vyYyflREOfqkAD0piyCiKrGQ9MqZrTza2DwepMkoQQJBh8mgWlk5Q==}
     dependencies:
       zhi-lib-base: 0.4.2
     dev: false
@@ -9684,18 +9684,18 @@ packages:
     resolution: {integrity: sha512-kfKgN4hb5efUf+k5Y9028CVV1p/hsnK0NbRsxI3uwJoTlHfTBjfi6ZfrkhDn+XEnEYeWidO75sx4RdcnT7C3KA==}
     dev: false
 
-  /zhi-siyuan-api@1.27.8:
-    resolution: {integrity: sha512-urQk/XCYGfi/7/y7SHo4ghhORkqAcOO1+QPFDbktAhMXH7u6HGkFqUS42nQgaziBHYOrTUwIjvxQHfaKM1IhHw==}
+  /zhi-siyuan-api@1.28.1:
+    resolution: {integrity: sha512-ciPCBprC85Qz0N0aqBCOhR+K/bnfcYDiNWSISteWbzsN1Sdp/I0pWdML53QWKmQVu+VExSudQnudkotK9hyY0A==}
     dependencies:
-      zhi-blog-api: 1.18.1
+      zhi-blog-api: 1.20.0
       zhi-common: 1.11.5
       zhi-lib-base: 0.4.2
     dev: false
 
-  /zhi-wechatsync-middleware@0.1.8:
-    resolution: {integrity: sha512-+zm39HyYsqAsl/Gyechd3KBnJO2AWHFHsokixSfno2osKS2XZwnTxRPrwI5AEu+r5Ra6nh63i4ssgss/XPokMg==}
+  /zhi-wechatsync-middleware@0.1.12:
+    resolution: {integrity: sha512-mN/kp7XDnsRpgjWeIq/7RHc7RrnoI8omsSKYLSK9tsAo5oW9ELmr0OT4ziwyyRHd9BXzXQLTdUcv55MUMasGkw==}
     dependencies:
-      zhi-blog-api: 1.18.1
+      zhi-blog-api: 1.20.0
       zhi-common: 1.11.5
       zhi-lib-base: 0.4.2
     dev: false

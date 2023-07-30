@@ -28,7 +28,7 @@ import { AppInstance } from "~/src/appInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { TypechoConfig } from "~/src/adaptors/api/typecho/config/typechoConfig.ts"
-import { JsonUtil, ObjectUtil } from "zhi-common"
+import {JsonUtil, ObjectUtil, StrUtil} from "zhi-common"
 import { getDynPostidKey } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { TypechoApiAdaptor } from "~/src/adaptors/api/typecho/adaptor/typechoApiAdaptor.ts"
 
@@ -71,11 +71,14 @@ export const useTypechoApi = async (key?: string, newCfg?: TypechoConfig) => {
         "https://api.terwer.space/api/middleware"
       )
       cfg = new TypechoConfig(typechoApiUrl, typechoUsername, typechoAuthToken, middlewareUrl)
-      // 默认值
-      cfg.posidKey = getDynPostidKey(key)
       logger.info("Configuration is empty, using default environment variables.")
     } else {
       logger.info("Using configuration from settings...")
+    }
+    // 初始化posidKey
+    if (StrUtil.isEmptyString(cfg.posidKey)) {
+      // 默认值
+      cfg.posidKey = getDynPostidKey(key)
     }
   }
 
