@@ -156,7 +156,7 @@ const handleSinglePlatformSetting = async (cfg: DynamicConfig) => {
     } else if (isInChromeExtension()) {
       _handleChromeExtensionAuth(cfg)
     } else {
-      _handleSetCookieAuth(cfg)
+      await _handleSetCookieAuth(cfg)
     }
   }
 }
@@ -243,7 +243,7 @@ const _handleSetCookieAuth = async (cfg: DynamicConfig) => {
 
 const handleValidateWebAuth = async (cfg: DynamicConfig) => {
   if (isInSiyuanWidget()) {
-    await _handleValidateOpenBrowserAuth(cfg)
+    _handleValidateOpenBrowserAuth(cfg)
   } else if (isInChromeExtension()) {
     await _handleValidateChromeExtensionAuth(cfg)
   } else {
@@ -251,25 +251,24 @@ const handleValidateWebAuth = async (cfg: DynamicConfig) => {
   }
 }
 
-const _handleValidateOpenBrowserAuth = async (cfg: DynamicConfig) => {
+const _handleValidateOpenBrowserAuth = (cfg: DynamicConfig) => {
   // 设置将要读取的域名
-  const domain = cfg.domain
-  const cookieCb = async (domain: string, cookies: ElectronCookie[]) => {
+  const cookieCb = async (dynCfg: DynamicConfig, cookies: ElectronCookie[]) => {
     // ElMessage.info("验证中，请关注状态，没有授权表示不可用，已授权表示该平台可正常使用...")
     logger.debug("get cookie result=>", cookies)
     formData.isWebAuthLoading = true
 
     try {
       const appInstance = new AppInstance()
-      const apiAdaptor = await Adaptors.getAdaptor(cfg.platformKey)
+      const apiAdaptor = await Adaptors.getAdaptor(dynCfg.platformKey)
       const api = Utils.webApi(appInstance, apiAdaptor)
 
       // 构造对应平台的cookie
       const cookieStr = await api.buildCookie(cookies)
       // 更新cookie
-      const newSettingCfg = JsonUtil.safeParse<WebConfig>(formData.setting[cfg.platformKey], {} as WebConfig)
+      const newSettingCfg = JsonUtil.safeParse<WebConfig>(formData.setting[dynCfg.platformKey], {} as WebConfig)
       newSettingCfg.password = cookieStr
-      formData.setting[cfg.platformKey] = newSettingCfg
+      formData.setting[dynCfg.platformKey] = newSettingCfg
       // 更新cookie
       await updateSetting(formData.setting)
 
@@ -278,26 +277,26 @@ const _handleValidateOpenBrowserAuth = async (cfg: DynamicConfig) => {
       const metadata = await api.getMetaData()
       logger.debug("get meta data=>", metadata)
       if (metadata.flag) {
-        cfg.isAuth = true
-        const newSettingCfg2 = JsonUtil.safeParse<WebConfig>(formData.setting[cfg.platformKey], {} as WebConfig)
+        dynCfg.isAuth = true
+        const newSettingCfg2 = JsonUtil.safeParse<WebConfig>(formData.setting[dynCfg.platformKey], {} as WebConfig)
         newSettingCfg2.metadata = metadata
         // newSettingCfg2
-        formData.setting[cfg.platformKey] = newSettingCfg2
+        formData.setting[dynCfg.platformKey] = newSettingCfg2
         // 更新metadata
         await updateSetting(formData.setting)
         logger.info("已更新最新的metadata")
         ElMessage.success("验证成功，该平台可正常使用")
       } else {
-        cfg.isAuth = false
+        dynCfg.isAuth = false
         ElMessage.error("验证失败，该平台将不可用")
       }
     } catch (e) {
-      cfg.isAuth = false
+      dynCfg.isAuth = false
       ElMessage.error(t("main.opt.failure") + "=>" + e)
       logger.error(e)
     }
 
-    formData.dynamicConfigArray = replacePlatformByKey(formData.dynamicConfigArray, cfg.platformKey, cfg)
+    formData.dynamicConfigArray = replacePlatformByKey(formData.dynamicConfigArray, dynCfg.platformKey, dynCfg)
     // 替换删除后的平台配置
     const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
     formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
@@ -305,7 +304,8 @@ const _handleValidateOpenBrowserAuth = async (cfg: DynamicConfig) => {
     await updateSetting(formData.setting)
     formData.isWebAuthLoading = false
   }
-  openBrowserWindow(cfg.authUrl, domain, cookieCb)
+
+  openBrowserWindow(cfg.authUrl, cfg, cookieCb)
 }
 
 const _handleValidateChromeExtensionAuth = async (cfg: DynamicConfig) => {
