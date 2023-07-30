@@ -26,7 +26,7 @@
 import { WebAuthApi } from "~/src/adaptors/web/base/web/WebAuthApi.ts"
 
 /**
- * 知乎网页授权适配器
+ * 简书网页授权适配器
  *
  * @see [wechatsync jianshu adaptor](https://github.com/wechatsync/Wechatsync/blob/master/packages/@wechatsync/drivers/src/jianshu.js)
  * @author terwer

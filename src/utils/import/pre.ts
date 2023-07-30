@@ -122,5 +122,16 @@ export const pre = {
       domain: "jianshu.com",
       isEnabled: false,
     },
+    {
+      platformType: PlatformType.Custom,
+      subPlatformType: SubPlatformType.Custom_Juejin,
+      platformKey: "custom_Juejin",
+      platformName: "掘金",
+      platformIcon: svgIcons.iconIFJuejin,
+      authMode: AuthMode.WEBSITE,
+      authUrl: "https://juejin.cn/login",
+      domain: "juejin.cn",
+      isEnabled: false,
+    },
   ],
 }

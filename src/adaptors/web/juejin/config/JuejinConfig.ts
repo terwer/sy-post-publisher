@@ -23,33 +23,9 @@
  * questions.
  */
 
-import { WebAuthApi } from "~/src/adaptors/web/base/web/WebAuthApi.ts"
+import { CommonWebConfig } from "~/src/adaptors/web/base/web/config/CommonWebConfig.ts"
 
 /**
- * CSDN网页授权适配器
- *
- * @see [wechatsync csdn adaptor](https://github.com/wechatsync/Wechatsync/blob/master/packages/@wechatsync/drivers/src/CSDN.js)
- * @author terwer
- * @version 0.9.0
- * @since 0.9.0
+ * 掘金配置
  */
-class CsdnWebAdaptor extends WebAuthApi {
-  public async getMetaData(): Promise<any> {
-    const res = await this.proxyFetch("https://bizapi.csdn.net/blog-console-api/v1/user/info")
-    const flag = !!res.data.csdnid
-    this.logger.info(`get csdn metadata finished, flag => ${flag}`)
-    return {
-      flag: flag,
-      uid: res.data.csdnid,
-      title: res.data.username,
-      avatar: res.data.avatarurl,
-      type: "csdn",
-      displayName: "CSDN",
-      supportTypes: ["markdown", "html"],
-      home: "https://mp.csdn.net/",
-      icon: "https://g.csdnimg.cn/static/logo/favicon32.ico",
-    }
-  }
-}
-
-export { CsdnWebAdaptor }
+export class JuejinConfig extends CommonWebConfig {}

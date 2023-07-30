@@ -26,30 +26,31 @@
 import { WebAuthApi } from "~/src/adaptors/web/base/web/WebAuthApi.ts"
 
 /**
- * CSDN网页授权适配器
+ * 掘金网页授权适配器
  *
- * @see [wechatsync csdn adaptor](https://github.com/wechatsync/Wechatsync/blob/master/packages/@wechatsync/drivers/src/CSDN.js)
+ * @see [wechatsync juejin adaptor](https://github.com/wechatsync/Wechatsync/blob/master/packages/@wechatsync/drivers/src/Juejin.js)
  * @author terwer
  * @version 0.9.0
  * @since 0.9.0
  */
-class CsdnWebAdaptor extends WebAuthApi {
+class JuejinWebAdaptor extends WebAuthApi {
   public async getMetaData(): Promise<any> {
-    const res = await this.proxyFetch("https://bizapi.csdn.net/blog-console-api/v1/user/info")
-    const flag = !!res.data.csdnid
-    this.logger.info(`get csdn metadata finished, flag => ${flag}`)
+    const res = await this.proxyFetch("https://api.juejin.cn/user_api/v1/user/get")
+    const flag = !!res.data.user_id
+    this.logger.info(`get juejin metadata finished, flag => ${flag}`)
     return {
       flag: flag,
-      uid: res.data.csdnid,
-      title: res.data.username,
-      avatar: res.data.avatarurl,
-      type: "csdn",
-      displayName: "CSDN",
-      supportTypes: ["markdown", "html"],
-      home: "https://mp.csdn.net/",
-      icon: "https://g.csdnimg.cn/static/logo/favicon32.ico",
+      uid: res.data.user_id,
+      title: res.data.user_name,
+      avatar: res.data.avatar_large,
+      type: 'juejin',
+      displayName: '掘金',
+      raw: res.data,
+      supportTypes: ['markdown', 'html'],
+      home: 'https://juejin.cn/editor/drafts',
+      icon: 'https://juejin.cn/favicon.ico',
     }
   }
 }
 
-export { CsdnWebAdaptor }
+export { JuejinWebAdaptor }

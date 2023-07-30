@@ -77,6 +77,12 @@ export class WebAuthApi extends WebApi {
   // ================
   // private methods
   // ================
+  /**
+   * 网页授权通用的请求代理
+   *
+   * @param url - url
+   * @param params - 参数
+   */
   protected async proxyFetch(url: string, params: any = {}): Promise<any> {
     if (this.isInSiyuanWidget) {
       this.logger.info("using siyuan forwardProxy")
