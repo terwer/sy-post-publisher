@@ -111,5 +111,16 @@ export const pre = {
     //   domain: "csdn.net",
     //   isEnabled: false,
     // },
+    {
+      platformType: PlatformType.Custom,
+      subPlatformType: SubPlatformType.Custom_Jianshu,
+      platformKey: "custom_Jianshu",
+      platformName: "简书",
+      platformIcon: svgIcons.iconIFJianshu,
+      authMode: AuthMode.WEBSITE,
+      authUrl: "https://www.jianshu.com/sign_in",
+      domain: "jianshu.com",
+      isEnabled: false,
+    },
   ],
 }

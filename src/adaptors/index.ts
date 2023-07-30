@@ -32,6 +32,7 @@ import { useTypechoApi } from "~/src/adaptors/api/typecho/useTypechoApi.ts"
 import { useYuqueApi } from "~/src/adaptors/api/yuque/useYuqueApi.ts"
 import { useZhihuWeb } from "~/src/adaptors/web/zhihu/useZhihuWeb.ts"
 import { useCsdnWeb } from "~/src/adaptors/web/csdn/useCsdnWeb.ts"
+import { useJianshuWeb } from "~/src/adaptors/web/jianshu/useJianshuWeb.ts"
 
 /**
  * 适配器统一入口
@@ -80,6 +81,11 @@ class Adaptors {
       }
       case SubPlatformType.Custom_CSDN: {
         const { webApi } = await useCsdnWeb(key, newCfg)
+        blogAdaptor = webApi
+        break
+      }
+      case SubPlatformType.Custom_Jianshu: {
+        const { webApi } = await useJianshuWeb(key, newCfg)
         blogAdaptor = webApi
         break
       }

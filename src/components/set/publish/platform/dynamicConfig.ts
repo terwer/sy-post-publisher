@@ -175,6 +175,7 @@ export enum SubPlatformType {
   // Custom
   Custom_Zhihu = "Zhihu",
   Custom_CSDN = "Csdn",
+  Custom_Jianshu = "Jianshu",
 
   NONE = "none",
 }
@@ -220,6 +221,7 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
     case PlatformType.Custom:
       subtypeList.push(SubPlatformType.Custom_Zhihu)
       subtypeList.push(SubPlatformType.Custom_CSDN)
+      subtypeList.push(SubPlatformType.Custom_Jianshu)
       break
     default:
       break
