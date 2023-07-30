@@ -33,16 +33,16 @@ import { describe, it, expect } from "vitest"
 
 describe("test dynamicConfig", () => {
   it("test getSubPlatformTypeByKey", () => {
-    // const key = "common_Zhihu-z2jom6d"
-    const key = "common_Zhihu"
+    // const key = "custom_Zhihu-z2jom6d"
+    const key = "custom_Zhihu"
     const result = getSubPlatformTypeByKey(key)
     console.log("result=>", result)
-    expect(result).toBe(SubPlatformType.Common_Zhihu)
+    expect(result).toBe(SubPlatformType.Custom_Zhihu)
   })
 
   it("test getNewPlatformKey", () => {
     const ptype = PlatformType.Common
-    const subtype = SubPlatformType.Common_Zhihu
+    const subtype = SubPlatformType.Custom_CSDN
     const result = getNewPlatformKey(ptype, subtype)
     console.log("result=>", result)
     expect(result).toMatch(/common_Zhihu-\w+/)

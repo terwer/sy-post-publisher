@@ -50,6 +50,8 @@ import Adaptors from "~/src/adaptors"
 import { Utils } from "~/src/utils/utils.ts"
 import { AppInstance } from "~/src/appInstance.ts"
 import { ElectronCookie, WebConfig } from "zhi-blog-api"
+import { useSiyuanDevice } from "~/src/composables/useSiyuanDevice.ts"
+import CookieSetting from "~/src/components/set/publish/singleplatform/CookieSetting.vue"
 
 const logger = createAppLogger("publish-setting")
 
@@ -58,6 +60,7 @@ const { t } = useVueI18n()
 const router = useRouter()
 const { getSetting, updateSetting, deleteKey } = useSettingStore()
 const { platformTypeList } = usePlatformDefine()
+const { isInSiyuanWidget, isInChromeExtension } = useSiyuanDevice()
 
 // datas
 const formData = reactive({
@@ -72,6 +75,11 @@ const formData = reactive({
   isUpgradeLoading: false,
   showLogMessage: false,
   logMessage: "",
+
+  cookieSettingFormVisible: false,
+  dlgCookieTitle: "",
+  dlgKey: "",
+  dlgSettingCfg: {} as WebConfig,
 })
 
 // methods
@@ -89,20 +97,6 @@ const handleAddPlatformStep = (type: PlatformType) => {
       showBack: "true",
     },
   })
-}
-
-const handleSinglePlatformSetting = async (cfg: DynamicConfig) => {
-  if (cfg.authMode === AuthMode.API) {
-    const key = cfg.platformKey
-    await router.push({
-      path: `/setting/platform/single/${key}`,
-      query: {
-        showBack: "true",
-      },
-    })
-  } else {
-    await handleOpenBrowserAuth(cfg)
-  }
 }
 
 const handleSinglePlatformDelete = (cfg: DynamicConfig) => {
@@ -147,7 +141,27 @@ const handlePlatformEnabled = async (cfg: DynamicConfig) => {
   await updateSetting(formData.setting)
 }
 
-const handleOpenBrowserAuth = async (cfg: DynamicConfig) => {
+const handleSinglePlatformSetting = async (cfg: DynamicConfig) => {
+  if (cfg.authMode === AuthMode.API) {
+    const key = cfg.platformKey
+    await router.push({
+      path: `/setting/platform/single/${key}`,
+      query: {
+        showBack: "true",
+      },
+    })
+  } else {
+    if (isInSiyuanWidget()) {
+      await _handleOpenBrowserAuth(cfg)
+    } else if (isInChromeExtension()) {
+      _handleChromeExtensionAuth(cfg)
+    } else {
+      _handleSetCookieAuth(cfg)
+    }
+  }
+}
+
+const _handleOpenBrowserAuth = async (cfg: DynamicConfig) => {
   ElMessageBox.confirm(
     `将打开 [${cfg.platformName}] 登录授权页面，您需要在新页面完成登录，然后点击验证查看授权结果，是否继续？`,
     "网页授权",
@@ -176,7 +190,68 @@ const handleOpenBrowserAuth = async (cfg: DynamicConfig) => {
     .catch(() => {})
 }
 
-const handleValidateWebAuth = (cfg: DynamicConfig) => {
+const _handleChromeExtensionAuth = (cfg: DynamicConfig) => {
+  ElMessageBox.confirm(
+    `将打开 [${cfg.platformName}] 登录授权页面，您需要在新页面完成登录，然后点击验证查看授权结果，是否继续？`,
+    "网页授权",
+    {
+      type: "warning",
+      icon: markRaw(WarningFilled),
+      confirmButtonText: t("main.opt.ok"),
+      cancelButtonText: t("main.opt.cancel"),
+    }
+  )
+    .then(async () => {
+      if (cfg.isAuth) {
+        cfg.isAuth = false
+        formData.dynamicConfigArray = replacePlatformByKey(formData.dynamicConfigArray, cfg.platformKey, cfg)
+        // 替换删除后的平台配置
+        const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
+        formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
+        // 更新状态
+        await updateSetting(formData.setting)
+        logger.info("已授权，将清空状态，并重新进行授权，授权完成需要重新验证")
+      } else {
+        logger.info("未授权，准备开始授权")
+      }
+      window.open(cfg.authUrl)
+    })
+    .catch(() => {})
+}
+
+const _handleSetCookieAuth = async (cfg: DynamicConfig) => {
+  if (cfg.isAuth) {
+    cfg.isAuth = false
+    formData.dynamicConfigArray = replacePlatformByKey(formData.dynamicConfigArray, cfg.platformKey, cfg)
+    // 替换删除后的平台配置
+    const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
+    formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
+    // 更新状态
+    await updateSetting(formData.setting)
+    logger.info("已授权，将清空状态，并重新进行授权，授权完成需要重新验证")
+  } else {
+    logger.info("未授权，准备开始授权")
+  }
+
+  // 更新cookie
+  const settingCfg = JsonUtil.safeParse<WebConfig>(formData.setting[cfg.platformKey], {} as WebConfig)
+  formData.dlgKey = cfg.platformKey
+  formData.dlgSettingCfg = settingCfg
+  formData.dlgCookieTitle = `${cfg.platformName} Cookie 设置`
+  formData.cookieSettingFormVisible = true
+}
+
+const handleValidateWebAuth = async (cfg: DynamicConfig) => {
+  if (isInSiyuanWidget()) {
+    await _handleValidateOpenBrowserAuth(cfg)
+  } else if (isInChromeExtension()) {
+    await _handleValidateChromeExtensionAuth(cfg)
+  } else {
+    await _handleValidateCookieAuth(cfg)
+  }
+}
+
+const _handleValidateOpenBrowserAuth = async (cfg: DynamicConfig) => {
   // 设置将要读取的域名
   const domain = cfg.domain
   const cookieCb = async (domain: string, cookies: ElectronCookie[]) => {
@@ -233,6 +308,51 @@ const handleValidateWebAuth = (cfg: DynamicConfig) => {
   openBrowserWindow(cfg.authUrl, domain, cookieCb)
 }
 
+const _handleValidateChromeExtensionAuth = async (cfg: DynamicConfig) => {
+  formData.isWebAuthLoading = true
+
+  try {
+    const appInstance = new AppInstance()
+    const apiAdaptor = await Adaptors.getAdaptor(cfg.platformKey)
+    const api = Utils.webApi(appInstance, apiAdaptor)
+    const metadata = await api.getMetaData()
+    // logger.debug("chrome extension get meta data=>", metadata)
+    if (metadata.flag) {
+      cfg.isAuth = true
+      const newSettingCfg2 = JsonUtil.safeParse<WebConfig>(formData.setting[cfg.platformKey], {} as WebConfig)
+      newSettingCfg2.metadata = metadata
+      // newSettingCfg2
+      formData.setting[cfg.platformKey] = newSettingCfg2
+      // 更新metadata
+      await updateSetting(formData.setting)
+      logger.info("已更新最新的metadata")
+      ElMessage.success("验证成功，该平台可正常使用")
+    } else {
+      cfg.isAuth = false
+      ElMessage.error("验证失败，该平台将不可用")
+    }
+  } catch (e) {
+    cfg.isAuth = false
+    ElMessage.error(t("main.opt.failure") + "=>" + e)
+    logger.error(e)
+  }
+
+  formData.dynamicConfigArray = replacePlatformByKey(formData.dynamicConfigArray, cfg.platformKey, cfg)
+  // 替换删除后的平台配置
+  const dynJsonCfg = setDynamicJsonCfg(formData.dynamicConfigArray)
+  formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
+  // 更新状态
+  await updateSetting(formData.setting)
+  formData.isWebAuthLoading = false
+}
+
+const _handleValidateCookieAuth = async (cfg: DynamicConfig) => {
+  await _handleValidateChromeExtensionAuth(cfg)
+}
+
+const handleHideCookieDlg = () => {
+  formData.cookieSettingFormVisible = false
+}
 const handleImportPre = () => {
   ElMessage.info("开发中，敬请期待，您可以自行前往 [新增平台] 选择添加")
 }
@@ -498,6 +618,21 @@ onMounted(async () => {
         </div>
       </el-col>
     </el-row>
+
+    <!--
+    -----------------------------------------------------------------------------
+    -->
+    <!-- cookie设置弹窗 -->
+
+    <!-- 通用设置弹窗 -->
+    <el-dialog v-model="formData.cookieSettingFormVisible" :title="formData.dlgCookieTitle">
+      <cookie-setting
+        :key="formData.dlgKey"
+        :setting="formData.setting"
+        :setting-cfg="formData.dlgSettingCfg"
+        @emitHideDlg="handleHideCookieDlg"
+      />
+    </el-dialog>
   </div>
 </template>
 

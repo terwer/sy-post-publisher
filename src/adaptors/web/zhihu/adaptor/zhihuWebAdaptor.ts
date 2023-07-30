@@ -23,13 +23,8 @@
  * questions.
  */
 
-import { ElectronCookie, WebApi } from "zhi-blog-api"
-import { JsonUtil } from "zhi-common"
-import { AppInstance } from "~/src/appInstance.ts"
-import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { ZhihuConfig } from "~/src/adaptors/web/zhihu/config/zhihuConfig.ts"
-import { useSiyuanApi } from "~/src/composables/useSiyuanApi.ts"
-import { SiyuanKernelApi } from "zhi-siyuan-api"
+import { ElectronCookie } from "zhi-blog-api"
+import { WebAuthApi } from "~/src/adaptors/web/zhihu/base/WebAuthApi.ts"
 
 /**
  * 知乎网页授权适配器
@@ -38,35 +33,25 @@ import { SiyuanKernelApi } from "zhi-siyuan-api"
  * @version 0.9.0
  * @since 0.9.0
  */
-class ZhihuWebAdaptor extends WebApi {
-  private readonly logger
-  private cfg: ZhihuConfig
-  private readonly kernelApi: SiyuanKernelApi
-
-  /**
-   * 初始化博客园 API 适配器
-   *
-   * @param appInstance 应用实例
-   * @param cfg 配置项
-   */
-  constructor(appInstance: AppInstance, cfg: ZhihuConfig) {
-    super()
-
-    this.cfg = cfg
-    this.logger = createAppLogger("cnblogs-api-adaptor")
-    const { kernelApi } = useSiyuanApi()
-    this.kernelApi = kernelApi
-  }
-
-  public updateCfg(cfg: ZhihuConfig) {
-    this.cfg = cfg
-  }
+class ZhihuWebAdaptor extends WebAuthApi {
+  // /**
+  //  * 初始化知乎 API 适配器
+  //  *
+  //  * @param appInstance 应用实例
+  //  * @param cfg 配置项
+  //  */
+  // constructor(appInstance: AppInstance, cfg: ZhihuConfig) {
+  //   super(appInstance, cfg)
+  //
+  //   this.cfg = cfg
+  //   this.logger = createAppLogger("zhihu-web-adaptor")
+  // }
 
   public async buildCookie(cookies: ElectronCookie[]): Promise<string> {
     return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join(";")
   }
 
-  public async getMetaData(): Promise<object> {
+  public async getMetaData(): Promise<any> {
     const res = await this.proxyFetch(
       "https://www.zhihu.com/api/v4/me?include=account_status%2Cis_bind_phone%2Cis_force_renamed%2Cemail%2Crenamed_fullname"
     )
@@ -85,31 +70,9 @@ class ZhihuWebAdaptor extends WebApi {
     }
   }
 
-  public async getPreviewUrl(postid: string): Promise<string> {
-    return Promise.resolve(`https://zhuanlan.zhihu.com/p/${postid}`)
-  }
-
-  // ================
-  // private methods
-  // ================
-  private async proxyFetch(url: string, params: any = {}): Promise<any> {
-    const fetchResult = await this.kernelApi.forwardProxy(
-      url,
-      [
-        {
-          Cookie: this.cfg.password,
-        },
-      ],
-      params,
-      "GET",
-      "application/json",
-      7000
-    )
-    this.logger.debug("proxyFetch result=>", fetchResult)
-    const resText = fetchResult?.body
-    const res = JsonUtil.safeParse<any>(resText, {} as any)
-    return res
-  }
+  // public async getPreviewUrl(postid: string): Promise<string> {
+  //   return Promise.resolve(`https://zhuanlan.zhihu.com/p/${postid}`)
+  // }
 }
 
 export { ZhihuWebAdaptor }

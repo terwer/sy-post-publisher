@@ -62,6 +62,13 @@ const useZhihuWeb = async (key?: string, newCfg?: ZhihuConfig) => {
     } else {
       logger.info("Using configuration from settings...")
     }
+    const middlewareUrl = Utils.emptyOrDefault(
+      process.env.VITE_MIDDLEWARE_URL,
+      "https://api.terwer.space/api/middleware"
+    )
+    if(StrUtil.isEmptyString(cfg.middlewareUrl)){
+      cfg.middlewareUrl = middlewareUrl
+    }
     // 初始化posidKey
     if (StrUtil.isEmptyString(cfg.posidKey)) {
       // 默认值
