@@ -34,6 +34,7 @@ import { Post } from "zhi-blog-api"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { useSiyuanApi } from "~/src/composables/useSiyuanApi.ts"
+import { pre } from "~/src/utils/import/pre.ts"
 
 /**
  * 通用发布组件
@@ -65,6 +66,10 @@ const usePublish = () => {
       singleFormData.setting = await getSetting()
       singleFormData.cfg = JsonUtil.safeParse<any>(singleFormData.setting[key], {} as any)
 
+      // 系统内置
+      const isSys = pre.systemCfg.some((item) => item.platformKey === key)
+      logger.info("isSys=>", isSys)
+
       // 初始化API
       const appInstance = new AppInstance()
       const apiAdaptor = await Adaptors.getAdaptor(key)
@@ -78,9 +83,17 @@ const usePublish = () => {
       }
       const postMeta = singleFormData.setting[id] ?? {}
       singleFormData.postid = postMeta[posidKey] ?? ""
-      singleFormData.isAdd = !StrUtil.isEmptyString(singleFormData.postid)
+      singleFormData.isAdd = StrUtil.isEmptyString(singleFormData.postid)
 
-      if (singleFormData.isAdd) {
+      if (!singleFormData.isAdd || isSys) {
+        logger.info("文章已发布，准备更新")
+        const post = new Post()
+        post.title = doc.title
+        post.description = doc.description
+        // result 正常情况下就是 postid
+        const result = await api.editPost(singleFormData.postid, post)
+        logger.info("edit post=>", result)
+      } else {
         logger.info("文章未发布，准备发布")
         const post = new Post()
         post.title = doc.title
@@ -94,14 +107,6 @@ const usePublish = () => {
         singleFormData.setting[id] = postMeta
         await updateSetting(singleFormData.setting)
         logger.info("new post=>", result)
-      } else {
-        logger.info("文章已发布，准备更新")
-        const post = new Post()
-        post.title = doc.title
-        post.description = doc.description
-        // result 正常情况下就是 postid
-        const result = await api.editPost(singleFormData.postid, post)
-        logger.info("edit post=>", result)
       }
       const previewUrl = await api.getPreviewUrl(singleFormData.postid)
       singleFormData.previewUrl = `${singleFormData.cfg.home}${previewUrl}`
@@ -121,7 +126,7 @@ const usePublish = () => {
     return {
       key: key,
       status: singleFormData.publishProcessStatus,
-      name: singleFormData.cfg.blogName,
+      name: singleFormData.cfg?.blogName,
       previewUrl: singleFormData.previewUrl,
       errMsg: singleFormData.errMsg,
     }
