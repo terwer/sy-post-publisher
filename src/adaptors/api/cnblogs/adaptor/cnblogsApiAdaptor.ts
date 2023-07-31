@@ -23,12 +23,12 @@
  * questions.
  */
 
-import { BlogApi, UserBlog } from "zhi-blog-api"
+import { UserBlog } from "zhi-blog-api"
 import { CnblogsConfig } from "~/src/adaptors/api/cnblogs/config/cnblogsConfig.ts"
-import { CommonXmlrpcClient } from "zhi-xmlrpc-middleware"
 import { AppInstance } from "~/src/appInstance.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { CnblogsConstants } from "~/src/adaptors/api/cnblogs/cnblogsConstants.ts"
+import { MetaweblogBlogApi } from "~/src/adaptors/api/base/metaweblog/metaweblogBlogApi.ts"
 
 /**
  * 博客园 API 适配器
@@ -39,11 +39,7 @@ import { CnblogsConstants } from "~/src/adaptors/api/cnblogs/cnblogsConstants.ts
  * @version 0.9.0
  * @since 0.9.0
  */
-class CnblogsApiAdaptor extends BlogApi {
-  private readonly logger
-  private readonly cfg: CnblogsConfig
-  private readonly commonXmlrpcClient
-
+class CnblogsApiAdaptor extends MetaweblogBlogApi {
   /**
    * 初始化博客园 API 适配器
    *
@@ -51,24 +47,37 @@ class CnblogsApiAdaptor extends BlogApi {
    * @param cfg 配置项
    */
   constructor(appInstance: AppInstance, cfg: CnblogsConfig) {
-    super()
-
-    this.cfg = cfg
+    super(appInstance, cfg)
     this.logger = createAppLogger("cnblogs-api-adaptor")
-    this.commonXmlrpcClient = new CommonXmlrpcClient(appInstance, cfg.apiUrl)
+    this.cfg.blogid = "cnblogs"
   }
 
   public override async getUsersBlogs(): Promise<Array<UserBlog>> {
     let result: UserBlog[] = []
-    result = await this.cnblogsCall(CnblogsConstants.METHOD_GET_USERS_BLOGS, [])
+    result = await this.metaweblogCall(CnblogsConstants.METHOD_GET_USERS_BLOGS, [
+      this.cfg.blogid,
+      this.cfg.username,
+      this.cfg.password,
+    ])
     this.logger.debug("getUsersBlogs=>", result)
     return result
   }
 
-  private async cnblogsCall(method: string, params: string[]) {
-    const parameters = ["cnblogs", this.cfg.username, this.cfg.password]
-    params.forEach((param) => parameters.push(param))
-    return await this.commonXmlrpcClient.methodCall(method, parameters, this.cfg.middlewareUrl)
+  public override async getPreviewUrl(postid: string): Promise<string> {
+    return this.cfg.previewUrl.replace(/\[postid\]/g, postid)
+  }
+
+  public override async deletePost(postid: string): Promise<boolean> {
+    const ret = await this.metaweblogCall(CnblogsConstants.METHOD_DELETE_POST, [
+      this.cfg.blogid,
+      postid,
+      this.cfg.username,
+      this.cfg.password,
+      false,
+    ])
+    this.logger.debug("ret=>", ret)
+
+    return ret
   }
 }
 export { CnblogsApiAdaptor }

@@ -29,9 +29,10 @@ import { Utils } from "~/src/utils/utils.ts"
 import { reactive, ref } from "vue"
 import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
 import { SimpleXmlRpcClient } from "simple-xmlrpc"
-import { MediaObject } from "zhi-blog-api"
+import {MediaObject, Post} from "zhi-blog-api"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import Adaptors from "~/src/adaptors"
+import {SiYuanApiAdaptor, SiyuanConfig} from "zhi-siyuan-api";
 
 const logger = createAppLogger("cnblogs-test")
 
@@ -127,13 +128,13 @@ const onMethodChange = (val: string) => {
     }
     case METHOD_GET_POST: {
       params.value = JSON.stringify({
-        postid: "20230526221603-3mgotyw",
+        postid: "17593464",
       })
       break
     }
     case METHOD_EDIT_POST: {
       params.value = JSON.stringify({
-        postid: "20230527202519-k09a4gx",
+        postid: "17593464",
         post: {
           title: "自动发布的测试标题2",
           description: "自动发布的测试内容2",
@@ -146,7 +147,7 @@ const onMethodChange = (val: string) => {
     }
     case METHOD_DELETE_POST: {
       params.value = JSON.stringify({
-        postid: "20230528192554-mlcxbe8",
+        postid: "17593463",
       })
       break
     }
@@ -156,7 +157,7 @@ const onMethodChange = (val: string) => {
     }
     case METHOD_GET_PREVIEW_URL: {
       params.value = JSON.stringify({
-        postid: "20230528192554-mlcxbe8",
+        postid: "17243968",
       })
       break
     }
@@ -200,27 +201,99 @@ const cnblogsHandleApi = async () => {
         break
       }
       case METHOD_GET_RECENT_POSTS_COUNT: {
+        const key = "metaweblog_Cnblogs"
+        const cnblogsApiAdaptor = await Adaptors.getAdaptor(key)
+        const cnblogsApi = Utils.blogApi(appInstance, cnblogsApiAdaptor)
+        logger.info("cnblogsApi=>", cnblogsApi)
+        const result = await cnblogsApi.getRecentPostsCount()
+        logMessage.value = JSON.stringify(result)
+        logger.info("cnblogs getRecentPostsCount=>", result)
         break
       }
       case METHOD_GET_RECENT_POSTS: {
+        const key = "metaweblog_Cnblogs"
+        const cnblogsApiAdaptor = await Adaptors.getAdaptor(key)
+        const cnblogsApi = Utils.blogApi(appInstance, cnblogsApiAdaptor)
+        logger.info("cnblogsApi=>", cnblogsApi)
+        const result = await cnblogsApi.getRecentPosts(10)
+        logMessage.value = JSON.stringify(result)
+        logger.info("cnblogs getRecentPosts=>", result)
         break
       }
       case METHOD_NEW_POST: {
+        const paramsValue = JSON.parse(params.value)
+        let post = new Post()
+        post = {
+          ...post,
+          ...paramsValue,
+        }
+        const key = "metaweblog_Cnblogs"
+        const cnblogsApiAdaptor = await Adaptors.getAdaptor(key)
+        const cnblogsApi = Utils.blogApi(appInstance, cnblogsApiAdaptor)
+        const result = await cnblogsApi.newPost(post)
+        logMessage.value = JSON.stringify(result)
+        logger.info("cnblogs newPost=>", result)
         break
       }
       case METHOD_GET_POST: {
+        const key = "metaweblog_Cnblogs"
+        const cnblogsApiAdaptor = await Adaptors.getAdaptor(key)
+        const cnblogsApi = Utils.blogApi(appInstance, cnblogsApiAdaptor)
+        logger.info("cnblogsApi=>", cnblogsApi)
+        const paramsValue = JSON.parse(params.value)
+        const postid = paramsValue.postid
+        const result = await cnblogsApi.getPost(postid)
+        logMessage.value = JSON.stringify(result)
+        logger.info("cnblogs getPost=>", result)
         break
       }
       case METHOD_EDIT_POST: {
+        const key = "metaweblog_Cnblogs"
+        const cnblogsApiAdaptor = await Adaptors.getAdaptor(key)
+        const cnblogsApi = Utils.blogApi(appInstance, cnblogsApiAdaptor)
+        logger.info("cnblogsApi=>", cnblogsApi)
+        const paramsValue = JSON.parse(params.value)
+        const postid = paramsValue.postid
+        let post = new Post()
+        post = {
+          ...post,
+          ...paramsValue.post,
+        }
+        const result = await cnblogsApi.editPost(postid, post)
+        logMessage.value = JSON.stringify(result)
         break
       }
       case METHOD_DELETE_POST: {
+        const key = "metaweblog_Cnblogs"
+        const cnblogsApiAdaptor = await Adaptors.getAdaptor(key)
+        const cnblogsApi = Utils.blogApi(appInstance, cnblogsApiAdaptor)
+        logger.info("cnblogsApi=>", cnblogsApi)
+        const paramsValue = JSON.parse(params.value)
+        const postid = paramsValue.postid
+        const result = await cnblogsApi.deletePost(postid)
+        logMessage.value = JSON.stringify(result)
         break
       }
       case METHOD_GET_CATEGORIES: {
+        const key = "metaweblog_Cnblogs"
+        const cnblogsApiAdaptor = await Adaptors.getAdaptor(key)
+        const cnblogsApi = Utils.blogApi(appInstance, cnblogsApiAdaptor)
+        logger.info("cnblogsApi=>", cnblogsApi)
+        const result = await cnblogsApi.getCategories()
+        logMessage.value = JSON.stringify(result)
+        logger.info("cnblogs getCategories=>", result)
         break
       }
       case METHOD_GET_PREVIEW_URL: {
+        const key = "metaweblog_Cnblogs"
+        const cnblogsApiAdaptor = await Adaptors.getAdaptor(key)
+        const cnblogsApi = Utils.blogApi(appInstance, cnblogsApiAdaptor)
+        logger.info("cnblogsApi=>", cnblogsApi)
+        const paramsValue = JSON.parse(params.value)
+        const postid = paramsValue.postid
+        const result = await cnblogsApi.getPreviewUrl(postid)
+        logMessage.value = JSON.stringify(result)
+        logger.info("cnblogs getPreviewUrl=>", result)
         break
       }
       case METHOD_NEW_MEDIA_OBJECT: {

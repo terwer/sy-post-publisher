@@ -68,11 +68,6 @@ export class DynamicConfig {
   isAuth: boolean
 
   /**
-   * 授权加载中
-   */
-  isWebAuthLoading?: boolean
-
-  /**
    * 授权模式
    */
   authMode: AuthMode
@@ -162,13 +157,13 @@ export enum SubPlatformType {
   Common_Yuque = "Yuque",
 
   // Github 子平台
-  Github_Hugo = "Hugo",
   Github_Hexo = "Hexo",
-  Github_Jekyll = "Jekyll",
-  Github_Vuepress = "Vuepress",
-  Github_Vitepress = "Vitepress",
-  Github_Nuxt = "Nuxt",
-  Github_Next = "Next",
+  // Github_Hugo = "Hugo",
+  // Github_Jekyll = "Jekyll",
+  // Github_Vuepress = "Vuepress",
+  // Github_Vitepress = "Vitepress",
+  // Github_Nuxt = "Nuxt",
+  // Github_Next = "Next",
 
   // Metaweblog
   Metaweblog_Cnblogs = "Cnblogs",
@@ -179,10 +174,10 @@ export enum SubPlatformType {
 
   // Custom
   Custom_Zhihu = "Zhihu",
-  Custom_CSDN = "Csdn",
+  // Custom_CSDN = "Csdn",
   Custom_Jianshu = "Jianshu",
   Custom_Juejin = "Juejin",
-  Custom_Wechat = "Wechat",
+  // Custom_Wechat = "Wechat",
 
   NONE = "none",
 }
@@ -211,12 +206,12 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
       break
     case PlatformType.Github:
       subtypeList.push(SubPlatformType.Github_Hexo)
-      subtypeList.push(SubPlatformType.Github_Hugo)
-      subtypeList.push(SubPlatformType.Github_Jekyll)
-      subtypeList.push(SubPlatformType.Github_Vuepress)
-      subtypeList.push(SubPlatformType.Github_Vitepress)
-      subtypeList.push(SubPlatformType.Github_Nuxt)
-      subtypeList.push(SubPlatformType.Github_Next)
+      // subtypeList.push(SubPlatformType.Github_Hugo)
+      // subtypeList.push(SubPlatformType.Github_Jekyll)
+      // subtypeList.push(SubPlatformType.Github_Vuepress)
+      // subtypeList.push(SubPlatformType.Github_Vitepress)
+      // subtypeList.push(SubPlatformType.Github_Nuxt)
+      // subtypeList.push(SubPlatformType.Github_Next)
       break
     case PlatformType.Metaweblog:
       subtypeList.push(SubPlatformType.Metaweblog_Cnblogs)

@@ -99,7 +99,7 @@ export const pre = {
       domain: "zhihu.com",
       isEnabled: false,
     },
-    // CSDN 目前有CA验证
+    // // CSDN 目前有CA验证
     // {
     //   platformType: PlatformType.Custom,
     //   subPlatformType: SubPlatformType.Custom_CSDN,

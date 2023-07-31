@@ -24,17 +24,20 @@
  */
 
 /**
- * 预定义博客园变量
+ * 预定义 Metaweblog 变量
  *
  * @author terwer
  * @version 0.9.0
  * @since 0.9.0
  */
-class CnblogsConstants {
-  // 博客园不支持 metaWeblog.getUsersBlogs 只支持 blogger.getUsersBlogs
-  public static METHOD_GET_USERS_BLOGS = "blogger.getUsersBlogs"
-  // 博客园不支持 metaWeblog.deletePost 只支持 blogger.deletePost
+class MetaweblogConstants {
+  public static METHOD_GET_USERS_BLOGS = "metaWeblog.getUsersBlogs"
+  public static METHOD_NEW_POST = "metaWeblog.newPost"
+  public static METHOD_EDIT_POST = "metaWeblog.editPost"
   public static METHOD_DELETE_POST = "blogger.deletePost"
+  public static METHOD_GET_RECENT_POSTS = "metaWeblog.getRecentPosts"
+  public static METHOD_GET_POST = "metaWeblog.getPost"
+  public static METHOD_GET_CATEGORIES = "metaWeblog.getCategories"
 }
 
-export { CnblogsConstants }
+export { MetaweblogConstants }
