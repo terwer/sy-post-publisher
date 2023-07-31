@@ -70,12 +70,10 @@ onMounted(async () => {
         发布中，请稍后...：
       </div>
       <div v-else-if="singleFormData.publishProcessStatus" class="success-tips">
-        {{ StrUtil.isEmptyString(singleFormData.postid) ? "发布到" : "更新文章到" }} [博客园] 成功，
+        {{ singleFormData.isAdd ? "发布到" : "更新文章到" }} [博客园] 成功，
         <a :href="singleFormData.previewUrl" target="_blank">查看文章</a>
       </div>
-      <div v-else class="fail-tips">
-        {{ StrUtil.isEmptyString(singleFormData.postid) ? "发布到" : "更新文章到" }} [博客园] 失败！
-      </div>
+      <div v-else class="fail-tips">{{ singleFormData.isAdd ? "发布到" : "更新文章到" }} [博客园] 失败！</div>
     </div>
   </div>
 </template>

@@ -54,6 +54,7 @@ const usePublish = () => {
 
     setting: {} as typeof SypConfig,
     cfg: {} as any,
+    isAdd: true,
     postid: "",
     previewUrl: "",
   })
@@ -77,8 +78,9 @@ const usePublish = () => {
       }
       const postMeta = singleFormData.setting[id] ?? {}
       singleFormData.postid = postMeta[posidKey] ?? ""
+      singleFormData.isAdd = !StrUtil.isEmptyString(singleFormData.postid)
 
-      if (StrUtil.isEmptyString(singleFormData.postid)) {
+      if (singleFormData.isAdd) {
         logger.info("文章未发布，准备发布")
         const post = new Post()
         post.title = doc.title
