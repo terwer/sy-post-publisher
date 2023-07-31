@@ -9,9 +9,9 @@ lerna-debug.log*
 
 node_modules
 dist
-build
 dist-ssr
 *.local
+testdata
 
 # Editor directories and files
 .vscode/*
@@ -24,24 +24,12 @@ dist-ssr
 *.sln
 *.sw?
 
-# test
-.vercel
-*.private.env.json
-__snapshots__
-test/data/polyfill
-extension/
-*.crx
-*.pem
-backup/
-.vitest-result.json
-coverage
-
-# docs
-out
-.pnpm-store
-public/lib/picgo/picgo.cfg.json
-public/lib/picgo/picgo.cfg.dev.json
-
+# Scripts
+venv
 __pycache__
-package.zip
-test.sh
+cookie.txt
+token.txt
+
+# ext
+extension
+build

@@ -3,6 +3,17 @@
   "author": "terwer",
   "url": "https://github.com/terwer/sy-post-publisher",
   "version": "0.8.1",
+  "minAppVersion": "2.9.0",
+  "backends": [
+    "windows",
+    "linux",
+    "darwin",
+    "docker"
+  ],
+  "frontends": [
+    "desktop",
+    "desktop-window"
+  ],
   "displayName": {
     "default": "sy-post-publisher",
     "zh_CN": "发布工具挂件版"

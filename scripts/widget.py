@@ -73,17 +73,12 @@ if __name__ == "__main__":
 
         # 删除Chrome插件专属文件
         scriptutils.rm_file(dist_folder + "background.js")
-        scriptutils.rm_files(dist_folder + "manifest*.json")
+        scriptutils.rm_files(dist_folder + "manifest.json")
         print("删除Chrome插件专属文件.")
 
         # 删除Firefox的专属文件
         scriptutils.rm_folder(dist_folder + "mv2")
         print("删除Firefox的专属文件.")
-
-        # 删除Picgo配置文件
-        scriptutils.rm_file(dist_folder + "lib/picgo/picgo.cfg.json")
-        scriptutils.rm_file(dist_folder + "lib/picgo/picgo.cfg.dev.json")
-        print("删除Picgo配置文件.")
 
         print("项目构建完成.")
 
@@ -103,7 +98,9 @@ if __name__ == "__main__":
     print("将dist文件打包成zip，用于挂件版本发布.")
 
     if args.test:
-        scriptutils.cp_folder(dist_folder, "../../SiYuanWorkspace/public/data/widgets/sy-post-publisher/", True)
-        print("拷贝文件到本地 public 工作空间测试.")
+        # scriptutils.cp_folder(dist_folder, "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher/")
+        # print("拷贝文件到本地 public 工作空间测试.")
+        scriptutils.cp_folder(dist_folder, "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/widgets/sy-post-publisher/")
+        print("拷贝文件到本地 test 工作空间测试.")
 
     print("发布完毕.")

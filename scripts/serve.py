@@ -26,7 +26,23 @@ import os
 import scriptutils
 
 if __name__ == "__main__":
-    # 切换工作空间
+    # Switch to the working directory.
     scriptutils.switch_workdir()
 
-    os.system("vercel dev --listen 6006")
+    # Get the current working directory.
+    cwd = scriptutils.get_workdir()
+
+    # 获取当前工作目录
+    print(os.getcwd())
+
+    URL = 'http://127.0.0.1:6806'
+    COOKIE = open('cookie.txt').read().strip()
+    TOKEN = open('token.txt').read().strip()
+
+    # 设置环境变量
+    os.environ['IS_SERVE'] = 'true'
+    os.environ['VITE_SIYUAN_API_URL'] = URL
+    os.environ['VITE_SIYUAN_AUTH_TOKEN'] = TOKEN
+    os.environ['VITE_SIYUAN_COOKIE'] = COOKIE
+
+    os.system("vite")

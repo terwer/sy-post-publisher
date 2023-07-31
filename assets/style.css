@@ -123,18 +123,9 @@ code {
   background-color: #ffffff;
 }
 
-.top-version-tip {
-  margin: 10px 0 !important;
-}
-
 .el-header {
   --el-header-padding: 0 20px;
   --el-header-height: 20px !important;
-}
-
-.el-tag {
-  margin-right: 10px;
-  margin-bottom: 10px;
 }
 
 .el-alert {

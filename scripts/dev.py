@@ -20,13 +20,18 @@
 #  Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
 #  or visit www.terwer.space if you need additional information or have any
 #  questions.
-
 import os
 
 import scriptutils
 
 if __name__ == "__main__":
-    # 切换工作空间
+    # Switch to the working directory.
     scriptutils.switch_workdir()
 
-    os.system("vite --port 6006")
+    # Get the current working directory.
+    cwd = scriptutils.get_workdir()
+
+    # 设置环境变量
+    os.environ['BUILD_TYPE'] = 'siyuan'
+
+    os.system("vite build --watch")
