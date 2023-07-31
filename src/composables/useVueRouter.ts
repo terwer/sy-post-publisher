@@ -32,6 +32,7 @@ import SettingEntry from "~/src/components/set/publish/singleplatform/SettingEnt
 import PlatformAddForm from "~/src/components/set/publish/PlatformAddForm.vue"
 import PlatformUpdateForm from "~/src/components/set/publish/PlatformUpdateForm.vue"
 import PlatformQuickAdd from "~/src/components/set/publish/PlatformQuickAdd.vue"
+import QuickPublish from "~/src/workers/quickPublish.vue"
 
 const ApiTest = () => import("~/src/pages/ApiTest.vue")
 const SiyuanTest = () => import("~/src/components/test/SiyuanTest.vue")
@@ -43,6 +44,7 @@ const ZhihuTest = () => import("~/src/components/test/ZhihuTest.vue")
 
 const routes: RouteRecordRaw[] = [
   { path: "/", component: Home },
+  { path: "/workers/quickPublish/:key/:id", component: QuickPublish },
   {
     path: "/test",
     component: ApiTest,
