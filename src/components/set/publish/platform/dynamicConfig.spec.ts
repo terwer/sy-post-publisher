@@ -42,7 +42,7 @@ describe("test dynamicConfig", () => {
 
   it("test getNewPlatformKey", () => {
     const ptype = PlatformType.Common
-    const subtype = SubPlatformType.Custom_CSDN
+    const subtype = SubPlatformType.Common_Yuque
     const result = getNewPlatformKey(ptype, subtype)
     console.log("result=>", result)
     expect(result).toMatch(/common_Zhihu-\w+/)
