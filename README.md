@@ -24,8 +24,8 @@ Features are currently available
 
 The platform is currently supported
 
-- [X] Blog Park
-- [X] Verbal finch
+- [X] Cnblogs
+- [X] yuque
 
 Refer to https://github.com/terwer/siyuan-plugin-publisher/blob/main/README_zh_CN.md for subsequent support
 
