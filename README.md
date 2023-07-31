@@ -4,9 +4,9 @@
 
 ![](https://img1.terwer.space/api/public/202212181125714.png)
 
-Publish [Source Notes] (https://github.com/siyuan-note/siyuan) articles to **Source Note Pendant** on supported platforms
+Publish [siyuan-note](https://github.com/siyuan-note/siyuan) articles to supported platforms
 
-0.9.0+ It is highly recommended to use with the [Publishing Tool] (https://github.com/terwer/siyuan-plugin-publisher) plugin for a better experience~
+0.9.0+ It is highly recommended to use with the [Publishing Tool](https://github.com/terwer/siyuan-plugin-publisher) plugin for a better experience~
 
 0.8.1- For the following versions, please see [this description](./README_0_8_1_zh_CN.md)
 
