@@ -68,6 +68,11 @@ export class DynamicConfig {
   isAuth: boolean
 
   /**
+   * 授权加载中
+   */
+  isWebAuthLoading?: boolean
+
+  /**
    * 授权模式
    */
   authMode: AuthMode

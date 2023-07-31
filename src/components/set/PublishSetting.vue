@@ -71,7 +71,6 @@ const formData = reactive({
 
   dynamicConfigArray: [] as DynamicConfig[],
 
-  isWebAuthLoading: false,
   isUpgradeLoading: false,
   showLogMessage: false,
   logMessage: "",
@@ -256,7 +255,7 @@ const _handleValidateOpenBrowserAuth = (cfg: DynamicConfig) => {
   const cookieCb = async (dynCfg: DynamicConfig, cookies: ElectronCookie[]) => {
     // ElMessage.info("验证中，请关注状态，没有授权表示不可用，已授权表示该平台可正常使用...")
     logger.debug("get cookie result=>", cookies)
-    formData.isWebAuthLoading = true
+    dynCfg.isWebAuthLoading = true
 
     try {
       const appInstance = new AppInstance()
@@ -302,14 +301,14 @@ const _handleValidateOpenBrowserAuth = (cfg: DynamicConfig) => {
     formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
     // 更新状态
     await updateSetting(formData.setting)
-    formData.isWebAuthLoading = false
+    dynCfg.isWebAuthLoading = false
   }
 
   openBrowserWindow(cfg.authUrl, cfg, cookieCb)
 }
 
 const _handleValidateChromeExtensionAuth = async (cfg: DynamicConfig) => {
-  formData.isWebAuthLoading = true
+  cfg.isWebAuthLoading = true
 
   try {
     const appInstance = new AppInstance()
@@ -343,7 +342,7 @@ const _handleValidateChromeExtensionAuth = async (cfg: DynamicConfig) => {
   formData.setting[DYNAMIC_CONFIG_KEY] = dynJsonCfg
   // 更新状态
   await updateSetting(formData.setting)
-  formData.isWebAuthLoading = false
+  cfg.isWebAuthLoading = false
 }
 
 const _handleValidateCookieAuth = async (cfg: DynamicConfig) => {
@@ -544,7 +543,7 @@ onMounted(async () => {
                           class="action-btn action-web-auth"
                           @click="handleValidateWebAuth(platform)"
                           :size="'small'"
-                          :loading="formData.isWebAuthLoading"
+                          :loading="platform.isWebAuthLoading"
                         >
                           <el-icon>
                             <Lock />

@@ -24,13 +24,77 @@
   -->
 
 <script setup lang="ts">
+import { onMounted, reactive } from "vue"
+import { useRoute } from "vue-router"
+import { useVueI18n } from "~/src/composables/useVueI18n.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
 
+const logger = createAppLogger("quick-publish-worker")
+
+// uses
+const { t } = useVueI18n()
+const route = useRoute()
+
+// datas
+const params = reactive(route.params)
+const key = params.key as string
+const id = params.id as string
+const formData = reactive({
+  isPublishLoading: false,
+  publishStatus: false,
+  errMsg: "",
+})
+
+const doPublish = async () => {
+  try {
+    formData.publishStatus = true
+  } catch (e) {
+    formData.errMsg = t("main.opt.failure") + "=>" + e
+    logger.error(e)
+    formData.publishStatus = false
+  }
+}
+
+onMounted(async () => {
+  formData.isPublishLoading = true
+  setTimeout(async () => {
+    await doPublish()
+    formData.isPublishLoading = false
+  }, 200)
+})
 </script>
 
 <template>
-<div>quick publishing...</div>
+  <div id="quick-publish-box">
+    <div class="publish-tips">
+      <div v-if="formData.isPublishLoading" class="is-loading info-tips">
+        <i class="el-icon is-loading"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 64a32 32 0 0 1 32 32v192a32 32 0 0 1-64 0V96a32 32 0 0 1 32-32zm0 640a32 32 0 0 1 32 32v192a32 32 0 1 1-64 0V736a32 32 0 0 1 32-32zm448-192a32 32 0 0 1-32 32H736a32 32 0 1 1 0-64h192a32 32 0 0 1 32 32zm-640 0a32 32 0 0 1-32 32H96a32 32 0 0 1 0-64h192a32 32 0 0 1 32 32zM195.2 195.2a32 32 0 0 1 45.248 0L376.32 331.008a32 32 0 0 1-45.248 45.248L195.2 240.448a32 32 0 0 1 0-45.248zm452.544 452.544a32 32 0 0 1 45.248 0L828.8 783.552a32 32 0 0 1-45.248 45.248L647.744 692.992a32 32 0 0 1 0-45.248zM828.8 195.264a32 32 0 0 1 0 45.184L692.992 376.32a32 32 0 0 1-45.248-45.248l135.808-135.808a32 32 0 0 1 45.248 0zm-452.544 452.48a32 32 0 0 1 0 45.248L240.448 828.8a32 32 0 0 1-45.248-45.248l135.808-135.808a32 32 0 0 1 45.248 0z"></path></svg></i>
+        发布中，请稍后...：
+      </div>
+      <div v-else-if="formData.publishStatus" class="success-tips">
+        发布到 [博客园] 成功， <a href="https://www.baidu.com" target="_blank">查看文章</a>
+      </div>
+      <div v-else class="fail-tips">发布到 [博客园] 失败，异常如下：{{ formData.errMsg }}</div>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="stylus">
-
+.top-tip
+  margin 10px 0
+  padding-left 0
+#quick-publish-box
+  .publish-tips
+    margin 10px
+    margin-top 8px
+    font-size 14px
+    .info-tips
+      color var(--el-color-info)
+      .is-loading
+        vertical-align middle
+        margin-top -4px
+    .success-tips
+      color var(--el-color-success)
+    .fail-tips
+      color var(--el-color-error)
 </style>
