@@ -1,6 +1,6 @@
 {
   "name": "思源笔记发布辅助工具",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "manifest_version": 3,
   "author": "terwer",
   "icons": {
@@ -13,11 +13,17 @@
   "background": {
     "service_worker": "background.js"
   },
-  "host_permissions": ["*://*/*"],
+  "host_permissions": [
+    "*://*/*"
+  ],
   "web_accessible_resources": [
     {
-      "resources": ["index.html"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "action": {
