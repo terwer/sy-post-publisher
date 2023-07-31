@@ -128,11 +128,6 @@ code {
   --el-header-height: 20px !important;
 }
 
-.el-tag {
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-
 .el-alert {
   margin-top: 10px !important;
 }

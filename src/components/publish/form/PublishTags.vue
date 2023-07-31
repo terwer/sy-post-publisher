@@ -36,7 +36,7 @@ const { t } = useVueI18n()
         {{ tag }}
       </el-tag>
       <el-input class="ml-1 w-20" />
-      <el-button class="button-new-tag ml-1 el-tag">
+      <el-button class="button-new-tag ml-1 el-tag pub-tags">
         {{ t("main.tag.new") }}
       </el-button>
     </el-form-item>
@@ -48,4 +48,7 @@ const { t } = useVueI18n()
   </div>
 </template>
 
-<style scoped lang="stylus"></style>
+<style lang="stylus" scoped>
+:deep(.pub-tags)
+  margin-top 10px
+</style>

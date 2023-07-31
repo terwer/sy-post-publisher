@@ -26,107 +26,32 @@
 <script setup lang="ts">
 import { onMounted, reactive } from "vue"
 import { useRoute } from "vue-router"
-import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import Adaptors from "~/src/adaptors"
-import { Utils } from "~/src/utils/utils.ts"
-import { AppInstance } from "~/src/appInstance.ts"
-import { Post } from "zhi-blog-api"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
-import { JsonUtil, StrUtil } from "zhi-common"
-import { SypConfig } from "~/syp.config.ts"
+import { StrUtil } from "zhi-common"
+import { usePublish } from "~/src/composables/usePublish.ts"
 import { useSiyuanApi } from "~/src/composables/useSiyuanApi.ts"
 
 const logger = createAppLogger("quick-publish-worker")
 
 // uses
-const { t } = useVueI18n()
 const route = useRoute()
-const { getSetting, updateSetting } = useSettingStore()
-const { kernelApi, blogApi } = useSiyuanApi()
+const { singleFormData, doSinglePublish } = usePublish()
+const { blogApi } = useSiyuanApi()
 
 // datas
 const params = reactive(route.params)
 const key = params.key as string
 const id = params.id as string
-const formData = reactive({
-  isPublishLoading: false,
-  publishStatus: false,
-  errMsg: "",
-
-  setting: {} as typeof SypConfig,
-  cfg: {} as any,
-  postid: "",
-  previewUrl: "",
-})
-
-const doPublish = async () => {
-  try {
-    // 加载配置
-    formData.setting = await getSetting()
-    formData.cfg = JsonUtil.safeParse<any>(formData.setting[key], {} as any)
-
-    // 思源笔记原始文章数据
-    const doc = await blogApi.getPost(id)
-
-    // 初始化API
-    const appInstance = new AppInstance()
-    const apiAdaptor = await Adaptors.getAdaptor(key)
-    const api = Utils.blogApi(appInstance, apiAdaptor)
-    logger.info("api=>", api)
-
-    // 检测是否发布
-    const posidKey = formData.cfg.posidKey
-    if (StrUtil.isEmptyString(posidKey)) {
-      throw new Error("配置错误，posidKey不能为空，请检查配置")
-    }
-    const postMeta = formData.setting[id] ?? {}
-    formData.postid = postMeta[posidKey] ?? ""
-
-    if (StrUtil.isEmptyString(formData.postid)) {
-      logger.info("文章未发布，准备发布")
-      const post = new Post()
-      post.title = doc.title
-      post.description = doc.description
-      // result 正常情况下就是 postid
-      const result = await api.newPost(post)
-
-      // 写入postid到配置
-      formData.postid = result
-      postMeta[posidKey] = formData.postid
-      formData.setting[id] = postMeta
-      await updateSetting(formData.setting)
-      logger.info("new post=>", result)
-    } else {
-      logger.info("文章已发布，准备更新")
-      const post = new Post()
-      post.title = doc.title
-      post.description = doc.description
-      // result 正常情况下就是 postid
-      const result = await api.editPost(formData.postid, post)
-      logger.info("edit post=>", result)
-    }
-    const previewUrl = await api.getPreviewUrl(formData.postid)
-    formData.previewUrl = `${formData.cfg.home}${previewUrl}`
-
-    formData.publishStatus = true
-  } catch (e) {
-    formData.errMsg = t("main.opt.failure") + "=>" + e
-    logger.error(e)
-    // ElMessage.error(formData.errMsg)
-    await kernelApi.pushErrMsg({
-      msg: formData.errMsg,
-      timeout: 7000,
-    })
-    formData.publishStatus = false
-  }
-}
 
 onMounted(async () => {
-  formData.isPublishLoading = true
+  singleFormData.isPublishLoading = true
   setTimeout(async () => {
-    await doPublish()
-    formData.isPublishLoading = false
+    logger.info("单个快速发布开始")
+    // 思源笔记原始文章数据
+    const doc = await blogApi.getPost(id)
+    await doSinglePublish(key, id, doc)
+    logger.info("单个快速发布结束")
+    singleFormData.isPublishLoading = false
   }, 200)
 })
 </script>
@@ -134,7 +59,7 @@ onMounted(async () => {
 <template>
   <div id="quick-publish-box">
     <div class="publish-tips">
-      <div v-if="formData.isPublishLoading" class="is-loading info-tips">
+      <div v-if="singleFormData.isPublishLoading" class="is-loading info-tips">
         <i class="el-icon is-loading"
           ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
             <path
@@ -144,12 +69,12 @@ onMounted(async () => {
         ></i>
         发布中，请稍后...：
       </div>
-      <div v-else-if="formData.publishStatus" class="success-tips">
-        {{ StrUtil.isEmptyString(formData.postid) ? "发布到" : "更新文章到" }} [博客园] 成功，
-        <a :href="formData.previewUrl" target="_blank">查看文章</a>
+      <div v-else-if="singleFormData.publishProcessStatus" class="success-tips">
+        {{ StrUtil.isEmptyString(singleFormData.postid) ? "发布到" : "更新文章到" }} [博客园] 成功，
+        <a :href="singleFormData.previewUrl" target="_blank">查看文章</a>
       </div>
       <div v-else class="fail-tips">
-        {{ StrUtil.isEmptyString(formData.postid) ? "发布到" : "更新文章到" }} [博客园] 失败！
+        {{ StrUtil.isEmptyString(singleFormData.postid) ? "发布到" : "更新文章到" }} [博客园] 失败！
       </div>
     </div>
   </div>

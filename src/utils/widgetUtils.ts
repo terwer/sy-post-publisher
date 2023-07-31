@@ -166,3 +166,36 @@ const doOpenBrowserWindow = (
     logger.error("Open browser window failed", e)
   }
 }
+
+/**
+ * 获取挂件所在的块ID
+ * 如果挂件未找到或块ID无效，则返回空字符串。
+ */
+export const getWidgetId = (): string => {
+  // 检查是否在 iframe 中
+  if (
+    window.frameElement == null ||
+    window.frameElement.parentElement == null ||
+    window.frameElement.parentElement.parentElement == null
+  ) {
+    // 如果不在 iframe 中，返回空字符串
+    return ""
+  }
+
+  // 获取 iframe 的父级父级元素（即挂件所在的块）
+  const widgetContainer = window.frameElement.parentElement.parentElement
+  if (!widgetContainer) {
+    // 如果父级父级元素不存在，返回空字符串
+    return ""
+  }
+
+  // 获取块的唯一标识符（数据节点ID）
+  const widgetId = widgetContainer.getAttribute("data-node-id")
+  if (!widgetId) {
+    // 如果块的唯一标识符不存在，返回空字符串
+    return ""
+  }
+
+  // 返回挂件所在的块ID
+  return widgetId
+}

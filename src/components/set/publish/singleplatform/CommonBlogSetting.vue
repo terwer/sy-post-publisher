@@ -33,7 +33,7 @@ import {
   DynamicConfig,
   DynamicJsonCfg,
   getDynCfgByKey,
-  setDynamicJsonCfg
+  setDynamicJsonCfg,
 } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { SypConfig } from "~/syp.config.ts"
 import { CommonblogConfig } from "~/src/adaptors/api/base/commonblog/config/CommonblogConfig.ts"
@@ -41,9 +41,9 @@ import { onMounted } from "vue"
 import { JsonUtil, ObjectUtil } from "zhi-common"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { PageTypeEnum, PasswordType } from "zhi-blog-api"
-import Adaptors from "~/src/adaptors";
-import {Utils} from "~/src/utils/utils.ts";
-import {ElMessage} from "element-plus";
+import Adaptors from "~/src/adaptors"
+import { Utils } from "~/src/utils/utils.ts"
+import { ElMessage } from "element-plus"
 
 const logger = createAppLogger("commonblog-setting")
 // appInstance
@@ -74,7 +74,6 @@ const formData = reactive({
   setting: {} as typeof SypConfig,
   dynamicConfigArray: [] as DynamicConfig[],
 })
-
 
 const valiConf = async () => {
   isLoading.value = true
@@ -129,7 +128,6 @@ const saveConf = async (hideTip?: any) => {
     ElMessage.success(t("main.opt.success"))
   }
 }
-
 
 const initConf = async () => {
   formData.setting = await getSetting()
