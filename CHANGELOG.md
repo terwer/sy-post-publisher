@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.8.2](https://github.com/terwer/sy-post-publisher/compare/v0.8.1...v0.8.2) (2023-07-31)
+## [0.9.0](https://github.com/terwer/sy-post-publisher/compare/v0.8.1...v0.9.0) (2023-07-31)
 
 
 ### Features
@@ -19,6 +19,7 @@
 * 新版挂件-动态平台管理 ([de09930](https://github.com/terwer/sy-post-publisher/commit/de09930ace424512095308cc463463944d187d98))
 * 新版挂件-动态读取配置 ([6d8ba7f](https://github.com/terwer/sy-post-publisher/commit/6d8ba7f4ae26253184f7e2e075453f5dbaf0e257))
 * 新版挂件-动态读取配置 ([5234e76](https://github.com/terwer/sy-post-publisher/commit/5234e76716d74223b4e0c234b6ec7a57f3e8ed85))
+* 新版挂件-发布0.9.0内测版 ([9c8b9c1](https://github.com/terwer/sy-post-publisher/commit/9c8b9c1f80f8fc37df0c651608021f2280692242))
 * 新版挂件-发布0.9.0内测版 ([2807680](https://github.com/terwer/sy-post-publisher/commit/28076800fea932e8bfaf914069188b37c99f3298))
 * 新版挂件-插件版极速发布菜单联动 ([833af19](https://github.com/terwer/sy-post-publisher/commit/833af19fbfdb69181c05ea265a19ebab1db93063))
 * 新版挂件-支持API携带TOKEN和Cookie ([24bd457](https://github.com/terwer/sy-post-publisher/commit/24bd4577646815c54481fbd0c9c36fc69956b2c5))
