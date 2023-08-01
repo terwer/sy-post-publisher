@@ -63,6 +63,6 @@
     "zhi-lib-base": "^0.4.2",
     "zhi-siyuan-api": "^1.28.2",
     "zhi-wechatsync-middleware": "^0.1.13",
-    "zhi-xmlrpc-middleware": "^0.2.19"
+    "zhi-xmlrpc-middleware": "^0.3.0"
   }
 }
