@@ -32,7 +32,7 @@
     "typescript": "^5.1.6",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.24.1",
-    "vercel": "^29.4.0",
+    "vercel": "^31.2.1",
     "vite": "^4.4.7",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-html": "^3.2.0",
