@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.1](https://github.com/terwer/sy-post-publisher/compare/v0.10.0...v0.10.1) (2023-08-01)
+
+
+### Miscellaneous
+
+* sync repo v1.1.1 ([7be5fe4](https://github.com/terwer/sy-post-publisher/commit/7be5fe4a859bb9bc92aef649836e9b66710c0c24))
+* sync repo v1.1.2 ([d1815cd](https://github.com/terwer/sy-post-publisher/commit/d1815cd44c6b5dce13db83f8733f78ee950fb025))
+
 ## [1.1.2](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.1.1...v1.1.2) (2023-08-01)
 ### Bug Fixes
 * 修复插件包缺失问题 ([41b5686](https://github.com/terwer/siyuan-plugin-publisher/commit/41b5686891af330d38a31d124e3f48028da8be63))
