@@ -9,10 +9,11 @@ import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import { nodePolyfills } from "vite-plugin-node-polyfills"
-import os from "os"
 
-const getAppBase = (isSiyuanBuild: boolean, isStaticBuild: boolean): string => {
+const getAppBase = (isSiyuanBuild: boolean, isWidgetBuild: boolean, isStaticBuild: boolean): string => {
   if (isSiyuanBuild) {
+    return "/plugins/siyuan-plugin-publisher/"
+  } else if (isWidgetBuild) {
     return "/widgets/sy-post-publisher/"
   } else if (isStaticBuild) {
     return "/dist/"
@@ -57,17 +58,18 @@ const isWatch = args.watch || args.w || false
 // const isDev = isServe || isWatch || debugMode
 const isDev = false
 const isWindows = process.platform === "win32"
-let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/widgets/sy-post-publisher"
-// let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/widgets/sy-post-publisher"
+let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-publisher"
+// let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/plugins/siyuan-plugin-publisher"
 if (isWindows) {
-  devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\test\\data\\widgets\\sy-post-publisher"
-  // devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\public\widgets\sy-post-publisher"
+  devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\test\\data\\plugins\\siyuan-plugin-publisher"
+  // devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\public\plugins\siyuan-plugin-publisher"
 }
-const distDir = isWatch ? devDistDir : "./dist"
 const isSiyuanBuild = process.env.BUILD_TYPE === "siyuan"
+const isWidgetBuild = process.env.BUILD_TYPE === "widget"
 const isStaticBuild = process.env.BUILD_TYPE === "static"
 const isChromeBuild = process.env.BUILD_TYPE === "chrome"
-const appBase = getAppBase(isSiyuanBuild, isStaticBuild)
+const distDir = isWatch ? devDistDir : isWidgetBuild ? "widget" : "./dist"
+const appBase = getAppBase(isSiyuanBuild, isWidgetBuild, isStaticBuild)
 
 console.log("isWatch=>", isWatch)
 console.log("debugMode=>", debugMode)

@@ -23,9 +23,14 @@
  * questions.
  */
 
-module.exports = {
-    semi: false,
-    singleQuote: false,
-    printWidth: 120,
-    plugins: ["prettier-plugin-svelte"]
-}
+export const workspaceDir = `${(window as any).siyuan.config.system.workspaceDir}`
+export const dataDir = `${(window as any).siyuan.config.system.dataDir}`
+export const isDev = process.env.DEV_MODE === "true"
+
+export const siyuanApiToken = ""
+export const siyuanApiUrl = ""
+
+/**
+ * 动态配置key，全系统唯一，请勿更改
+ */
+export const DYNAMIC_CONFIG_KEY = "dynamic-config"

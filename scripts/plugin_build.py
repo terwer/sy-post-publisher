@@ -20,6 +20,7 @@
 #  Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
 #  or visit www.terwer.space if you need additional information or have any
 #  questions.
+
 import os
 
 import scriptutils
@@ -31,8 +32,23 @@ if __name__ == "__main__":
     # Get the current working directory.
     cwd = scriptutils.get_workdir()
 
-    # 设置环境变量
-    os.environ['BUILD_TYPE'] = 'siyuan'
+    # 获取当前工作目录
+    print(os.getcwd())
 
-    os.system("zhi-build --serve --production")
-    os.system("vue-tsc --noEmit && vite build --watch")
+    os.system("zhi-build --production")
+    dist_folder = "./dist"
+    data = scriptutils.read_json_file(cwd + "package.json")
+    v = data["version"]
+
+    src_folder = dist_folder
+    tmp_folder_name = "./siyuan-plugin-publisher"
+    build_zip_path = "./build"
+    build_zip_name = "siyuan-plugin-publisher-" + v + ".zip"
+
+    try:
+        # 压缩dist为zip
+        scriptutils.zip_folder(src_folder, tmp_folder_name, build_zip_path, build_zip_name)
+        scriptutils.cp_file(os.path.join(build_zip_path, build_zip_name), os.path.join(build_zip_path, "package.zip"))
+    except Exception as e:
+        print(f"打包错误,{str(e)}")
+    print("插件打包完毕.")

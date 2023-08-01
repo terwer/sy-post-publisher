@@ -23,9 +23,24 @@
  * questions.
  */
 
-module.exports = {
-    semi: false,
-    singleQuote: false,
-    printWidth: 120,
-    plugins: ["prettier-plugin-svelte"]
+import PublisherPlugin from "../index"
+import { JsonUtil } from "zhi-common"
+
+/**
+ * 配置管理类
+ * 提供配置的加载、保存和删除功能
+ */
+export class ConfigManager {
+  private static storageKey = "/data/storage/syp/sy-p-plus-cfg.json"
+
+  /**
+   * 加载配置
+   *
+   * @param pluginInstance PublisherPlugin的实例
+   * @returns 返回配置对象
+   */
+  public static async loadConfig(pluginInstance: PublisherPlugin): Promise<any> {
+    const configStr = await pluginInstance.kernelApi.getFile(this.storageKey, "text")
+    return JsonUtil.safeParse<any>(configStr, {} as any)
+  }
 }

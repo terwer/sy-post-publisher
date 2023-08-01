@@ -20,6 +20,7 @@
 #  Please contact Terwer, Shenzhen, Guangdong, China, youweics@163.com
 #  or visit www.terwer.space if you need additional information or have any
 #  questions.
+
 import os
 
 import scriptutils
@@ -31,8 +32,10 @@ if __name__ == "__main__":
     # Get the current working directory.
     cwd = scriptutils.get_workdir()
 
+    # 获取当前工作目录
+    print(os.getcwd())
+
     # 设置环境变量
     os.environ['BUILD_TYPE'] = 'siyuan'
 
-    os.system("zhi-build --serve --production")
-    os.system("vue-tsc --noEmit && vite build --watch")
+    os.system("vue-tsc --noEmit && vite build")

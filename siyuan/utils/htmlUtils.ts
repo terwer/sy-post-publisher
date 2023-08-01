@@ -23,9 +23,15 @@
  * questions.
  */
 
-module.exports = {
-    semi: false,
-    singleQuote: false,
-    printWidth: 120,
-    plugins: ["prettier-plugin-svelte"]
+class HtmlUtils {
+  public static async copyToClipboard(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text)
+      return true
+    } catch (err) {
+      throw new Error("复制失败！" + err)
+    }
+  }
 }
+
+export default HtmlUtils
