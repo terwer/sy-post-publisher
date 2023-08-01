@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.10.0](https://github.com/terwer/sy-post-publisher/compare/v0.9.0...v0.10.0) (2023-08-01)
+
+
+### Features
+
+* 插件挂件源码合并 https://github.com/terwer/sy-post-publisher/issues/89 https://github.com/terwer/siyuan-plugin-publisher/issues/522 ([452e5b8](https://github.com/terwer/sy-post-publisher/commit/452e5b8dc3d719eb6b8ce8c840d260d0135a5003))
+
+
+### Bug Fixes
+
+* [#83](https://github.com/terwer/sy-post-publisher/issues/83) 多平台分发需要考虑同步更新思源笔记 ([c23e4e3](https://github.com/terwer/sy-post-publisher/commit/c23e4e35997ba08ff280ff23d70d331bb7e41bbf))
+* 修复发布更新状态判断错误的问题 ([cbc271e](https://github.com/terwer/sy-post-publisher/commit/cbc271ee793bb2bfd052ec6971b07b71abd9876f))
+* 修改构建错误 ([37b0235](https://github.com/terwer/sy-post-publisher/commit/37b02359d436a29316c257d03508b6049536cdd1))
+
+
+### Miscellaneous
+
+* sync repo v1.1.1 ([7dc27f9](https://github.com/terwer/sy-post-publisher/commit/7dc27f940bd87f305f13804b123832f5c56e0c23))
+* sync repo v1.1.1 ([36fc72f](https://github.com/terwer/sy-post-publisher/commit/36fc72fda7ff5fcbc754107e7fd5296f38a68404))
+* sync repo v1.1.1 ([23b0c85](https://github.com/terwer/sy-post-publisher/commit/23b0c852aae9e7981b8d3cd3ec53b061c975064f))
+
 ## [1.1.1](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.1.0...v1.1.1) (2023-08-01)
 ### Bug Fixes
 * 修改构建错误 ([0681ebd](https://github.com/terwer/siyuan-plugin-publisher/commit/0681ebd97572f2b6651a37c60e67669b8f9c563b))
