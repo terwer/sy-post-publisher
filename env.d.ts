@@ -23,7 +23,6 @@
  * questions.
  */
 
-
-declare module "vite-plugin-html"
-
-declare module "node:buffer"
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}

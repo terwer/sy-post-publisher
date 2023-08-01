@@ -83,6 +83,11 @@ export class DynamicConfig {
   domain?: string
 
   /**
+   * 是否内置
+   */
+  isSys: boolean
+
+  /**
    * YAML转换器
    */
   yamlConverter?: YamlConvertAdaptor
@@ -101,6 +106,7 @@ export class DynamicConfig {
     this.isAuth = false
     this.isEnabled = false
     this.authMode = AuthMode.API
+    this.isSys = false
 
     this.subPlatformType = subPlatformType
     this.platformIcon = platformIcon
@@ -121,6 +127,11 @@ export enum AuthMode {
  */
 export enum PlatformType {
   /**
+   * 通用平台(Yuque)
+   */
+  Common = "Common",
+
+  /**
    * Metaweblog
    */
   Metaweblog = "Metaweblog",
@@ -136,14 +147,14 @@ export enum PlatformType {
   Github = "Github",
 
   /**
-   * 通用平台(zhihu)
-   */
-  Common = "Common",
-
-  /**
-   * 自定义
+   * 自定义(zhihu)
    */
   Custom = "Custom",
+
+  /**
+   * 内置平台，仅内部使用，用户不能使用也不能更改(Siyuan)
+   */
+  System = "System",
 }
 
 /**
@@ -179,6 +190,9 @@ export enum SubPlatformType {
   Custom_Juejin = "Juejin",
   Custom_Wechat = "Wechat",
 
+  // System
+  System_Siyuan = "Siyuan",
+
   NONE = "none",
 }
 
@@ -192,6 +206,7 @@ export interface DynamicJsonCfg {
   metaweblogCfg: DynamicConfig[]
   wordpressCfg: DynamicConfig[]
   customCfg: DynamicConfig[]
+  systemCfg: DynamicConfig[]
 }
 
 /**
@@ -227,6 +242,9 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
       subtypeList.push(SubPlatformType.Custom_Juejin)
       subtypeList.push(SubPlatformType.Custom_Wechat)
       break
+    case PlatformType.System:
+      subtypeList.push(SubPlatformType.System_Siyuan)
+      break
     default:
       break
   }
@@ -246,6 +264,7 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
   const metaweblogCfg: DynamicConfig[] = []
   const wordpressCfg: DynamicConfig[] = []
   const customCfg: DynamicConfig[] = []
+  const systemCfg: DynamicConfig[] = []
 
   // 按照类型组装便于后面数据使用
   totalCfg.forEach((item) => {
@@ -265,6 +284,9 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
       case PlatformType.Custom:
         customCfg.push(item)
         break
+      case PlatformType.System:
+        systemCfg.push(item)
+        break
       default:
         break
     }
@@ -277,6 +299,7 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
     metaweblogCfg,
     wordpressCfg,
     customCfg,
+    systemCfg,
   }
 
   return dynamicJsonCfg

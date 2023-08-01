@@ -34,6 +34,7 @@ import { Post } from "zhi-blog-api"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { useSiyuanApi } from "~/src/composables/useSiyuanApi.ts"
+import { pre } from "~/src/utils/import/pre.ts"
 
 /**
  * 通用发布组件
@@ -54,6 +55,7 @@ const usePublish = () => {
 
     setting: {} as typeof SypConfig,
     cfg: {} as any,
+    isAdd: true,
     postid: "",
     previewUrl: "",
   })
@@ -64,21 +66,31 @@ const usePublish = () => {
       singleFormData.setting = await getSetting()
       singleFormData.cfg = JsonUtil.safeParse<any>(singleFormData.setting[key], {} as any)
 
+      // 系统内置
+      const isSys = pre.systemCfg.some((item) => item.platformKey === key)
+      logger.info("isSys=>", isSys)
+
       // 初始化API
       const appInstance = new AppInstance()
       const apiAdaptor = await Adaptors.getAdaptor(key)
       const api = Utils.blogApi(appInstance, apiAdaptor)
       logger.info("api=>", api)
 
-      // 检测是否发布
-      const posidKey = singleFormData.cfg.posidKey
-      if (StrUtil.isEmptyString(posidKey)) {
-        throw new Error("配置错误，posidKey不能为空，请检查配置")
+      if (isSys) {
+        // 内置平台直接用思源的ID
+        singleFormData.postid = id
+      } else {
+        // 检测是否发布
+        const posidKey = singleFormData.cfg.posidKey
+        if (StrUtil.isEmptyString(posidKey)) {
+          throw new Error("配置错误，posidKey不能为空，请检查配置")
+        }
+        const postMeta = singleFormData.setting[id] ?? {}
+        singleFormData.postid = postMeta[posidKey] ?? ""
       }
-      const postMeta = singleFormData.setting[id] ?? {}
-      singleFormData.postid = postMeta[posidKey] ?? ""
 
-      if (StrUtil.isEmptyString(singleFormData.postid)) {
+      singleFormData.isAdd = StrUtil.isEmptyString(singleFormData.postid)
+      if (singleFormData.isAdd) {
         logger.info("文章未发布，准备发布")
         const post = new Post()
         post.title = doc.title
@@ -88,6 +100,8 @@ const usePublish = () => {
 
         // 写入postid到配置
         singleFormData.postid = result
+        const posidKey = singleFormData.cfg.posidKey
+        const postMeta = singleFormData.setting[id] ?? {}
         postMeta[posidKey] = singleFormData.postid
         singleFormData.setting[id] = postMeta
         await updateSetting(singleFormData.setting)
@@ -102,7 +116,8 @@ const usePublish = () => {
         logger.info("edit post=>", result)
       }
       const previewUrl = await api.getPreviewUrl(singleFormData.postid)
-      singleFormData.previewUrl = `${singleFormData.cfg.home}${previewUrl}`
+      const isAbsoluteUrl = /^http/.test(previewUrl)
+      singleFormData.previewUrl = isAbsoluteUrl ? previewUrl : `${singleFormData.cfg?.home ?? ""}${previewUrl}`
 
       singleFormData.publishProcessStatus = true
     } catch (e) {
@@ -119,8 +134,64 @@ const usePublish = () => {
     return {
       key: key,
       status: singleFormData.publishProcessStatus,
-      name: singleFormData.cfg.blogName,
+      name: singleFormData.cfg?.blogName,
       previewUrl: singleFormData.previewUrl,
+      errMsg: singleFormData.errMsg,
+    }
+  }
+
+  const doSingleDelete = async (key: string, id: string) => {
+    try {
+      // 加载配置
+      singleFormData.setting = await getSetting()
+      singleFormData.cfg = JsonUtil.safeParse<any>(singleFormData.setting[key], {} as any)
+
+      // 检测是否发布
+      const posidKey = singleFormData.cfg.posidKey
+      if (StrUtil.isEmptyString(posidKey)) {
+        throw new Error("配置错误，posidKey不能为空，请检查配置")
+      }
+
+      const postMeta = singleFormData.setting[id] ?? {}
+      const postid = postMeta[posidKey] ?? ""
+      if (StrUtil.isEmptyString(postid)) {
+        throw new Error("未找到postid，无法删除，请手动在平台删除")
+      }
+
+      // 初始化API
+      const appInstance = new AppInstance()
+      const apiAdaptor = await Adaptors.getAdaptor(key)
+      const api = Utils.blogApi(appInstance, apiAdaptor)
+      logger.info("api=>", api)
+
+      singleFormData.publishProcessStatus = await api.deletePost(postid)
+    } catch (e) {
+      singleFormData.errMsg = t("main.opt.failure") + "=>" + e
+      logger.error(e)
+      // ElMessage.error(singleFormData.errMsg)
+      await kernelApi.pushErrMsg({
+        msg: singleFormData.errMsg,
+        timeout: 7000,
+      })
+    }
+
+    // 移除文章发布信息
+    const posidKey = singleFormData.cfg.posidKey
+    if (!StrUtil.isEmptyString(posidKey)) {
+      const postMeta = singleFormData.setting[id] ?? {}
+      const updatedPostMeta = { ...postMeta }
+      if (updatedPostMeta.hasOwnProperty(posidKey)) {
+        delete updatedPostMeta[posidKey]
+      }
+
+      singleFormData.setting[id] = updatedPostMeta
+      await updateSetting(singleFormData.setting)
+      logger.info(`[${key}] [${id}] 文章发布信息已移除`)
+    }
+
+    return {
+      key: key,
+      status: singleFormData.publishProcessStatus,
       errMsg: singleFormData.errMsg,
     }
   }
@@ -128,6 +199,7 @@ const usePublish = () => {
   return {
     singleFormData,
     doSinglePublish,
+    doSingleDelete,
   }
 }
 

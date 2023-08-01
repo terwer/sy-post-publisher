@@ -67,6 +67,9 @@ if __name__ == "__main__":
     if args.verbose:
         print("Verbose mode enabled")
 
+    # plugin.json
+    parse_json(cwd + "plugin.json", "version", args.version)
+
     # widget.json
     parse_json(cwd + "widget.json", "version", args.version)
 

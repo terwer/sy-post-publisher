@@ -89,6 +89,10 @@ class YuqueApiAdaptor extends BlogApi {
     if (post.cate_slugs != null && post.cate_slugs.length > 0) {
       const repo = post.cate_slugs[0]
       return await this.yuqueApi.addDoc(post.title, post.wp_slug, post.description, repo)
+    } else if (!StrUtil.isEmptyString(this.cfg.blogid)) {
+      // 确保最新的文章ID都包含了笔记本信息，防止以后文章出错
+      const repo = this.cfg.blogid
+      return await this.yuqueApi.addDoc(post.title, post.wp_slug, post.description, repo)
     } else {
       return await this.yuqueApi.addDoc(post.title, post.wp_slug, post.description)
     }
@@ -146,12 +150,12 @@ class YuqueApiAdaptor extends BlogApi {
     const docId = yuquePostidKey.docId
     const repo = yuquePostidKey.docRepo ?? this.cfg.blogid ?? ""
     const postUrl = purl.replace("[postid]", docId).replace("[notebook]", repo)
-    // 路径组合
     return StrUtil.pathJoin(this.cfg.home ?? "", postUrl)
   }
 
   /**
    * 获取封装的postid
+   *
    * @param postid
    * @private postid
    */

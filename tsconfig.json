@@ -5,6 +5,9 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+    "allowJs": true,
+    "checkJs": false,
+    "allowSyntheticDefaultImports": true,
 
     /* Bundler mode */
     "moduleResolution": "node",
@@ -13,7 +16,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "allowSyntheticDefaultImports": true,
 
     /* Linting */
     "strict": false,
@@ -21,20 +23,18 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["node", "vite/client"],
-
     "paths": {
       "~/*": ["./*"]
     }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "syp.config.ts",
-    "vite.config.ts",
-    "custom.d.ts"
+    "*.ts",
+    "*.d.ts",
+    "**/**/*.ts",
+    "**/**/*.d.ts",
+    "*.vue",
+    "**/**/*.vue",
+    "src/picgo.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

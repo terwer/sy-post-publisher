@@ -44,8 +44,8 @@ if __name__ == "__main__":
     if args.verbose:
         print("Verbose mode enabled")
 
-    # 构建项目到 dist 目录
-    dist_name = "dist"
+    # 构建项目到 widget 目录
+    dist_name = "widget"
     if args.dist is not None and args.dist != "":
         dist_name = str(args.dist)
     dist_folder = "./" + dist_name + "/"
@@ -56,30 +56,20 @@ if __name__ == "__main__":
         print("忽略项目构建.")
     else:
         # 在 node 里面可以通过 process.env.BUILD_TYPE 读取
-        os.environ["BUILD_TYPE"] = "siyuan"
+        os.environ["BUILD_TYPE"] = "widget"
         build_cmd = "vue-tsc --noEmit && vite build --outDir " + dist_name
         print("构建命令:" + build_cmd)
         os.system(build_cmd)
 
         # 复制挂件需要的其他文件
         scriptutils.cp_file("./LICENSE", dist_folder)
-        scriptutils.cp_file("./README.md", dist_folder)
-        scriptutils.cp_file("./README_zh_CN.md", dist_folder)
+        scriptutils.cp_file("./src/assets/README.md", dist_folder)
+        scriptutils.cp_file("./src/assets/README_zh_CN.md", dist_folder)
         scriptutils.cp_file("./widget.json", dist_folder)
-        scriptutils.cp_file("./icon.png", dist_folder)
-        scriptutils.cp_file("./preview.png", dist_folder)
+        scriptutils.cp_file("./src/assets/icon.png", dist_folder)
+        scriptutils.cp_file("./src/assets/preview.png", dist_folder)
         scriptutils.cp_file("./policy.md", dist_folder)
         print("复制挂件需要的其他文件.")
-
-        # 删除Chrome插件专属文件
-        scriptutils.rm_file(dist_folder + "background.js")
-        scriptutils.rm_files(dist_folder + "manifest.json")
-        print("删除Chrome插件专属文件.")
-
-        # 删除Firefox的专属文件
-        scriptutils.rm_folder(dist_folder + "mv2")
-        print("删除Firefox的专属文件.")
-
         print("项目构建完成.")
 
     # 挂件打包
@@ -94,7 +84,7 @@ if __name__ == "__main__":
 
     # 压缩dist为zip
     scriptutils.zip_folder(src_folder, tmp_folder_name, build_zip_path, build_zip_name)
-    scriptutils.cp_file(os.path.join(build_zip_path, build_zip_name), os.path.join(build_zip_path, "package.zip"))
+    scriptutils.cp_file(os.path.join(build_zip_path, build_zip_name), os.path.join(build_zip_path, "package-widget.zip"))
     print("将dist文件打包成zip，用于挂件版本发布.")
 
     if args.test:

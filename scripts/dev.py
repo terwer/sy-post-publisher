@@ -34,4 +34,5 @@ if __name__ == "__main__":
     # 设置环境变量
     os.environ['BUILD_TYPE'] = 'siyuan'
 
-    os.system("vite build --watch")
+    os.system("zhi-build --serve --production")
+    os.system("vue-tsc --noEmit && vite build --watch")

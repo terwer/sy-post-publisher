@@ -145,4 +145,16 @@ export const pre = {
       isEnabled: false,
     },
   ],
+  systemCfg: <DynamicConfig[]>[
+    {
+      platformType: PlatformType.System,
+      subPlatformType: SubPlatformType.System_Siyuan,
+      platformKey: "system_Siyuan",
+      platformName: "思源笔记",
+      platformIcon: svgIcons.iconIFSiyuan,
+      authMode: AuthMode.API,
+      isEnabled: true,
+      isSys: true,
+    },
+  ],
 }

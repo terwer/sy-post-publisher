@@ -115,7 +115,7 @@ if __name__ == "__main__":
         print("Verbose mode enabled.")
 
     # Build the project.
-    dist_name = "dist"
+    dist_name = "extension/dist"
     if args.dist is not None and args.dist != "":
         dist_name = str(args.dist)
     dist_folder = "./" + dist_name + "/"
@@ -128,7 +128,7 @@ if __name__ == "__main__":
         # Copy necessary files.
         scriptutils.cp_folder("./src/extensions", dist_folder)
         scriptutils.cp_file("./LICENSE", dist_folder)
-        # scriptutils.cp_file("./assets/key.pem", dist_folder)
+        # scriptutils.cp_file("./src/assets/key.pem", dist_folder)
         print("Copied required extension files.")
 
         # Set the BUILD_TYPE environment variable in node.

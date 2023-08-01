@@ -25,24 +25,42 @@
 
 <script setup lang="ts">
 import { onMounted, reactive } from "vue"
-import { JsonUtil } from "zhi-common"
-import { DynamicConfig, DynamicJsonCfg } from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import { JsonUtil, StrUtil } from "zhi-common"
+import { DynamicConfig, DynamicJsonCfg, getDynPostidKey } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { svgIcons } from "../../../utils/svgIcons.ts"
+import { pre } from "~/src/utils/import/pre.ts"
+import { createAppLogger } from "~/src/utils/appLogger.ts"
+
+const logger = createAppLogger("publish-platform")
+
+const props = defineProps({
+  id: {
+    type: String,
+    default: "",
+  },
+})
 
 // uses
 const { getSetting } = useSettingStore()
 
 // datas
+const sysKeys = pre.systemCfg.map((item) => {
+  return item.platformKey
+})
 const formData = reactive({
   dynamicConfigArray: [] as DynamicConfig[],
 
-  selectedKeys: <string[]>[],
+  selectedKeys: <string[]>[].concat(sysKeys),
 })
 
 const emit = defineEmits(["emitSyncDynList"])
 
+if (emit) {
+  logger.info("selectedKeys=>", formData.selectedKeys)
+  emit("emitSyncDynList", formData.selectedKeys)
+}
 const handleCheck = (key: string) => {
   if (formData.selectedKeys.includes(key)) {
     // 如果 formData.selectedKeys 数组中包含 key，则从数组中删除 key
@@ -53,6 +71,7 @@ const handleCheck = (key: string) => {
   }
 
   if (emit) {
+    logger.info("selectedKeys=>", formData.selectedKeys)
     emit("emitSyncDynList", formData.selectedKeys)
   }
 }
@@ -66,6 +85,18 @@ onMounted(async () => {
   )
   // 默认展示通用平台
   formData.dynamicConfigArray = enabledConfigs || []
+  // 检测是否已经发布
+  formData.dynamicConfigArray.forEach((item) => {
+    const key = item.platformKey
+    const posidKey = getDynPostidKey(key)
+    if (!StrUtil.isEmptyString(posidKey)) {
+      const postMeta = setting[props.id] ?? {}
+      const postid = postMeta[posidKey] ?? ""
+      if (!StrUtil.isEmptyString(postid)) {
+        handleCheck(key)
+      }
+    }
+  })
 })
 </script>
 
@@ -74,16 +105,16 @@ onMounted(async () => {
     <p>请选择要发布的平台：</p>
     <div class="syp-distri-platform-container">
       <a
-        class="distri-item"
         v-for="cfg in formData.dynamicConfigArray"
-        @click="handleCheck(cfg.platformKey)"
+        class="distri-item"
         :title="cfg.platformName"
+        @click="handleCheck(cfg.platformKey)"
       >
         <el-icon class="platform-icon">
           <span v-html="cfg.platformIcon"></span>
         </el-icon>
         <span v-if="formData.selectedKeys.includes(cfg.platformKey)" v-html="svgIcons.iconOTYes"></span>
-        <span v-else v-html="svgIcons.iconOTNo" class="icon-no"></span>
+        <span v-else class="icon-no" v-html="svgIcons.iconOTNo"></span>
       </a>
     </div>
   </div>
