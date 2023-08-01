@@ -25,8 +25,8 @@
 
 <script setup lang="ts">
 import { onMounted, reactive } from "vue"
-import { JsonUtil } from "zhi-common"
-import { DynamicConfig, DynamicJsonCfg } from "~/src/components/set/publish/platform/dynamicConfig.ts"
+import { JsonUtil, StrUtil } from "zhi-common"
+import { DynamicConfig, DynamicJsonCfg, getDynPostidKey } from "~/src/components/set/publish/platform/dynamicConfig.ts"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { svgIcons } from "../../../utils/svgIcons.ts"
@@ -34,6 +34,13 @@ import { pre } from "~/src/utils/import/pre.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 
 const logger = createAppLogger("publish-platform")
+
+const props = defineProps({
+  id: {
+    type: String,
+    default: "",
+  },
+})
 
 // uses
 const { getSetting } = useSettingStore()
@@ -50,6 +57,10 @@ const formData = reactive({
 
 const emit = defineEmits(["emitSyncDynList"])
 
+if (emit) {
+  logger.info("selectedKeys=>", formData.selectedKeys)
+  emit("emitSyncDynList", formData.selectedKeys)
+}
 const handleCheck = (key: string) => {
   if (formData.selectedKeys.includes(key)) {
     // 如果 formData.selectedKeys 数组中包含 key，则从数组中删除 key
@@ -74,6 +85,18 @@ onMounted(async () => {
   )
   // 默认展示通用平台
   formData.dynamicConfigArray = enabledConfigs || []
+  // 检测是否已经发布
+  formData.dynamicConfigArray.forEach((item) => {
+    const key = item.platformKey
+    const posidKey = getDynPostidKey(key)
+    if (!StrUtil.isEmptyString(posidKey)) {
+      const postMeta = setting[props.id] ?? {}
+      const postid = postMeta[posidKey] ?? ""
+      if (!StrUtil.isEmptyString(postid)) {
+        handleCheck(key)
+      }
+    }
+  })
 })
 </script>
 
