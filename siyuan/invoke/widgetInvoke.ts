@@ -24,13 +24,12 @@
  */
 
 import { DeviceDetection, DeviceTypeEnum } from "zhi-device"
-import { createAppLogger } from "../appLogger"
+import { createSiyuanAppLogger } from "../appLogger"
 import PageUtil from "../utils/pageUtil"
 import { showIframeDialog } from "../iframeDialog"
 import PublisherPlugin from "../index"
 import { StrUtil } from "zhi-common"
 import { showMessage } from "siyuan"
-import { isFileExists } from "../utils/utils"
 
 /**
  * 挂件相关
@@ -40,11 +39,11 @@ export class WidgetInvoke {
   private readonly pluginInstance
 
   constructor(pluginInstance: PublisherPlugin) {
-    this.logger = createAppLogger("widget-invoke")
+    this.logger = createSiyuanAppLogger("widget-invoke")
     this.pluginInstance = pluginInstance
   }
 
-  public async showPublisherPublishDialog() {
+  public async showPublisherBatchPublishDialog() {
     let pageId: string | undefined = PageUtil.getPageId()
     if (pageId == "") {
       pageId = undefined
@@ -55,6 +54,19 @@ export class WidgetInvoke {
       return
     }
     await this.showPage(`/?id=${pageId}`)
+  }
+
+  public async showPublisherSinglePublishDialog() {
+    let pageId: string | undefined = PageUtil.getPageId()
+    if (pageId == "") {
+      pageId = undefined
+    }
+    this.logger.debug("pageId=>", pageId)
+    if (StrUtil.isEmptyString(pageId)) {
+      showMessage(`文档ID不能为空，注意：您必须打开当前文档才能进行发布操作`, 2000, "error")
+      return
+    }
+    await this.showPage(`/publish/singlePublish?id=${pageId}`)
   }
 
   public async showPublisherQuickPublishDialog(key: string) {
@@ -71,11 +83,16 @@ export class WidgetInvoke {
   }
 
   public async showPublisherPublishSettingDialog() {
-    await this.showPage("/setting/publish", true)
+    await this.showPage("/setting/publish")
   }
 
   public async showPublisherGeneralSettingDialog() {
-    await this.showPage("/setting/general")
+    let pageId: string | undefined = PageUtil.getPageId()
+    if (pageId == "") {
+      pageId = undefined
+    }
+    this.logger.debug("pageId=>", pageId)
+    await this.showPage(`/setting/general?id=${pageId}`)
   }
 
   private async showPage(pageUrl: string, isReload?: boolean, w?: string, h?: string, noscroll?: boolean) {

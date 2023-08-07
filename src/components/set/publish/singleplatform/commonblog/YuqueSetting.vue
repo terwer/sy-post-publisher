@@ -24,11 +24,11 @@
   -->
 
 <script setup lang="ts">
-import CommonBlogSetting from "~/src/components/set/publish/singleplatform/CommonBlogSetting.vue"
+import CommonBlogSetting from "~/src/components/set/publish/singleplatform/base/CommonBlogSetting.vue"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { useYuqueApi } from "~/src/adaptors/api/yuque/useYuqueApi.ts"
-import { YuqueConfig } from "~/src/adaptors/api/yuque/config/yuqueConfig.ts"
-import { YuquePlaceHolder } from "~/src/adaptors/api/yuque/config/yuquePlaceHolder.ts"
+import { YuqueConfig } from "~/src/adaptors/api/yuque/yuqueConfig.ts"
+import { YuquePlaceHolder } from "~/src/adaptors/api/yuque/yuquePlaceHolder.ts"
 
 const props = defineProps({
   apiType: {
@@ -45,11 +45,12 @@ yuquePlaceholder.homePlaceholder = t("setting.yuque.home.tip")
 yuquePlaceholder.usernamePlaceholder = t("setting.yuque.username.tip")
 yuquePlaceholder.passwordPlaceholder = t("setting.yuque.password.tip")
 yuquePlaceholder.apiUrlPlaceholder = t("setting.yuque.apiurl.tip")
+yuquePlaceholder.previewUrlPlaceholder = t("setting.yuque.previewUrl.tip")
 yuqueCfg.placeholder = yuquePlaceholder
+yuqueCfg.knowledgeSpaceTitle = "知识库"
+yuqueCfg.enableKnowledgeSpace = true
 </script>
 
 <template>
   <common-blog-setting :api-type="props.apiType" :cfg="yuqueCfg" />
 </template>
-
-<style scoped lang="stylus"></style>

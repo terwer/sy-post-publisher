@@ -2,31 +2,81 @@
 
 # Publisher
 
-![](https://raw.githubusercontent.com/terwer/siyuan-plugin-publisher/main/icon.png)
+![](./icon.png)
 
-Publishing articles from siyuan-note to platforms such as Yuque, Cnblogs, WordPress, Typecho, Hexo, Hugo and more.
+Publish articles from Siyuan Notes to platforms such as Yuque, Notion, Cnblogs, WordPress, Typecho, Hexo, Zhihu and more.
 
 Support features such as fast publishing, image bed management, platform expansion, smart labels, etc.
 
-This plugin promises that the basic functions will be free forever, and the follow-up related to intelligent AI may be charged, and the closed beta stage is completely free. If you want to support developers, please [feel free to support](https://github.com/terwer/siyuan-plugin-publisher/blob/main/README_zh_CN.md#Donate) here.
+> **Note: This plugin is in the rapid iteration and pre-beta testing stage, the function is not yet stable, if you encounter the problem that you cannot use it, you can try the following steps to fix it:**
 
-> 🌹 Tips: This plugin is an upgraded version of the original 'Siyuan Note Publishing Tool' widget, which includes all the functions provided by the original widget, provides a convenient menu operation entry, and has carried out a series of problem fixes and experience optimizations.
->
-> In addition to [Extended Functions], **Other functions do not require any dependencies** , and there is no need to download the previous widget, which is already built-in in the plugin.
+(1) Uninstall the plugin
+
+![](./help/help_1.png)
+
+(2) Download and install again
+
+(3) Re-enable
+
+![](./help/help_2.png)
+
+(4) If a platform configuration is incomplete, you can disable the platform configuration, then delete the platform and add it again.
+
+If you still can't use this step after this step, [New issue](https://github.com/terwer/siyuan-plugin-publisher/issues/new) is welcome.
+
+**This tip will be removed after the stable release.**
 
 ## Recent critical updates and bug fixes
 
-- Fixed missing general release parameters
-- Fixed an issue where menu loading order issues may not be displayed
-- Multi-platform distribution needs to consider synchronizing and updating Siyuan notes
-- Fixed an issue where there could be an error in editing articles
-- Fixed the wrong issue of Lark Preview link
-- Added extended menu
-- Warehouse synchronization
-- Plug-in widget source code merging
-- Fixed missing plugin package
-- Fixed the error issue of the Wordbird client
-- Added Vercel and NGINX build support
+- Support article binding
+- HEXO supports YAML
+- Support automatic generation of article aliases
+- Unified integration of platform configurations
+- Complete HEXO adaptation
+- Fixed the issue where regular publishing returned an exception
+- Fixed the issue that typecho updates did not take effect
+- Fixed the batch distribution error issue
+- Notion and Yuque platforms use the forward agent of Siyuan Note to improve performance
+- Regular publishing supports article comparison
+- Added notion support
+- Support for changing the default knowledge base
+- Added support for general releases with fine-grained configuration
+- Support for Yuque, Cnblogs, Metaweblog, Typecho, WordPress
+
+## Compatibility of Origin notes
+
+This plugin supports almost all devices and platforms of Siyuan Note, and the specific compatibility is as follows:
+
+- [X] Siyuan Note Client (zero configuration) <sup>is highly recommended</sup>
+- [X] Servo environment (cross-domain request proxy needs to be set)
+  - [X] CentSource Note Browser Servo
+  - [X] Siyuan Note Client Servo
+  - [X] Siyuan Notemaker mobile servo
+- [X] Siyuan Note docker version (need to set up cross-domain request proxy)
+
+**Note: If it is a LAN servo, you need to deploy the cross-domain proxy on the LAN.**
+
+**Set up the method, clone https://github.com/terwer/node-metaweblog-api-adaptor then `pnpm install & pnpm dev`, after startup the proxy address is https://<local-IP>:3000/api/middleware .**
+
+**If the Internet needs to be deployed on the Internet, the cross-domain request proxy of the Internet can also be used directly: https://api.terwer.space/api/middleware**
+
+**It may be migrated to the official forward proxy to achieve zero configuration in the future, but for now you must set it yourself, you can follow the progress here.**
+
+- Progress 1: The Yuque and Notion platforms have used the built-in forward proxy and do not need to be configured.
+
+## Platform List
+
+Names not listed in order
+
+- [X] Yuque
+- [X] Metaweblog
+- [X] Cnblogs
+- [X] Typecho
+- [X] WordPress
+- [X] Github
+  - [X] Hexo
+- [X] Notion
+- [ ] Zhihu
 
 ## Core Features
 
@@ -45,16 +95,11 @@ This plugin promises that the basic functions will be free forever, and the foll
 - [ ] **Release view**: Support multiple release views, simple mode, detailed mode and source code mode
 - [X] **Multiple deployments**: support Siyuan notes plugin<sup>Highly recommended</sup>, Chrome browser extension, self-deployment
 
-## Platform List
+This plugin promises that the basic functions will be free forever, and the follow-up related to intelligent AI may be charged, and the closed beta stage is completely free. If you want to support developers, please [feel free to support](https://github.com/terwer/siyuan-plugin-publisher/blob/main/README_zh_CN.md#Donate) here.
 
-Names not listed in order
-
-- [X] Cnblogs
-- [ ] WordPress
-- [X] Yuque
-- [ ] Github
-  - [ ] Hexo
-  - [ ] Hugo
+> 🌹 Tips: This plugin is an upgraded version of the original 'Siyuan Note Publishing Tool' widget, which includes all the functions provided by the original widget, provides a convenient menu operation entry, and has carried out a series of problem fixes and experience optimizations.
+>
+> In addition to [Extended Functions], **Other functions do not require any dependencies** , and there is no need to download the previous widget, which is already built-in in the plugin.
 
 ## Platform Adaptation Plan
 
@@ -82,22 +127,15 @@ Please check [CHANGELOG](./CHANGELOG.MD)
 
 * Q2：After installing the publishing tool plugin, do I still need to install the widget?
 
-  A2：**unnecessary. **
+  A2：**unnecessary.**
 
   The plugin version contains all the functions of the widget version.
 
+* Q3: I am not used to the new version of the operation and want to continue to use the previous widget, can I?
 
-* Q3：I am not used to the operation of the new version, and I want to continue to use the previous widget through the plugin, is that possible?
+  A3:**Yes but not recommended.**
 
-  A3：**Yes.**
-
-  The plugin has a builtin bridge by default, which can invoke the widget through the plugin. This feature needs to be turned on in `Settings -> Use WidgetInvoke`.
-
-  <u>Note 1: The plugin version uses the builtin menu of the plugin system, and the menu slot will be disabled when the widget version is activated via plugin. </u>
-
-  <u>Note 2: After opening the widget version, all functions of the plugin version will be disabled to avoid confusion.</u>
-
-  **We strongly recommend you to use the plugin version, because the plugin version will be the main version for long-term maintenance in the future, and the widget version is obsolete, and it is only used to fix problems and compatible with historical users.**
+  **We strongly recommend that you use the plug-in version directly, because the plug-in version will be the main version for long-term maintenance in the future, and the hanger version has been deprecated only as a fix for problems and compatible with historical users.**
 
 
 * Q4：I used to use `Custom JS Fragment` or add `WidgetInvoke` directly, do I still need to download the plugin now?
