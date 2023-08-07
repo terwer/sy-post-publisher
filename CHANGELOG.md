@@ -1,16 +1,8 @@
 # Changelog
 
 ## [0.10.2](https://github.com/terwer/sy-post-publisher/compare/v0.10.1...v0.10.2) (2023-08-07)
-
-
 ### Miscellaneous
-
-* sync repo v1.5.0 ([bd64609](https://github.com/terwer/sy-post-publisher/commit/bd64609d5997f4e51c5537782a189ada00e18369))
-* sync repo v1.5.0 ([57e4d99](https://github.com/terwer/sy-post-publisher/commit/57e4d991b76dfb24f3b170a7b3eeffc17eb801e9))
-* sync repo v1.5.0 ([65d8756](https://github.com/terwer/sy-post-publisher/commit/65d87563a34d5a207ca8d121601fc8eb887548a7))
-* sync repo v1.5.0 ([66cce57](https://github.com/terwer/sy-post-publisher/commit/66cce5717a0b52802d2698f3aac2c2e608506d73))
 * sync repo v1.5.0 ([c62657e](https://github.com/terwer/sy-post-publisher/commit/c62657e7614cea2ca519ea91e48c2663364a1239))
-
 ## [1.5.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.4.1...v1.5.0) (2023-08-07)
 ### Features
 * hexo 支持 yaml ([a230ff0](https://github.com/terwer/siyuan-plugin-publisher/commit/a230ff0d6979516563bc005807ea2085b3b9880c))
@@ -72,7 +64,6 @@
 * **deps:** bump zhi-xmlrpc-middleware from 0.3.0 to 0.4.0 ([1c16b2c](https://github.com/terwer/siyuan-plugin-publisher/commit/1c16b2c15ad5bccc982dfa0849be3e8a20ecd095))
 * 修复第一次打开可能导致的报错问题 ([b05894e](https://github.com/terwer/siyuan-plugin-publisher/commit/b05894e8a40e58dc16583aba00cc91235181764b))
 * 常规发布改为批量分发 ([dc06680](https://github.com/terwer/siyuan-plugin-publisher/commit/dc066801e84d2553b97e0a84432f22ccd2f86221))
-### Miscellaneous
 * **deps-dev:** bump vite from 4.4.7 to 4.4.8 ([d38a208](https://github.com/terwer/siyuan-plugin-publisher/commit/d38a208faccf2a864bd6f14b226f1bf281d63a9a))
 * **deps-dev:** bump vitest from 0.33.0 to 0.34.1 ([748042f](https://github.com/terwer/siyuan-plugin-publisher/commit/748042fa3e17faf93253dcce151b3bb6fc05b3f7))
 ## [1.2.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.1.2...v1.2.0) (2023-08-01)
