@@ -44,7 +44,6 @@ const { getPublishCfg } = usePublishConfig()
 const params = reactive(route.params)
 const key = params.key as string
 const id = params.id as string
-
 const formData = reactive({
   processResult: {} as any,
 })
