@@ -3,7 +3,7 @@ import {
   DynamicConfig,
   PlatformType,
   SubPlatformType,
-} from "~/src/components/set/publish/platform/dynamicConfig.ts"
+} from "~/src/platforms/dynamicConfig.ts"
 import { svgIcons } from "~/src/utils/svgIcons.ts"
 
 export const pre = {
@@ -14,6 +14,15 @@ export const pre = {
       platformKey: "common_Yuque",
       platformName: "语雀",
       platformIcon: svgIcons.iconIFYuque,
+      authMode: AuthMode.API,
+      isEnabled: false,
+    },
+    {
+      platformType: PlatformType.Common,
+      subPlatformType: SubPlatformType.Common_Notion,
+      platformKey: "common_Notion",
+      platformName: "Notion",
+      platformIcon: svgIcons.iconIFNotion,
       authMode: AuthMode.API,
       isEnabled: false,
     },

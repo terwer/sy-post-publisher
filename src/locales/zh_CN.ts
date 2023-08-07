@@ -116,6 +116,7 @@ export default {
   "main.opt.tip": "温馨提示",
   "main.opt.ok": "确认",
   "main.opt.cancel": "取消",
+  "main.opt.select": "请选择",
   "main.opt.warning.tip": "此操作不可恢复，是否继续？",
   "setting.noneed": "无需配置",
   "setting.blog.setting": "设置",
@@ -141,21 +142,23 @@ export default {
   "setting.blog.type.github.default.path.tip":
     "存储目录（相对于仓库根目录的相对路径，默认所有文章都发布在这里），例如：docs/_posts",
   "setting.blog.type.github.msg": "提交信息",
-  "setting.blog.type.github.msg.tip": "提交信息，例如：auto published by sy-post-publisher",
+  "setting.blog.type.github.msg.tip": "提交信息，例如：auto published by siyuan-publish-publisher",
   "setting.blog.type.github.author": "作者",
   "setting.blog.type.github.author.tip": "作者，例如：terwer",
   "setting.blog.type.github.email": "邮箱",
   "setting.blog.type.github.email.tip": "邮箱",
   "setting.blog.url": "博客网址",
+  "setting.blog.github.url.tip": "Github首页地址",
   "setting.blog.username": "账号",
   "setting.blog.password": "密码/Token",
   "setting.blog.apiurl": "API地址",
+  "setting.blog.github.apiurl.tip": "Github 的 REST API 地址，通常是：https://api.github.com",
+  "setting.blog.previewPostUrl": "文章预览规则",
+  "setting.blog.previewPostUrl.tip":
+    "预览规则（占位符：[yyyy] [MM] [dd] [postid]），例如：/post/[postid].html 或者 /[cats]/[yyyy]/[mm]/[dd]/[postid].html",
   "setting.blog.previewUrl": "预览规则",
   "setting.blog.previewUrl.tip":
-    "预览规则（占位符：[yyyy] [MM] [dd] [postid]），例如：/post/[postid].html 或者 /[cats]/[yyyy]/[mm]/[dd]/[postid].html",
-  "setting.blog.previewMdUrl": "MD预览规则",
-  "setting.blog.previewMdUrl.tip":
-    "MD文件预览规则（占位符：[user] [repo] [branch] [docpath]），例如：/[user]/[repo]/blob/[branch]/[docpath]",
+    "MD文件预览规则（占位符：[user] [repo] [branch] [docpath]），通常是：/[user]/[repo]/blob/[branch]/[docpath]",
   "setting.blog.mdFilenameRule": "文件规则",
   "setting.blog.mdFilenameRule.tip":
     "Markdown文件名规则（占位符：[yyyy] [MM] [dd] [slug] [filename] ），例如：[filename].md 或者 [yyyy]-[mm]-[dd]-[slug].md",
@@ -339,11 +342,20 @@ export default {
     "启用此选项，将会自动将此文档包含的所有本地图片上传至自定义图床（远程图片不上传），请确保PicGO图床配置正确",
   "github.post.picgo.start.upload": "图床已开启，即将上传本地图片到图床",
   "github.post.picgo.picbed.error": "文档可能已经成功发布，但是图片上传失败或者当前场景不支持图片上传，详细信息",
+
   "setting.yuque.home.tip": "语雀平台首页，通常固定是：https://www.yuque.com/",
   "setting.yuque.username.tip": "语雀平台用户名，注意是【账户设置】里面固定连接里面的用户名，不是用户昵称哦(*^▽^*)",
   "setting.yuque.password.tip":
     "语雀平台的Token，请按照链接点击获取，只需要勾选【读取你的知识库】和【修改和读取你的文档】两个权限即可",
   "setting.yuque.apiurl.tip": "语雀平台的API地址，通常固定是：https://www.yuque.com/api/v2",
+  "setting.yuque.previewUrl.tip": "语雀平台的文章预览规则，通常是：/[notebook]/[postid]",
+
+  "setting.notion.home.tip": "Notion平台首页，通常固定是：https://www.notion.so/",
+  "setting.notion.password.tip":
+    "Notion平台的Token，请按照链接点击获取，需要勾选【Read content】、【Update content】、【Insert content】三个权限",
+  "setting.notion.apiurl.tip": "Notion平台的API地址，通常固定是：https://api.notion.com/v1",
+  "setting.notion.previewUrl.tip": "Notion平台的文章预览规则，通常是：/[postid]",
+
   "setting.liandi.home.tip": "链滴平台首页，通常固定是：https://ld246.com/",
   "setting.liandi.username.tip":
     "链滴平台用户名，注意是点击【个人主页】之后URL上member后面显示的用户名，不是用户昵称哦(*^▽^*)",
@@ -383,17 +395,25 @@ export default {
     "Typecho平台的xmlrpc远程发布地址，通常固定是：https://<平台地址>/index.php/action/xmlrpc",
   "setting.typecho.previewUrl.tip": "Typecho平台的文章预览规则，通常是：/index.php/archives/[postid]",
 
+  "setting.metaweblog.home.tip": "Metaweblog平台的首页",
+  "setting.metaweblog.username.tip": "Metaweblog平台登录名",
+  "setting.metaweblog.password.tip": "Metaweblog平台密码",
+  "setting.metaweblog.apiUrl.tip": "Metaweblog平台的xmlrpc远程发布地址",
+  "setting.metaweblog.previewUrl.tip": "Metaweblog平台的文章预览规则，[postid]可作文文章ID占位符",
+
   "setting.jvue.home.tip": "JVue平台的首页",
   "setting.jvue.username.tip": "JVue平台登录名",
   "setting.jvue.password.tip": "JVue平台密码",
   "setting.jvue.apiUrl.tip": "JVue平台的xmlrpc远程发布地址，通常固定是：https://<平台地址>/xmlrpc",
   "setting.jvue.previewUrl.tip": "JVue平台的文章预览规则，通常是：/post/[postid].html",
+
   "setting.conf.home.tip": "Confluence Cloud，首页，通常是：https://<您的用户名>.atlassian.net/wiki/spaces/<空间名>",
   "setting.conf.username.tip": "Confluence登录名，可前往您的atlassian账户获取",
   "setting.conf.password.tip": "Confluence访问令牌，可前往您的atlassian账户获取",
   "setting.conf.apiUrl.tip":
     "可前往 https://developer.atlassian.com/cloud/confluence/rest/v1/#api-wiki-rest-api-content-get 查看文档",
   "setting.conf.previewUrl.tip": "Confluence平台文章预览规则，通常是：/pages/[postid]",
+
   "setting.picgo.refer.to": "详情请参考：",
   "setting.picgo.refer.to.online.doc": "PicGO配置在线文档",
   "setting.picgo.picbed": "图床设置",
@@ -473,7 +493,7 @@ export default {
   "setting.platform.add.this": "新增此平台",
   "setting.platform.universal": "通用平台",
   "setting.platform.universal.desc":
-    "目前支持的通用平台有：语雀，采用API授权。这些平台通常提供了现代化的REST API，可以方便的进行集成。",
+    "目前支持的通用平台有：语雀、Notion等，采用API授权。这些平台通常提供了现代化的REST API，可以方便的进行集成。",
   "setting.platform.wordpress": "WordPress",
   "setting.platform.wordpress.desc":
     "Wordpress 通过Xmlrpc API支持，采用 API 授权。WordPress是一个自由开源的博客软件和内容管理系统，具有数量众多的优质插件和主题。",
@@ -484,7 +504,8 @@ export default {
   "setting.platform.metaweblog.desc":
     "目前支持Metaweblog的平台有：博客园、Typecho等，采用 API 授权。MetaWeblog API 作为XML-RPC Web 服务实现，是目前公认的开放博客标准。",
   "setting.platform.custom": "自定义 HTTP 协议",
-  "setting.platform.custom.desc": "目前支持自定义HTTP协议的平台有：知乎、简书、掘金等，采用网页授权。自定义HTTP协议通过类似 WeChatSync 的方式实现。",
+  "setting.platform.custom.desc":
+    "目前支持自定义HTTP协议的平台有：知乎、简书、掘金等，采用网页授权。自定义HTTP协议通过类似 WeChatSync 的方式实现。",
   "setting.platform.right.tips0": "特别提示：",
   "setting.platform.right.tips1": "1、在这里可以进行发布配置，直接点击 [设置图标] 即可进行配置。",
   "setting.platform.right.tips2": "2、如需新增平台，直接点击左侧 + 按钮即可。",
@@ -502,4 +523,11 @@ export default {
   "setting.upgrade.syp.doTip2": "检测到旧配置，准备升级配置文件",
   "setting.upgrade.syp.doTip3": "旧配置升级",
   "setting.upgrade.syp.doTip4": "没有版本更新，跳过升级",
+  "main.publish.start": "开始同步",
+  "main.publish.remove": "批量删除",
+  "setting.blog.knowledge.space": "知识空间/知识库",
+  "main.data.empty": "暂无数据",
+  "enableKnowledgeSpace.Tips":
+    "验证通过之后，将列出可用的 [[knowledge-space-title]] 列表，您可以根据需要修改默认 [[knowledge-space-title]] 并保存",
+  "post.bind.auto.tips": "此处ID为发布工具自动保存，仅作为修复数据使用，如果您不清楚原理，请勿修改",
 }

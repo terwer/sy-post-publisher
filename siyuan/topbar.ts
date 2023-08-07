@@ -28,11 +28,12 @@ import { icons } from "./utils/svg"
 import { IMenuItemOption, Menu, showMessage } from "siyuan"
 import PageUtil from "./utils/pageUtil"
 import HtmlUtils from "./utils/htmlUtils"
-import { createAppLogger } from "./appLogger"
+import { createSiyuanAppLogger } from "./appLogger"
 import { WidgetInvoke } from "./invoke/widgetInvoke"
 import { PluginInvoke } from "./invoke/pluginInvoke"
 import { ObjectUtil } from "zhi-common"
 import { DYNAMIC_CONFIG_KEY } from "./Constants"
+import { ConfigManager } from "~/siyuan/store/config.ts"
 
 /**
  * 顶部按钮
@@ -44,40 +45,58 @@ export class Topbar {
   private pluginInvoke
 
   constructor(pluginInstance: PublisherPlugin) {
-    this.logger = createAppLogger("topbar")
+    this.logger = createSiyuanAppLogger("topbar")
     this.pluginInstance = pluginInstance
     this.pluginInvoke = new PluginInvoke(pluginInstance)
     this.widgetInvoke = new WidgetInvoke(pluginInstance)
   }
 
-  public async initTopbar() {
-    const quickMenus = await this.getQuickMenus()
-    const extendMenus = await this.getExtendMenus()
+  public initTopbar() {
+    const self = this
     const topBarElement = this.pluginInstance.addTopBar({
       icon: icons.iconPlane,
       title: this.pluginInstance.i18n.publishTool,
       position: "left",
-      callback: () => {
-        this.addMenu(topBarElement.getBoundingClientRect(), quickMenus, extendMenus)
-      },
+      callback: () => {},
+    })
+    topBarElement.addEventListener("click", async () => {
+      // 预加载数据
+      const setting = await ConfigManager.loadConfig(self.pluginInstance)
+      // 快速发布
+      const quickMenus = self.getQuickMenus(setting)
+      // 扩展菜单
+      const extendMenus = await self.getExtendMenus()
+      // 初始化菜单
+      this.addMenu(topBarElement.getBoundingClientRect(), quickMenus, extendMenus)
+      self.logger.info("publisher menu loaded")
     })
   }
 
-  private async getQuickMenus() {
+  private getQuickMenus(setting: any) {
     const submenus = <IMenuItemOption[]>[]
     // 读取配置
-    if (ObjectUtil.isEmptyObject(this.pluginInstance.cfg)) {
+    if (ObjectUtil.isEmptyObject(setting)) {
       // 配置错误，直接返回空
       return submenus
     }
-    const setting = this.pluginInstance.cfg
     const dynJsonCfg = setting[DYNAMIC_CONFIG_KEY] as any
     this.logger.info("dynJsonCfg =>", dynJsonCfg.totalCfg)
     // 构造发布菜单
-    dynJsonCfg.totalCfg.forEach((config: any) => {
+    dynJsonCfg.totalCfg?.forEach((config: any) => {
+      let icon = `<span class="iconfont-icon">${config.platformIcon}</span>`
+      // 修复图片不展示问题
+      if (/^\<img/.test(config.platformIcon) && config.platformIcon.indexOf("./images") > -1) {
+        icon = config.platformIcon.replace(
+          /\.\/images/g,
+          `${window.location.origin}/plugins/siyuan-plugin-publisher/images`
+        )
+        icon = `<span class="img-icon">${icon}</span>`
+      }
       if (config.isEnabled === true) {
+        // http://127.0.0.1:6806/plugins/siyuan-plugin-publisher/i
+
         const submenu = {
-          iconHTML: `<span class="iconfont-icon">${config.platformIcon}</span>`,
+          iconHTML: `${icon}`,
           label: config.platformName,
           disabled: !config.isAuth,
           click: async () => {
@@ -160,7 +179,17 @@ export class Topbar {
       iconHTML: icons.iconPen,
       label: this.pluginInstance.i18n.publishNormal,
       click: () => {
-        this.widgetInvoke.showPublisherPublishDialog()
+        this.widgetInvoke.showPublisherSinglePublishDialog()
+      },
+    })
+
+    // 批量分发
+    menu.addSeparator()
+    menu.addItem({
+      iconHTML: `<svg class="b3-menu__icon" style=""><use xlink:href="#iconMove"></use></svg>`,
+      label: this.pluginInstance.i18n.batchSync,
+      click: () => {
+        this.widgetInvoke.showPublisherBatchPublishDialog()
       },
     })
 

@@ -25,10 +25,9 @@
 
 import { BlogApi, CategoryInfo, Post, PostStatusEnum, UserBlog } from "zhi-blog-api"
 import { AppInstance } from "~/src/appInstance.ts"
-import { CnblogsConfig } from "~/src/adaptors/api/cnblogs/config/cnblogsConfig.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { CommonXmlrpcClient } from "zhi-xmlrpc-middleware"
-import { MetaweblogConfig } from "~/src/adaptors/api/base/metaweblog/config/MetaweblogConfig.ts"
+import { MetaweblogConfig } from "~/src/adaptors/api/base/metaweblog/MetaweblogConfig.ts"
 import { MetaweblogConstants } from "~/src/adaptors/api/base/metaweblog/metaweblogConstants.ts"
 import { StrUtil } from "zhi-common"
 import { BrowserUtil } from "zhi-device"
@@ -51,7 +50,7 @@ class MetaweblogBlogApi extends BlogApi {
    * @param appInstance 应用实例
    * @param cfg 配置项
    */
-  constructor(appInstance: AppInstance, cfg: CnblogsConfig) {
+  constructor(appInstance: AppInstance, cfg: MetaweblogConfig) {
     super()
 
     this.cfg = cfg
@@ -119,14 +118,13 @@ class MetaweblogBlogApi extends BlogApi {
 
   /**
    * 新建文章
-   * @param post
-   * @param publish
+   *
+   * @param post - 文章
+   * @param publish - 可选，不传递默认是发布，传递false才是草稿
    */
-  public async newPost(post: Post, publish: boolean = true): Promise<string> {
-    // 草稿
-    if (!publish) {
-      post.post_status = PostStatusEnum.PostStatusEnum_Draft
-    }
+  public async newPost(post: Post, publish?: boolean): Promise<string> {
+    // 不传递默认是发布，传递false才是草稿
+    post.post_status = publish === false ? PostStatusEnum.PostStatusEnum_Draft : PostStatusEnum.PostStatusEnum_Publish
 
     const postStruct = this.createPostStruct(post)
     this.logger.debug("postStruct=>", postStruct)
@@ -144,11 +142,16 @@ class MetaweblogBlogApi extends BlogApi {
     return ret
   }
 
-  public async editPost(postid: string, post: Post, publish: boolean = true): Promise<boolean> {
-    // 草稿
-    if (!publish) {
-      post.post_status = PostStatusEnum.PostStatusEnum_Draft
-    }
+  /**
+   * 编辑文章
+   *
+   * @param postid - 文章ID
+   * @param post - 文章
+   * @param publish - 可选，不传递默认是发布，传递false才是草稿
+   */
+  public async editPost(postid: string, post: Post, publish?: boolean): Promise<boolean> {
+    // 不传递默认是发布，传递false才是草稿
+    post.post_status = publish === false ? PostStatusEnum.PostStatusEnum_Draft : PostStatusEnum.PostStatusEnum_Publish
 
     const postStruct = this.createPostStruct(post)
     this.logger.debug("postStruct=>", postStruct)
@@ -169,10 +172,16 @@ class MetaweblogBlogApi extends BlogApi {
       postid,
       this.cfg.username,
       this.cfg.password,
+      false,
     ])
     this.logger.debug("ret=>", ret)
 
     return ret
+  }
+
+  public async getPreviewUrl(postid: string): Promise<string> {
+    const previewUrl = this.cfg.previewUrl.replace(/\[postid\]/g, postid)
+    return StrUtil.pathJoin(this.cfg.home ?? "", previewUrl)
   }
 
   public async getCategories(): Promise<CategoryInfo[]> {

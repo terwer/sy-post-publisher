@@ -116,6 +116,7 @@ export default {
   "main.opt.warning": "Warning",
   "main.opt.ok": "Confirm",
   "main.opt.cancel": "Cancel",
+  "main.opt.select": "Select",
   "main.opt.warning.tip": "The operation will delete the data, whether to continue?",
   "main.opt.tip": "Tips",
   "setting.noneed": "No need setting",
@@ -145,11 +146,13 @@ export default {
   "setting.blog.type.github.email": "Email",
   "setting.blog.type.github.email.tip": "Email",
   "setting.blog.url": "Blog addr",
-  "setting.blog.previewUrl": "Preview rule",
-  "setting.blog.previewUrl.tip":
+  "setting.blog.github.url.tip": "Github homepage address",
+  "setting.blog.github.apiurl.tip": "Github's REST API address, typically: https://api.github.com",
+  "setting.blog.previewPostUrl": "Preview rule",
+  "setting.blog.previewPostUrl.tip":
     "Preview Rules (place occupied: [yyyy] [mm] [dd] [postid]), for example:/post/[postid].html or /[cats]/[yyyy]/[mm]/[dd]/[[dd]/[postid].html",
-  "setting.blog.previewMdUrl": "MD preview rule",
-  "setting.blog.previewMdUrl.tip":
+  "setting.blog.previewUrl": "MD preview rule",
+  "setting.blog.previewUrl.tip":
     "MD file preview rules (place occupied: [user] [repo] [Branch] [docpath]), for example:/[user]/[repo]/blob/[branch]/[docpath]",
   "setting.blog.mdFilenameRule": "File rule",
   "setting.blog.mdFilenameRule.tip":
@@ -344,6 +347,13 @@ export default {
     "For the token of the spark platform, please follow the link to get it. You only need to grant the document to read and modify the two permissions.",
   "setting.yuque.apiurl.tip":
     "The API address of the language bird platform is usually fixed: https://www.yuque.com/api/v2",
+  "setting.yuque.previewUrl.tip": "Article preview rules for the Yuque platform, Usually: /[notebook]/[postid]",
+
+  "setting.notion.home.tip": "The homepage of the Notion platform is usually fixed: https://www.notion.so/",
+  "setting.notion.password.tip": "For the token of the Notion platform, please click the link to get it, you need to check the three permissions of [Read content], [Update content], and [Insert content].",
+  "setting.notion.apiurl.tip": "The API address of the Notion platform is usually fixed: https://api.notion.com/v1",
+  "setting.notion.previewUrl.tip": "Article preview rules for the Notion platform, usually:/[postid]",
+
   "setting.liandi.home.tip": "The homepage of the chain drop platform is usually fixed: https://ld246.com/",
   "setting.liandi.username.tip":
     "The user name of the chain drop platform, note that after clicking [Personal Homepage], the user name displayed behind the MEMBER on the URL is not a user nickname (*^▽^*)",
@@ -387,6 +397,13 @@ export default {
   "setting.typecho.previewUrl.tip":
     "The preview rules of the Typecho platform are usually: /index.php/archives/ [Postid]",
 
+  "setting.metaweblog.home.tip": "The homepage of the Metaweblog platform",
+  "setting.metaweblog.username.tip": "Metaweblog platform login",
+  "setting.metaweblog.password.tip": "Metaweblog platform password",
+  "setting.metaweblog.apiUrl.tip": "The xmlrpc remote publishing address for the Metaweblog platform",
+  "setting.metaweblog.previewUrl.tip":
+    "Article preview rules for the Metaweblog platform, [postid] can be composed article ID placeholder",
+
   "setting.jvue.home.tip": "Homepage of the Jvue platform",
   "setting.jvue.username.tip": "Jvue platform login name",
   "setting.jvue.password.tip": "Jvue platform password",
@@ -400,6 +417,7 @@ export default {
   "setting.conf.password.tip": "Confluence access token, you can go to your Atlassian account to get",
   "setting.conf.apiUrl.tip": "You can go to https://developper.atlassian.com/Cloud/confluence/rest/v1/1/1/",
   "setting.conf.previewUrl.tip": "CONFLUENCE platform articles preview rules, usually:/pages/[postid]",
+
   "setting.picgo.refer.to": "For details, please refer to:",
   "setting.picgo.refer.to.online.doc": "Picgo configuration online documentation",
   "setting.picgo.picbed": "Picbed setting",
@@ -515,4 +533,10 @@ export default {
   "setting.upgrade.syp.doTip2": "Detected old configuration, preparation to upgrade the configuration file",
   "setting.upgrade.syp.doTip3": "Old configuration upgraded",
   "setting.upgrade.syp.doTip4": "No update for version, skip upgrade",
+  "main.publish.start": "Start syncing",
+  "main.publish.remove": "Remove",
+  "setting.blog.knowledge.space": "Knowledge space/Knowledge base",
+  "main.data.empty": "No data",
+  "enableKnowledgeSpace.Tips": "After validation, a list of available knowledge spaces is listed, and you can modify the default knowledge spaces as needed and save them",
+  "post.bind.auto.tips": "The ID here is automatically saved by the publishing tool, if you are not clear about the principle, please do not modify it",
 }

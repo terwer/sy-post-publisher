@@ -23,18 +23,22 @@
  * questions.
  */
 
-import { isDev } from "~/src/utils/constants.ts"
+import { isDebugMode, isDev } from "~/src/utils/constants.ts"
 import { simpleLogger } from "zhi-lib-base"
 
 /**
  * 使用 eruda 更好的控制日志
  */
-window.console = isDev ? (window as any).eruda.get("console") : window.console
+if (typeof window === "undefined") {
+  global.console = console
+} else {
+  window.console = isDev && isDebugMode ? (window as any).eruda.get("console") : window.console
+}
 
 /**
  * 简单的日志接口
  */
-interface ILogger {
+export interface ILogger {
   debug: (msg: string, obj?: any) => void
   info: (msg: string, obj?: any) => void
   warn: (msg: string, obj?: any) => void
@@ -55,7 +59,7 @@ export const createAppLogger = (name: string): ILogger => {
 /**
  * 销毁日志
  */
-export const destroyLogger = (): void => {
-  const win = window as any
-  win.eruda.destroy()
-}
+// export const destroyLogger = (): void => {
+//   const win = window as any
+//   win.eruda.destroy()
+// }
