@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.3](https://github.com/terwer/sy-post-publisher/compare/v0.10.2...v0.10.3) (2023-08-08)
+
+
+### Miscellaneous
+
+* sync repo v1.5.2 ([2729124](https://github.com/terwer/sy-post-publisher/commit/27291248161370e83cb5375d44659b1a56ff3781))
+
 ## [1.5.2](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.5.1...v1.5.2) (2023-08-08)
 ### Bug Fixes
 * 修复挂件获取文档id错误的问题 ([364f689](https://github.com/terwer/siyuan-plugin-publisher/commit/364f689359d88589a85fdaa251ac66856dfed819))
