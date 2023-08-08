@@ -24,7 +24,7 @@
   -->
 
 <script setup lang="ts">
-import { onMounted, reactive } from "vue"
+import {onMounted, reactive, toRaw} from "vue"
 import { JsonUtil, StrUtil } from "zhi-common"
 import { DynamicConfig, DynamicJsonCfg, getDynPostidKey } from "~/src/platforms/dynamicConfig.ts"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
@@ -86,11 +86,11 @@ onMounted(async () => {
   // 默认展示通用平台
   formData.dynamicConfigArray = enabledConfigs || []
   // 检测是否已经发布
+  const postMeta = setting[props.id] ?? {}
   formData.dynamicConfigArray.forEach((item) => {
     const key = item.platformKey
     const posidKey = getDynPostidKey(key)
     if (!StrUtil.isEmptyString(posidKey)) {
-      const postMeta = setting[props.id] ?? {}
       const postid = postMeta[posidKey] ?? ""
       if (!StrUtil.isEmptyString(postid)) {
         handleCheck(key)
