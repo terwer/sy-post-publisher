@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { UserBlog } from "zhi-blog-api"
+import { Post, UserBlog } from "zhi-blog-api"
 import { CnblogsConfig } from "~/src/adaptors/api/cnblogs/cnblogsConfig.ts"
 import { AppInstance } from "~/src/appInstance.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
@@ -63,6 +63,18 @@ class CnblogsApiAdaptor extends MetaweblogBlogApi {
     return result
   }
 
+  public async newPost(post: Post, publish?: boolean): Promise<string> {
+    // 设置markdown分类
+    post = this.assignMdCategory(post)
+    return super.newPost(post, publish)
+  }
+
+  public async editPost(postid: string, post: Post, publish?: boolean): Promise<boolean> {
+    // 设置markdown分类
+    post = this.assignMdCategory(post)
+    return super.editPost(postid, post, publish)
+  }
+
   public override async deletePost(postid: string): Promise<boolean> {
     const ret = await this.metaweblogCall(CnblogsConstants.METHOD_DELETE_POST, [
       this.cfg.blogid,
@@ -74,6 +86,17 @@ class CnblogsApiAdaptor extends MetaweblogBlogApi {
     this.logger.debug("ret=>", ret)
 
     return ret
+  }
+
+  private assignMdCategory(post: Post) {
+    const MD_CATEGORY = "[Markdown]"
+    const cats = post.categories ?? []
+
+    if (cats.length === 0 || cats.some((cat) => cat.toLowerCase() === MD_CATEGORY.toLowerCase())) {
+      cats.push(MD_CATEGORY)
+    }
+
+    return post
   }
 }
 export { CnblogsApiAdaptor }
