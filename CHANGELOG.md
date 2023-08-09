@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.4](https://github.com/terwer/sy-post-publisher/compare/v0.10.3...v0.10.4) (2023-08-09)
+
+
+### Miscellaneous
+
+* sync repo v1.6.1 ([ea14e94](https://github.com/terwer/sy-post-publisher/commit/ea14e94d0f28c486b410371dfbe54d267e63fd1a))
+
 ## [1.6.1](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.6.0...v1.6.1) (2023-08-09)
 ### Bug Fixes
 * lodash-es ([29b65ed](https://github.com/terwer/siyuan-plugin-publisher/commit/29b65ed7d4672eee1a54b16552f281afd0344df6))
