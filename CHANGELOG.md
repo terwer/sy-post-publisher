@@ -1,12 +1,8 @@
 # Changelog
 
 ## [0.10.4](https://github.com/terwer/sy-post-publisher/compare/v0.10.3...v0.10.4) (2023-08-09)
-
-
 ### Miscellaneous
-
 * sync repo v1.6.1 ([ea14e94](https://github.com/terwer/sy-post-publisher/commit/ea14e94d0f28c486b410371dfbe54d267e63fd1a))
-
 ## [1.6.1](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.6.0...v1.6.1) (2023-08-09)
 ### Bug Fixes
 * lodash-es ([29b65ed](https://github.com/terwer/siyuan-plugin-publisher/commit/29b65ed7d4672eee1a54b16552f281afd0344df6))
@@ -83,7 +79,6 @@
 * **deps:** bump zhi-xmlrpc-middleware from 0.3.0 to 0.4.0 ([1c16b2c](https://github.com/terwer/siyuan-plugin-publisher/commit/1c16b2c15ad5bccc982dfa0849be3e8a20ecd095))
 * 修复第一次打开可能导致的报错问题 ([b05894e](https://github.com/terwer/siyuan-plugin-publisher/commit/b05894e8a40e58dc16583aba00cc91235181764b))
 * 常规发布改为批量分发 ([dc06680](https://github.com/terwer/siyuan-plugin-publisher/commit/dc066801e84d2553b97e0a84432f22ccd2f86221))
-### Miscellaneous
 * **deps-dev:** bump vite from 4.4.7 to 4.4.8 ([d38a208](https://github.com/terwer/siyuan-plugin-publisher/commit/d38a208faccf2a864bd6f14b226f1bf281d63a9a))
 * **deps-dev:** bump vitest from 0.33.0 to 0.34.1 ([748042f](https://github.com/terwer/siyuan-plugin-publisher/commit/748042fa3e17faf93253dcce151b3bb6fc05b3f7))
 ## [1.2.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.1.2...v1.2.0) (2023-08-01)
