@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.10.5](https://github.com/terwer/sy-post-publisher/compare/v0.10.4...v0.10.5) (2023-08-14)
+### Miscellaneous
+* sync repo v1.8.0 ([d59b668](https://github.com/terwer/sy-post-publisher/commit/d59b6686f9af846faa960c7d7e9b1a9a9f85dfdd))
 ## [1.8.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.7.0...v1.8.0) (2023-08-14)
 ### Features
 * 底部新增发布配置快捷入口 ([e2eec4c](https://github.com/terwer/siyuan-plugin-publisher/commit/e2eec4c493b1e1dece965f8c87e573a772583fcc))
@@ -16,7 +19,6 @@
 * 兼容平台图片上传-统一所有平台的预处理逻辑 ([6d9aba3](https://github.com/terwer/siyuan-plugin-publisher/commit/6d9aba3eb7e3b6a67fcc34e9ecabd697fe00ff50))
 * 兼容平台图片上传-解决notion图片解析错误问题 ([6c99367](https://github.com/terwer/siyuan-plugin-publisher/commit/6c9936746d4a65bf5a1ec9f2f8fba6c15a125902))
 * 博客园 electron 平台图片上传成功 ([0af57ce](https://github.com/terwer/siyuan-plugin-publisher/commit/0af57ce8067fc1e5227654a13bc0bed0bf1b4fb1))
-### Miscellaneous
 * **deps-dev:** bump vite-plugin-node-polyfills from 0.8.2 to 0.11.1 ([55c389b](https://github.com/terwer/siyuan-plugin-publisher/commit/55c389b7e699c4bd7c33b8787dec98300cd16cc3))
 ## [1.7.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.6.1...v1.7.0) (2023-08-11)
 * [#593](https://github.com/terwer/siyuan-plugin-publisher/issues/593) 插件版支持图床替换图片 ([bc645c0](https://github.com/terwer/siyuan-plugin-publisher/commit/bc645c0751016daabfa2e309882f988bd46e49ac))
