@@ -28,7 +28,7 @@ import { createSiyuanAppLogger } from "../appLogger"
 import { showIframeDialog } from "../iframeDialog"
 import PageUtil from "../utils/pageUtil"
 import { IObject } from "siyuan"
-import { isFileExists } from "../utils/utils"
+import { isSiyuanFileExists } from "../utils/utils"
 
 /**
  * 插件相关
@@ -46,6 +46,7 @@ export class PluginInvoke {
 
   public async showBlogDialog() {
     const pageId: string | undefined = PageUtil.getPageId()
+    const pageUrl = `${this.blogPluginBase}/post/${pageId}`
 
     // 临时开启预览权限
     let isShared = false
@@ -59,7 +60,6 @@ export class PluginInvoke {
       this.logger.info("The document is not shared, will temporarily turn on preview permissions")
     }
 
-    const pageUrl = `${this.blogPluginBase}/post/${pageId}`
     showIframeDialog(this.pluginInstance, pageUrl, undefined, undefined, undefined, async (options?: IObject) => {
       // 回收预览权限
       if (!isShared) {
@@ -67,6 +67,8 @@ export class PluginInvoke {
           "custom-publish-status": "draft",
         })
         this.logger.info("Temporary permissions are turned off")
+      } else {
+        this.logger.info("Already shared, do nothing")
       }
     })
   }
@@ -85,10 +87,10 @@ export class PluginInvoke {
 
   public async preCheckPicgoPlugin() {
     // 检测是否安装 picgo 插件
-    return await isFileExists(this.pluginInstance.kernelApi, "/data/plugins/siyuan-plugin-picgo/plugin.json", "text")
+    return await isSiyuanFileExists(this.pluginInstance.kernelApi, "/data/plugins/siyuan-plugin-picgo/plugin.json", "text")
   }
 
   public async preCheckBlogPlugin() {
-    return await isFileExists(this.pluginInstance.kernelApi, "/data/plugins/siyuan-blog/plugin.json", "text")
+    return await isSiyuanFileExists(this.pluginInstance.kernelApi, "/data/plugins/siyuan-blog/plugin.json", "text")
   }
 }
