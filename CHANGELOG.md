@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.10.5](https://github.com/terwer/sy-post-publisher/compare/v0.10.4...v0.10.5) (2023-08-14)
+
+
+### Miscellaneous
+
+* sync repo v1.8.0 ([6754af4](https://github.com/terwer/sy-post-publisher/commit/6754af486b8bf0e0e3701972bf44c0cc962eae20))
+* sync repo v1.8.0 ([6d0efc8](https://github.com/terwer/sy-post-publisher/commit/6d0efc89dce787faa871c9a4e0baa436d72429f4))
+* sync repo v1.8.0 ([d59b668](https://github.com/terwer/sy-post-publisher/commit/d59b6686f9af846faa960c7d7e9b1a9a9f85dfdd))
+
 ## [1.8.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.7.0...v1.8.0) (2023-08-14)
 ### Features
 * 底部新增发布配置快捷入口 ([e2eec4c](https://github.com/terwer/siyuan-plugin-publisher/commit/e2eec4c493b1e1dece965f8c87e573a772583fcc))
