@@ -1,13 +1,30 @@
 # Changelog
 
-## [0.10.4](https://github.com/terwer/sy-post-publisher/compare/v0.10.3...v0.10.4) (2023-08-09)
-### Miscellaneous
-* sync repo v1.6.1 ([ea14e94](https://github.com/terwer/sy-post-publisher/commit/ea14e94d0f28c486b410371dfbe54d267e63fd1a))
-## [1.6.1](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.6.0...v1.6.1) (2023-08-09)
+## [1.8.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.7.0...v1.8.0) (2023-08-14)
+### Features
+* 底部新增发布配置快捷入口 ([e2eec4c](https://github.com/terwer/siyuan-plugin-publisher/commit/e2eec4c493b1e1dece965f8c87e573a772583fcc))
+* 所有平台迁移到官方的正向代理 ([c4de13f](https://github.com/terwer/siyuan-plugin-publisher/commit/c4de13f77c65b74b7db3284729cf4434a6ec6d47))
+* 支持接入平台自有能力进行图片上传 ([efccca6](https://github.com/terwer/siyuan-plugin-publisher/commit/efccca6e2c03d2affcc912ec657a2f0ea1822324))
+* 新增思源配置 ([202c2ce](https://github.com/terwer/siyuan-plugin-publisher/commit/202c2ce861489da1da4ce48b91bb73dac774c96e))
 ### Bug Fixes
+* 修复思源配置 ([75712b8](https://github.com/terwer/siyuan-plugin-publisher/commit/75712b84b7e743d3dcb2b741aaab5c441405c834))
+* 兼容平台图片上传 ([47472af](https://github.com/terwer/siyuan-plugin-publisher/commit/47472af2259592e2929cf14edc168e59ae3c65ab))
+* 兼容平台图片上传-picgo 插件检测 ([090425c](https://github.com/terwer/siyuan-plugin-publisher/commit/090425ccec393ef0f582b89e91f846d35c850b80))
+* 兼容平台图片上传-排查notion图片解析错误问题 ([24d2c8a](https://github.com/terwer/siyuan-plugin-publisher/commit/24d2c8a4ba8cd5824936a9098c8e4db65872d6e8))
+* 兼容平台图片上传-支持远程图片链接 ([cf82997](https://github.com/terwer/siyuan-plugin-publisher/commit/cf82997aa26971b833010c6afcc423f540f1c73d))
+* 兼容平台图片上传-知乎平台支持图片上传 ([c3e1c54](https://github.com/terwer/siyuan-plugin-publisher/commit/c3e1c54c2ae20fe54d86b313e4fa4fce9a57615b))
+* 兼容平台图片上传-统一所有平台的预处理逻辑 ([6d9aba3](https://github.com/terwer/siyuan-plugin-publisher/commit/6d9aba3eb7e3b6a67fcc34e9ecabd697fe00ff50))
+* 兼容平台图片上传-解决notion图片解析错误问题 ([6c99367](https://github.com/terwer/siyuan-plugin-publisher/commit/6c9936746d4a65bf5a1ec9f2f8fba6c15a125902))
+* 博客园 electron 平台图片上传成功 ([0af57ce](https://github.com/terwer/siyuan-plugin-publisher/commit/0af57ce8067fc1e5227654a13bc0bed0bf1b4fb1))
+### Miscellaneous
+* **deps-dev:** bump vite-plugin-node-polyfills from 0.8.2 to 0.11.1 ([55c389b](https://github.com/terwer/siyuan-plugin-publisher/commit/55c389b7e699c4bd7c33b8787dec98300cd16cc3))
+## [1.7.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.6.1...v1.7.0) (2023-08-11)
+* [#593](https://github.com/terwer/siyuan-plugin-publisher/issues/593) 插件版支持图床替换图片 ([bc645c0](https://github.com/terwer/siyuan-plugin-publisher/commit/bc645c0751016daabfa2e309882f988bd46e49ac))
+* 修复授权码模式发布预览失效问题 ([633dabf](https://github.com/terwer/siyuan-plugin-publisher/commit/633dabf97fef63883cd9cd7865becbdab7a07677))
+* 添加帮助文档链接 ([f9deaf4](https://github.com/terwer/siyuan-plugin-publisher/commit/f9deaf4c7ec2ec423a9ab02789e96ad7534051df))
+## [1.6.1](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.6.0...v1.6.1) (2023-08-09)
 * lodash-es ([29b65ed](https://github.com/terwer/siyuan-plugin-publisher/commit/29b65ed7d4672eee1a54b16552f281afd0344df6))
 ## [1.6.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.5.2...v1.6.0) (2023-08-09)
-### Features
 * 修正博客园markdown分类问题 ([ea1950d](https://github.com/terwer/siyuan-plugin-publisher/commit/ea1950d32e3886889bacbdbbdce9e52b9bbbc61d))
 * 发布首个稳定版 ([945df12](https://github.com/terwer/siyuan-plugin-publisher/commit/945df12a6ecf89b02d3aa2cdba6119f152a247a7))
 * 开始适配知乎 ([8db460c](https://github.com/terwer/siyuan-plugin-publisher/commit/8db460c7c3bf4426f80ae206eb2fabd40029d67f))

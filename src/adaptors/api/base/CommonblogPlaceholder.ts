@@ -28,4 +28,4 @@ import { BlogPlaceholder } from "zhi-blog-api"
 /**
  * Metaweblog 操作提示
  */
-export class CommonblogPlaceholder extends BlogPlaceholder {}
+export class CommonBlogPlaceholder extends BlogPlaceholder {}

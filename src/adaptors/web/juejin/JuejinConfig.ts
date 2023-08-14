@@ -23,7 +23,7 @@
  * questions.
  */
 
-import { CommonWebConfig } from "~/src/adaptors/web/base/CommonWebConfig.ts"
+import { CommonWebConfig } from "~/src/adaptors/web/base/commonWebConfig.ts"
 
 /**
  * 掘金配置

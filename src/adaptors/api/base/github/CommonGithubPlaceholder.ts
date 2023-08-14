@@ -23,11 +23,11 @@
  * questions.
  */
 
-import { CommonblogPlaceholder } from "~/src/adaptors/api/base/CommonblogPlaceholder.ts"
+import { CommonBlogPlaceholder } from "~/src/adaptors/api/base/commonBlogPlaceholder.ts"
 
 /**
  * Github 操作提示
  */
-class CommonGithubPlaceholder extends CommonblogPlaceholder {}
+class CommonGithubPlaceholder extends CommonBlogPlaceholder {}
 
 export { CommonGithubPlaceholder }

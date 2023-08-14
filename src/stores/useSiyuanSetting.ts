@@ -23,14 +23,31 @@
  * questions.
  */
 
-import { MetaweblogBlogApi } from "~/src/adaptors/api/base/metaweblog/metaweblogBlogApi.ts"
+import { SiyuanConfig } from "zhi-siyuan-api"
+import { RemovableRef, StorageSerializers, useLocalStorage } from "@vueuse/core"
 
-/**
- * Metaweblog API 适配器
- *
- * @author terwer
- * @version 0.9.0
- * @since 0.9.0
- */
-class MetaweblogApiAdaptor extends MetaweblogBlogApi {}
-export { MetaweblogApiAdaptor }
+const useSiyuanSetting = () => {
+  const storageKey = "siyuan-cfg"
+
+  /**
+   * 获取思源笔记配置
+   *
+   * @author terwer
+   * @since 0.6.0
+   */
+  const getSiyuanSetting = (): RemovableRef<SiyuanConfig> => {
+    let baseUrl = "http://127.0.0.1:6806"
+    let token = ""
+    let middlewareUrl = "https://api.terwer.space/api/middleware"
+    const initialValue = new SiyuanConfig(baseUrl, token)
+    initialValue.middlewareUrl = middlewareUrl
+    const siyuanConfig = useLocalStorage<SiyuanConfig>(storageKey, initialValue, {
+      serializer: StorageSerializers.object,
+    })
+    return siyuanConfig
+  }
+
+  return { getSiyuanSetting }
+}
+
+export { useSiyuanSetting }

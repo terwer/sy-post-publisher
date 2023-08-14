@@ -24,7 +24,7 @@
  */
 
 import { PageTypeEnum, WebConfig } from "zhi-blog-api"
-import { CommonWebPlaceholder } from "~/src/adaptors/web/base/CommonWebPlaceholder.ts"
+import { CommonWebPlaceholder } from "~/src/adaptors/web/base/commonWebPlaceholder.ts"
 
 /**
  * 网页授权配置

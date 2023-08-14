@@ -23,10 +23,24 @@
  * questions.
  */
 
+import { SiyuanKernelApi } from "zhi-siyuan-api"
+import { StrUtil } from "zhi-common"
+
 /**
- * 依赖注入 key 通用定义
+ * 文件是否存在
+ *
+ * @param kernelApi - kernelApi
+ * @param p - 路径
+ * @param type - 类型
  */
-export enum InjectKeys {
-  VUE_INSTANCE = "vueInstance",
-  APP_INSTANCE = "appInstance",
+export const isFileExists = async (kernelApi: SiyuanKernelApi, p: string, type: "text" | "json") => {
+  try {
+    const res = await kernelApi.getFile(p, type)
+    if (type === "text") {
+      return !StrUtil.isEmptyString(res)
+    }
+    return res !== null
+  } catch {
+    return false
+  }
 }

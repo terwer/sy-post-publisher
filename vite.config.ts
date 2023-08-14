@@ -113,7 +113,14 @@ export default defineConfig({
                 {
                   tag: "script",
                   attrs: {
-                    src: "./libs/lute/lute-1.7.5-20230410.min.cjs",
+                    src: "./libs/lute/lute-1.7.5-20230410.min.js",
+                  },
+                  injectTo: "head",
+                },
+                {
+                  tag: "script",
+                  attrs: {
+                    src: "./libs/alioss/aliyun-oss-sdk-6.16.0.min.js",
                   },
                   injectTo: "head",
                 },
@@ -122,7 +129,14 @@ export default defineConfig({
                 {
                   tag: "script",
                   attrs: {
-                    src: "./libs/lute/lute-1.7.5-20230410.min.cjs",
+                    src: "./libs/lute/lute-1.7.5-20230410.min.js",
+                  },
+                  injectTo: "head",
+                },
+                {
+                  tag: "script",
+                  attrs: {
+                    src: "./libs/alioss/aliyun-oss-sdk-6.16.0.min.js",
                   },
                   injectTo: "head",
                 },
