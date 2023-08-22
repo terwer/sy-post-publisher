@@ -39,25 +39,18 @@
           isDark ? t("theme.mode.light") : t("theme.mode.dark")
         }}</span>
 
-        <!--
-        <span class="text">.</span>
-        <span class="text s-dark" @click="openTransportSetting">
-          {{ t("setting.conf.transport") }}
-        </span>
-        -->
-
         <span class="text">.</span>
         <span class="text s-dark" @click="handlePublishSetting">
           {{ t("service.tab.publish.setting") }}
         </span>
 
         <span class="text">.</span>
-        <span class="text s-dark" @click="handleSiyuanSetting">
-          {{ t("siyuan.config.setting") }}
+        <span class="text s-dark" @click="handlePrefenceSetting">
+          {{ t("service.tab.change.local") }}
         </span>
 
-        <span class="text" v-if="isDev">.</span>
-        <span class="text s-dark" @click="handleTest" v-if="isDev"> 组件测试 </span>
+        <span v-if="isDev" class="text">.</span>
+        <span v-if="isDev" class="text s-dark" @click="handleTest"> 组件测试 </span>
 
         <span v-if="isChromeExtension" class="text">.</span>
         <span v-if="isChromeExtension" class="text s-dark" @click="newWin()">
@@ -96,8 +89,12 @@ const goGithub = () => {
   window.open("https://github.com/terwer/siyuan-plugin-publisher")
 }
 
-const goAbout = () => {
-  window.open("https://blog.terwer.space/about")
+const goAbout = async () => {
+  // window.open("https://blog.terwer.space/about")
+  await router.push({
+    path: "/about",
+    query: { showBack: "true" },
+  })
 }
 
 const goToApiTest = () => {
@@ -119,9 +116,9 @@ const handlePublishSetting = async () => {
   })
 }
 
-const handleSiyuanSetting = async () => {
+const handlePrefenceSetting = async () => {
   await router.push({
-    path: "/setting/siyuan",
+    path: "/setting/general",
     query: { showBack: "true" },
   })
 }
