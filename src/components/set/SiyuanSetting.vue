@@ -34,29 +34,22 @@ const siyuanSettingForm = getSiyuanSetting()
 </script>
 
 <template>
-  <back-page title="思源笔记设置">
-    <el-form label-width="125px" class="siyuan-setting-form">
-      <el-form-item :label="t('setting.blog.siyuan.apiurl')" prop="apiUrl">
-        <el-input
-          v-model="siyuanSettingForm.apiUrl"
-          autocomplete="off"
-          :placeholder="t('setting.blog.siyuan.apiurl.tip')"
-        />
-      </el-form-item>
-      <el-form-item :label="t('setting.blog.siyuan.password')" prop="pwd">
-        <el-input
-          v-model="siyuanSettingForm.password"
-          type="password"
-          autocomplete="off"
-          :placeholder="t('setting.blog.siyuan.password.tip')"
-          show-password
-        />
-      </el-form-item>
-    </el-form>
-  </back-page>
+  <el-form label-width="125px" class="siyuan-setting-form">
+    <el-form-item :label="t('setting.blog.siyuan.apiurl')" prop="apiUrl">
+      <el-input
+        v-model="siyuanSettingForm.apiUrl"
+        autocomplete="off"
+        :placeholder="t('setting.blog.siyuan.apiurl.tip')"
+      />
+    </el-form-item>
+    <el-form-item :label="t('setting.blog.siyuan.password')" prop="pwd">
+      <el-input
+        v-model="siyuanSettingForm.password"
+        type="password"
+        autocomplete="off"
+        :placeholder="t('setting.blog.siyuan.password.tip')"
+        show-password
+      />
+    </el-form-item>
+  </el-form>
 </template>
-
-<style lang="stylus" scoped>
-.siyuan-setting-form
-  margin-top 20px
-</style>

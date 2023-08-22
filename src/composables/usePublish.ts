@@ -26,19 +26,28 @@
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { reactive, toRaw } from "vue"
 import { SypConfig } from "~/syp.config.ts"
-import { AliasTranslator, ObjectUtil, StrUtil } from "zhi-common"
-import { BlogAdaptor, PageTypeEnum, Post, PostStatusEnum } from "zhi-blog-api"
+import { AliasTranslator, ObjectUtil, StrUtil, YamlUtil } from "zhi-common"
+import {
+  BlogAdaptor,
+  BlogConfig,
+  PageTypeEnum,
+  Post,
+  PostStatusEnum,
+  YamlConvertAdaptor,
+  YamlFormatObj,
+} from "zhi-blog-api"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { useSiyuanApi } from "~/src/composables/useSiyuanApi.ts"
 import { pre } from "~/src/utils/import/pre.ts"
 import { MethodEnum } from "~/src/models/methodEnum.ts"
-import { DynamicConfig } from "~/src/platforms/dynamicConfig.ts"
-import { CommonBlogConfig } from "~/src/adaptors/api/base/commonBlogConfig.ts"
+import { DynamicConfig, getDynYamlKey } from "~/src/platforms/dynamicConfig.ts"
 import { IPublishCfg } from "~/src/types/IPublishCfg.ts"
 import { usePublishConfig } from "~/src/composables/usePublishConfig.ts"
 import { ElMessage } from "element-plus"
-import { usePicgoBridge } from "~/src/composables/usePicgoBridge.ts"
+import { SiyuanAttr } from "zhi-siyuan-api"
+import _ from "lodash"
+import Adaptors from "~/src/adaptors"
 
 /**
  * 通用发布组件
@@ -74,7 +83,7 @@ const usePublish = () => {
    */
   const doSinglePublish = async (key: string, id: string, publishCfg: IPublishCfg, doc: Post) => {
     const setting: typeof SypConfig = publishCfg.setting
-    const cfg: CommonBlogConfig = publishCfg.cfg
+    const cfg: BlogConfig = publishCfg.cfg
     const dynCfg: DynamicConfig = publishCfg.dynCfg
 
     // vars
@@ -104,20 +113,13 @@ const usePublish = () => {
       let post = doc
       // 保证postid一致
       post.postid = postid
-      // ===================================
-      // 文章处理开始
-      // ===================================
-
-      // 分配文章属性 - 初始化和发布都会调用
-      post = await assignAttrs(post, id, publishCfg)
-
-      // ===================================
-      // 文章处理结束
-      // ===================================
 
       // 初始化API
       const api = await getPublishApi(key, cfg)
 
+      // ===================================
+      // 文章处理开始
+      // ===================================
       // 平台相关的正文预处理 - 仅在发布的时候调用
       logger.debug(`before preEditPost, isAdd ${singleFormData.isAdd}, post=>`, toRaw(post))
       post = await api.preEditPost(post, id, publishCfg)
@@ -129,7 +131,10 @@ const usePublish = () => {
       } else {
         post.description = post.html
       }
-      logger.debug("文章全部预处理完毕，最终结果", { post })
+      logger.debug(`文章全部预处理完毕，最终结果 =>id=${id},key=${key},`, { post: toRaw(post) })
+      // ===================================
+      // 文章处理结束
+      // ===================================
 
       // 处理发布：新增 或者 更新
       if (singleFormData.isAdd) {
@@ -143,11 +148,12 @@ const usePublish = () => {
         const posidKey = cfg.posidKey
         const postMeta = ObjectUtil.getProperty(setting, id, {})
         postMeta[posidKey] = postid
-        postMeta["custom-slug"] = post.wp_slug
+        postMeta[SiyuanAttr.Custom_slug] = post.wp_slug
         setting[id] = postMeta
         await updateSetting(setting)
 
         logger.info("new post=>", result)
+        logger.info("文章发布成功")
       } else {
         logger.info("文章已发布，准备更新")
 
@@ -155,13 +161,31 @@ const usePublish = () => {
         const result = await api.editPost(postid, post)
 
         // 写入属性到配置
+        // 这里更新 slug 的原因是历史文章有可能没有生成过别名
         const postMeta = ObjectUtil.getProperty(setting, id, {})
-        postMeta["custom-slug"] = post.wp_slug
-        setting[id] = postMeta
-        await updateSetting(setting)
+        if (!postMeta.hasOwnProperty(SiyuanAttr.Custom_slug)) {
+          logger.info("检测到未生成过别名，准备更新别名")
+          postMeta[SiyuanAttr.Custom_slug] = post.wp_slug
+          setting[id] = postMeta
+          await updateSetting(setting)
+        } else {
+          // 确保别名不被修改
+          post.wp_slug = postMeta[SiyuanAttr.Custom_slug]
+        }
 
         logger.info("edit post=>", result)
+        logger.info("文章更新成功")
       }
+
+      logger.info("发布完成，准备处理文章属性")
+      // 保存属性用于初始化
+      if (isSys) {
+        logger.info("内置平台，忽略保存属性")
+      } else {
+        const yamlKey = getDynYamlKey(key)
+        await kernelApi.setSingleBlockAttr(id, yamlKey, post.yaml)
+      }
+      logger.info("文章属性处理完成")
 
       // 更新预览链接
       postPreviewUrl = await getPostPreviewUrl(api, postid, cfg)
@@ -169,7 +193,7 @@ const usePublish = () => {
       singleFormData.publishProcessStatus = true
     } catch (e) {
       singleFormData.errMsg = t("main.opt.failure") + "=>" + e
-      logger.error(t("main.opt.failure") + "=>", e)
+      // logger.error(t("main.opt.failure") + "=>", e)
       await kernelApi.pushErrMsg({
         msg: singleFormData.errMsg,
         timeout: 7000,
@@ -195,7 +219,7 @@ const usePublish = () => {
    */
   const doSingleDelete = async (key: string, id: string, publishCfg: IPublishCfg) => {
     const setting: typeof SypConfig = publishCfg.setting
-    const cfg: CommonBlogConfig = publishCfg.cfg
+    const cfg: BlogConfig = publishCfg.cfg
     const dynCfg: DynamicConfig = publishCfg.dynCfg
 
     try {
@@ -224,8 +248,8 @@ const usePublish = () => {
         if (updatedPostMeta.hasOwnProperty(posidKey)) {
           delete updatedPostMeta[posidKey]
         }
-        if (updatedPostMeta.hasOwnProperty("custom-slug")) {
-          delete updatedPostMeta["custom-slug"]
+        if (updatedPostMeta.hasOwnProperty(SiyuanAttr.Custom_slug)) {
+          delete updatedPostMeta[SiyuanAttr.Custom_slug]
         }
 
         setting[id] = updatedPostMeta
@@ -234,7 +258,7 @@ const usePublish = () => {
       }
     } catch (e) {
       singleFormData.errMsg = t("main.opt.failure") + "=>" + e
-      logger.error(t("main.opt.failure") + "=>", e)
+      // logger.error(t("main.opt.failure") + "=>", e)
       // ElMessage.error(singleFormData.errMsg)
       await kernelApi.pushErrMsg({
         msg: singleFormData.errMsg,
@@ -259,7 +283,7 @@ const usePublish = () => {
   const doForceSingleDelete = async (key: string, id: string, publishCfg: IPublishCfg) => {
     try {
       const setting: typeof SypConfig = publishCfg.setting
-      const cfg: CommonBlogConfig = publishCfg.cfg
+      const cfg: BlogConfig = publishCfg.cfg
       const dynCfg: DynamicConfig = publishCfg.dynCfg
 
       // 检测是否发布
@@ -274,9 +298,6 @@ const usePublish = () => {
           delete updatedPostMeta[posidKey]
         }
         // 别名不能删除，因为别的平台可能还用
-        // if (updatedPostMeta.hasOwnProperty("custom-slug")) {
-        //   delete updatedPostMeta["custom-slug"]
-        // }
 
         setting[id] = updatedPostMeta
         await updateSetting(setting)
@@ -298,107 +319,174 @@ const usePublish = () => {
     }
   }
 
-  const getPostPreviewUrl = async (api: BlogAdaptor, postid: string, cfg: CommonBlogConfig) => {
+  const getPostPreviewUrl = async (api: BlogAdaptor, postid: string, cfg: BlogConfig) => {
     const previewUrl = await api.getPreviewUrl(postid)
     const isAbsoluteUrl = /^http/.test(previewUrl)
     return isAbsoluteUrl ? previewUrl : `${cfg?.home ?? ""}${previewUrl}`
   }
 
-  // const assignCompareValue = (title1: string, title2: string) => (title1.length > title2.length ? title1 : title2)
-
   /**
-   * 分配属性 - 初始化和发布都可能调用
+   * 初始化调用
    *
    * @param post - 文章对象
    * @param id - 思源笔记文档ID
    * @param publishCfg - 发布配置
    */
-  const assignAttrs = async (post: Post, id: string, publishCfg: IPublishCfg) => {
-    const setting: typeof SypConfig = publishCfg.setting
-    const cfg: CommonBlogConfig = publishCfg.cfg
-    const dynCfg: DynamicConfig = publishCfg.dynCfg
-    const postMeta = ObjectUtil.getProperty(setting, id, {})
+  const initPublishMethods = {
+    // 别名初始化
+    assignInitSlug: async (post: Post, id: string, publishCfg: IPublishCfg) => {
+      const setting: typeof SypConfig = publishCfg.setting
+      const postMeta = ObjectUtil.getProperty(setting, id, {})
 
-    // 别名
-    const slug = ObjectUtil.getProperty(postMeta, "custom-slug", post.wp_slug)
-    if (!StrUtil.isEmptyString(slug)) {
-      post.wp_slug = slug
-      logger.info("Using existing siyuan note slug")
-    } else {
-      // 如果wp_slug为空，则生成一个新的slug
-      const slug = await AliasTranslator.getPageSlug(post.title, true)
-      post.wp_slug = `${slug}`
-      logger.info("Generated new slug")
-    }
-
-    // 发布状态
-    post.post_status = PostStatusEnum.PostStatusEnum_Publish
-
-    return post
-  }
-
-  const doInitPage = async (
-    key: string,
-    id: string,
-    method: MethodEnum = MethodEnum.METHOD_ADD,
-    publishCfg: IPublishCfg
-  ) => {
-    const setting: typeof SypConfig = publishCfg.setting
-    const cfg: CommonBlogConfig = publishCfg.cfg
-    const dynCfg: DynamicConfig = publishCfg.dynCfg
-
-    // 检测是否发布
-    const posidKey = cfg.posidKey
-    if (StrUtil.isEmptyString(posidKey)) {
-      throw new Error("配置错误，posidKey不能为空，请检查配置")
-    }
-
-    const postMeta = ObjectUtil.getProperty(setting, id, {})
-    const postid = ObjectUtil.getProperty(postMeta, posidKey)
-
-    // 初始化API
-    const api = await getPublishApi(key, cfg)
-
-    // vars
-    let postPreviewUrl: string = ""
-
-    // 思源笔记原始文章数据
-    const siyuanPost = await blogApi.getPost(id)
-    let platformPost = new Post()
-    let mergedPost = new Post()
-    logger.debug("doInitPage start init siyuanPost =>", toRaw(siyuanPost))
-
-    if (method === MethodEnum.METHOD_ADD) {
-      logger.info("Add, using siyuan post")
-      mergedPost = siyuanPost
-    } else {
-      logger.info("Reading post from remote platform")
-      if (StrUtil.isEmptyString(postid)) {
-        throw new Error("未找到postid，将无法进行更新")
+      // 别名
+      const slug = ObjectUtil.getProperty(postMeta, SiyuanAttr.Custom_slug, post.wp_slug)
+      if (!StrUtil.isEmptyString(slug)) {
+        post.wp_slug = slug
+        logger.info("Using existing siyuan note slug")
+      } else {
+        // 如果wp_slug为空，则生成一个新的slug
+        const slug = await AliasTranslator.getPageSlug(post.title, true)
+        post.wp_slug = `${slug}`
+        logger.info("Generated new slug")
       }
 
-      // 查询平台文章
-      platformPost = await api.getPost(postid)
+      // 发布状态
+      post.post_status = PostStatusEnum.PostStatusEnum_Publish
+      return post
+    },
 
-      // 暂时不合并
-      mergedPost = siyuanPost
+    // 分配平台相关的YAML属性
+    assignInitAttrs: async (post: Post, id: string, publishCfg: IPublishCfg) => {
+      const setting: typeof SypConfig = publishCfg.setting
+      const cfg: BlogConfig = publishCfg.cfg
+      const dynCfg: DynamicConfig = publishCfg.dynCfg
+      const key = dynCfg.platformKey
+      const isSys = pre.systemCfg.some((item) => item.platformKey === key)
 
-      // 更新预览链接
-      postPreviewUrl = await getPostPreviewUrl(api, postid, cfg)
-    }
+      // 别名
+      post = await initPublishMethods.assignInitSlug(post, id, publishCfg)
+      const slug = post.wp_slug
 
-    // 初始化属性
-    mergedPost = await assignAttrs(mergedPost, id, publishCfg)
+      if (!isSys) {
+        // 平台相关自定义属性（摘要、标签、分类）
+        const yamlKey = getDynYamlKey(key)
+        const yaml = await kernelApi.getSingleBlockAttr(id, yamlKey)
+        const savedYaml = YamlUtil.extractFrontmatter(yaml).trim()
 
-    logger.debug("doInitPage finished platformPost =>", toRaw(platformPost))
-    logger.debug("doInitPage finished mergedPost =>", toRaw(mergedPost))
+        // YAML属性转换
+        const yamlAdaptor: YamlConvertAdaptor = await Adaptors.getYamlAdaptor(key, cfg)
+        if (null !== yamlAdaptor) {
+          // 有适配器
+          let yamlObj: any
+          if (!StrUtil.isEmptyString(savedYaml)) {
+            yamlObj = YamlUtil.yaml2Obj(savedYaml)
+            logger.info("读取已经存在的YAML，不再使用适配器，直接转换yamlObj")
+          } else {
+            yamlObj = await YamlUtil.yaml2ObjAsync(post.description)
+            logger.info("未保存过YAML，使用适配器生成yamlObj")
+          }
+          const yamlFormatObj = new YamlFormatObj()
+          yamlFormatObj.yamlObj = yamlObj
+          post = yamlAdaptor.convertToAttr(post, yamlFormatObj, cfg)
+          logger.debug("使用适配器转换yamlObj到post完成 =>", yamlObj)
+        } else {
+          // 无适配器
+          if (!StrUtil.isEmptyString(savedYaml)) {
+            const yamlObj = YamlUtil.yaml2Obj(savedYaml)
+            post.yaml = yaml
+            post.fromYaml(yamlObj)
+            logger.info("读取已经存在的YAML，无适配器，使用fromYaml生成默认的yamlObj")
+          } else {
+            // 未保存过，默认不处理
+            logger.info("未保存过YAML，未找到适配器，默认不处理")
+          }
+        }
+      }
 
-    return {
-      siyuanPost,
-      platformPost,
-      mergedPost,
-      postPreviewUrl,
-    }
+      return post
+    },
+
+    // 常规发布初始化
+    doInitSinglePage: async (
+      key: string,
+      id: string,
+      method: MethodEnum = MethodEnum.METHOD_ADD,
+      publishCfg: IPublishCfg
+    ) => {
+      const setting: typeof SypConfig = publishCfg.setting
+      const cfg: BlogConfig = publishCfg.cfg
+      const dynCfg: DynamicConfig = publishCfg.dynCfg
+
+      // 检测是否发布
+      const posidKey = cfg.posidKey
+      if (StrUtil.isEmptyString(posidKey)) {
+        throw new Error("配置错误，posidKey不能为空，请检查配置")
+      }
+
+      const postMeta = ObjectUtil.getProperty(setting, id, {})
+      const postid = ObjectUtil.getProperty(postMeta, posidKey)
+
+      // 初始化API
+      const api = await getPublishApi(key, cfg)
+
+      // vars
+      let postPreviewUrl: string = ""
+
+      // 思源笔记原始文章数据
+      const siyuanPost = await blogApi.getPost(id)
+      let platformPost = {} as Post
+      let mergedPost = siyuanPost
+      logger.debug("doInitPage start init siyuanPost =>", toRaw(siyuanPost))
+
+      if (method === MethodEnum.METHOD_ADD) {
+        logger.info("Add, using siyuan post")
+        // 更新属性
+        mergedPost.categories = []
+      } else {
+        logger.info("Reading post from remote platform")
+        if (StrUtil.isEmptyString(postid)) {
+          throw new Error("未找到postid，将无法进行更新")
+        }
+
+        // 查询平台文章
+        platformPost = await api.getPost(postid)
+        // 更新属性
+        mergedPost.shortDesc = platformPost.shortDesc
+        mergedPost.mt_keywords = platformPost.mt_keywords
+        mergedPost.categories = platformPost.categories
+        mergedPost.cate_slugs = platformPost.cate_slugs
+
+        // 更新预览链接
+        postPreviewUrl = await getPostPreviewUrl(api, postid, cfg)
+      }
+
+      logger.debug("doInitPage finished platformPost =>", toRaw(platformPost))
+      logger.debug("doInitPage finished mergedPost =>", toRaw(mergedPost))
+
+      return {
+        siyuanPost,
+        platformPost,
+        mergedPost,
+        postPreviewUrl,
+      }
+    },
+
+    doMergeBatchPost: (post: Post, newPost: Post): Post => {
+      // 复制原始 post 对象以避免直接修改它
+      const mergedPost = _.cloneDeep(post) as Post
+
+      const postKeywords = post.mt_keywords.split(",")
+      const newPostKeywords = newPost.mt_keywords.split(",")
+      // 合并并去重关键词
+      const mergedKeywords = [...new Set([...postKeywords, ...newPostKeywords])]
+      mergedPost.mt_keywords = mergedKeywords.join(",")
+
+      // 合并并去重分类
+      const mergedCategories = [...new Set([...post.categories, ...newPost.categories])]
+      mergedPost.categories = mergedCategories
+
+      return mergedPost
+    },
   }
 
   return {
@@ -406,8 +494,7 @@ const usePublish = () => {
     doSinglePublish,
     doSingleDelete,
     doForceSingleDelete,
-    doInitPage,
-    assignAttrs,
+    initPublishMethods,
   }
 }
 
