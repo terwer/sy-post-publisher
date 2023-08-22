@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.6](https://github.com/terwer/sy-post-publisher/compare/v0.10.5...v0.10.6) (2023-08-22)
+
+
+### Miscellaneous
+
+* sync repo v1.9.0 ([3a990b3](https://github.com/terwer/sy-post-publisher/commit/3a990b3647e80f9348707b0a3d0d5aaf310c2a2b))
+
 ## [1.9.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.8.0...v1.9.0) (2023-08-21)
 ### Features
 * hexo 平台支持修改自定义 yaml ([e9ce0da](https://github.com/terwer/siyuan-plugin-publisher/commit/e9ce0daa43d990762715a918527f218c6863cb21))
