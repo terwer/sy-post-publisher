@@ -66,8 +66,8 @@ dependencies:
     specifier: ^3.1.1
     version: 3.1.1
   zhi-blog-api:
-    specifier: ^1.33.1
-    version: 1.33.1
+    specifier: ^1.34.12
+    version: 1.34.12
   zhi-common:
     specifier: ^1.23.1
     version: 1.23.1
@@ -7654,6 +7654,13 @@ packages:
       zhi-lib-base: 0.4.4
     dev: false
 
+  /zhi-blog-api@1.34.12:
+    resolution: {integrity: sha512-HgKtb7ujPI/VDfxo/VHZWGIrZvsUGDATIrnAiknNBxAyIM1i22g/wsX9W3golv2D9pz16vtYK92L3bZgPf5bqg==}
+    dependencies:
+      zhi-common: 1.23.5
+      zhi-lib-base: 0.5.0
+    dev: false
+
   /zhi-common@1.18.0:
     resolution: {integrity: sha512-7m8uyV8+kZ0tJky0myjz8Nj1Ad0kNsMNsg4itixnoM0yIYo6VZ7uU+oMd3qmqyA9kcvszD2QXV4w8qlgIDBGfg==}
     dependencies:
@@ -7672,6 +7679,16 @@ packages:
       transliteration: 2.3.5
       vue: 3.3.4
       zhi-lib-base: 0.4.4
+    dev: false
+
+  /zhi-common@1.23.5:
+    resolution: {integrity: sha512-6FLN6Vv28TnGvVTvDc6nrBKP23Fq5tE/D8IEbrgbL4+1Nd9AHEbZHOzypmXp2snRTvIxw5U8/9wBGzluyq6IMQ==}
+    dependencies:
+      js-yaml: 4.1.0
+      shorthash2: 1.0.3
+      transliteration: 2.3.5
+      vue: 3.3.4
+      zhi-lib-base: 0.5.0
     dev: false
 
   /zhi-device@2.3.1:
@@ -7705,6 +7722,10 @@ packages:
 
   /zhi-lib-base@0.4.4:
     resolution: {integrity: sha512-adu1KXVDRjsE/tshAXUeRW62VkaNIb0AOcYXnjgHODsw2gJlkxbvVn2wISuboCiwKv1JsD5gbmxdzSkRyJiC5Q==}
+    dev: false
+
+  /zhi-lib-base@0.5.0:
+    resolution: {integrity: sha512-56QfNhYA5HgmnTWRmOxD4UDpOplR0dcpmdq4ZxRFqBtr3eyHdEmm0qBITJt6kk7lzbPNPD2wgsuHq7pnz+9OQg==}
     dev: false
 
   /zhi-notion-markdown@0.1.4:
