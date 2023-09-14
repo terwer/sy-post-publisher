@@ -23,36 +23,8 @@
  * questions.
  */
 
-import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { DeviceDetection } from "zhi-device"
-import { Deserializer, Serializer, SimpleXmlRpcClient, XmlrpcUtil } from "simple-xmlrpc"
-import fetch from "cross-fetch"
-import { create } from "xmlbuilder2"
+import { HexoPlaceHolder } from "~/src/adaptors/api/hexo/hexoPlaceHolder.ts"
 
-/**
- * 应用实例
- */
-export class AppInstance {
-  public logger
-  public deviceType
+class GitlabhexoPlaceHolder extends HexoPlaceHolder {}
 
-  public fetch
-  public xmlbuilder2
-  public simpleXmlrpc
-
-  constructor() {
-    this.logger = createAppLogger("app-instance")
-    this.deviceType = DeviceDetection.getDevice()
-
-    this.fetch = fetch
-    this.xmlbuilder2 = {
-      create,
-    }
-    this.simpleXmlrpc = {
-      SimpleXmlRpcClient: SimpleXmlRpcClient,
-      Serializer: Serializer,
-      Deserializer: Deserializer,
-      XmlrpcUtil: XmlrpcUtil,
-    }
-  }
-}
+export { GitlabhexoPlaceHolder }

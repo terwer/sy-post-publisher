@@ -23,7 +23,8 @@
  * questions.
  */
 
-// TODO
-// 网页授权版 Notion
-// https://github.com/NotionX/react-notion-x/tree/master/packages/notion-client
-// https://github.com/NotionX/react-notion-x/issues/115
+import { Vuepress2PlaceHolder } from "~/src/adaptors/api/vuepress2/vuepress2PlaceHolder.ts"
+
+class Gitlabvuepress2PlaceHolder extends Vuepress2PlaceHolder {}
+
+export { Gitlabvuepress2PlaceHolder }

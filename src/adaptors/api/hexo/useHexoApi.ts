@@ -24,7 +24,7 @@
  */
 
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { AppInstance } from "~/src/appInstance.ts"
+import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
 import { Utils } from "~/src/utils/utils.ts"
@@ -42,7 +42,7 @@ const useHexoApi = async (key: string, newCfg?: HexoConfig) => {
   logger.info("Start using Hexo API...")
 
   // 创建应用实例
-  const appInstance = new AppInstance()
+  const appInstance = new PublisherAppInstance()
 
   let cfg: HexoConfig
   if (newCfg) {
@@ -77,12 +77,24 @@ const useHexoApi = async (key: string, newCfg?: HexoConfig) => {
     }
   }
 
+  // 文件规则，占位符
+  // [slug] 别名
+  // [filename] 真实文件名
+  // [yyyy] 年
+  // [mm] 月
+  // [dd] 日
+  cfg.mdFilenameRule = "[slug].md"
+  cfg.useMdFilename = false
+  cfg.usePathCategory = false
+  // 标签
+  cfg.tagEnabled = true
   // 分类
   cfg.cateEnabled = true
   cfg.allowCateChange = true
   cfg.categoryType = CategoryTypeEnum.CategoryType_Multi
   // 知识空间
   cfg.knowledgeSpaceEnabled = true
+  cfg.knowledgeSpaceTitle = "发布目录"
   cfg.allowKnowledgeSpaceChange = false
   cfg.placeholder.knowledgeSpaceReadonlyModeTip = "Hexo 平台暂不支持修改发布目录，如需修改，请删除之后重新发布"
   cfg.knowledgeSpaceType = CategoryTypeEnum.CategoryType_Tree_Single

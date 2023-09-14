@@ -133,8 +133,8 @@ export default {
   "setting.blog.type.github.label": "Github",
   "setting.blog.type.github.user": "Github用户名",
   "setting.blog.type.github.user.tip": "Github用户名，例如：terwer",
-  "setting.blog.type.github.repo": "Github仓库名",
-  "setting.blog.type.github.repo.tip": "Github仓库名，例如：terwer.github.io",
+  "setting.blog.type.github.repo": "git仓库名",
+  "setting.blog.type.github.repo.tip": "git仓库名，例如：hexo-blog",
   "setting.blog.type.github.token": "Github令牌",
   "setting.blog.type.github.token.tip": "Github令牌，例如：ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
   "setting.blog.type.github.token.gen": "Github 个人令牌生成地址",
@@ -270,7 +270,7 @@ export default {
   "setting.blog.middlewareUrl": "跨域请求代理",
   "setting.blog.middlewareUrl.tip": "某些场景下需要（例如自部署模式，Nginx伺服等、vite开发环境伺服等），其他情况可忽略",
   "setting.blog.middlewareUrl.my.tip":
-    "如果没有部署代理，可以使用我的共享地址：https://api.terwer.space/api/middleware 。出于性能考虑，建议自己部署一份，请使用 https://github.com/terwer/node-metaweblog-api-adaptor 进行部署。",
+    "大部分情况下不需要，部分场景在浏览器环境下可能需要。如果没有部署代理，可以使用我的共享地址：https://api.terwer.space/api/middleware 。出于性能考虑，建议自己部署一份，请使用 https://github.com/terwer/node-metaweblog-api-adaptor 进行部署。",
   "setting.conf.export": "导出配置",
   "setting.conf.import": "导入配置",
   "setting.conf.transport": "导入导出",
@@ -417,11 +417,31 @@ export default {
     "可前往 https://developer.atlassian.com/cloud/confluence/rest/v1/#api-wiki-rest-api-content-get 查看文档",
   "setting.conf.previewUrl.tip": "Confluence平台文章预览规则，通常是：/pages/[postid]",
 
-  "setting.zhihu.home.tip": "专栏首页地址，通常固定",
+  "setting.zhihu.home.tip": "知乎专栏首页地址，通常固定",
   "setting.zhihu.username.tip": "知乎用户名，必须设置正确，否则无法获取专栏",
   "setting.zhihu.password.tip": "知乎Cookie，请勿修改",
   "setting.zhihu.apiUrl.tip": "通常固定，请勿修改",
-  "setting.zhihu.previewUrl.tip": "知乎平台文章预览规则，通常是：//[postid]",
+  "setting.zhihu.previewUrl.tip": "知乎平台文章预览规则，通常是：/[postid]",
+
+  "setting.csdn.home.tip": "CSDN博客首页地址，通常固定",
+  "setting.csdn.password.tip": "CSDN的Cookie，请勿修改",
+  "setting.csdn.apiUrl.tip": "通常固定，请勿修改",
+  "setting.csdn.previewUrl.tip": "CSDN平台文章预览规则",
+
+  "setting.wechat.home.tip": "微信公众号首页地址，通常固定",
+  "setting.wechat.password.tip": "微信公众号的Cookie，请勿修改",
+  "setting.wechat.apiUrl.tip": "通常固定，请勿修改",
+  "setting.wechat.previewUrl.tip": "微信公众号平台文章预览规则",
+
+  "setting.jianshu.home.tip": "简书首页地址，通常固定",
+  "setting.jianshu.password.tip": "简书的Cookie，请勿修改",
+  "setting.jianshu.apiUrl.tip": "通常固定，请勿修改",
+  "setting.jianshu.previewUrl.tip": "简书平台文章预览规则",
+
+  "setting.juejin.home.tip": "掘金首页地址，通常固定",
+  "setting.juejin.password.tip": "掘金的Cookie，请勿修改",
+  "setting.juejin.apiUrl.tip": "通常固定，请勿修改",
+  "setting.juejin.previewUrl.tip": "掘金平台文章预览规则",
 
   "setting.picgo.refer.to": "详情请参考：",
   "setting.picgo.refer.to.online.doc": "PicGO配置在线文档",
@@ -509,6 +529,9 @@ export default {
   "setting.platform.github": "Github",
   "setting.platform.github.desc":
     "目前支持Github发布的的平台有：Hexo、Hugo、Jekyll、Vitepress等，采用 API 授权。GitHub 是一个使用 Git 进行软件开发和版本控制的代码平台。",
+  "setting.platform.gitlab": "Gitlab",
+  "setting.platform.gitlab.desc":
+    "Gitlab基本上与Github的使用方式类似，唯一的区别是Gitlab支持自己本地部署或者云服务器部署。",
   "setting.platform.metaweblog": "Metaweblog",
   "setting.platform.metaweblog.desc":
     "目前支持Metaweblog的平台有：博客园、Typecho等，采用 API 授权。MetaWeblog API 作为XML-RPC Web 服务实现，是目前公认的开放博客标准。",
@@ -536,7 +559,7 @@ export default {
   "main.publish.remove": "批量删除",
   "setting.blog.knowledge.space": "知识空间/知识库",
   "main.data.empty": "暂无数据",
-  "enableKnowledgeSpace.Tips":
+  "knowledgeSpaceEnabled.Tips":
     "验证通过之后，将列出可用的 [[knowledge-space-title]] 列表，您可以根据需要修改默认 [[knowledge-space-title]] 并保存",
   "post.bind.auto.tips": "此处ID为发布工具自动保存，仅作为修复数据使用，如果您不清楚原理，请勿修改",
   "siyuan.config.setting": "思源设置",
@@ -557,4 +580,22 @@ export default {
   "preference.setting.removeWidgetTag": "去除挂件HTML",
   "pref.setting.ai.proxy.url": "ChatGPT代理地址",
   "pref.setting.ai.proxy.url.tip": "可留空，注意：填写了代理会忽略ChatGPT请求地址",
+  "main.auto.fetch.title": "自动提取标题",
+  "main.auto.fetch.cate": "自动提取分类",
+  "category.ai.hand": "由于各平台分类体系不一致，分类需要手动进行校准，不会自动保存",
+  "category.ai.enabled": "检测到您已经配置AI，可请前往详细模式进行操作",
+  "sys.config.ai": "AI设置",
+  "config.ai.use.siyuan": "思源笔记内部，直接使用思源笔记配置，无需配置",
+  "setting.blog.yamlLinkEnabled": "YAML永久链接",
+  "distri.type.overide.warn": "注意：覆盖模式下会用当前数据覆盖所有选择的平台，请谨慎操作。",
+  "distri.type.merge.warn": "注意：为了保留平台数据，合并模式下，标题和摘要的修改无效，您可在在常规发布单独修改对应平台的标题和摘要，标签和分类会与所选择的平台数据合并。",
+  "preference.setting.keepTitle": "不更新原始标题",
+
+  "setting.blog.gitlab.url.tip": "Gitlab首页，例如：http://localhost:8002",
+  "setting.blog.type.gitlab.user.tip": "Gitlab的用户名",
+  "setting.blog.type.gitlab.token.tip": "Gitlab的token，请参考下面链接设置，并保证有api权限",
+  "setting.blog.gitlab.apiurl.tip": "Gitlab的API地址，一般与首页相同",
+  "setting.blog.gitlab.previewUrl.tip": "文章预览地址，一般默认即可",
+
+  "main.force.cancel": "强制删除"
 }

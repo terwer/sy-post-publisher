@@ -63,6 +63,7 @@ const isWatch = args.watch || args.w || false
 const isDev = isServe || isWatch || debugMode
 const isWindows = process.platform === "win32"
 let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/test/data/plugins/siyuan-plugin-publisher"
+// let devDistDir = "/Users/zhangyue/Documents/terwer/SiyuanWorkspace/test/data/plugins/siyuan-plugin-publisher"
 // let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/plugins/siyuan-plugin-publisher"
 if (isWindows) {
   devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\test\\data\\plugins\\siyuan-plugin-publisher"
@@ -163,12 +164,12 @@ export default defineConfig({
     // 在浏览器中polyfill node
     // https://github.com/davidmyersdev/vite-plugin-node-polyfills/blob/main/test/src/main.ts
     nodePolyfills({
-      exclude: ["fs"],
+      exclude: [],
       globals: {
         // can also be 'build', 'dev', or false
         Buffer: true,
         global: true,
-        process: false,
+        process: true
       },
       protocolImports: true,
     }),

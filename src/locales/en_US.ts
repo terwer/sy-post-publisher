@@ -135,7 +135,7 @@ export default {
   "setting.blog.type.github.user": "Github user",
   "setting.blog.type.github.user.tip": "Github user, eg:terwer",
   "setting.blog.type.github.repo": "Github repo",
-  "setting.blog.type.github.repo.tip": "Github repo, eg:terwer.github.io",
+  "setting.blog.type.github.repo.tip": "Github repo, eg:hexo-blog",
   "setting.blog.type.github.token": "Github token",
   "setting.blog.type.github.token.tip": "Github token, eg:ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
   "setting.blog.type.github.token.gen": "Generate Github Personal Token",
@@ -275,9 +275,12 @@ export default {
   "page.no.id": "pageId fetch error",
   "main.read.mode": "Readonly",
   "main.edit.mode": "Editable",
-  "main.read.mode.tip1": "Tips: The multi-platform distribution mode will display the built-in public YAML, and the general release can display the platform's custom YAML.",
-  "main.read.mode.tip2": "To identify the uniqueness of the article, slug modifications are ignored and other attributes can be synchronized.",
-  "main.read.mode.tip3": "！！！ This feature is advanced, if you are unclear about the YAML syntax and purpose, do not modify it!!",
+  "main.read.mode.tip1":
+    "Tips: The multi-platform distribution mode will display the built-in public YAML, and the general release can display the platform's custom YAML.",
+  "main.read.mode.tip2":
+    "To identify the uniqueness of the article, slug modifications are ignored and other attributes can be synchronized.",
+  "main.read.mode.tip3":
+    "！！！ This feature is advanced, if you are unclear about the YAML syntax and purpose, do not modify it!!",
   "main.opt.onclick.confirm.tip":
     "This operation will re -generate all attributes other than alias. If you just want to modify individual attributes, please click the individual function button to operate in the detailed mode. Do you continue?",
   "main.cat.list.error": "Category list get error",
@@ -426,6 +429,26 @@ export default {
   "setting.zhihu.apiUrl.tip": "Usually fixed, do not modify",
   "setting.zhihu.previewUrl.tip": "Zhihu platform article preview rules, usually: //[postid]",
 
+  "setting.csdn.home.tip": "CSDN blog homepage address, usually fixed",
+  "setting.csdn.password.tip": "CSDN cookies, do not modify",
+  "setting.csdn.apiUrl.tip": "Usually fixed, do not modify",
+  "setting.csdn.previewUrl.tip": "CSDN Platform Article Preview Rules",
+
+  "setting.wechat.home.tip": "The address of the home page of the WeChat public account is usually fixed",
+  "setting.wechat.password.tip": "Please do not modify the cookies of WeChat official account",
+  "setting.wechat.apiUrl.tip": "Usually fixed, do not modify",
+  "setting.wechat.previewUrl.tip": "WeChat official account platform article preview rules",
+
+  "setting.jianshu.home.tip": "Jianshu homepage address, usually fixed",
+  "setting.jianshu.password.tip": "Jianshu's Cookie, do not modify",
+  "setting.jianshu.apiUrl.tip": "Usually fixed, do not modify",
+  "setting.jianshu.previewUrl.tip": "Jianshu platform article preview rules",
+
+  "setting.juejin.home.tip": "Juejin homepage address, usually fixed",
+  "setting.juejin.password.tip": "Juejin's Cookie, do not modify",
+  "setting.juejin.apiUrl.tip": "Usually fixed, do not modify",
+  "setting.juejin.previewUrl.tip": "Juejin platform article preview rules",
+
   "setting.picgo.refer.to": "For details, please refer to:",
   "setting.picgo.refer.to.online.doc": "Picgo configuration online documentation",
   "setting.picgo.picbed": "Picbed setting",
@@ -506,6 +529,9 @@ export default {
   "setting.main.background": "Widget background",
   "setting.main.background.tip":
     "Support hexadecimal and RGB, for example: #000000, no settings or staying empty unchanged",
+  "setting.platform.gitlab": "Gitlab",
+  "setting.platform.gitlab.desc":
+    "Gitlab is basically similar to Github, except that Gitlab supports its own on-premises or cloud server deployment",
   "setting.picgo.manage": "Picture manage",
   "setting.platform.add": "Add platform",
   "setting.platform.add.this": "Add this platform",
@@ -545,7 +571,7 @@ export default {
   "main.publish.remove": "Remove",
   "setting.blog.knowledge.space": "Knowledge space/Knowledge base",
   "main.data.empty": "No data",
-  "enableKnowledgeSpace.Tips":
+  "knowledgeSpaceEnabled.Tips":
     "After validation, a list of available knowledge spaces is listed, and you can modify the default knowledge spaces as needed and save them",
   "post.bind.auto.tips":
     "The ID here is automatically saved by the publishing tool, if you are not clear about the principle, please do not modify it",
@@ -556,15 +582,38 @@ export default {
   "setting.blog.siyuan.password": "Siyuan Token",
   "setting.blog.siyuan.password.tip": "Siyuan Token, which is empty by default",
   "slogan.make.written.fun": "Let creation return to fun",
-  "category.batch.not.supported": "Note: Some platforms in the bulk distribution mode do not support public classification, such as Yuque and Zhihu",
-  "yuque.edit.cate.no.change": "Due to the limitations of the Yuque platform, editing the knowledge base is not supported at the moment. If you want to move a document, click Undelete and then select the new knowledge base publication again",
+  "category.batch.not.supported":
+    "Note: Some platforms in the bulk distribution mode do not support public classification, such as Yuque and Zhihu",
+  "yuque.edit.cate.no.change":
+    "Due to the limitations of the Yuque platform, editing the knowledge base is not supported at the moment. If you want to move a document, click Undelete and then select the new knowledge base publication again",
   "main.commonn.cate.title": "Public category",
   "main.cate.new": "New category",
   "pref.setting.aicode": "ChatGPT request key",
-  "pref.setting.aicode.tip": "ChatGPT request key or third-party proxy key, if it is a proxy key, please set the request address",
+  "pref.setting.aicode.tip":
+    "ChatGPT request key or third-party proxy key, if it is a proxy key, please set the request address",
   "pref.setting.ai.baseurl": "ChatGPT request address",
   "pref.setting.ai.baseurl.tip": "The ChatGPT request address, if it is official ChatGPT, can be left blank",
   "preference.setting.removeWidgetTag": "Remove the widget HTML",
   "pref.setting.ai.proxy.url": "ChatGPT proxy address",
-  "pref.setting.ai.proxy.url.tip": "Can be left blank, note: Filling in the proxy will ignore the ChatGPT request address",
+  "pref.setting.ai.proxy.url.tip":
+    "Can be left blank, note: Filling in the proxy will ignore the ChatGPT request address",
+  "main.auto.fetch.title": "Auto fetch title",
+  "main.auto.fetch.cate": "Auto fetch category",
+  "category.ai.hand":
+    "Due to inconsistent classification systems across platforms, classifications need to be calibrated manually and are not automatically saved",
+  "category.ai.enabled": "AI is available, please go to the detailed mode to operate",
+  "sys.config.ai": "AI configuration",
+  "config.ai.use.siyuan": "Inside Siyuan notes, you can directly use Siyuan notes to configure, no configuration is required",
+  "setting.blog.yamlLinkEnabled": "YAML permalink",
+  "distri.type.overide.warn": "Note: Please use caution when overwriting the selected platform with the current data.",
+  "distri.type.merge.warn": "Note: In merge mode, the title and abstract changes are not valid, and the labels and categories are merged with the selected platform data.",
+  "preference.setting.keepTitle": "Do not update the original title",
+
+  "setting.blog.gitlab.url.tip": "GitLab homepage, e.g., http://localhost:8002",
+  "setting.blog.type.gitlab.user.tip": "Username for GitLab",
+  "setting.blog.type.gitlab.token.tip": "Token for GitLab, please refer to the link below for setup and ensure API permissions are granted",
+  "setting.blog.gitlab.apiurl.tip": "GitLab API address, usually the same as the homepage",
+  "setting.blog.gitlab.previewUrl.tip": "Article preview address, usually the default",
+
+  "main.force.cancel": "Force delete"
 }

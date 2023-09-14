@@ -49,6 +49,9 @@ export class CommonBlogConfig extends BlogConfig {
     this.usernameEnabled = false
     this.allowPreviewUrlChange = true
     this.showTokenTip = false
+    this.yamlLinkEnabled = true
+    this.useMdFilename = false
+    this.usePathCategory = false
     this.placeholder = new CommonBlogPlaceholder()
   }
 }

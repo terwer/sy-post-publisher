@@ -27,7 +27,7 @@ import { useSiyuanApi } from "~/src/composables/useSiyuanApi.ts"
 import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
 import { CommonFetchClient } from "zhi-fetch-middleware"
 import { isDev } from "~/src/utils/constants.ts"
-import { AppInstance } from "~/src/appInstance.ts"
+import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { Deserializer, Serializer, XmlrpcUtil } from "simple-xmlrpc"
 
@@ -46,7 +46,7 @@ const useProxy = (middlewareUrl?: string) => {
   /**
    * 创建应用程序实例和通用的 fetch 客户端实例
    */
-  const appInstance = new AppInstance()
+  const appInstance = new PublisherAppInstance()
   const apiUrl = ""
   middlewareUrl = middlewareUrl ?? "https://api.terwer.space/api/middleware"
   const commonFetchClient = new CommonFetchClient(appInstance, apiUrl, middlewareUrl, isDev)
@@ -69,7 +69,7 @@ const useProxy = (middlewareUrl?: string) => {
     method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" = "GET",
     contentType: string = "application/json"
   ) => {
-    const siyuanSupported = ["application/json", "text/html", "text/xml", "image/png"]
+    const siyuanSupported = ["application/json", "text/html", "text/xml", ""]
     if (isUseSiyuanProxy && siyuanSupported.includes(contentType)) {
       logger.info("Using Siyuan forwardProxy, contentType=>", contentType)
       let body: any
@@ -86,8 +86,21 @@ const useProxy = (middlewareUrl?: string) => {
         method,
         contentType,
       })
-      const fetchResult = await kernelApi.forwardProxy(reqUrl, headers, body, method, contentType, 30000)
+      const fetchResult = await kernelApi.forwardProxy(
+        reqUrl,
+        headers,
+        body,
+        method,
+        contentType,
+        undefined,
+        undefined,
+        30000
+      )
       logger.debug("proxyFetch result =>", fetchResult)
+
+      if (!(fetchResult.status >= 200 && fetchResult.status < 300)) {
+        throw new Error(fetchResult?.body)
+      }
 
       if (contentType === "application/json") {
         const resText = fetchResult?.body
@@ -100,7 +113,7 @@ const useProxy = (middlewareUrl?: string) => {
         const resText = fetchResult?.body
         return resText
       } else {
-        logger.error("SiYuan proxy directly response fetchResult for content type:", contentType)
+        logger.info("SiYuan proxy directly response fetchResult for content type:", contentType)
         return fetchResult
       }
     } else {
@@ -109,7 +122,7 @@ const useProxy = (middlewareUrl?: string) => {
       const fetchOptions = {
         method: method,
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": contentType,
           ...header,
         },
       }

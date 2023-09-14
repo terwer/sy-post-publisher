@@ -42,12 +42,12 @@ import { IPublishCfg } from "~/src/types/IPublishCfg.ts"
 import { PageEditMode } from "~/src/models/pageEditMode.ts"
 import EditModeSelect from "~/src/components/publish/form/EditModeSelect.vue"
 import PublishTime from "~/src/components/publish/form/PublishTime.vue"
-import AiSwitch from "~/src/components/publish/form/AiSwitch.vue"
-import { isDev } from "~/src/utils/constants.ts"
 import { ICategoryConfig } from "~/src/types/ICategoryConfig.ts"
 import { SiyuanAttr } from "zhi-siyuan-api"
 import { DistributionPattern } from "~/src/models/distributionPattern.ts"
 import _ from "lodash"
+import PublishTitle from "~/src/components/publish/form/PublishTitle.vue"
+import { useChatGPT } from "~/src/composables/useChatGPT.ts"
 
 const logger = createAppLogger("publisher-index")
 
@@ -104,7 +104,7 @@ const formData = reactive({
   // sync attrs end
   // =========================
 
-  distriPattern: DistributionPattern.Override,
+  distriPattern: DistributionPattern.Merge,
   actionEnable: true,
 })
 
@@ -136,7 +136,13 @@ const handlePublish = async () => {
         batchItemPost = await initPublishMethods.assignInitAttrs(siyuanPost, id, formData.publishCfg)
 
         // 合并属性
-        if (formData.distriPattern === DistributionPattern.Merge) {
+        if (formData.distriPattern === DistributionPattern.Override) {
+          batchItemPost = initPublishMethods.doOverideBatchPost(siyuanPost, batchItemPost)
+          logger.debug("批量分发模式文章已覆盖", {
+            siyuanPost: toRaw(siyuanPost),
+            mergedPost: toRaw(batchItemPost),
+          })
+        } else {
           batchItemPost = initPublishMethods.doMergeBatchPost(siyuanPost, batchItemPost)
           logger.debug("批量分发模式文章已合并", {
             siyuanPost: toRaw(siyuanPost),
@@ -162,8 +168,13 @@ const handlePublish = async () => {
     } else {
       ElMessage.error(`多平台文章分发失败，失败个数：${formData.errCount}`)
     }
-  } catch (error) {
-    ElMessage.error(error.message)
+  } catch (e) {
+    const errMsg = t("main.opt.failure") + "=>" + e
+    logger.error(t("main.opt.failure") + "=>", e)
+    await kernelApi.pushErrMsg({
+      msg: errMsg,
+      timeout: 7000,
+    })
   } finally {
     formData.isPublishLoading = false
   }
@@ -221,8 +232,13 @@ const doDelete = async () => {
     } else {
       ElMessage.error(`多平台文章删除失败，失败个数：${formData.errCount}`)
     }
-  } catch (error) {
-    ElMessage.error(error.message)
+  } catch (e) {
+    const errMsg = t("main.opt.failure") + "=>" + e
+    logger.error(t("main.opt.failure") + "=>", e)
+    await kernelApi.pushErrMsg({
+      msg: errMsg,
+      timeout: 7000,
+    })
   } finally {
     formData.isDeleteLoading = false
   }
@@ -254,6 +270,11 @@ const syncAiSwitch = (val: boolean) => {
   logger.debug(`syncAiSwitch in batch publish => ${formData.useAi}`)
 }
 
+const syncPublishTitle = (val: string) => {
+  formData.siyuanPost.title = val
+  logger.debug("syncPublishTitle in batch publish")
+}
+
 const syncEditMode = async (val: PageEditMode) => {
   formData.editType = val
   logger.debug("syncEditMode in batch publish")
@@ -266,11 +287,13 @@ const syncDynList = (selectedKeys: string[]) => {
 
 const syncDesc = (val: string) => {
   formData.siyuanPost.shortDesc = val
+  formData.siyuanPost.mt_text_more = val
+  formData.siyuanPost.mt_excerpt = val
   logger.debug("syncDesc in batch publish")
 }
 
 const syncTags = (val: string[]) => {
-  formData.siyuanPost.mt_keywords = val.join(",")
+  formData.siyuanPost.mt_keywords = val?.join(",")
   logger.debug("syncTags in batch publish")
 }
 
@@ -289,6 +312,24 @@ const handleRefresh = () => {
   BrowserUtil.reloadPage()
 }
 
+const checkChatGPTEnabled = () => {
+  let flag = false
+  let attempts = 0
+
+  while (!flag && attempts < 3) {
+    try {
+      useChatGPT()
+      flag = true
+    } catch (e) {
+      logger.error(`${t("main.opt.failure")} => ${e}`)
+      attempts++
+    }
+  }
+
+  logger.info(`第${attempts}次尝试就检测AI状态: ${flag}`)
+  return flag
+}
+
 onMounted(async () => {
   // ==================
   // 初始化开始
@@ -305,7 +346,7 @@ onMounted(async () => {
   // ==================
 
   // 这里可以控制一些功能开关
-  formData.useAi = isDev
+  formData.useAi = checkChatGPTEnabled()
   formData.editType = PageEditMode.EditMode_simple
 })
 </script>
@@ -346,6 +387,13 @@ onMounted(async () => {
         <!-- 表单数据 -->
         <div class="publish-form">
           <el-form label-width="100px">
+            <el-alert
+              v-if="formData.useAi"
+              class="top-tip"
+              :title="t('category.ai.enabled')"
+              type="success"
+              :closable="false"
+            />
             <!-- 编辑模式选择 -->
             <edit-mode-select v-model:edit-type="formData.editType" @emitSyncEditMode="syncEditMode" />
 
@@ -361,26 +409,46 @@ onMounted(async () => {
             />
             <div v-else class="normal-mode">
               <!-- 文章标题 -->
-              <div class="form-post-title">
-                <el-form-item :label="t('main.title')">
-                  <el-input v-model="formData.siyuanPost.title" />
-                </el-form-item>
-              </div>
+              <publish-title
+                v-model:use-ai="formData.useAi"
+                v-model="formData.siyuanPost.title"
+                @emitSyncPublishTitle="syncPublishTitle"
+                v-model:md="formData.siyuanPost.markdown"
+                v-model:html="formData.siyuanPost.html"
+              />
 
               <!-- 分发模式 -->
               <div class="distri-type">
                 <el-form-item label="分发模式">
-                  <el-radio-group v-model="formData.distriPattern" class="ml-4">
+                  <el-radio-group v-model="formData.distriPattern" class="ml-4 distri-type-check">
                     <el-radio :label="DistributionPattern.Override" size="large">覆盖</el-radio>
                     <el-radio :label="DistributionPattern.Merge" size="large">合并</el-radio>
                   </el-radio-group>
+                </el-form-item>
+                <el-form-item class="distri-tip">
+                  <el-alert
+                    v-if="formData.distriPattern === DistributionPattern.Override"
+                    :closable="false"
+                    :title="t('distri.type.overide.warn')"
+                    class="distri-tip-alert"
+                    type="error"
+                  />
+                  <el-alert
+                    v-else
+                    :closable="false"
+                    :title="t('distri.type.merge.warn')"
+                    class="distri-tip-alert"
+                    type="warning"
+                  />
                 </el-form-item>
               </div>
               <el-divider border-style="dashed" />
 
               <div v-if="formData.editType === PageEditMode.EditMode_complex" class="complex-mode">
                 <!-- AI开关 -->
+                <!--
                 <ai-switch v-if="formData.useAi" v-model:use-ai="formData.useAi" @emitSyncAiSwitch="syncAiSwitch" />
+                -->
 
                 <!-- 别名 -->
                 <el-form-item :label="t('main.slug')">
@@ -392,7 +460,8 @@ onMounted(async () => {
                   v-model:use-ai="formData.useAi"
                   v-model:page-id="id"
                   v-model:desc="formData.siyuanPost.shortDesc"
-                  v-model:content="formData.siyuanPost.html"
+                  v-model:md="formData.siyuanPost.markdown"
+                  v-model:html="formData.siyuanPost.html"
                   @emitSyncDesc="syncDesc"
                 />
 
@@ -401,12 +470,19 @@ onMounted(async () => {
                   v-model:use-ai="formData.useAi"
                   v-model:page-id="id"
                   v-model:tags="formData.siyuanPost.mt_keywords"
-                  v-model:content="formData.siyuanPost.html"
+                  v-model:md="formData.siyuanPost.markdown"
+                  v-model:html="formData.siyuanPost.html"
                   @emitSyncTags="syncTags"
                 />
 
                 <!-- 公共分类 -->
-                <common-categories v-model:cates="formData.siyuanPost.categories" @emitSyncCates="syncCates" />
+                <common-categories
+                  v-model:use-ai="formData.useAi"
+                  v-model:cates="formData.siyuanPost.categories"
+                  @emitSyncCates="syncCates"
+                  v-model:md="formData.siyuanPost.markdown"
+                  v-model:html="formData.siyuanPost.html"
+                />
 
                 <!-- 发布时间 -->
                 <publish-time v-model="formData.siyuanPost" @emitSyncPublishTime="syncPublishTime" />
@@ -443,7 +519,9 @@ onMounted(async () => {
               >
                 {{ t("main.publish.remove") }}
               </el-button>
-              <el-button type="warning" @click="handleSyncToSiyuan"> 同步修改到思源笔记 </el-button>
+              <el-button type="warning" @click="handleSyncToSiyuan" :disabled="!formData.actionEnable">
+                同步修改到思源笔记
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -455,7 +533,8 @@ onMounted(async () => {
 <style lang="stylus" scoped>
 .top-tip
   margin 10px 0
-  padding-left 0
+  padding 6px 0
+  padding-top 8px
 
 .batch-result
   margin 16px 0
@@ -483,4 +562,11 @@ onMounted(async () => {
 .distri-type
   :deep(.el-form-item)
     margin-bottom -16px
+.distri-type-check
+  margin-top -3px
+.distri-tip
+  margin-top 10px
+  .distri-tip-alert
+    margin 10px 0
+    padding: 2px 0
 </style>

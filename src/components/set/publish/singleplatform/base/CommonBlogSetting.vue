@@ -25,10 +25,10 @@
 
 <script lang="ts" setup>
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { AppInstance } from "~/src/appInstance.ts"
+import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
-import { onMounted, reactive, ref, toRaw } from "vue"
+import { onMounted, reactive, ref, toRaw, watch } from "vue"
 import { DynamicConfig, DynamicJsonCfg, getDynCfgByKey, setDynamicJsonCfg } from "~/src/platforms/dynamicConfig.ts"
 import { SypConfig } from "~/syp.config.ts"
 import { CommonBlogConfig } from "~/src/adaptors/api/base/commonBlogConfig.ts"
@@ -42,7 +42,7 @@ import { useSiyuanApi } from "~/src/composables/useSiyuanApi.ts"
 
 const logger = createAppLogger("commonblog-setting")
 // appInstance
-const appInstance = new AppInstance()
+const appInstance = new PublisherAppInstance()
 
 // uses
 const { t } = useVueI18n()
@@ -69,34 +69,46 @@ const handleHomeChange = (value: string | number): void => {
   }
 }
 
-// methods
-const getSettingTips = (bid?: string) => {
-  const apiTypeInfo = t("setting.blog.platform.support.common") + props.apiType + " "
-  let blogName = formData.cfg.blogName
-  const blogid = bid ?? formData.cfg.blogid
-  if (props.cfg?.enableKnowledgeSpace) {
-    const kwSpace = formData.kwSpaces.find((item) => item.value === blogid)
-    blogName = kwSpace ? kwSpace.label : formData.cfg.blogName
-    // 更新名字
-    formData.cfg.blogName = blogName
-  }
-  return apiTypeInfo + blogName
-}
-
 // datas
 const isLoading = ref(false)
 const formData = reactive({
   cfg: {} as CommonBlogConfig,
-  settingTips: "",
   kwSpaces: [],
+  settingTips: "",
 
   dynCfg: {} as DynamicConfig,
   setting: {} as typeof SypConfig,
   dynamicConfigArray: [] as DynamicConfig[],
 
-  useSiyuanApi: false,
   isInit: false,
 })
+
+// watch
+watch(
+  () => formData.cfg.blogid,
+  (newBlogId, oldBlogId) => {
+    if (newBlogId !== oldBlogId) {
+      // 只在实际数据变化时执行逻辑
+      forceWatchBlogId(newBlogId)
+      logger.debug("Watch logic triggered:", newBlogId)
+    }
+  },
+  { immediate: true }
+)
+
+const forceWatchBlogId = (newBlogId: string) => {
+  const apiTypeInfo = t("setting.blog.platform.support.common") + props.apiType + " "
+  let blogName = formData.cfg.blogName
+
+  if (props.cfg?.knowledgeSpaceEnabled) {
+    const kwSpace = formData.kwSpaces.find((item) => item.value === newBlogId)
+    console.log(kwSpace)
+    blogName = kwSpace ? kwSpace.label : formData.cfg.blogid ?? formData.cfg.blogName
+    formData.cfg.blogName = blogName
+  }
+
+  formData.settingTips = apiTypeInfo + blogName
+}
 
 // methods
 const valiConf = async () => {
@@ -126,9 +138,6 @@ const valiConf = async () => {
         const userBlog = usersBlogs[0]
         formData.cfg.blogid = userBlog.blogid
         formData.cfg.blogName = userBlog.blogName
-
-        // 初始化顶部提示
-        formData.settingTips = getSettingTips()
       }
 
       formData.cfg.apiStatus = true
@@ -176,10 +185,6 @@ const saveConf = async (hideTip?: any) => {
   }
 }
 
-const handleKeSpaceChange = (val: any) => {
-  formData.settingTips = getSettingTips(val)
-}
-
 // init methods
 const initKwSpaces = async () => {
   try {
@@ -195,6 +200,9 @@ const initKwSpaces = async () => {
         }
         formData.kwSpaces.push(kwItem)
       })
+
+      forceWatchBlogId(formData.cfg.blogid)
+      logger.debug("已强制刷新")
     }
   } catch (e) {
     // ElMessage.error(t("main.opt.failure") + "=>" + e)
@@ -221,10 +229,9 @@ const initConf = async () => {
     formData.cfg = conf
 
     // 初始化知识空间
-    if (props.cfg?.enableKnowledgeSpace) {
+    if (props.cfg?.knowledgeSpaceEnabled) {
       await initKwSpaces()
     }
-    formData.settingTips = getSettingTips()
   } else {
     ElMessage.error("Read init config error, your config may not work")
   }
@@ -234,7 +241,6 @@ const initConf = async () => {
 onMounted(async () => {
   // 初始化
   await initConf()
-  formData.useSiyuanApi = isStorageViaSiyuanApi()
   formData.isInit = true
 })
 </script>
@@ -244,9 +250,9 @@ onMounted(async () => {
   <el-form v-else label-width="120px">
     <el-alert :closable="false" :title="formData.settingTips" class="top-tip" type="info" />
     <el-alert
-      v-if="props.cfg?.enableKnowledgeSpace"
+      v-if="props.cfg?.knowledgeSpaceEnabled"
       :closable="false"
-      :title="t('enableKnowledgeSpace.Tips').replace(/\[knowledge-space-title\]/g, props.cfg?.knowledgeSpaceTitle)"
+      :title="t('knowledgeSpaceEnabled.Tips').replace(/\[knowledge-space-title\]/g, props.cfg?.knowledgeSpaceTitle)"
       class="top-tip"
       type="info"
     />
@@ -278,8 +284,8 @@ onMounted(async () => {
         show-password
         :placeholder="props.cfg.placeholder.passwordPlaceholder"
       />
-      <a v-if="props.cfg.showTokenTip" :href="props.cfg.tokenSettingUrl" target="_blank"
-        >{{ t("setting.common.username.gen") }}：{{ props.cfg.tokenSettingUrl }}</a
+      <a v-if="formData.cfg.showTokenTip" :href="formData.cfg.tokenSettingUrl" target="_blank"
+        >{{ t("setting.common.username.gen") }}：{{ formData.cfg.tokenSettingUrl }}</a
       >
     </el-form-item>
     <!-- token -->
@@ -293,8 +299,8 @@ onMounted(async () => {
         show-password
         :placeholder="props.cfg.placeholder.passwordPlaceholder"
       />
-      <a v-if="formData.cfg.showTokenTip" :href="props.cfg.tokenSettingUrl" target="_blank"
-        >{{ t("setting.common.token.gen") }}：{{ props.cfg.tokenSettingUrl }}</a
+      <a v-if="formData.cfg.showTokenTip" :href="formData.cfg.tokenSettingUrl" target="_blank"
+        >{{ t("setting.common.token.gen") }}：{{ formData.cfg.tokenSettingUrl }}</a
       >
     </el-form-item>
     <!-- 平台cookie -->
@@ -327,23 +333,21 @@ onMounted(async () => {
       <el-radio-group v-model="formData.cfg.pageType" class="ml-4">
         <el-radio :label="PageTypeEnum.Markdown" size="large">Markdown</el-radio>
         <el-radio :label="PageTypeEnum.Html" size="large">HTML</el-radio>
-        <el-radio :label="PageTypeEnum.Kramdown" size="large">Kramdown</el-radio>
       </el-radio-group>
     </el-form-item>
     <!-- 知识空间 -->
-    <el-form-item :label="props.cfg?.knowledgeSpaceTitle" v-if="props.cfg?.enableKnowledgeSpace">
+    <el-form-item :label="props.cfg?.knowledgeSpaceTitle" v-if="props.cfg?.knowledgeSpaceEnabled">
       <el-select
         v-model="formData.cfg.blogid"
         class="m-2"
         :placeholder="t('main.opt.select')"
         :no-data-text="t('main.data.empty')"
-        @change="handleKeSpaceChange"
       >
         <el-option v-for="item in formData.kwSpaces" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </el-form-item>
     <!-- 跨域代理地址 -->
-    <el-form-item v-if="!formData.useSiyuanApi" :label="t('setting.blog.middlewareUrl')">
+    <el-form-item :label="t('setting.blog.middlewareUrl')">
       <el-input v-model="formData.cfg.middlewareUrl" :placeholder="t('setting.blog.middlewareUrl.tip')" />
       <el-alert
         :closable="false"

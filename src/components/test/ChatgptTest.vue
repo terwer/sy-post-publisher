@@ -35,7 +35,6 @@ const logger = createAppLogger("chatgpt-test")
 
 // uses
 const { t } = useVueI18n()
-const { chat } = useChatGPT()
 
 // datas
 const inputText = ref("")
@@ -52,6 +51,7 @@ const sendMessage = async () => {
 
   formData.isLoading = true
   try {
+    const { chat } = useChatGPT()
     const chatText = await chat(inputText.value)
     if (StrUtil.isEmptyString(chatText)) {
       ElMessage.error("请求错误，请在底部偏好设置修改请求地址和ChatGPT key！")
@@ -62,7 +62,7 @@ const sendMessage = async () => {
     inputText.value = ""
   } catch (e) {
     logger.error(t("main.opt.failure") + "=>", e)
-    ElMessage.error(t("main.opt.failure") + "=>", e)
+    ElMessage.error(t("main.opt.failure") + "=>" + e)
   } finally {
     formData.isLoading = false
   }

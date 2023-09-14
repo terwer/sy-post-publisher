@@ -28,7 +28,10 @@ import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { reactive, watch } from "vue"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { ElMessage } from "element-plus"
-import { HtmlUtil, SmartUtil, StrUtil } from "zhi-common"
+import { HtmlUtil, JsonUtil, SmartUtil, StrUtil } from "zhi-common"
+import { prompt, ShortDescAIResult } from "~/src/utils/ai/prompt.ts"
+import { useChatGPT } from "~/src/composables/useChatGPT.ts"
+import { AiConstants } from "~/src/utils/ai/AiConstants.ts"
 
 const logger = createAppLogger("publish-description")
 const { t } = useVueI18n()
@@ -46,7 +49,11 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  content: {
+  md: {
+    type: String,
+    default: "",
+  },
+  html: {
     type: String,
     default: "",
   },
@@ -58,7 +65,8 @@ const formData = reactive({
   useAi: props.useAi,
   pageId: props.pageId,
   desc: props.desc,
-  html: props.content,
+  md: props.md,
+  html: props.html,
 })
 
 // 对于未强制刷新组件的情况下需要watch或者computed
@@ -69,37 +77,70 @@ watch(
   }
 )
 
+// watch(
+//   () => props.md,
+//   (newValue) => {
+//     formData.md = newValue
+//   }
+// )
+
+watch(
+  () => props.html,
+  (newValue) => {
+    formData.html = newValue
+  }
+)
+
 const emit = defineEmits(["emitSyncDesc"])
 
 const handleMakeDesc = async () => {
-  logger.debug("准备生成摘要...")
   formData.isDescLoading = true
   try {
-    if (formData.useAi) {
-      if (StrUtil.isEmptyString(formData.html)) {
-        throw new Error("正文为空，无法生成摘要")
-      }
-      logger.debug("使用人工智能提取摘要", { q: formData.html })
-      const result = await SmartUtil.autoSummary(formData.html)
-      logger.debug("auto summary reault =>", result)
-      if (!StrUtil.isEmptyString(result.errMsg)) {
-        throw new Error(result.errMsg)
-      } else {
-        formData.desc = result.result
-      }
-      ElMessage.warning("使用人工智能提取摘要成功")
-    } else {
-      formData.desc = HtmlUtil.parseHtml(formData.html, MAX_PREVIEW_LENGTH, true)
-      ElMessage.success(`操作成功，未开启人工智能，直接截取文章前${MAX_PREVIEW_LENGTH}个字符作为摘要`)
+    // if (formData.useAi) {
+    const inputWord = prompt.shortDescPrompt.content
+    const { chat } = useChatGPT()
+    const chatText = await chat(inputWord, {
+      name: "desc",
+      systemMessage: HtmlUtil.parseHtml(formData.html, AiConstants.MAX_INPUT_TOKEN_LENGTH, true),
+    })
+    if (StrUtil.isEmptyString(chatText)) {
+      ElMessage.error("请求错误，请在偏好设置配置请求地址和ChatGPT key！")
+      return
     }
-    // ElMessage.success(t("main.opt.success"))
+    const resJson = JsonUtil.safeParse<ShortDescAIResult>(chatText, {} as ShortDescAIResult)
+    if (StrUtil.isEmptyString(resJson?.desc)) {
+      throw new Error("文档信息量太少，未能抽取有效信息")
+    }
+    formData.desc = resJson.desc
+    logger.info("使用AI智能生成的摘要结果 =>", {
+      inputWord: inputWord,
+      chatText: chatText,
+    })
+
+    // 自部署无监督摘要
+    // if (StrUtil.isEmptyString(formData.html)) {
+    //   throw new Error("正文为空，无法生成摘要")
+    // }
+    // logger.debug("使用人工智能提取摘要", { q: formData.html })
+    // const result = await SmartUtil.autoSummary(formData.html)
+    // logger.debug("auto summary reault =>", result)
+    // if (!StrUtil.isEmptyString(result.errMsg)) {
+    //   throw new Error(result.errMsg)
+    // } else {
+    //   formData.desc = result.result
+    // }
+    // } else {
+    //   formData.desc = HtmlUtil.parseHtml(formData.html, MAX_PREVIEW_LENGTH, true)
+    //   ElMessage.success(`操作成功，未开启人工智能，直接截取文章前${MAX_PREVIEW_LENGTH}个字符作为摘要`)
+    // }
+    emit("emitSyncDesc", formData.desc)
+    ElMessage.success("使用人工智能提取摘要成功")
   } catch (e) {
     logger.error(t("main.opt.failure") + "=>", e)
-    ElMessage.error(t("main.opt.failure") + "=>", e)
+    ElMessage.error(t("main.opt.failure") + "=>" + e)
+  } finally {
+    formData.isDescLoading = false
   }
-
-  formData.isDescLoading = false
-  logger.debug("摘要生成完毕.")
 }
 
 const onDescChange = () => {
@@ -118,7 +159,7 @@ const onDescChange = () => {
         @input="onDescChange"
       />
     </el-form-item>
-    <el-form-item>
+    <el-form-item v-if="formData.useAi">
       <el-button size="small" :loading="formData.isDescLoading" type="primary" @click="handleMakeDesc">
         {{ formData.isDescLoading ? t("main.opt.loading") : t("main.auto.fetch.desc") }}
       </el-button>

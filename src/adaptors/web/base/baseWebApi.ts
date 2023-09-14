@@ -22,11 +22,12 @@
  * or visit www.terwer.space if you need additional information or have any
  * questions.
  */
-import { Attachment, ElectronCookie, MediaObject, Post, WebApi, WebConfig } from "zhi-blog-api"
-import { AppInstance } from "~/src/appInstance.ts"
+import { Attachment, ElectronCookie, MediaObject, Post, WebApi, WebConfig, YamlConvertAdaptor } from "zhi-blog-api"
+import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import { createAppLogger, ILogger } from "~/src/utils/appLogger.ts"
 import { useProxy } from "~/src/composables/useProxy.ts"
 import { BaseExtendApi } from "~/src/adaptors/base/baseExtendApi.ts"
+import { JsonUtil } from "zhi-common"
 
 /**
  * 网页授权统一封装基类
@@ -36,6 +37,7 @@ import { BaseExtendApi } from "~/src/adaptors/base/baseExtendApi.ts"
  * @since 0.9.0
  */
 class BaseWebApi extends WebApi {
+  protected appInstance: PublisherAppInstance
   protected logger: ILogger
   protected cfg: WebConfig
   protected readonly baseExtendApi: BaseExtendApi
@@ -47,9 +49,10 @@ class BaseWebApi extends WebApi {
    * @param appInstance 应用实例
    * @param cfg 配置项
    */
-  constructor(appInstance: AppInstance, cfg: WebConfig) {
+  constructor(appInstance: PublisherAppInstance, cfg: WebConfig) {
     super()
 
+    this.appInstance = appInstance
     this.cfg = cfg
     this.logger = createAppLogger("base-web-api")
     this.baseExtendApi = new BaseExtendApi(this)
@@ -68,24 +71,32 @@ class BaseWebApi extends WebApi {
     return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join(";")
   }
 
+  public getYamlAdaptor(): YamlConvertAdaptor {
+    return null
+  }
+
   public async preEditPost(post: Post, id?: string, publishCfg?: any): Promise<Post> {
     return await this.baseExtendApi.preEditPost(post, id, publishCfg)
   }
 
   // 兼容的方法
   public async newPost(post: Post, publish?: boolean): Promise<string> {
-    const res = await this.addPost(post)
-    if (res.status !== "success") {
-      throw new Error("网页授权发布文章异常")
+    try {
+      const res = await this.addPost(post)
+      if (res.status !== "success") {
+        throw new Error("网页授权发布文章异常")
+      }
+      return res.post_id
+    } catch (e) {
+      throw e
     }
-    return res.post_id
   }
 
   public async newMediaObject(mediaObject: MediaObject, customHandler?: any): Promise<Attachment> {
     const bits = mediaObject.bits
     this.logger.debug("newMediaObject on baseWebApi =>", mediaObject)
     const blob = new Blob([bits], { type: mediaObject.type })
-    const res = await this.uploadFile(blob as File)
+    const res = await this.uploadFile(blob as File, mediaObject.name)
     return {
       attachment_id: res?.id,
       date_created_gmt: new Date(),
@@ -132,11 +143,28 @@ class BaseWebApi extends WebApi {
     const header = headers.length > 0 ? headers[0] : {}
     const webHeaders = [
       {
-        Cookie: this.cfg.password,
         ...header,
+        Cookie: this.cfg.password,
       },
     ]
     return await this.proxyFetch(url, webHeaders, params, method, contentType)
+  }
+
+  public async webFormFetch(url: string, headers: any[], formData: FormData) {
+    const win = this.appInstance.win
+    const doFetch = win.require(`${this.appInstance.moduleBase}libs/zhi-formdata-fetch/index.cjs`)
+
+    // headers
+    const header = headers.length > 0 ? headers[0] : {}
+    this.logger.debug("before zhi-formdata-fetch, headers =>", headers)
+    this.logger.debug("before zhi-formdata-fetch, url =>", url)
+
+    const resText = await doFetch(this.appInstance.moduleBase, url, header, formData)
+    this.logger.debug("webForm doFetch success, resText =>", resText)
+    const resJson = JsonUtil.safeParse<any>(resText, {} as any)
+    this.logger.debug("webForm doFetch success, resJson=>", resJson)
+
+    return resJson
   }
 }
 

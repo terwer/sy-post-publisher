@@ -43,13 +43,14 @@ export const useSiyuanApi = () => {
   const envSiyuanCookie = Utils.emptyOrDefault(process.env.VITE_SIYUAN_COOKIE, "")
 
   const pref = getReadOnlyPublishPreferenceSetting()
-
   const siyuanSetting = getReadOnlySiyuanSetting()
+
   const siyuanApiUrl = siyuanSetting.value.apiUrl ?? envSiyuanApiUrl
   const siyuanAuthToken = siyuanSetting.value.password ?? envSiyuanAuthToken
   const siyuanConfig = new SiyuanConfig(siyuanApiUrl, siyuanAuthToken)
   siyuanConfig.cookie = siyuanSetting.value.cookie ?? envSiyuanCookie
   siyuanConfig.preferenceConfig.fixTitle = pref.value.fixTitle
+  siyuanConfig.preferenceConfig.keepTitle = pref.value.keepTitle
   siyuanConfig.preferenceConfig.removeFirstH1 = pref.value.removeFirstH1
   siyuanConfig.preferenceConfig.removeMdWidgetTag = pref.value.removeMdWidgetTag
 

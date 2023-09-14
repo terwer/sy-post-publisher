@@ -8,32 +8,22 @@ Publish articles from siyuan-note to platforms such as Yuque, Notion, Cnblogs, W
 
 Support features such as fast publishing, image bed management, platform expansion, smart labels, etc.
 
-> **Front Announcement 1: The first version `1.9.0` for Publish Tools that supports release view and AI beta early adopter is released!**
->
-> **Front Announcement 2: Version `1.8.0` released with full support for image upload in the Publish Tools!**
+> 🎉 I am pleased to announce the `1.14.0` release of Publish Tool.
 
-Tips: Zhihu uses the image upload of the Zhihu platform, Yuque, Notion, and Hexo need Picgo plugin support, and the Metaweblog series platform supports both Picgo plugin and self-contained image upload (install Picgo plugin to use Picgo plugin, otherwise use their own platform)
+  - In this update, we have added several new platforms, including JianShu, Juejin, as well as Hugo, Jekyll, Vuepress, Vuepress2, and Vitepress. The latter platforms are also compatible with both `Github` and `Gitlab`. 
+  - Oh, and in this version, the author secretly developed an import feature. You can quickly import predefined platforms using the `Settings` -> `Publish Settings` -> `Import Predefined Platforms` function 😄
 
-We recommend that you use the `uninstall->install` method to update. If the configuration is abnormal, please backup `[workspace]/data/storage/syp/sy-p-plus-cfg.json` , and then delete it, this configuration file will be automatically initialized the first time it is used.
+> Platform Limitations:
+  - **WeChat Official Accounts**: Publishing Tool now supports posting articles to the WeChat Official Accounts draft box in version `1.13.0` and beyond. However, due to limitations on the WeChat platform in Electron, normal login operations are not possible. Therefore, you will need to visit `https://mp.weixin.qq.com/` yourself, complete the login, copy the cookie, and then paste it into the configuration options.
+  - **Notion**: Since Notion is block-based, not a whole document, it is constrained by technology and does not support updates. To update, you can only delete and then repost it.
+  - **Juejin**: Due to the mandatory requirements of the Jujin platform, tags and classifications must be filled in, if you do not select publishing, a backend classification and programmer label will be added by default, otherwise you will not be able to publish.
+  - **Juejin**: **Juejin need to review every time they publish an article**, so the preview may be 404 immediately after publishing the article, at which point you can modify the link '/post' to '/spost' for temporary viewing, or wait patiently for the review to pass.
 
-In later releases, the release configuration will only be backward compatible to `1.6.0+`.
+> [Click here](https://blog.terwer.space/s/20230810132040-nn4q7vs) to view the latest help documentation.
 
-## Recent critical updates and bug fixes
+## Update history
 
-- Support multiple publishing views, simple mode, detailed mode and source mode
-- Support to modify summary, tags, classification, knowledge space
-- The Hexo platform supports custom modification of YAML
-- Yuque, Notion, and Hexo support image links, and automatic upload requires Picgo plugin support
-- Zhihu platform supports automatic image upload
-- When the Picgo plugin is not installed, some platforms can use the built-in image upload, such as Cnblogs, Typecho, WordPress
-- Support replacing picture bed image links with Picgo plugin
-- Fixed the issue that the release preview of the authorization code mode was invalidated
-- Support publishing to Zhihu
-- Support for publishing to Hexo
-- Support for publishing to Notion
-- Support for Yuque, Cnblogs, Metaweblog, Typecho, WordPress
-- Support automatic generation of article aliases
-- Support for changing the default knowledge base
+Please check [CHANGELOG](./CHANGELOG.MD)
 
 ## Platform List
 
@@ -43,28 +33,42 @@ Names not listed in order
 - [X] Notion
 - [X] Github
   - [X] Hexo
+  - [X] Hugo
+  - [X] Jekyll
+  - [X] Vuepress
+  - [X] Vuepress2
+  - [X] Vitepress
+- [X] Gitlab
+  - [X] Gitlabhexo
+  - [X] Gitlabhugo
+  - [X] Gitlabjekyll
+  - [X] Gitlabvuepress
+  - [X] Gitlabvuepress2
+  - [X] Gitlabvitepress
 - [X] Metaweblog
 - [X] Cnblogs
 - [X] Typecho
 - [X] WordPress
 - [X] Zhihu
+- [X] CSDN
+- [X] Wechat
+- [X] Jianshu
+- [X] Juejin
 
 ## Core Features
 
-- [X] **Extremely fast release**: One-time configuration, one-click release
-- [X] **Picture bed management**: Integrate PicGO picture bed, support s3, minio, watermark plugin
-- [X] **Support for extensions**: Based on the unified blog API specification, built-in support for metaweblogAPI, WordPress
-  and GitHub, and provides a unified adapter, which can theoretically be extended to any platform
-- [X] **Platform switch**: All platforms support enabling and disabling, the blog garden is enabled by default, and can be
-  disabled at any time
-- [X] **Dynamic Newly Added**: Support custom adding platform
-- [X] **Smart Classification**: Support smart tags, smart slug aliases, smart summaries, and continue to improve.Smart tags and smart summaries is currently in the invitation experience stage, if you want to experience, you can email youweics@163.com, I will send you a plugin experience package containing AI.
-- [X] **Article Binding**: Support linking existing platform articles to siyuan-note to facilitate follow-up management,
-  support Siyuan->platform one-way synchronization
-- [X] **Adapt to Theme**: Automatically adapt to dark mode and light mode
-- [X] **Language support**: multi-language support, support Chinese version and English version
-- [X] **Release view**: Support multiple release views, simple mode, detailed mode and source code mode
-- [X] **Multiple deployments**: support Siyuan notes plugin<sup>Highly recommended</sup>, Chrome browser extension, self-deployment
+- [X] **Rapid Publishing**: One-time configuration, one-click publishing.
+- [X] **Image Hosting Management**: Integrated with PicGO image hosting, supports s3, minio, watermark plugins. Requires installation of [Picgo plugin](https://github.com/terwer/siyuan-plugin-picgo) from the marketplace. **Currently only available for PC client**.
+- [X] **Extension Support**: Built on a unified blog API specification, with built-in metaweblogAPI, WordPress, Wechatsync, and Github support. Provides a unified adapter, theoretically extensible to any platform.
+- [X] **Platform Toggle**: Enable or disable all platforms.
+- [X] **Dynamic Addition**: Supports custom adding of platforms.
+- [X] **AI Integration**: Integrates freeform chat and context-based chat based on the current document.
+- [X] **Intelligent Categorization**: Supports intelligent slug aliases, intelligent titles, intelligent summaries, intelligent tags, intelligent categories.
+- [X] **Article Association**: Supports linking existing platform articles to SiYuan notes for convenient future management. Supports one-way synchronization from SiYuan to platforms.
+- [X] **Theme Adaptation**: Automatically adapts to dark mode and light mode.
+- [X] **Language Support**: Multi-language support, including Chinese and English versions.
+- [X] **Publishing Views**: Supports various publishing views - simple mode, detailed mode, and source code mode.
+- [X] **Multiple Deployment Options**: Supports SiYuan Note plugin <sup>highly recommended</sup>, Chrome browser extension, and self-deployment.
 
 This plugin promises that the basic functions will be free forever, and the follow-up related to intelligent AI may be charged, and the closed beta stage is completely free. If you want to support developers, please [feel free to support](https://github.com/terwer/siyuan-plugin-publisher/blob/main/README_zh_CN.md#Donate) here.
 
@@ -85,6 +89,12 @@ This plugin is fully compatible with `siyuan-note PC Client` , due to limited pe
   - [X] Single-choice knowledge space
   - [X] Tree-shaped radio knowledge space
 
+- [X] tag
+  - [X] Multi-select tab
+
+- [X] Label alias
+  - [X] Radio label alias
+
 ## Platform Adaptation Plan
 
 If you have a platform you want to use, but this tool has not yet been implemented, you can submit
@@ -93,10 +103,6 @@ the [Siyuan Note Publishing Tool Plugin Platform Adaptation Tracking Form](https
 
 For platform adaptation, please refer
 to [Latest Adaptation](https://terwergreen.feishu.cn/share/base/view/shrcnWT2IGIz1r94z9qvqUghDzd)
-
-## Update history
-
-Please check [CHANGELOG](./CHANGELOG.MD)
 
 ## FAQ
 
@@ -166,11 +172,27 @@ more useful tools~
 
   Names not listed in order
 
-  |Name|version|vendor|
-  | :---------: | :-----: | :---------: |
-  |turbo|1.9+|Vercel|
-  |vite|4.2+|Evan You|
-  |Svelte|3.57+|Rich Harris|
-  |TypeScript|5.0+|Microsoft|
-  |siyuan-note|2.9.0+|D,V|
+  |    Name     | version |vendor|
+  |:-----------:|:-------:| :---------: |
+  |    turbo    |  1.9+   |Vercel| 
+  |     Vue     | 3.3.4+  |Evan You|
+  |    Vite     |  4.2+   |Evan You|
+  | TypeScript  |  5.0+   |Microsoft|
+  | siyuan-note | 2.9.0+  |D,V|
+
 - Thanks to [leolee9086](https://github.com/leolee9086) and [ciwoyipang]() for the icon resource
+
+* Thanks to the enthusiastic support of the following users, I will continue to update and maintain the project!
+
+  - 2023-09-04 *Xia Donate to [Publish Tool]
+  - 2023-08-31 *Cheng Donate to [Publishing Tool] Thanks for providing the note posting tool, reminder change
+  - 2023-08-31 *? Donated to [Publish Tool] Thanks for providing the siyuan-note Publish Tool.
+  - 2023-08-14 *? Donated to [Publish Tool]
+  - 2023-08-10 *f Donated to [Publish Tool] for liking the release plugin.
+  - 2023-08-10 *2 Donated to [Publish Tool] to support the development of Source Release Plugin.
+  - 2023-07-13 *Liang Donated to [Document Alias] Is it possible to expand the functionality to H1?
+  - 2023-07-09 *z Donated to [Online Sharing] The online sharing plugin is great, thanks!
+  - 2023-06-14 *Jun Donated to [Document Roaming] Thanks for the Document Roaming feature.
+  - 2023-01-16 *Zhan Donated to [Import Tool] Finally, we can import epub files.
+
+    If you do not want to display donation information, you can send an email directly to youweics@163.com.

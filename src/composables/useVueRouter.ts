@@ -47,6 +47,8 @@ import ZhihuTest from "~/src/components/test/ZhihuTest.vue"
 import Test from "~/src/pages/Test.vue"
 import About from "~/src/pages/About.vue"
 import ChatgptTest from "~/src/components/test/ChatgptTest.vue"
+import AiChat from "~/src/pages/AiChat.vue"
+import CsdnTest from "~/src/components/test/CsdnTest.vue"
 
 const routes: RouteRecordRaw[] = [
   // 极速发布
@@ -59,6 +61,12 @@ const routes: RouteRecordRaw[] = [
   // /?id=<id>
   { path: "/", component: BatchPublish },
   { path: "/publish/batchPublish", component: BatchPublish },
+
+  // AI
+  {
+    path: "/ai/chat",
+    component: AiChat,
+  },
 
   // 测试
   {
@@ -88,6 +96,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/test/zhihu",
     component: ZhihuTest,
+  },
+  {
+    path: "/test/csdn",
+    component: CsdnTest,
   },
   {
     path: "/test/picgo",

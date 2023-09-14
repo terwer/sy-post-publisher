@@ -27,26 +27,63 @@
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { nextTick, reactive, ref } from "vue"
+import { watch } from "vue"
+import { CategoryAIResult, prompt } from "~/src/utils/ai/prompt.ts"
+import { useChatGPT } from "~/src/composables/useChatGPT.ts"
+import { HtmlUtil, JsonUtil, StrUtil } from "zhi-common"
+import { ElMessage } from "element-plus"
+import { AiConstants } from "~/src/utils/ai/AiConstants.ts"
 
 const logger = createAppLogger("common-categories")
 const { t } = useVueI18n()
 
 const props = defineProps({
+  useAi: {
+    type: Boolean,
+    default: false,
+  },
   cates: {
     type: Array,
     default: [],
+  },
+  md: {
+    type: String,
+    default: "",
+  },
+  html: {
+    type: String,
+    default: "",
   },
 })
 
 // datas
 const tagRefInput = ref()
 const formData = reactive({
+  isLoading: false,
+  useAi: props.useAi,
   cate: {
     inputValue: "",
     dynamicCates: <string[]>(props.cates.length == 0 ? [] : props.cates),
     inputVisible: false,
   },
+  recommCates: <string[]>[],
+  md: props.md,
+  html: props.html,
 })
+
+watch(
+  () => props.useAi,
+  (newValue) => {
+    formData.useAi = newValue
+  }
+)
+
+watch(
+  () => props.html,
+  (newValue) => {
+    formData.html = newValue
+  }
+)
 
 const emit = defineEmits(["emitSyncCates"])
 
@@ -70,6 +107,36 @@ const cateMethods = {
     }
     formData.cate.inputVisible = false
     formData.cate.inputValue = ""
+  },
+  fetchCate: async () => {
+    try {
+      formData.isLoading = true
+
+      const inputWord = prompt.categoryPrompt.content
+      const { chat } = useChatGPT()
+      const chatText = await chat(inputWord, {
+        name: "categories",
+        systemMessage: HtmlUtil.parseHtml(formData.html, AiConstants.MAX_INPUT_TOKEN_LENGTH, true),
+      })
+      if (StrUtil.isEmptyString(chatText)) {
+        ElMessage.error("请求错误，请在偏好设置配置请求地址和ChatGPT key！")
+        return
+      }
+      const resJson = JsonUtil.safeParse<CategoryAIResult>(chatText, {} as CategoryAIResult)
+      if (!resJson?.categories || resJson?.categories.length == 0) {
+        throw new Error("文档信息量太少，未能抽取有效信息")
+      }
+      formData.recommCates = resJson.categories
+      logger.info("使用AI智能生成的分类结果 =>", {
+        inputWord: inputWord,
+        chatText: chatText,
+      })
+    } catch (e: any) {
+      logger.error(t("main.opt.failure") + "=>", e)
+      ElMessage.error(t("main.opt.failure") + "=>" + e)
+    } finally {
+      formData.isLoading = false
+    }
   },
 }
 </script>
@@ -100,6 +167,20 @@ const cateMethods = {
         {{ t("main.cate.new") }}
       </el-button>
     </el-form-item>
+    <div v-if="formData.useAi">
+      <el-form-item v-if="formData.recommCates.length > 0" class="recomm-show">
+        推荐的分类：
+        <el-tag class="ml-2 recomm-cate" type="success" v-for="rtag in formData.recommCates">{{ rtag }}</el-tag>
+      </el-form-item>
+      <el-form-item class="cat-action">
+        <el-button size="small" :loading="formData.isLoading" type="primary" @click="cateMethods.fetchCate">
+          {{ formData.isLoading ? t("main.opt.loading") : t("main.auto.fetch.cate") }}
+        </el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-alert :closable="false" :title="t('category.ai.hand')" class="form-item-tip" type="warning" />
+      </el-form-item>
+    </div>
     <el-form-item>
       <el-alert :closable="false" :title="t('category.batch.not.supported')" class="form-item-tip" type="warning" />
     </el-form-item>
@@ -124,4 +205,12 @@ const cateMethods = {
 
   :deep(.pub-tag-input)
     max-width 120px
+
+.cat-action
+  margin-top 10px
+.recomm-show
+  margin-top 10px
+
+.recomm-cate
+  margin 0 10px
 </style>

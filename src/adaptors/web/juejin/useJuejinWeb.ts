@@ -25,12 +25,13 @@
 
 import { JuejinConfig } from "~/src/adaptors/web/juejin/juejinConfig.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
-import { AppInstance } from "~/src/appInstance.ts"
+import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import { useSettingStore } from "~/src/stores/useSettingStore.ts"
 import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
 import { Utils } from "~/src/utils/utils.ts"
 import { getDynPostidKey } from "~/src/platforms/dynamicConfig.ts"
 import { JuejinWebAdaptor } from "~/src/adaptors/web/juejin/juejinWebAdaptor.ts"
+import { CategoryTypeEnum } from "zhi-blog-api"
 
 /**
  * 用于获取JuejinWeb的API的自定义Hook
@@ -43,7 +44,7 @@ const useJuejinWeb = async (key?: string, newCfg?: JuejinConfig) => {
   logger.info("Start using Juejin WebAuth...")
 
   // 创建应用实例
-  const appInstance = new AppInstance()
+  const appInstance = new PublisherAppInstance()
   let cfg: JuejinConfig
   if (newCfg) {
     logger.info("Initialize with the latest newCfg passed in...")
@@ -80,8 +81,24 @@ const useJuejinWeb = async (key?: string, newCfg?: JuejinConfig) => {
     }
   }
 
+  // 注意：
+  // 分类和知识空间可以共存。但是共存的前提是。知识空间使用getCategories，分类使用getCategoryTreeNodes
+  // 分类使用getCategories时候，不能开启知识空间
+  //
+  // 标签和别名标签不能共存
+  //
+  // 掘金使用单选分类、别名标签
+  cfg.tagEnabled = false
+  cfg.tagSlugEnabled = true
+  cfg.cateEnabled = false
+  cfg.knowledgeSpaceEnabled = true
+  cfg.knowledgeSpaceTitle = "分类"
+  cfg.knowledgeSpaceType = CategoryTypeEnum.CategoryType_Single
+  cfg.allowKnowledgeSpaceChange = true
+
   const webApi = new JuejinWebAdaptor(appInstance, cfg)
   return {
+    cfg,
     webApi,
   }
 }

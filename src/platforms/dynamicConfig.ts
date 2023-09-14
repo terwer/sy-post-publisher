@@ -82,6 +82,11 @@ export class DynamicConfig {
   domain?: string
 
   /**
+   * cookie现在
+   */
+  cookieLimit?: boolean
+
+  /**
    * 是否内置
    */
   isSys: boolean
@@ -99,6 +104,7 @@ export class DynamicConfig {
     this.isAuth = false
     this.isEnabled = false
     this.authMode = AuthMode.API
+    this.cookieLimit = false
     this.isSys = false
 
     this.subPlatformType = subPlatformType
@@ -139,6 +145,11 @@ export enum PlatformType {
   Github = "Github",
 
   /**
+   * Gitlab
+   */
+  Gitlab = "Gitlab",
+
+  /**
    * 自定义(zhihu)
    */
   Custom = "Custom",
@@ -162,12 +173,19 @@ export enum SubPlatformType {
 
   // Github 子平台
   Github_Hexo = "Hexo",
-  // Github_Hugo = "Hugo",
-  // Github_Jekyll = "Jekyll",
-  // Github_Vuepress = "Vuepress",
-  // Github_Vitepress = "Vitepress",
-  // Github_Nuxt = "Nuxt",
-  // Github_Next = "Next",
+  Github_Hugo = "Hugo",
+  Github_Jekyll = "Jekyll",
+  Github_Vuepress = "Vuepress",
+  Github_Vuepress2 = "Vuepress2",
+  Github_Vitepress = "Vitepress",
+
+  // Gitlab 子平台
+  Gitlab_Hexo = "Gitlabhexo",
+  Gitlab_Hugo = "Gitlabhugo",
+  Gitlab_Jekyll = "Gitlabjekyll",
+  Gitlab_Vuepress = "Gitlabvuepress",
+  Gitlab_Vuepress2 = "Gitlabvuepress2",
+  Gitlab_Vitepress = "Gitlabvitepress",
 
   // Metaweblog
   Metaweblog_Metaweblog = "Metaweblog",
@@ -179,10 +197,10 @@ export enum SubPlatformType {
 
   // Custom
   Custom_Zhihu = "Zhihu",
-  // Custom_CSDN = "Csdn",
-  // Custom_Jianshu = "Jianshu",
-  // Custom_Juejin = "Juejin",
-  // Custom_Wechat = "Wechat",
+  Custom_CSDN = "Csdn",
+  Custom_Wechat = "Wechat",
+  Custom_Jianshu = "Jianshu",
+  Custom_Juejin = "Juejin",
 
   // System
   System_Siyuan = "Siyuan",
@@ -197,6 +215,7 @@ export interface DynamicJsonCfg {
   totalCfg: DynamicConfig[]
   commonCfg: DynamicConfig[]
   githubCfg: DynamicConfig[]
+  gitlabCfg: DynamicConfig[]
   metaweblogCfg: DynamicConfig[]
   wordpressCfg: DynamicConfig[]
   customCfg: DynamicConfig[]
@@ -216,12 +235,19 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
       break
     case PlatformType.Github:
       subtypeList.push(SubPlatformType.Github_Hexo)
-      // subtypeList.push(SubPlatformType.Github_Hugo)
-      // subtypeList.push(SubPlatformType.Github_Jekyll)
-      // subtypeList.push(SubPlatformType.Github_Vuepress)
-      // subtypeList.push(SubPlatformType.Github_Vitepress)
-      // subtypeList.push(SubPlatformType.Github_Nuxt)
-      // subtypeList.push(SubPlatformType.Github_Next)
+      subtypeList.push(SubPlatformType.Github_Hugo)
+      subtypeList.push(SubPlatformType.Github_Jekyll)
+      subtypeList.push(SubPlatformType.Github_Vuepress)
+      subtypeList.push(SubPlatformType.Github_Vuepress2)
+      subtypeList.push(SubPlatformType.Github_Vitepress)
+      break
+    case PlatformType.Gitlab:
+      subtypeList.push(SubPlatformType.Gitlab_Hexo)
+      subtypeList.push(SubPlatformType.Gitlab_Hugo)
+      subtypeList.push(SubPlatformType.Gitlab_Jekyll)
+      subtypeList.push(SubPlatformType.Gitlab_Vuepress)
+      subtypeList.push(SubPlatformType.Gitlab_Vuepress2)
+      subtypeList.push(SubPlatformType.Gitlab_Vitepress)
       break
     case PlatformType.Metaweblog:
       subtypeList.push(SubPlatformType.Metaweblog_Metaweblog)
@@ -233,10 +259,10 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
       break
     case PlatformType.Custom:
       subtypeList.push(SubPlatformType.Custom_Zhihu)
-      // subtypeList.push(SubPlatformType.Custom_CSDN)
-      // subtypeList.push(SubPlatformType.Custom_Jianshu)
-      // subtypeList.push(SubPlatformType.Custom_Juejin)
-      // subtypeList.push(SubPlatformType.Custom_Wechat)
+      subtypeList.push(SubPlatformType.Custom_CSDN)
+      subtypeList.push(SubPlatformType.Custom_Wechat)
+      subtypeList.push(SubPlatformType.Custom_Jianshu)
+      subtypeList.push(SubPlatformType.Custom_Juejin)
       break
     case PlatformType.System:
       subtypeList.push(SubPlatformType.System_Siyuan)
@@ -257,6 +283,7 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
   const totalCfg: DynamicConfig[] = dynamicConfigArray
   const commonCfg: DynamicConfig[] = []
   const githubCfg: DynamicConfig[] = []
+  const gitlabCfg: DynamicConfig[] = []
   const metaweblogCfg: DynamicConfig[] = []
   const wordpressCfg: DynamicConfig[] = []
   const customCfg: DynamicConfig[] = []
@@ -270,6 +297,9 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
         break
       case PlatformType.Github:
         githubCfg.push(item)
+        break
+      case PlatformType.Gitlab:
+        gitlabCfg.push(item)
         break
       case PlatformType.Metaweblog:
         metaweblogCfg.push(item)
@@ -292,6 +322,7 @@ export function setDynamicJsonCfg(dynamicConfigArray: DynamicConfig[]): DynamicJ
     totalCfg,
     commonCfg,
     githubCfg,
+    gitlabCfg,
     metaweblogCfg,
     wordpressCfg,
     customCfg,

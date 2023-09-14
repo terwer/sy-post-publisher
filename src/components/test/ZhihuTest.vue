@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { reactive, ref } from "vue"
-import { AppInstance } from "~/src/appInstance.ts"
+import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import Adaptors from "~/src/adaptors"
 import { Utils } from "~/src/utils/utils.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
@@ -81,7 +81,7 @@ const zhihuHandleApi = async () => {
   logMessage.value = "zhihu requesting..."
   try {
     // appInstance
-    const appInstance = new AppInstance()
+    const appInstance = new PublisherAppInstance()
     logger.info("appInstance=>", appInstance)
 
     switch (methodOption.value) {
