@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.7](https://github.com/terwer/sy-post-publisher/compare/v0.10.6...v0.10.7) (2023-09-14)
+
+
+### Miscellaneous
+
+* sync repo v1.14.0 ([a3662b4](https://github.com/terwer/sy-post-publisher/commit/a3662b4f3999865beef3ddc2ecee12b203d331d7))
+* sync repo v1.14.0 ([16a3f40](https://github.com/terwer/sy-post-publisher/commit/16a3f404109f149ea34a46bb20c8841589a254c0))
+
 ## [1.14.0](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.13.0...v1.14.0) (2023-09-14)
 ### Features
 * 全面支持github和gitlab各平台 ([b5e7413](https://github.com/terwer/siyuan-plugin-publisher/commit/b5e7413b7c03558f86f6429ef61bab7255760933))
