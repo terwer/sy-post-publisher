@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.10.7](https://github.com/terwer/sy-post-publisher/compare/v0.10.6...v0.10.7) (2023-09-18)
+
+
+### Miscellaneous
+
+* sync repo v1.14.0 ([a3662b4](https://github.com/terwer/sy-post-publisher/commit/a3662b4f3999865beef3ddc2ecee12b203d331d7))
+* sync repo v1.14.0 ([16a3f40](https://github.com/terwer/sy-post-publisher/commit/16a3f404109f149ea34a46bb20c8841589a254c0))
+* sync repo v1.14.1 ([cb9fbbb](https://github.com/terwer/sy-post-publisher/commit/cb9fbbb672dc97b6187eb00a4683c1b333a7b282))
+* sync repo v1.14.1 ([d473d9b](https://github.com/terwer/sy-post-publisher/commit/d473d9bad00c6ecf37332b2ced8ea59452e68ed0))
+
 ## [1.14.1](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.14.0...v1.14.1) (2023-09-18)
 ### Bug Fixes
 * notion支持根页面搜索 ([ef88004](https://github.com/terwer/siyuan-plugin-publisher/commit/ef880045587f3ccf8459a7731ebac3d250c87cfa))
