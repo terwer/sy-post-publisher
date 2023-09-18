@@ -1,15 +1,9 @@
 # Changelog
 
 ## [0.10.7](https://github.com/terwer/sy-post-publisher/compare/v0.10.6...v0.10.7) (2023-09-18)
-
-
 ### Miscellaneous
-
-* sync repo v1.14.0 ([a3662b4](https://github.com/terwer/sy-post-publisher/commit/a3662b4f3999865beef3ddc2ecee12b203d331d7))
 * sync repo v1.14.0 ([16a3f40](https://github.com/terwer/sy-post-publisher/commit/16a3f404109f149ea34a46bb20c8841589a254c0))
-* sync repo v1.14.1 ([cb9fbbb](https://github.com/terwer/sy-post-publisher/commit/cb9fbbb672dc97b6187eb00a4683c1b333a7b282))
 * sync repo v1.14.1 ([d473d9b](https://github.com/terwer/sy-post-publisher/commit/d473d9bad00c6ecf37332b2ced8ea59452e68ed0))
-
 ## [1.14.1](https://github.com/terwer/siyuan-plugin-publisher/compare/v1.14.0...v1.14.1) (2023-09-18)
 ### Bug Fixes
 * notion支持根页面搜索 ([ef88004](https://github.com/terwer/siyuan-plugin-publisher/commit/ef880045587f3ccf8459a7731ebac3d250c87cfa))
@@ -37,7 +31,6 @@
 * 修复 cookie 设置问题 ([642e570](https://github.com/terwer/siyuan-plugin-publisher/commit/642e57040f9410af9162e0f44fcddbb727a2e22f))
 * 修复未初始化标签时初始化异常的问题 ([cea4056](https://github.com/terwer/siyuan-plugin-publisher/commit/cea40561e379ee6c69fdba73c18caf5cdc16921d))
 * 修复知识空间重复显示的问题 ([9671464](https://github.com/terwer/siyuan-plugin-publisher/commit/9671464d4dd4f576e68f80d8956b92d57798fdd1))
-### Miscellaneous
 * **deps-dev:** bump vercel from 32.1.0 to 32.2.2 ([795221a](https://github.com/terwer/siyuan-plugin-publisher/commit/795221a946b1d1e0fa01a81f8708fce9797052b2))
 * **deps-dev:** bump vite-plugin-node-polyfills from 0.12.0 to 0.14.0 ([412d2f8](https://github.com/terwer/siyuan-plugin-publisher/commit/412d2f8a4184322f380fd0a1e507c0470a9f1420))
 * **deps-dev:** bump vue-tsc from 1.8.8 to 1.8.10 ([cb26813](https://github.com/terwer/siyuan-plugin-publisher/commit/cb26813dc9f97522c2eba9ec4843b5a2ec09378a))
