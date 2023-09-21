@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
@@ -89,8 +93,8 @@ dependencies:
     specifier: ^0.1.4
     version: 0.1.4
   zhi-siyuan-api:
-    specifier: ^2.10.2
-    version: 2.10.2
+    specifier: ^2.10.3
+    version: 2.10.3
   zhi-xmlrpc-middleware:
     specifier: ^0.5.11
     version: 0.5.11
@@ -6264,7 +6268,7 @@ packages:
       zhi-device: 2.3.1
       zhi-fetch-middleware: 0.2.29
       zhi-lib-base: 0.4.4
-      zhi-siyuan-api: 2.10.2
+      zhi-siyuan-api: 2.10.3
     transitivePeerDependencies:
       - '@vue/composition-api'
       - typescript
@@ -7510,6 +7514,13 @@ packages:
       zhi-lib-base: 0.5.0
     dev: false
 
+  /zhi-blog-api@1.44.3:
+    resolution: {integrity: sha512-eBnHiLjGnobOeaK9TDbROJ1KWkSEcjE39o2nwO28r6ptJUU/kj8kOG25qW8zryNfAmOC6wiYp+N+drJRc9VuyA==}
+    dependencies:
+      zhi-common: 1.24.0
+      zhi-lib-base: 0.5.0
+    dev: false
+
   /zhi-common@1.18.0:
     resolution: {integrity: sha512-7m8uyV8+kZ0tJky0myjz8Nj1Ad0kNsMNsg4itixnoM0yIYo6VZ7uU+oMd3qmqyA9kcvszD2QXV4w8qlgIDBGfg==}
     dependencies:
@@ -7522,6 +7533,16 @@ packages:
 
   /zhi-common@1.23.7:
     resolution: {integrity: sha512-wv8tuadOCD1/OzzRWX4wfac7mqyREXhOQQe5cD1xzTrJMriX5zYFQ51gM8uF6HQvxu9G2JzRuRE0kv4oMeahmw==}
+    dependencies:
+      js-yaml: 4.1.0
+      shorthash2: 1.0.3
+      transliteration: 2.3.5
+      vue: 3.3.4
+      zhi-lib-base: 0.5.0
+    dev: false
+
+  /zhi-common@1.24.0:
+    resolution: {integrity: sha512-5npk1z/i/EW/n8J8oMAb9pbDKggMfR7addwGZSQoaOAN5wGRj+do015ZIZ1tunwff+zYybH3SnHGd3WUZ8RwvQ==}
     dependencies:
       js-yaml: 4.1.0
       shorthash2: 1.0.3
@@ -7584,11 +7605,11 @@ packages:
       - supports-color
     dev: false
 
-  /zhi-siyuan-api@2.10.2:
-    resolution: {integrity: sha512-mSmjVf9wk7iAGrQG/zWPwHoKQ9OPz5J9Zjp4apoc07zTXuaVyQIwdggHK5383GIiB7fAAAUOuA6de9dazzXLug==}
+  /zhi-siyuan-api@2.10.3:
+    resolution: {integrity: sha512-IsG0zYXuYxDmJktTZLXhragil8VzL2fQGI8d2HGkUHmPLMfWY5EdsZdmrKTE9okj80AdGRna8VUbfR8a1S2c+Q==}
     dependencies:
-      zhi-blog-api: 1.44.2
-      zhi-common: 1.23.7
+      zhi-blog-api: 1.44.3
+      zhi-common: 1.24.0
       zhi-lib-base: 0.5.0
     dev: false
 
@@ -7603,7 +7624,3 @@ packages:
   /zwitch@1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: false
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
