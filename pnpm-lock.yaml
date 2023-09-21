@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
@@ -74,8 +78,8 @@ dependencies:
     specifier: ^2.3.1
     version: 2.3.1
   zhi-fetch-middleware:
-    specifier: ^0.6.4
-    version: 0.6.4
+    specifier: ^0.6.5
+    version: 0.6.5
   zhi-github-middleware:
     specifier: ^0.4.2
     version: 0.4.2
@@ -7530,6 +7534,16 @@ packages:
       zhi-lib-base: 0.5.0
     dev: false
 
+  /zhi-common@1.24.0:
+    resolution: {integrity: sha512-5npk1z/i/EW/n8J8oMAb9pbDKggMfR7addwGZSQoaOAN5wGRj+do015ZIZ1tunwff+zYybH3SnHGd3WUZ8RwvQ==}
+    dependencies:
+      js-yaml: 4.1.0
+      shorthash2: 1.0.3
+      transliteration: 2.3.5
+      vue: 3.3.4
+      zhi-lib-base: 0.5.0
+    dev: false
+
   /zhi-device@2.3.1:
     resolution: {integrity: sha512-HLNroA/bIHrEPQTaOC0gZyR42FpaxSJb/lc+LqWvtlazsxeOiYAc9HhFHBwJFdbikMqCogFWVFtGG7OMLYmaKg==}
     dev: false
@@ -7546,6 +7560,14 @@ packages:
     resolution: {integrity: sha512-OdZILt6YqzYF+mNS4IRhB9aT6xmeA/LnCbuENmfjq7HmKw6f/hTTIxOJTfsJ5YZGJzeJ2vPCVn4oPDleWpFibw==}
     dependencies:
       zhi-common: 1.23.7
+      zhi-device: 2.3.1
+      zhi-lib-base: 0.5.0
+    dev: false
+
+  /zhi-fetch-middleware@0.6.5:
+    resolution: {integrity: sha512-8agzHLIO1hTYwlX6ZMx9CMBsfedmL8SF/BqcPcHZAnDaivXoy1jlpKJpJd+I2bl4Okp7xmGwqpL0OsYkbpzfxA==}
+    dependencies:
+      zhi-common: 1.24.0
       zhi-device: 2.3.1
       zhi-lib-base: 0.5.0
     dev: false
@@ -7603,7 +7625,3 @@ packages:
   /zwitch@1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: false
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
