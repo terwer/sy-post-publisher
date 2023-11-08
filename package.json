@@ -75,7 +75,7 @@
     "zhi-blog-api": "^1.44.2",
     "zhi-common": "^1.23.7",
     "zhi-device": "^2.3.1",
-    "zhi-fetch-middleware": "^0.6.4",
+    "zhi-fetch-middleware": "^0.7.15",
     "zhi-github-middleware": "^0.4.2",
     "zhi-gitlab-middleware": "^0.6.4",
     "zhi-lib-base": "^0.5.0",
