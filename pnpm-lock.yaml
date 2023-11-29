@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
@@ -44,8 +48,8 @@ dependencies:
     specifier: ^1.4.2
     version: 1.4.2
   siyuan:
-    specifier: ^0.8.3
-    version: 0.8.3
+    specifier: ^0.8.9
+    version: 0.8.9
   siyuan-plugin-picgo:
     specifier: ^1.4.4
     version: 1.4.4(typescript@5.2.2)
@@ -6274,8 +6278,8 @@ packages:
     resolution: {integrity: sha512-X5olBQhfkgyPRF+d8agpcbAaFnCSvSkN3LWX7XU9jApmCfpJ/4PAmK7mKPfR1YGBpjFLRa/xTrv11BQ3hxN15Q==}
     dev: false
 
-  /siyuan@0.8.3:
-    resolution: {integrity: sha512-bpYR2PNTzFbSz4aw4CPLltYnI1RWX0rh7pfID2UDJr9FdB1MRwK4DmfSE5qVI4GxZO2J+5PbSt6G+2SDM62iCw==}
+  /siyuan@0.8.9:
+    resolution: {integrity: sha512-dKKr1sQKP9+zFl9E75DDtyXfkfzVpyBrtGGRvtjl9ji+46xTIipbj0O7kfXWnEbxKPMNHIZ7g0zPk5B5hQgr7w==}
     dev: false
 
   /slash@3.0.0:
@@ -7603,7 +7607,3 @@ packages:
   /zwitch@1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: false
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
