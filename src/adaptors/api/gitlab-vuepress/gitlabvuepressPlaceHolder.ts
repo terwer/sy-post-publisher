@@ -23,8 +23,8 @@
  * questions.
  */
 
-import { VuepressPlaceHolder } from "~/src/adaptors/api/vuepress/vuepressPlaceHolder.ts"
+import { VuepressPlaceholder } from "~/src/adaptors/api/vuepress/vuepressPlaceholder.ts"
 
-class GitlabvuepressPlaceHolder extends VuepressPlaceHolder {}
+class GitlabvuepressPlaceholder extends VuepressPlaceholder {}
 
-export { GitlabvuepressPlaceHolder }
+export { GitlabvuepressPlaceholder }

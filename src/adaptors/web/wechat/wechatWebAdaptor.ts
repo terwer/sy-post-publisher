@@ -28,10 +28,8 @@ import * as cheerio from "cheerio"
 import { HtmlUtil, JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
 import { BlogConfig, PageTypeEnum, Post, UserBlog } from "zhi-blog-api"
 import { toRaw } from "vue"
-import _ from "lodash"
-import { SiyuanDevice } from "zhi-device"
+import _ from "lodash-es"
 import { fileToBuffer } from "~/src/utils/polyfillUtils.ts"
-import { CategoryAIResult } from "~/src/utils/ai/prompt.ts"
 
 /**
  * 微信公众号网页授权适配器
@@ -516,9 +514,9 @@ class WechatWebAdaptor extends BaseWebApi {
 
     // 发布格式
     if (cfg?.pageType == PageTypeEnum.Markdown) {
-      post.description = post.markdown
+      updatedPost.description = updatedPost.markdown
     } else {
-      post.description = post.html
+      updatedPost.description = updatedPost.html
     }
 
     return updatedPost

@@ -58,10 +58,36 @@ class PublishPreferenceCfg extends PreferenceConfig {
    */
   public experimentalAIProxyUrl?: string
 
+  // 文档菜单
+  /**
+   * 是否展示文档快捷菜单
+   */
+  public showDocQuickMenu?: boolean
+
+  // 顶栏菜单
+  public showQuickMenu?: boolean
+  public showSingleMenu?: boolean
+  public showBatchMenu?: boolean
+  public showAIMenu?: boolean
+  public showExtendMenu?: boolean
+
+  // 文章管理
+  public showArticleManageMenu?: boolean
+
   constructor() {
     super()
     this.experimentalUseSiyuanNoteAIConfig = true
     this.experimentalAIEnabled = false
+
+    this.showDocQuickMenu = true
+
+    this.showQuickMenu = true
+    this.showSingleMenu = true
+    this.showBatchMenu = true
+    this.showAIMenu = true
+    this.showExtendMenu = true
+
+    this.showArticleManageMenu = true
   }
 }
 

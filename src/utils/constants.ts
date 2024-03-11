@@ -25,6 +25,10 @@
 
 export const isDev = process.env.DEV_MODE === "true"
 export const isDebugMode = process.env.DEBUG_MODE === "true"
+export const appBase = process.env.APP_BASE
+
+// 关于我页面
+export const aboutUrl = "https://blog.terwergreen.com/guestbook.html#respond"
 
 /**
  * 动态配置key，全系统唯一，请勿更改
@@ -40,3 +44,29 @@ export const MUST_USE_OWN_PLATFORM = ["custom_Zhihu", "custom_Csdn", "custom_Wec
  * 必须使用图床的平台
  */
 export const MUST_USE_PICBED_PLATFORM = ["common_Yuque", "common_Notion", "common_Hexo", "gitlab_Gitlabhexo"]
+
+/**
+ * 自动映射分类占位符
+ */
+export const CATE_AUTO_NAME = "[auto]"
+
+/**
+ * 标题最大长度
+ */
+export const MAX_TITLE_LENGTH = 10
+
+/**
+ * 旧的通用 HTTP 代理
+ *
+ * @since 1.0.0
+ * @version 1.20.0
+ */
+export const LEGENCY_SHARED_PROXT_MIDDLEWARE = "https://api.terwer.space/api/middleware"
+
+/**
+ * 新版通用 HTTP 代理
+ *
+ * @since 1.20.0
+ * @version 1.20.0
+ */
+export const CORS_PROXT_URL = "https://cors.terwer.space"

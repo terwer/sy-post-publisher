@@ -26,7 +26,7 @@
 import { MetaweblogPlaceholder } from "~/src/adaptors/api/base/metaweblog/metaweblogPlaceholder.ts"
 
 /**
- * WordPress 操作提示
+ * Typecho 操作提示
  */
 class TypechoPlaceholder extends MetaweblogPlaceholder {}
 

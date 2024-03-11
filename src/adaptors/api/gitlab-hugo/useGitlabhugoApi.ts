@@ -25,7 +25,7 @@
 
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { usePublishSettingStore } from "~/src/stores/usePublishSettingStore.ts"
 import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
 import { Utils } from "~/src/utils/utils.ts"
 import { getDynPostidKey } from "~/src/platforms/dynamicConfig.ts"
@@ -33,6 +33,7 @@ import { CategoryTypeEnum } from "zhi-blog-api"
 import { GitlabhugoConfig } from "~/src/adaptors/api/gitlab-hugo/gitlabhugoConfig.ts"
 import { GitlabhugoYamlConverterAdaptor } from "~/src/adaptors/api/gitlab-hugo/gitlabhugoYamlConverterAdaptor.ts"
 import { GitlabhugoApiAdaptor } from "~/src/adaptors/api/gitlab-hugo/gitlabhugoApiAdaptor.ts"
+import { LEGENCY_SHARED_PROXT_MIDDLEWARE } from "~/src/utils/constants.ts"
 
 const useGitlabhugoApi = async (key: string, newCfg?: GitlabhugoConfig) => {
   // 创建应用日志记录器
@@ -50,7 +51,7 @@ const useGitlabhugoApi = async (key: string, newCfg?: GitlabhugoConfig) => {
     cfg = newCfg
   } else {
     // 从配置中获取数据
-    const { getSetting } = useSettingStore()
+    const { getSetting } = usePublishSettingStore()
     const setting = await getSetting()
     cfg = JsonUtil.safeParse<GitlabhugoConfig>(setting[key], {} as GitlabhugoConfig)
 
@@ -61,10 +62,7 @@ const useGitlabhugoApi = async (key: string, newCfg?: GitlabhugoConfig) => {
       const githubAuthToken = Utils.emptyOrDefault(process.env.VITE_GITLAB_AUTH_TOKEN, "")
       const githubRepo = Utils.emptyOrDefault(process.env.VITE_GITLAB_REPO, "")
       const githubBranch = Utils.emptyOrDefault(process.env.VITE_GITLAB_BRANCH, "main")
-      const middlewareUrl = Utils.emptyOrDefault(
-        process.env.VITE_MIDDLEWARE_URL,
-        "https://api.terwer.space/api/middleware"
-      )
+      const middlewareUrl = Utils.emptyOrDefault(process.env.VITE_MIDDLEWARE_URL, LEGENCY_SHARED_PROXT_MIDDLEWARE)
       cfg = new GitlabhugoConfig(githubUsername, githubAuthToken, githubRepo, githubBranch, middlewareUrl)
       logger.info("Configuration is empty, using default environment variables.")
     } else {
@@ -79,12 +77,8 @@ const useGitlabhugoApi = async (key: string, newCfg?: GitlabhugoConfig) => {
 
   // 文件规则
   cfg.mdFilenameRule = "[slug].md"
-  cfg.useMdFilename = false
-  cfg.usePathCategory = false
   // 标签
   cfg.tagEnabled = true
-  cfg.useMdFilename = false
-  cfg.usePathCategory = false
   // 分类
   cfg.cateEnabled = true
   cfg.allowCateChange = true

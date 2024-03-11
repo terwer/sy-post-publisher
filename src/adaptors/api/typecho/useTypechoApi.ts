@@ -26,12 +26,13 @@
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { usePublishSettingStore } from "~/src/stores/usePublishSettingStore.ts"
 import { TypechoConfig } from "~/src/adaptors/api/typecho/typechoConfig.ts"
 import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
 import { getDynPostidKey } from "~/src/platforms/dynamicConfig.ts"
 import { TypechoApiAdaptor } from "~/src/adaptors/api/typecho/typechoApiAdaptor.ts"
 import { CategoryTypeEnum } from "zhi-blog-api"
+import { LEGENCY_SHARED_PROXT_MIDDLEWARE } from "~/src/utils/constants.ts"
 
 /**
  * 使用Typecho API的自定义hook
@@ -58,7 +59,7 @@ export const useTypechoApi = async (key?: string, newCfg?: TypechoConfig) => {
     cfg = newCfg
   } else {
     // 从配置中获取数据
-    const { getSetting } = useSettingStore()
+    const { getSetting } = usePublishSettingStore()
     const setting = await getSetting()
     cfg = JsonUtil.safeParse<TypechoConfig>(setting[key], {} as TypechoConfig)
     // 如果配置为空，则使用默认的环境变量值，并记录日志
@@ -67,10 +68,7 @@ export const useTypechoApi = async (key?: string, newCfg?: TypechoConfig) => {
       const typechoApiUrl = Utils.emptyOrDefault(process.env.VITE_TYPECHO_API_URL, "http://your-typecho-home.com/")
       const typechoUsername = Utils.emptyOrDefault(process.env.VITE_TYPECHO_USERNAME, "")
       const typechoAuthToken = Utils.emptyOrDefault(process.env.VITE_TYPECHO_AUTH_TOKEN, "")
-      const middlewareUrl = Utils.emptyOrDefault(
-        process.env.VITE_MIDDLEWARE_URL,
-        "https://api.terwer.space/api/middleware"
-      )
+      const middlewareUrl = Utils.emptyOrDefault(process.env.VITE_MIDDLEWARE_URL, LEGENCY_SHARED_PROXT_MIDDLEWARE)
       cfg = new TypechoConfig(typechoApiUrl, typechoUsername, typechoAuthToken, middlewareUrl)
       logger.info("Configuration is empty, using default environment variables.")
     } else {

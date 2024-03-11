@@ -25,7 +25,7 @@
 
 import { DeviceDetection, DeviceTypeEnum } from "zhi-device"
 import { createSiyuanAppLogger } from "../appLogger"
-import PageUtil from "../utils/pageUtil"
+import PageUtils from "../utils/pageUtils.ts"
 import { showIframeDialog } from "../iframeDialog"
 import PublisherPlugin from "../index"
 import { StrUtil } from "zhi-common"
@@ -44,7 +44,7 @@ export class WidgetInvoke {
   }
 
   public async showPublisherBatchPublishDialog() {
-    let pageId: string | undefined = PageUtil.getPageId()
+    let pageId: string | undefined = PageUtils.getPageId()
     if (pageId == "") {
       pageId = undefined
     }
@@ -53,11 +53,19 @@ export class WidgetInvoke {
       showMessage(`文档ID不能为空，注意：您必须打开当前文档才能进行发布操作`, 2000, "error")
       return
     }
-    await this.showPage(`/?id=${pageId}`)
+    await this.showPage(`/publish/batchPublish?id=${pageId}`)
+  }
+
+  public async showPublisherArticleManegeDialog() {
+    await this.showPage(`/`)
+  }
+
+  public async showPublisherArticleManegeTab() {
+    await this.showTab(`/`, this.pluginInstance.i18n.articleManage)
   }
 
   public async showPublisherAiChatDialog() {
-    let pageId: string | undefined = PageUtil.getPageId()
+    let pageId: string | undefined = PageUtils.getPageId()
     if (pageId == "") {
       pageId = undefined
     }
@@ -65,15 +73,15 @@ export class WidgetInvoke {
   }
 
   public async showPublisherAiChatTab() {
-    let pageId: string | undefined = PageUtil.getPageId()
+    let pageId: string | undefined = PageUtils.getPageId()
     if (pageId == "") {
       pageId = undefined
     }
-    this.showTab(`/ai/chat?id=${pageId}`)
+    this.showTab(`/ai/chat?id=${pageId}`, this.pluginInstance.i18n.aiChatTab)
   }
 
   public async showPublisherSinglePublishDialog() {
-    let pageId: string | undefined = PageUtil.getPageId()
+    let pageId: string | undefined = PageUtils.getPageId()
     if (pageId == "") {
       pageId = undefined
     }
@@ -85,11 +93,7 @@ export class WidgetInvoke {
     await this.showPage(`/publish/singlePublish?id=${pageId}`)
   }
 
-  public async showPublisherQuickPublishDialog(key: string) {
-    let pageId: string | undefined = PageUtil.getPageId()
-    if (pageId == "") {
-      pageId = undefined
-    }
+  public async showPublisherQuickPublishDialog(key: string, pageId?: string) {
     this.logger.debug("pageId=>", pageId)
     if (StrUtil.isEmptyString(key) || StrUtil.isEmptyString(pageId)) {
       showMessage(`平台key和文档ID不能为空，注意：您必须打开当前文档才能进行发布操作`, 2000, "error")
@@ -103,7 +107,7 @@ export class WidgetInvoke {
   }
 
   public async showPublisherGeneralSettingDialog() {
-    let pageId: string | undefined = PageUtil.getPageId()
+    let pageId: string | undefined = PageUtils.getPageId()
     if (pageId == "") {
       pageId = undefined
     }
@@ -112,7 +116,7 @@ export class WidgetInvoke {
   }
 
   public async showPublisherAboutDialog() {
-    let pageId: string | undefined = PageUtil.getPageId()
+    let pageId: string | undefined = PageUtils.getPageId()
     if (pageId == "") {
       pageId = undefined
     }
@@ -137,27 +141,24 @@ export class WidgetInvoke {
     }
   }
 
-  private showTab(pageUrl: string, noscroll?: boolean) {
+  private async showTab(pageUrl: string, title: string, noscroll?: boolean) {
     // 自定义tab
     this.pluginInstance.tabInstance = openTab({
       app: this.pluginInstance.app,
       custom: {
         id: "publisher-ai-tab",
         icon: "iconAccount",
-        title: this.pluginInstance.i18n.aiChatTab,
+        title: title,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         fn: this.pluginInstance.customTabObject,
       },
     })
+    if (this.pluginInstance.tabInstance instanceof Promise) {
+      this.pluginInstance.tabInstance = await this.pluginInstance.tabInstance
+    }
     const url = `/plugins/siyuan-plugin-publisher/#${pageUrl}`
     this.logger.info("will show webview page =>", url)
-    // 有高度问题，参考下面的
-    // this.pluginInstance.tabInstance.panelElement.innerHTML = `
-    //   <div class="plugin-publisher__custom-tab">
-    //       <style>iframe { width: 100%; border: none; }</style>
-    //       <iframe src="${url}" width="100%" scrolling="${noscroll ? "no" : "yes"}">
-    //       </iframe>
-    //   </div>`
 
     // 参考 https://github.com/zuoez02/siyuan-plugin-webview-flomo/blob/main/index.js#L380C20-L382C29
     this.pluginInstance.tabInstance.panelElement.innerHTML = `

@@ -27,14 +27,15 @@ import { ZhihuWebAdaptor } from "~/src/adaptors/web/zhihu/zhihuWebAdaptor.ts"
 import { ZhihuConfig } from "~/src/adaptors/web/zhihu/zhihuConfig.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { usePublishSettingStore } from "~/src/stores/usePublishSettingStore.ts"
 import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
 import { Utils } from "~/src/utils/utils.ts"
 import { getDynPostidKey } from "~/src/platforms/dynamicConfig.ts"
 import { CategoryTypeEnum } from "zhi-blog-api"
+import { LEGENCY_SHARED_PROXT_MIDDLEWARE } from "~/src/utils/constants.ts"
 
 /**
- * 用于获取ZhihuWeb的API的自定义Hook
+ * 用于获取Zhihu的API的自定义Hook
  */
 const useZhihuWeb = async (key?: string, newCfg?: ZhihuConfig) => {
   // 创建应用日志记录器
@@ -51,15 +52,12 @@ const useZhihuWeb = async (key?: string, newCfg?: ZhihuConfig) => {
     cfg = newCfg
   } else {
     // 从配置中获取数据
-    const { getSetting } = useSettingStore()
+    const { getSetting } = usePublishSettingStore()
     const setting = await getSetting()
     cfg = JsonUtil.safeParse<ZhihuConfig>(setting[key], {} as ZhihuConfig)
     // 如果配置为空，则使用默认的环境变量值，并记录日志
     if (ObjectUtil.isEmptyObject(cfg)) {
-      const middlewareUrl = Utils.emptyOrDefault(
-        process.env.VITE_MIDDLEWARE_URL,
-        "https://api.terwer.space/api/middleware"
-      )
+      const middlewareUrl = Utils.emptyOrDefault(process.env.VITE_MIDDLEWARE_URL, LEGENCY_SHARED_PROXT_MIDDLEWARE)
       // 从环境变量获取Zhihu的cookie
       const zhihuCookie = Utils.emptyOrDefault(process.env.VITE_ZHIHU_AUTH_TOKEN, "")
       cfg = new ZhihuConfig("", zhihuCookie, middlewareUrl)
@@ -67,10 +65,7 @@ const useZhihuWeb = async (key?: string, newCfg?: ZhihuConfig) => {
     } else {
       logger.info("Using configuration from settings...")
     }
-    const middlewareUrl = Utils.emptyOrDefault(
-      process.env.VITE_MIDDLEWARE_URL,
-      "https://api.terwer.space/api/middleware"
-    )
+    const middlewareUrl = Utils.emptyOrDefault(process.env.VITE_MIDDLEWARE_URL, LEGENCY_SHARED_PROXT_MIDDLEWARE)
     if (StrUtil.isEmptyString(cfg.middlewareUrl)) {
       cfg.middlewareUrl = middlewareUrl
     }

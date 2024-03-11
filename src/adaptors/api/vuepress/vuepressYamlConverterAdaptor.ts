@@ -39,9 +39,13 @@ import { toRaw } from "vue"
 class VuepressYamlConverterAdaptor extends YamlConvertAdaptor {
   private readonly logger = createAppLogger("vuepress-yaml-converter-adaptor")
 
-  public convertToYaml(post: Post, cfg?: BlogConfig): YamlFormatObj {
+  public convertToYaml(post: Post, yamlFormatObj?: YamlFormatObj, cfg?: BlogConfig): YamlFormatObj {
     this.logger.debug("您正在使用 Vuepress Yaml Converter", { post: toRaw(post) })
-    let yamlFormatObj: YamlFormatObj = new YamlFormatObj()
+    // 没有的情况默认初始化一个
+    if (!yamlFormatObj) {
+      yamlFormatObj = new YamlFormatObj()
+    }
+
     // title
     yamlFormatObj.yamlObj.title = post.title
 
@@ -49,16 +53,19 @@ class VuepressYamlConverterAdaptor extends YamlConvertAdaptor {
     yamlFormatObj.yamlObj.date = DateUtil.formatIsoToZh(post.dateCreated.toISOString(), true)
 
     // meta
-    yamlFormatObj.yamlObj.meta = [
-      {
+    yamlFormatObj.yamlObj.meta = []
+    if (!StrUtil.isEmptyString(post.mt_keywords)) {
+      yamlFormatObj.yamlObj.meta.push({
         name: "keywords",
-        content: post.mt_keywords.split(",").join(" "),
-      },
-      {
+        content: post.mt_keywords.split(",").join(" ") || "",
+      })
+    }
+    if (!StrUtil.isEmptyString(post.shortDesc)) {
+      yamlFormatObj.yamlObj.meta.push({
         name: "description",
-        content: post.shortDesc ?? "",
-      },
-    ]
+        content: post.shortDesc,
+      })
+    }
 
     // tags
     if (!StrUtil.isEmptyString(post.mt_keywords)) {
@@ -78,14 +85,19 @@ class VuepressYamlConverterAdaptor extends YamlConvertAdaptor {
     }
 
     // author
-    let githubUrl = "https://github.com/terwer"
     const githubCfg = cfg as CommonGithubConfig
-    if (githubCfg.home) {
+    let githubUrl = githubCfg.site
+    if (StrUtil.isEmptyString(githubCfg.site)) {
       githubUrl = StrUtil.pathJoin(githubCfg.home, "/" + githubCfg.username)
     }
     yamlFormatObj.yamlObj.author = {
       name: githubCfg.author ?? "terwer",
       link: githubUrl,
+    }
+
+    // 日记
+    if (post?.title?.includes("[日记]")) {
+      yamlFormatObj.yamlObj.article = false
     }
 
     // formatter

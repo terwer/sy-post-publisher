@@ -29,6 +29,7 @@ export default {
   "theme.mode.choose": "切换模式",
   "theme.mode.dark": "暗黑模式",
   "theme.mode.light": "浅色模式",
+  "service.tab.manage": "文章管理",
   "service.tab.publish.service": "发布服务",
   "service.tab.publish.setting": "发布配置",
   "service.tab.platform.setting": "平台配置",
@@ -45,7 +46,7 @@ export default {
   "main.publish.github": "发布页面",
   "main.publish.github.tip": "自动将文章的markdown文本发布到Vuepress对应的Github仓库（需要先进行相关配置）",
   "main.publish.github.no.tip": "您未开启Github pages发布，请切换源码模式复制YAML以及Markdown文本",
-  "main.publish.github.choose.path": "选择目录",
+  "main.publish.github.choose.path": "发布目录",
   "main.publish.github.published.path": "发布路径",
   "main.publish.github.choose.path.use.default": "默认目录",
   "main.publish.github.choose.path.use.default.tip":
@@ -75,9 +76,12 @@ export default {
   "main.update.time.placeholder": "请选择更新时间",
   "main.tag": "文章标签",
   "main.tag.new": "新标签",
+  "main.tag.select": "请选择标签",
   "main.auto.fetch.tag": "自动提取标签",
   "main.tag.auto.switch": "自动标签",
   "main.tag.auto.switch.no.tip": "自动标签已关闭，将不会自动生成标签",
+  "main.tag.empty": "暂无标签",
+  "main.tag.close": "收起选项",
   "main.cat": "文章分类",
   "main.cat.empty": "暂无分类",
   "main.cat.select": "请选择分类",
@@ -142,13 +146,15 @@ export default {
   "setting.blog.type.github.default.branch.tip": "默认分支（旧版仓库为master，新版仓库默认为main），例如：main",
   "setting.blog.type.github.default.path": "存储目录",
   "setting.blog.type.github.default.path.tip":
-    "存储目录（相对于仓库根目录的相对路径，默认所有文章都发布在这里），例如：docs/_posts",
+    "存储目录例如：docs，部分平台可使用[auto]作为特殊占位符，代表自动映射层级目录，例如：docs/[auto]",
   "setting.blog.type.github.msg": "提交信息",
   "setting.blog.type.github.msg.tip": "提交信息，例如：auto published by siyuan-publish-publisher",
   "setting.blog.type.github.author": "作者",
   "setting.blog.type.github.author.tip": "作者，例如：terwer",
   "setting.blog.type.github.email": "邮箱",
   "setting.blog.type.github.email.tip": "邮箱",
+  "setting.blog.type.github.site": "作者主页",
+  "setting.blog.type.github.site.tip": "作者主页，如果为空默认为：[GitHub地址]/[用户名]",
   "setting.blog.url": "博客网址",
   "setting.blog.github.url.tip": "Github首页地址",
   "setting.blog.username": "账号",
@@ -163,7 +169,7 @@ export default {
     "如果不明白原理，请勿修改此选项。MD文件预览规则（占位符：[user] [repo] [branch] [docpath]），通常是：/[user]/[repo]/blob/[branch]/[docpath]",
   "setting.blog.mdFilenameRule": "文件规则",
   "setting.blog.mdFilenameRule.tip":
-    "Markdown文件名规则（占位符：[yyyy] [MM] [dd] [slug] [filename] ），例如：[filename].md 或者 [yyyy]-[mm]-[dd]-[slug].md",
+    "Markdown文件名规则(占位符：[yyyy] [MM] [dd] [slug] [filename])，例如：[filename].md、[slug].md、[yyyy]-[mm]-[dd]-[slug].md",
   "setting.blog.pageType": "发布格式",
   "setting.blog.validate": "验证",
   "setting.blog.save": "保存",
@@ -219,6 +225,9 @@ export default {
   "post.bind.yuque.postid": "语雀的ID",
   "post.bind.kms.postid": "KMS的ID",
   "post.bind.conf.save": "保存",
+  "post.bind.conf.v081": "检测 v0.8.1 元数据并导入",
+  "post.bind.auto.error": "未检测到ID，请手动输入文档根 ID ，然后再进行修复",
+  "post.bind.auto.empty": "该文档未发布过，无需修复",
   "post.bind.conf.cancel": "取消",
   "form.validate.name.required": "请输入名称",
   "form.validate.name.length": "长度必须在0到1之间",
@@ -255,13 +264,13 @@ export default {
   "setting.common.password": "密码",
   "setting.blog.platform.support.common": "您当前操作的平台是：",
   "platform.must.select.one":
-    "哇哦，离使用就差一步啦 o(╥﹏╥)o ，您必须添加并启用至少一个平台。如果列出的平台没有你想要的，可以点击新增按钮添加。有任何疑问欢迎邮件 youweics#163.com ",
+    "哇哦，离使用就差一步啦 o(╥﹏╥)o ，您必须添加并启用至少一个平台。可通过「平台导入」获取去插件闪商店自定义添加。",
   "blog.list.toptip": "温馨提示：单击表格行可以进入文章详情页，详情页有发布按钮哦! (〃'▽'〃)",
   "config.error.msg": "配置错误，请前往对应发布配置修改",
   "config.platform.none": "没有启用的发布平台，请前往服务开关开启",
   "post.delete.by.platform": "文章已被平台自行删除，请点击取消强制解除关联",
   "blog.top-data-tip":
-    "温馨提示：1. 0.1.0+ 以后，可通过【偏好设置->思源地址】来修改默认伺服配置，支持本地和远程；如果是远程还需要设置token，如果使用浏览器插件或者挂件之外的访问方式还需要设置跨域请求代理。 2、升级新版之前强烈建议导出配置，防止配置丢失。 3、如果出现新版本不兼容的异常情况，建议清空配置。此操作不可恢复，请谨慎操作！",
+    "温馨提示：1. 0.1.0+ 以后，可通过【偏好设置->思源设置】来修改默认伺服配置，支持本地和远程；如果是远程还需要设置token，如果使用浏览器插件或者挂件之外的访问方式还需要设置跨域请求代理。 2、升级新版之前强烈建议导出配置，防止配置丢失。 3、如果出现新版本不兼容的异常情况，建议清空配置。此操作不可恢复，请谨慎操作！",
   "blog.top-data-tip.siyuan":
     "温馨提示：1、当前处于挂件模式，从 0.1.0 版本开始，无需在所有页面引用挂件了，只需要在父级页面引用一个挂件即可。具体规则如下：(1). 如果检测到没有子文档，会兼容 0.0.3 版本以前的方式，展示当前文档的发布页面。 (2). 如果检测到有子文档，会以列表加分页的方式展示所有子文档列表。可单独选择某个子文档进行发布操作。 2、升级新版之前强烈建议导出配置，防止配置丢失。 3、如果出现新版本不兼容的异常情况，建议清空配置。此操作不可恢复，请谨慎操作！",
   "blog.newwin.open": "页签模式",
@@ -270,7 +279,10 @@ export default {
   "setting.blog.middlewareUrl": "跨域请求代理",
   "setting.blog.middlewareUrl.tip": "某些场景下需要（例如自部署模式，Nginx伺服等、vite开发环境伺服等），其他情况可忽略",
   "setting.blog.middlewareUrl.my.tip":
-    "大部分情况下不需要，部分场景在浏览器环境下可能需要。如果没有部署代理，可以使用我的共享地址：https://api.terwer.space/api/middleware 。出于性能考虑，建议自己部署一份，请使用 https://github.com/terwer/node-metaweblog-api-adaptor 进行部署。",
+    "部分跨域场景可用（不支持绕过浏览器拒绝的 header ，例如 origin、referer 等；请求体不支持 FormData 等二进制格式，仅支持字符串），出于性能考虑，建议自己部署一份，请使用 https://github.com/terwer/node-metaweblog-api-adaptor 进行部署。",
+  "setting.blog.middlewareUrl.my.fee.tip":
+    "🤝由于共享代理占用巨大的成本，或者因为不可抗力原因可能会取消共享，为了保证服务可用性，建议自己部署一份，或者请作者喝一杯咖啡，鼓励我们持续共享🌹。参考之前的前辈大佬倒下的故事：https://linux.do/t/topic/1051",
+  "setting.blog.middlewareUrl.my.coffee": "赞助咖啡☕️",
   "setting.conf.export": "导出配置",
   "setting.conf.import": "导入配置",
   "setting.conf.transport": "导入导出",
@@ -404,11 +416,12 @@ export default {
   "setting.metaweblog.apiUrl.tip": "Metaweblog平台的xmlrpc远程发布地址",
   "setting.metaweblog.previewUrl.tip": "Metaweblog平台的文章预览规则，[postid]可作文文章ID占位符",
 
-  "setting.jvue.home.tip": "JVue平台的首页",
-  "setting.jvue.username.tip": "JVue平台登录名",
-  "setting.jvue.password.tip": "JVue平台密码",
-  "setting.jvue.apiUrl.tip": "JVue平台的xmlrpc远程发布地址，通常固定是：https://<平台地址>/xmlrpc",
-  "setting.jvue.previewUrl.tip": "JVue平台的文章预览规则，通常是：/post/[postid].html",
+  "setting.jvue.home.tip": "Jvue平台的首页，例如：http://localhost:3000",
+  "setting.jvue.username.tip": "Jvue平台登录名",
+  "setting.jvue.password.tip": "Jvue平台密码",
+  "setting.jvue.apiUrl.tip":
+    "Jvue平台的xmlrpc远程发布地址，通常固定是：https://<平台地址>/xmlrpc，例如：http://localhost:8008/xmlrpc",
+  "setting.jvue.previewUrl.tip": "Jvue平台的文章预览规则，通常是：/post/[postid].html",
 
   "setting.conf.home.tip": "Confluence Cloud，首页，通常是：https://<您的用户名>.atlassian.net/wiki/spaces/<空间名>",
   "setting.conf.username.tip": "Confluence登录名，可前往您的atlassian账户获取",
@@ -442,6 +455,18 @@ export default {
   "setting.juejin.password.tip": "掘金的Cookie，请勿修改",
   "setting.juejin.apiUrl.tip": "通常固定，请勿修改",
   "setting.juejin.previewUrl.tip": "掘金平台文章预览规则",
+
+  "setting.halo.home.tip": "Halo首页地址，需要包括域名端口，例如：http://localhost:8090",
+  "setting.halo.username.tip": "Halo博客登录名",
+  "setting.halo.password.tip": "Halo博客登录密码",
+  "setting.halo.apiUrl.tip": "Halo博客API地址，一般与Halo首页相同",
+  "setting.halo.previewUrl.tip":
+    "Halo博客文章预览规则，默认 /archives/{slug}，占位符有 {slug} {name} {year} {month} {day}，可在 [halo-home-url]/console/settings?tab=routeRules设置",
+
+  "setting.flowus.home.tip": "Flowus首页地址，通常固定",
+  "setting.flowus.password.tip": "Flowus的Cookie，请勿修改",
+  "setting.flowus.apiUrl.tip": "通常固定，请勿修改",
+  "setting.flowus.previewUrl.tip": "Flowus平台文章预览规则",
 
   "setting.picgo.refer.to": "详情请参考：",
   "setting.picgo.refer.to.online.doc": "PicGO配置在线文档",
@@ -518,6 +543,8 @@ export default {
   "setting.main.background": "挂件背景",
   "setting.main.background.tip": "支持16进制和rgb，例如：#000000，未设置或者留空不变。如果新窗口设置，请重新刷新文档。",
   "setting.picgo.manage": "图床管理",
+  "setting.platform.import": "平台导入",
+  "setting.platform.store": "插件商店",
   "setting.platform.add": "新增平台",
   "setting.platform.add.this": "新增此平台",
   "setting.platform.universal": "通用平台",
@@ -540,7 +567,7 @@ export default {
     "目前支持自定义HTTP协议的平台有：知乎等，采用网页授权。自定义HTTP协议通过类似 WeChatSync 的方式实现。",
   "setting.platform.right.tips0": "特别提示：",
   "setting.platform.right.tips1": "1、在这里可以进行发布配置，直接点击 [设置图标] 即可进行配置。",
-  "setting.platform.right.tips2": "2、如需新增平台，直接点击左侧 + 按钮即可。",
+  "setting.platform.right.tips2": "2、如需新增平台，直接点击「平台导入」或者「插件商店」进行添加。",
   "setting.platform.right.tips3":
     "3、目前支持 网页授权 和 API 授权两种方式，API授权 复杂点但是相对稳定，网页授权简单但是可能会失效。网页授权模式实现思路类似 wechatsync 。",
   "setting.platform.right.tips4": "4、如需兼容其他平台，请联系我：youweics@163.com 或者填写下面的表单。",
@@ -572,7 +599,7 @@ export default {
   "yuque.edit.cate.no.change":
     "由于语雀平台的限制，暂时不支持编辑所属知识库。如果您想移动文档，请先点击取消删除该文档，然后重新选择新的知识库发布",
   "main.commonn.cate.title": "公共分类",
-  "main.cate.new": "新增分类",
+  "main.cate.new": "新分类",
   "pref.setting.aicode": "ChatGPT请求key",
   "pref.setting.aicode.tip": "ChatGPT请求key或者第三方代理key，如果是代理key，请设置请求地址",
   "pref.setting.ai.baseurl": "ChatGPT请求地址",
@@ -583,12 +610,14 @@ export default {
   "main.auto.fetch.title": "自动提取标题",
   "main.auto.fetch.cate": "自动提取分类",
   "category.ai.hand": "由于各平台分类体系不一致，分类需要手动进行校准，不会自动保存",
-  "category.ai.enabled": "检测到您已经配置AI，可请前往详细模式进行操作",
-  "sys.config.ai": "AI设置",
+  "category.ai.enabled":
+    "检测到您已经配置AI，可请前往详细模式进行操作。小贴士：由于网络或者其他问题，如果第一次失败生成，多试几次或许就能出结果哟~😄",
+  "sys.config.ai": "AI 设置",
   "config.ai.use.siyuan": "思源笔记内部，直接使用思源笔记配置，无需配置",
   "setting.blog.yamlLinkEnabled": "YAML永久链接",
   "distri.type.overide.warn": "注意：覆盖模式下会用当前数据覆盖所有选择的平台，请谨慎操作。",
-  "distri.type.merge.warn": "注意：为了保留平台数据，合并模式下，标题和摘要的修改无效，您可在在常规发布单独修改对应平台的标题和摘要，标签和分类会与所选择的平台数据合并。",
+  "distri.type.merge.warn":
+    "注意：为了保留平台数据，合并模式下，标题和摘要的修改无效，您可在在常规发布单独修改对应平台的标题和摘要，标签和分类会与所选择的平台数据合并。",
   "preference.setting.keepTitle": "不更新原始标题",
 
   "setting.blog.gitlab.url.tip": "Gitlab首页，例如：http://localhost:8002",
@@ -597,5 +626,42 @@ export default {
   "setting.blog.gitlab.apiurl.tip": "Gitlab的API地址，一般与首页相同",
   "setting.blog.gitlab.previewUrl.tip": "文章预览地址，一般默认即可",
 
-  "main.force.cancel": "强制删除"
+  "main.force.cancel": "强制删除",
+  "loading.cost": "操作耗时",
+
+  "preference.setting.showDocQuickMenu": "显示文档菜单",
+  "preference.setting.showQuickMenu": "显示极速发布",
+  "preference.setting.showSingleMenu": "显示常规发布",
+  "preference.setting.showBatchMenu": "显示批量分发",
+  "preference.setting.showAIMenu": "显示AI菜单",
+  "preference.setting.showExtendMenu": "显示扩展菜单",
+  "preference.setting.showArticleManageMenu": "显示文章管理菜单",
+
+  "message.publish.notShared": "文章尚未分享，无法在外部查看。请分享文章或者在PC 客户端内部通过插件菜单进行预览。",
+
+  "setting.telegraph.home.tip": "telegra.ph平台首页，通常固定是：https://telegra.ph/",
+  "setting.telegraph.username.tip": "作者，会显示在文章详情，可自行设置，默认为空",
+  "setting.telegraph.password.tip": "设备hash，会自动获取，无需填写",
+  "setting.telegraph.apiurl.tip": "telegra.ph的API地址，通常固定是：https://telegra.ph/",
+  "setting.telegraph.previewUrl.tip": "telegra.ph的文章预览规则，通常是：/[notebook]/[postid]",
+
+  "page.loading": "页面加载中...",
+
+  "setting.blog.middlewareUrl.new": "新代理(推荐)",
+  "setting.blog.corsAnywhereUrl.tip":
+    "1.20.0+ 全新CORS全局代理，优先级高，设置之后会忽略上面旧的代理地址。设置之后可彻底解决浏览器跨域、科学上网问题",
+  "setting.blog.middlewareUrl.my.new.tip":
+    "1.20.0+ 新版CORS代理，彻底解决「科学上网」、「CORS 跨域」两大问题，" +
+    "支持全局跨域请求（支持绕过 header、请求体支持 FormData）。受限于 CORS 策略，「Docker 版本」必须设置 CORS 代理，" +
+    "否则大部分场景将无法使用。技术细节可参考 MDN：https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS " +
+    "以及 https://developer.mozilla.org/zh-CN/docs/Glossary/CORS。可私发邮件到 youweics@163.com 提供捐赠截图获取部署方案。" +
+    "之前捐助过的也可以私发截图给我，免费提供部署指导🤝。",
+  "setting.blog.middlewareUrl.my.warn.tip":
+    "⚠️特别提醒：请求限制为 「10万次/天」、「1000次/10分钟」，频次为「所有人共享」，因此资源十分珍贵。为了大家的利益，请勿恶意请求，否则，我们会关闭此共享代理。",
+
+  "platform.new.platform":
+    "检测到还有 [count] 个内置平台 [platform] 尚未导入，您可以使用平台导入批量导入，或者去插件商店自行添加。",
+
+  "import.v081.warn":
+    "考虑到 v0.8.1 已经是很早的版本了，此功能可能不再需要。如果您需要此功能，可反馈至 youweics@163.com ，我们会根据需求决定是否实现此功能。",
 }

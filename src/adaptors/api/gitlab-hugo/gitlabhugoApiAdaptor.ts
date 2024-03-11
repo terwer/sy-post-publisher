@@ -25,7 +25,7 @@
 
 import { BlogConfig, PageTypeEnum, Post, YamlConvertAdaptor } from "zhi-blog-api"
 import { CommonGitlabApiAdaptor } from "~/src/adaptors/api/base/gitlab/commonGitlabApiAdaptor.ts"
-import _ from "lodash"
+import _ from "lodash-es"
 import { GitlabhugoYamlConverterAdaptor } from "~/src/adaptors/api/gitlab-hugo/gitlabhugoYamlConverterAdaptor.ts"
 import { YamlUtil } from "zhi-common"
 
@@ -45,7 +45,7 @@ class GitlabhugoApiAdaptor extends CommonGitlabApiAdaptor {
     // 公共的属性预处理
     const doc = await super.preEditPost(post, id, publishCfg)
 
-    // HEXO 自带的处理
+    // HUGO 自带的处理
     const cfg: BlogConfig = publishCfg?.cfg
     const updatedPost = _.cloneDeep(doc) as Post
 

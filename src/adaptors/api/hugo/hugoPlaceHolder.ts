@@ -25,6 +25,6 @@
 
 import { CommonGithubPlaceholder } from "~/src/adaptors/api/base/github/commonGithubPlaceholder.ts"
 
-class HugoPlaceHolder extends CommonGithubPlaceholder {}
+class HugoPlaceholder extends CommonGithubPlaceholder {}
 
-export { HugoPlaceHolder }
+export { HugoPlaceholder }

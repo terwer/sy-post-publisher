@@ -26,12 +26,13 @@
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { usePublishSettingStore } from "~/src/stores/usePublishSettingStore.ts"
 import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
 import { WordpressConfig } from "~/src/adaptors/api/wordpress/wordpressConfig.ts"
 import { WordpressApiAdaptor } from "~/src/adaptors/api/wordpress/wordpressApiAdaptor.ts"
 import { getDynPostidKey } from "~/src/platforms/dynamicConfig.ts"
 import { CategoryTypeEnum } from "zhi-blog-api"
+import { LEGENCY_SHARED_PROXT_MIDDLEWARE } from "~/src/utils/constants.ts"
 
 /**
  * 使用Wordpress API的自定义hook
@@ -58,7 +59,7 @@ export const useWordpressApi = async (key?: string, newCfg?: WordpressConfig) =>
     cfg = newCfg
   } else {
     // 从配置中获取数据
-    const { getSetting } = useSettingStore()
+    const { getSetting } = usePublishSettingStore()
     const setting = await getSetting()
     cfg = JsonUtil.safeParse<WordpressConfig>(setting[key], {} as WordpressConfig)
     // 如果配置为空，则使用默认的环境变量值，并记录日志
@@ -67,10 +68,7 @@ export const useWordpressApi = async (key?: string, newCfg?: WordpressConfig) =>
       const wordpressApiUrl = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_API_URL, "http://your-wordpress-home.com")
       const wordpressUsername = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_USERNAME, "")
       const wordpressAuthToken = Utils.emptyOrDefault(process.env.VITE_WORDPRESS_AUTH_TOKEN, "")
-      const middlewareUrl = Utils.emptyOrDefault(
-        process.env.VITE_MIDDLEWARE_URL,
-        "https://api.terwer.space/api/middleware"
-      )
+      const middlewareUrl = Utils.emptyOrDefault(process.env.VITE_MIDDLEWARE_URL, LEGENCY_SHARED_PROXT_MIDDLEWARE)
       cfg = new WordpressConfig(wordpressApiUrl, wordpressUsername, wordpressAuthToken, middlewareUrl)
       logger.info("Configuration is empty, using default environment variables.")
     } else {

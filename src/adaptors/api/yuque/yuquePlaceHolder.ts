@@ -28,6 +28,6 @@ import { CommonBlogPlaceholder } from "~/src/adaptors/api/base/commonBlogPlaceho
 /**
  * Yuque 配置提示
  */
-class YuquePlaceHolder extends CommonBlogPlaceholder {}
+class YuquePlaceholder extends CommonBlogPlaceholder {}
 
-export { YuquePlaceHolder }
+export { YuquePlaceholder }

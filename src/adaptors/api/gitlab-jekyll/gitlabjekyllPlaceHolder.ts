@@ -23,8 +23,8 @@
  * questions.
  */
 
-import { JekyllPlaceHolder } from "~/src/adaptors/api/jekyll/jekyllPlaceHolder.ts"
+import { JekyllPlaceholder } from "~/src/adaptors/api/jekyll/jekyllPlaceholder.ts"
 
-class GitlabjekyllPlaceHolder extends JekyllPlaceHolder {}
+class GitlabjekyllPlaceholder extends JekyllPlaceholder {}
 
-export { GitlabjekyllPlaceHolder }
+export { GitlabjekyllPlaceholder }

@@ -24,11 +24,12 @@
  */
 
 export default {
-  "lang.choose": "Choose lang",
+  "lang.choose": "Language",
   "lang.choose.placeholder": "Please select language",
   "theme.mode.choose": "Mode",
   "theme.mode.dark": "Dark mode",
   "theme.mode.light": "Light mode",
+  "service.tab.manage": "Post manage",
   "service.tab.publish.service": "Publish service",
   "service.tab.publish.setting": "Publish setting",
   "service.tab.platform.setting": "Platform setting",
@@ -77,7 +78,10 @@ export default {
   "main.update.time.placeholder": "Please select time",
   "main.tag": "Post tag",
   "main.tag.new": "New tag",
+  "main.tag.close": "Close tag",
+  "main.tag.select": "Select tag",
   "main.auto.fetch.tag": "Auto fetch tag",
+  "main.tag.empty": "No tags",
   "main.tag.auto.switch": "Tag switch",
   "main.tag.auto.switch.no.tip": "Auto tag is closed",
   "main.cat": "Category",
@@ -147,6 +151,9 @@ export default {
   "setting.blog.type.github.author.tip": "Author, eg:terwer",
   "setting.blog.type.github.email": "Email",
   "setting.blog.type.github.email.tip": "Email",
+  "setting.blog.type.github.site": "Author's Page",
+  "setting.blog.type.github.site.tip":
+    "Author's page, defaults to: [GitHub URL]/[Username] if left empty. Please do not change the key, translate the value to English.",
   "setting.blog.url": "Blog addr",
   "setting.blog.github.url.tip": "Github homepage address",
   "setting.blog.github.apiurl.tip": "Github's REST API address, typically: https://api.github.com",
@@ -158,7 +165,7 @@ export default {
     "MD file preview rules (place occupied: [user] [repo] [Branch] [docpath]), for example:/[user]/[repo]/blob/[branch]/[docpath]",
   "setting.blog.mdFilenameRule": "File rule",
   "setting.blog.mdFilenameRule.tip":
-    "Markdown File Name Rules (Plasma: [yyyy] [MM] [dd] [slug] [filename]), for example: [filename].md or [yyyy]-[MM]-[dd]-[slug].md",
+    "Markdown File Name Rules (Plasma: [yyyy] [MM] [dd] [slug] [filename]), for example: [filename].md or [slug].md or [yyyy]-[MM]-[dd]-[slug].md",
   "setting.blog.username": "Username",
   "setting.blog.password": "Password",
   "setting.blog.apiurl": "API Url",
@@ -218,6 +225,9 @@ export default {
   "post.bind.yuque.postid": "Yuque ID",
   "post.bind.kms.postid": "KMS ID",
   "post.bind.conf.save": "Save",
+  "post.bind.conf.v081": "Examine the v0.8.1 metadata and import it",
+  "post.bind.auto.error": "No ID detected, kindly input the document root ID manually, before proceeding with the repair.",
+  "post.bind.auto.empty": "This document has never been published, hence no repair is necessary",
   "post.bind.conf.cancel": "Cancel",
   "form.validate.name.required": "Please input name",
   "form.validate.name.length": "Length should be 0 to 1",
@@ -268,6 +278,13 @@ export default {
   "blog.newwin.open": "Open in a new window",
   "blog.change.siyuan.api": "Modify Siyuan API address",
   "setting.blog.siyuan.current.apiurl": "Current apiUrl=>",
+  "setting.blog.middlewareUrl.tip":
+    "In certain scenarios, a necessity might arise (as seen in self-hosting environments, Nginx server setups, Vite development environments, etc.), while other situations could warrant overlooking this requirement.",
+  "setting.blog.middlewareUrl.my.tip":
+    "In most cases, it is unnecessary, yet in specific contexts within 'browser environments,' 'docker environments,' 'Nginx server' setups, and the like, it might become essential. If a proxy deployment is absent, one can utilize my shared address: https://api.terwer.space/api/middleware. For performance considerations, I recommend self-deployment; kindly employ https://github.com/terwer/node-metaweblog-api-adaptor for deployment.",
+  "setting.blog.middlewareUrl.my.fee.tip":
+    "🤝Due to substantial costs associated with shared proxies or potential unforeseeable circumstances that may lead to its discontinuation, for the sake of service continuity, deploying one's instance is advised. Alternatively, consider inviting the author for a coffee to support ongoing sharing endeavors🌹.",
+  "setting.blog.middlewareUrl.my.coffee": "Sponsor a coffee☕️",
   "setting.conf.export": "Export config",
   "setting.conf.import": "Import config",
   "setting.conf.transport": "Transport",
@@ -413,7 +430,7 @@ export default {
   "setting.jvue.username.tip": "Jvue platform login name",
   "setting.jvue.password.tip": "Jvue platform password",
   "setting.jvue.apiUrl.tip":
-    "The XMLRPC remote release address of the JVUE platform is usually fixed: https: // <platform address>/xmlrpc",
+    "The XMLRPC remote release address of the Jvue platform is usually fixed: https: // <platform address>/xmlrpc",
   "setting.jvue.previewUrl.tip": "The preview rules of the Jvue platform are usually:/post/[postid] .html",
 
   "setting.conf.home.tip":
@@ -448,6 +465,19 @@ export default {
   "setting.juejin.password.tip": "Juejin's Cookie, do not modify",
   "setting.juejin.apiUrl.tip": "Usually fixed, do not modify",
   "setting.juejin.previewUrl.tip": "Juejin platform article preview rules",
+
+  "setting.halo.home.tip":
+    "Halo homepage address, should include the domain and port, for example: http://localhost:8090",
+  "setting.halo.username.tip": "Halo blog login name",
+  "setting.halo.password.tip": "Halo blog login password",
+  "setting.halo.apiUrl.tip": "Halo blog API address, typically the same as the Halo homepage",
+  "setting.halo.previewUrl.tip":
+    "Halo blog article preview rule, default /archives/{slug}, with placeholders {slug} {name} {year} {month} {day}, can be set in [halo-home-url]/console/settings?tab=routeRules",
+
+  "setting.flowus.home.tip": "Flowus homepage address, usually fixed",
+  "setting.flowus.password.tip": "Flowus cookie, do not modify",
+  "setting.flowus.apiUrl.tip": "Usually fixed, do not modify",
+  "setting.flowus.previewUrl.tip": "Flowus platform article preview rules",
 
   "setting.picgo.refer.to": "For details, please refer to:",
   "setting.picgo.refer.to.online.doc": "Picgo configuration online documentation",
@@ -533,6 +563,8 @@ export default {
   "setting.platform.gitlab.desc":
     "Gitlab is basically similar to Github, except that Gitlab supports its own on-premises or cloud server deployment",
   "setting.picgo.manage": "Picture manage",
+  "setting.platform.import": "Platform import",
+  "setting.platform.store": "Plugin store",
   "setting.platform.add": "Add platform",
   "setting.platform.add.this": "Add this platform",
   "setting.platform.universal": "Universal platform",
@@ -576,7 +608,7 @@ export default {
   "post.bind.auto.tips":
     "The ID here is automatically saved by the publishing tool, if you are not clear about the principle, please do not modify it",
   "siyuan.config.setting": "Source settings",
-  "setting.blog.siyuan.apiurl": "Siyuan API address",
+  "setting.blog.siyuan.apiurl": "Siyuan API",
   "setting.blog.siyuan.apiurl.tip":
     "The API address of Siyuan Note, including ports, The default address of Siyuan API is: http://127.0.0.1;6806",
   "setting.blog.siyuan.password": "Siyuan Token",
@@ -603,17 +635,47 @@ export default {
     "Due to inconsistent classification systems across platforms, classifications need to be calibrated manually and are not automatically saved",
   "category.ai.enabled": "AI is available, please go to the detailed mode to operate",
   "sys.config.ai": "AI configuration",
-  "config.ai.use.siyuan": "Inside Siyuan notes, you can directly use Siyuan notes to configure, no configuration is required",
+  "config.ai.use.siyuan":
+    "Inside Siyuan notes, you can directly use Siyuan notes to configure, no configuration is required",
   "setting.blog.yamlLinkEnabled": "YAML permalink",
   "distri.type.overide.warn": "Note: Please use caution when overwriting the selected platform with the current data.",
-  "distri.type.merge.warn": "Note: In merge mode, the title and abstract changes are not valid, and the labels and categories are merged with the selected platform data.",
+  "distri.type.merge.warn":
+    "Note: In merge mode, the title and abstract changes are not valid, and the labels and categories are merged with the selected platform data.",
   "preference.setting.keepTitle": "Do not update the original title",
 
   "setting.blog.gitlab.url.tip": "GitLab homepage, e.g., http://localhost:8002",
   "setting.blog.type.gitlab.user.tip": "Username for GitLab",
-  "setting.blog.type.gitlab.token.tip": "Token for GitLab, please refer to the link below for setup and ensure API permissions are granted",
+  "setting.blog.type.gitlab.token.tip":
+    "Token for GitLab, please refer to the link below for setup and ensure API permissions are granted",
   "setting.blog.gitlab.apiurl.tip": "GitLab API address, usually the same as the homepage",
   "setting.blog.gitlab.previewUrl.tip": "Article preview address, usually the default",
 
-  "main.force.cancel": "Force delete"
+  "main.force.cancel": "Force delete",
+  "loading.cost": "Loading cost",
+
+  "preference.setting.showDocQuickMenu": "Show doc menu",
+  "preference.setting.showQuickMenu": "Show quick publish",
+  "preference.setting.showSingleMenu": "Show normal publish",
+  "preference.setting.showBatchMenu": "Show batch publish",
+  "preference.setting.showAIMenu": "Show AI menu",
+  "preference.setting.showExtendMenu": "Show extend menu",
+  "preference.setting.showArticleManageMenu": "Show artile manage menu",
+
+  "message.publish.notShared":
+    "The article has not been shared and therefore cannot be viewed externally. Kindly share the article or preview it within the PC client through the plugin menu.",
+
+  "page.loading": "Page is loading...",
+
+  "setting.blog.middlewareUrl.new": "Fresh Proxy (Recommended)",
+  "setting.blog.corsAnywhereUrl.tip":
+    "CORS Global Proxy, once configured, helps alleviate browser cross-origin issues.",
+  "setting.blog.middlewareUrl.my.new.tip":
+    "Enhanced CORS proxy, enabling comprehensive cross-origin requests. It is advisable to deploy independently. For deployment guidance, kindly refer to https://github.com/Zibri/cloudflare-cors-anywhere.",
+  "reminder.blog.middlewareUrl.my.warning":
+    "A special note: Request limits are set at '100,000 times/day' and '1,000 times/10 minutes'. For the benefit of all, kindly refrain from malicious requests; otherwise, we reserve the right to terminate this proxy service.",
+
+  "platform.new.platform":
+    "It has been observed that there are still [count] internal platforms [platform] awaiting importation. You may utilize the platform importation tool for a bulk import, or alternatively, manually add them from the plugin store.",
+
+  "import.v081.warn": "Given that v0.8.1 is considered a significantly antiquated iteration, this feature may no longer be pertinent. Should you find yourself in need of this functionality, please direct your feedback to youweics@qq.com, and we shall deliberate on its implementation based on demand."
 }

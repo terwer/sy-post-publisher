@@ -26,7 +26,7 @@
 import PublisherPlugin from "../index"
 import { createSiyuanAppLogger } from "../appLogger"
 import { showIframeDialog } from "../iframeDialog"
-import PageUtil from "../utils/pageUtil"
+import PageUtils from "../utils/pageUtils.ts"
 import { IObject } from "siyuan"
 import { isSiyuanFileExists } from "../utils/utils"
 
@@ -45,7 +45,7 @@ export class PluginInvoke {
   }
 
   public async showBlogDialog() {
-    const pageId: string | undefined = PageUtil.getPageId()
+    const pageId: string | undefined = PageUtils.getPageId()
     const pageUrl = `${this.blogPluginBase}/post/${pageId}`
 
     // 临时开启预览权限
@@ -60,6 +60,7 @@ export class PluginInvoke {
       this.logger.info("The document is not shared, will temporarily turn on preview permissions")
     }
 
+    this.logger.info(`Will open page => ${pageUrl}`)
     showIframeDialog(this.pluginInstance, pageUrl, undefined, undefined, undefined, async (options?: IObject) => {
       // 回收预览权限
       if (!isShared) {
@@ -74,14 +75,16 @@ export class PluginInvoke {
   }
 
   public async showPicbedDialog() {
-    const pageId: string | undefined = PageUtil.getPageId()
+    const pageId: string | undefined = PageUtils.getPageId()
     const pageUrl = `${this.picgoPluginBase}/?pageId=${pageId}`
+    this.logger.info(`Will open page => ${pageUrl}`)
     showIframeDialog(this.pluginInstance, pageUrl)
   }
 
   public async showPicbedSettingDialog() {
-    const pageId: string | undefined = PageUtil.getPageId()
+    const pageId: string | undefined = PageUtils.getPageId()
     const pageUrl = `${this.picgoPluginBase}/setting?pageId=${pageId}`
+    this.logger.info(`Will open page => ${pageUrl}`)
     showIframeDialog(this.pluginInstance, pageUrl)
   }
 

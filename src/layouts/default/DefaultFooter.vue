@@ -35,6 +35,11 @@
         <span class="text s-dark" @click="goAbout()">{{ t("syp.about") }}</span>
 
         <span class="text">.</span>
+        <span class="text s-dark" @click="handleGoHome">
+          {{ t("service.tab.manage") }}
+        </span>
+
+        <span class="text">.</span>
         <span class="text s-dark" @click="toggleDark()">{{
           isDark ? t("theme.mode.light") : t("theme.mode.dark")
         }}</span>
@@ -89,8 +94,13 @@ const goGithub = () => {
   window.open("https://github.com/terwer/siyuan-plugin-publisher")
 }
 
+const handleGoHome = async () => {
+  await router.push({
+    path: "/",
+  })
+}
 const goAbout = async () => {
-  // window.open("https://blog.terwer.space/about")
+  // window.open("https://blog.terwergreen.com/guestbook.html")
   await router.push({
     path: "/about",
     query: { showBack: "true" },

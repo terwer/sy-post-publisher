@@ -2,7 +2,9 @@
   "publishTool": "Publisher",
   "publish": "Publish",
   "preview": "Preview",
+  "picmanage": "Picture manage",
   "picbed": "Upload picture to picbed",
+  "aitool": "AI tool",
   "setting": "Setting",
   "settingGeneral": "General setting",
   "settingPicbed": "Picbed manage",
@@ -14,9 +16,11 @@
   "cancel": "Cancel",
   "save": "Save",
   "publishTo": "Publish to...",
+  "publishToQuick": "Publish to..",
   "batchSync": "Batch sync",
   "publishNormal": "Publish normal",
   "extendFunction": "Extended functionality",
+  "articleManage": "Article manage",
   "aiChat": "AI chat",
   "aiChatTab": "AI chat tab"
 }

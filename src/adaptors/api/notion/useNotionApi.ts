@@ -27,11 +27,12 @@ import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import { Utils } from "~/src/utils/utils.ts"
 import { NotionConfig } from "~/src/adaptors/api/notion/notionConfig.ts"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { usePublishSettingStore } from "~/src/stores/usePublishSettingStore.ts"
 import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
 import { getDynPostidKey } from "~/src/platforms/dynamicConfig.ts"
 import { NotionApiAdaptor } from "~/src/adaptors/api/notion/notionApiAdaptor.ts"
 import { CategoryTypeEnum } from "zhi-blog-api"
+import { LEGENCY_SHARED_PROXT_MIDDLEWARE } from "~/src/utils/constants.ts"
 
 const useNotionApi = async (key: string, newCfg?: NotionConfig) => {
   // 创建应用日志记录器
@@ -49,7 +50,7 @@ const useNotionApi = async (key: string, newCfg?: NotionConfig) => {
     cfg = newCfg
   } else {
     // 从配置中获取数据
-    const { getSetting } = useSettingStore()
+    const { getSetting } = usePublishSettingStore()
     const setting = await getSetting()
     cfg = JsonUtil.safeParse<NotionConfig>(setting[key], {} as NotionConfig)
 
@@ -57,10 +58,7 @@ const useNotionApi = async (key: string, newCfg?: NotionConfig) => {
     if (ObjectUtil.isEmptyObject(cfg)) {
       // 从环境变量获取 Notion API 的 URL、认证令牌和其他配置信息
       const notionAuthToken = Utils.emptyOrDefault(process.env.VITE_NOTION_AUTH_TOKEN, "")
-      const middlewareUrl = Utils.emptyOrDefault(
-        process.env.VITE_MIDDLEWARE_URL,
-        "https://api.terwer.space/api/middleware"
-      )
+      const middlewareUrl = Utils.emptyOrDefault(process.env.VITE_MIDDLEWARE_URL, LEGENCY_SHARED_PROXT_MIDDLEWARE)
       cfg = new NotionConfig(notionAuthToken, middlewareUrl)
       logger.info("Configuration is empty, using default environment variables.")
     } else {

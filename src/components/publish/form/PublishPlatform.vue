@@ -24,14 +24,15 @@
   -->
 
 <script setup lang="ts">
-import {onMounted, reactive, toRaw} from "vue"
+import { onMounted, reactive } from "vue"
 import { JsonUtil, StrUtil } from "zhi-common"
 import { DynamicConfig, DynamicJsonCfg, getDynPostidKey } from "~/src/platforms/dynamicConfig.ts"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { usePublishSettingStore } from "~/src/stores/usePublishSettingStore.ts"
 import { svgIcons } from "../../../utils/svgIcons.ts"
-import { pre } from "~/src/utils/import/pre.ts"
+import { pre } from "~/src/platforms/pre.ts"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
+import CrossPageUtils from "~/cross/crossPageUtils.ts"
 
 const logger = createAppLogger("publish-platform")
 
@@ -43,7 +44,7 @@ const props = defineProps({
 })
 
 // uses
-const { getSetting } = useSettingStore()
+const { getSetting } = usePublishSettingStore()
 
 // datas
 const sysKeys = pre.systemCfg.map((item) => {
@@ -64,7 +65,7 @@ if (emit) {
 const handleCheck = (key: string) => {
   if (formData.selectedKeys.includes(key)) {
     // 如果 formData.selectedKeys 数组中包含 key，则从数组中删除 key
-    formData.selectedKeys = formData.selectedKeys?.filter((item: string) => item !== key)??[]
+    formData.selectedKeys = formData.selectedKeys?.filter((item: string) => item !== key) ?? []
   } else {
     // 如果 formData.selectedKeys 数组中不包含 key，则将其添加到数组中
     formData.selectedKeys.push(key)
@@ -104,16 +105,17 @@ onMounted(async () => {
   <div>
     <p>请选择要发布的平台：</p>
     <div class="syp-distri-platform-container">
-      <a
-        v-for="cfg in formData.dynamicConfigArray"
-        class="distri-item"
-        :title="cfg.platformName"
-        @click="handleCheck(cfg.platformKey)"
-      >
-        <el-icon class="platform-icon">
-          <span v-html="cfg.platformIcon"></span>
-        </el-icon>
-        <span v-if="formData.selectedKeys.includes(cfg.platformKey)" v-html="svgIcons.iconOTYes"></span>
+      <a v-for="cfg in formData.dynamicConfigArray" class="distri-item" @click="handleCheck(cfg.platformKey)">
+        <el-tooltip :content="CrossPageUtils.longPlatformName(cfg.platformName, 20)" placement="bottom">
+          <el-icon class="platform-icon">
+            <span v-html="cfg.platformIcon"></span>
+          </el-icon>
+        </el-tooltip>
+        <span
+          v-if="formData.selectedKeys.includes(cfg.platformKey)"
+          class="icon-yes"
+          v-html="svgIcons.iconOTYes"
+        ></span>
         <span v-else class="icon-no" v-html="svgIcons.iconOTNo"></span>
       </a>
     </div>
