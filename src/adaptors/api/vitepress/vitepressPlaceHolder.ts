@@ -25,6 +25,6 @@
 
 import { CommonGithubPlaceholder } from "~/src/adaptors/api/base/github/commonGithubPlaceholder.ts"
 
-class VitepressPlaceHolder extends CommonGithubPlaceholder {}
+class VitepressPlaceholder extends CommonGithubPlaceholder {}
 
-export { VitepressPlaceHolder }
+export { VitepressPlaceholder }

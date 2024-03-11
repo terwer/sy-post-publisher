@@ -29,8 +29,7 @@ import { reactive } from "vue"
 import { useRoute } from "vue-router"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { getSubPlatformTypeByKey, SubPlatformType } from "~/src/platforms/dynamicConfig.ts"
-import VuepressSetting from "~/src/components/set/publish/singleplatform/github/VuepressSetting.vue"
-import GitlabvuepressSetting from "~/src/components/set/publish/singleplatform/gitlab/GitlabvuepressSetting.vue"
+import TelegraphSetting from "~/src/components/set/publish/singleplatform/commonblog/TelegraphSetting.vue"
 
 // uses
 const { t } = useVueI18n()
@@ -46,6 +45,8 @@ const subtype = getSubPlatformTypeByKey(apiType)
   <back-page :title="t('setting.entry.title') + apiType">
     <yuque-setting v-if="subtype === SubPlatformType.Common_Yuque" :api-type="apiType" />
     <notion-setting v-else-if="subtype === SubPlatformType.Common_Notion" :api-type="apiType" />
+    <halo-setting v-else-if="subtype === SubPlatformType.Common_Halo" :api-type="apiType" />
+    <telegraph-setting v-else-if="subtype === SubPlatformType.Common_Telegraph" :api-type="apiType" />
     <hexo-setting v-else-if="subtype === SubPlatformType.Github_Hexo" :api-type="apiType" />
     <hugo-setting v-else-if="subtype === SubPlatformType.Github_Hugo" :api-type="apiType" />
     <jekyll-setting v-else-if="subtype === SubPlatformType.Github_Jekyll" :api-type="apiType" />
@@ -61,12 +62,16 @@ const subtype = getSubPlatformTypeByKey(apiType)
     <othermeta-setting v-else-if="subtype === SubPlatformType.Metaweblog_Metaweblog" :api-type="apiType" />
     <cnblogs-setting v-else-if="subtype === SubPlatformType.Metaweblog_Cnblogs" :api-type="apiType" />
     <typecho-setting v-else-if="subtype === SubPlatformType.Metaweblog_Typecho" :api-type="apiType" />
+    <jvue-setting v-else-if="subtype === SubPlatformType.Metaweblog_Jvue" :api-type="apiType" />
     <wordpress-setting v-else-if="subtype === SubPlatformType.Wordpress_Wordpress" :api-type="apiType" />
     <zhihu-setting v-else-if="subtype === SubPlatformType.Custom_Zhihu" :api-type="apiType" />
     <csdn-setting v-else-if="subtype === SubPlatformType.Custom_CSDN" :api-type="apiType" />
     <wechat-setting v-else-if="subtype === SubPlatformType.Custom_Wechat" :api-type="apiType" />
     <jianshu-setting v-else-if="subtype === SubPlatformType.Custom_Jianshu" :api-type="apiType" />
     <juejin-setting v-else-if="subtype === SubPlatformType.Custom_Juejin" :api-type="apiType" />
+    <!--
+    <flowus-setting v-else-if="subtype === SubPlatformType.Custom_Flowus" :api-type="apiType" />
+    -->
     <span v-else>
       <el-alert :closable="false" :title="t('setting.entry.not.supported')" class="top-tip" type="error" />
     </span>
@@ -76,5 +81,4 @@ const subtype = getSubPlatformTypeByKey(apiType)
 <style lang="stylus" scoped>
 .top-tip
   margin 10px 0
-  padding-left 0
 </style>

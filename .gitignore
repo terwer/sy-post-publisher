@@ -23,6 +23,7 @@ venv
 __pycache__
 cookie.txt
 token.txt
+pageId.txt
 
 # ext
 extension
@@ -32,6 +33,10 @@ build
 widget
 archive.zip
 components.d.ts
+auto-imports.d.ts
+
+# ginx
+nginx
 
 # test
 coverage

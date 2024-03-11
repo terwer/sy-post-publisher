@@ -25,6 +25,6 @@
 
 import { CommonGithubPlaceholder } from "~/src/adaptors/api/base/github/commonGithubPlaceholder.ts"
 
-class Vuepress2PlaceHolder extends CommonGithubPlaceholder {}
+class Vuepress2Placeholder extends CommonGithubPlaceholder {}
 
-export { Vuepress2PlaceHolder }
+export { Vuepress2Placeholder }

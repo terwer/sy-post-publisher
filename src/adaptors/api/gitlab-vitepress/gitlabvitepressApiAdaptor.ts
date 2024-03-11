@@ -26,7 +26,7 @@
 import { BlogConfig, PageTypeEnum, Post, YamlConvertAdaptor } from "zhi-blog-api"
 import { GitlabvitepressYamlConverterAdaptor } from "~/src/adaptors/api/gitlab-vitepress/gitlabvitepressYamlConverterAdaptor.ts"
 import { CommonGitlabApiAdaptor } from "~/src/adaptors/api/base/gitlab/commonGitlabApiAdaptor.ts"
-import _ from "lodash"
+import _ from "lodash-es"
 import { YamlUtil } from "zhi-common"
 
 /**
@@ -45,7 +45,7 @@ class GitlabvitepressApiAdaptor extends CommonGitlabApiAdaptor {
     // 公共的属性预处理
     const doc = await super.preEditPost(post, id, publishCfg)
 
-    // HEXO 自带的处理
+    // Vitepress 自带的处理
     const cfg: BlogConfig = publishCfg?.cfg
     const updatedPost = _.cloneDeep(doc) as Post
 

@@ -28,7 +28,7 @@ import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { StrUtil } from "zhi-common"
 import { useGitlabvuepressApi } from "~/src/adaptors/api/gitlab-vuepress/useGitlabvuepressApi.ts"
 import { GitlabvuepressConfig } from "~/src/adaptors/api/gitlab-vuepress/gitlabvuepressConfig.ts"
-import { GitlabvuepressPlaceHolder } from "~/src/adaptors/api/gitlab-vuepress/gitlabvuepressPlaceHolder.ts"
+import { GitlabvuepressPlaceholder } from "~/src/adaptors/api/gitlab-vuepress/gitlabvuepressPlaceholder.ts"
 
 const props = defineProps({
   apiType: {
@@ -40,7 +40,7 @@ const props = defineProps({
 const { t } = useVueI18n()
 const { cfg } = await useGitlabvuepressApi(props.apiType)
 const vuepressCfg = cfg as GitlabvuepressConfig
-const vuepressPlaceholder = new GitlabvuepressPlaceHolder()
+const vuepressPlaceholder = new GitlabvuepressPlaceholder()
 vuepressPlaceholder.homePlaceholder = t("setting.blog.gitlab.url.tip")
 vuepressPlaceholder.usernamePlaceholder = t("setting.blog.type.gitlab.user.tip")
 vuepressPlaceholder.passwordPlaceholder = t("setting.blog.type.gitlab.token.tip")
@@ -50,17 +50,38 @@ vuepressCfg.placeholder = vuepressPlaceholder
 
 // 处理事件的方法
 const onHomeChange = (value: string, cfg: GitlabvuepressConfig) => {
+  // sync api
   if (StrUtil.isEmptyString(cfg.home)) {
     cfg.apiUrl = ""
   } else {
     cfg.apiUrl = cfg.home
     cfg.tokenSettingUrl = `${cfg.home}/-/profile/personal_access_tokens`
   }
+
+  // sync site
+  if (StrUtil.isEmptyString(cfg.home) || StrUtil.isEmptyString(cfg.username)) {
+    cfg.site = ""
+  } else {
+    cfg.site = StrUtil.pathJoin(cfg.home, "/" + cfg.username)
+  }
+}
+const onUsernameChange = (value: string, cfg: GitlabvuepressConfig) => {
+  // sync site
+  if (StrUtil.isEmptyString(cfg.home) || StrUtil.isEmptyString(cfg.username)) {
+    cfg.site = ""
+  } else {
+    cfg.site = StrUtil.pathJoin(cfg.home, "/" + cfg.username)
+  }
 }
 </script>
 
 <template>
-  <common-github-setting :api-type="props.apiType" :cfg="vuepressCfg" @onHomeChange="onHomeChange">
+  <common-github-setting
+    :api-type="props.apiType"
+    :cfg="vuepressCfg"
+    @onHomeChange="onHomeChange"
+    @onUsernameChange="onUsernameChange"
+  >
     <template #header="header"> </template>
     <template #main="main"> </template>
     <template #footer="footer"> </template>

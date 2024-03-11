@@ -93,6 +93,16 @@ export class Utils {
   }
 
   public static emptyOrDefault(value: any, defaultValue: any) {
+    if (typeof value === "string") {
+      value = value.trim()
+    }
     return StrUtil.isEmptyString(value) ? defaultValue : value
+  }
+
+  public static emptyBooleanOrDefault(value: any, defaultValue: any) {
+    if (typeof value === "undefined") {
+      return defaultValue
+    }
+    return value
   }
 }

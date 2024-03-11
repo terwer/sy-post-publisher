@@ -25,9 +25,10 @@
 
 import { BaseWebApi } from "~/src/adaptors/web/base/baseWebApi.ts"
 import CsdnUtils from "~/src/adaptors/web/csdn/csdnUtils.ts"
-import { CategoryInfo, Post, UserBlog } from "zhi-blog-api"
-import { JsonUtil, StrUtil } from "zhi-common"
+import { BlogConfig, CategoryInfo, PageTypeEnum, Post, UserBlog } from "zhi-blog-api"
+import { JsonUtil } from "zhi-common"
 import WebUtils from "~/src/adaptors/web/base/webUtils.ts"
+import _ from "lodash-es"
 
 /**
  * CSDN网页授权适配器
@@ -139,6 +140,36 @@ class CsdnWebAdaptor extends BaseWebApi {
     return cats
   }
 
+  public override async preEditPost(post: Post, id?: string, publishCfg?: any): Promise<Post> {
+    // 公共的属性预处理
+    const doc = await super.preEditPost(post, id, publishCfg)
+
+    // CSDN自定义的处理
+    const cfg: BlogConfig = publishCfg?.cfg
+    const updatedPost = _.cloneDeep(doc) as Post
+    const html = updatedPost.html
+    this.logger.info("准备处理CSDN正文")
+    this.logger.debug("html =>", { html: html })
+    let updatedHtml = html
+
+    // 处理数学公式
+    updatedHtml = CsdnUtils.processCsdnMath(updatedHtml)
+
+    // 处理完毕
+    updatedPost.html = updatedHtml
+    this.logger.info("CSDN正文处理完毕")
+    this.logger.debug("updatedHtml =>", { updatedHtml: updatedHtml })
+
+    // 发布格式
+    if (cfg?.pageType == PageTypeEnum.Markdown) {
+      updatedPost.description = updatedPost.markdown
+    } else {
+      updatedPost.description = updatedPost.html
+    }
+
+    return updatedPost
+  }
+
   public async addPost(post: Post) {
     // 仅支持MD
     const params = JSON.stringify({
@@ -220,7 +251,7 @@ class CsdnWebAdaptor extends BaseWebApi {
     this.logger.debug("save csdn post res=>", res)
 
     if (res?.code !== 200) {
-      throw new Error("CSDN文章更新失败，可能是等级不够导致，如过等级不够，请去掉文章标签")
+      throw new Error("CSDN文章更新失败，可能是等级不够导致，如果等级不够，请去掉文章标签")
     }
 
     this.logger.debug("edit csdn post res=>", res)
@@ -386,9 +417,6 @@ class CsdnWebAdaptor extends BaseWebApi {
     this.logger.debug("csdn url =>", url)
     this.logger.debug("csdn requestOptions =>", requestOptions)
     const res = await this.webProxyFetch(url, [mergedHeaders], params, method, contentType)
-    if (res?.code !== 200) {
-      throw new Error(res?.body?.message)
-    }
     return res
   }
 
@@ -396,7 +424,8 @@ class CsdnWebAdaptor extends BaseWebApi {
     const token = this.cfg.password
     const userid = WebUtils.readCookie("UserName", token)
     const previewUrl = this.cfg.previewUrl.replace(/\[userid\]/g, userid).replace(/\[postid\]/g, postid)
-    return StrUtil.pathJoin(this.cfg.home ?? "", previewUrl)
+    return previewUrl
+    // return StrUtil.pathJoin(this.cfg.home ?? "", previewUrl)
   }
 }
 

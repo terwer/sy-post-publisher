@@ -28,11 +28,10 @@ import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { CategoryInfo, Post, UserBlog, YamlConvertAdaptor, YamlFormatObj } from "zhi-blog-api"
 import { CommonGithubClient, GithubConfig } from "zhi-github-middleware"
 import { CommonGithubConfig } from "~/src/adaptors/api/base/github/commonGithubConfig.ts"
-import { DateUtil, HtmlUtil, StrUtil, YamlUtil } from "zhi-common"
+import { StrUtil, YamlUtil } from "zhi-common"
 import { toRaw } from "vue"
 import { Base64 } from "js-base64"
-import { CommonGitlabConfig } from "~/src/adaptors/api/base/gitlab/commonGitlabConfig.ts"
-import IdUtil from "~/src/utils/idUtil.ts"
+import sypIdUtil from "~/src/utils/sypIdUtil.ts"
 
 /**
  * Github API 适配器
@@ -62,6 +61,23 @@ class CommonGithubApiAdaptor extends BaseBlogApi {
     this.githubClient = new CommonGithubClient(githubConfig)
   }
 
+  public async checkAuth(): Promise<boolean> {
+    let flag: boolean
+    try {
+      const testFilePath = `test.md`
+      await this.safeDeletePost(testFilePath)
+      const res = await this.githubClient.publishGithubPage(testFilePath, "Hello, World!")
+      await this.safeDeletePost(testFilePath)
+      flag = !StrUtil.isEmptyString(res?.content?.path)
+    } catch (e) {
+      this.logger.info(`checkAuth error =>`, e)
+      flag = false
+    }
+
+    this.logger.info(`checkAuth finished => ${flag}`)
+    return flag
+  }
+
   public async getUsersBlogs(): Promise<UserBlog[]> {
     const result: UserBlog[] = []
 
@@ -88,17 +104,36 @@ class CommonGithubApiAdaptor extends BaseBlogApi {
 
     // 路径处理
     const savePath = post.cate_slugs?.[0] ?? cfg.blogid
-    const filename = post.mdFilename ?? "auto-" + IdUtil.newID()
-    const docPath = `${savePath}/${filename}.md`
+    const filename = post.mdFilename ?? "auto-" + sypIdUtil.newID() + ".md"
+    const docPath = StrUtil.pathJoin(savePath, filename)
     this.logger.info("将要最终发送到以下目录 =>", docPath)
 
     // 开始发布
-    const res = await this.githubClient.publishGithubPage(docPath, post.description)
+    let finalRes: any
+    try {
+      const res = await this.githubClient.publishGithubPage(docPath, post.description)
 
-    if (!res?.content?.path) {
-      throw new Error("Github 调用API异常")
+      if (!res?.content?.path) {
+        throw new Error("Github 调用API异常")
+      }
+
+      finalRes = res
+    } catch (e) {
+      // 失败之后尝试删除旧数据再发一次
+      try {
+        await this.deletePost(docPath)
+      } catch (e) {
+        this.logger.warn("尝试删除失败，忽略", e)
+      }
+      const res2 = await this.githubClient.publishGithubPage(docPath, post.description)
+      if (!res2?.content?.path) {
+        throw new Error("重发依旧失败，Github 调用API异常")
+      }
+
+      finalRes = res2
     }
-    return res.content.path
+
+    return finalRes.content.path
   }
 
   public async getPost(postid: string, useSlug?: boolean): Promise<Post> {
@@ -154,10 +189,6 @@ class CommonGithubApiAdaptor extends BaseBlogApi {
     return true
   }
 
-  public async getCategories(): Promise<CategoryInfo[]> {
-    return Promise.resolve([])
-  }
-
   public async getCategoryTreeNodes(docPath: string): Promise<any[]> {
     const res = await this.githubClient.getGithubPageTreeNode(docPath)
     return res
@@ -172,16 +203,16 @@ class CommonGithubApiAdaptor extends BaseBlogApi {
       .replace("[branch]", cfg.githubBranch)
       .replace("[docpath]", postid)
     // 路径组合
-    previewUrl = StrUtil.pathJoin(this.cfg.home, previewUrl)
+    // previewUrl = StrUtil.pathJoin(this.cfg.home, previewUrl)
     return previewUrl
   }
 
-  public async getPostPreviewUrl(postid: string): Promise<string> {
+  public override async getPostPreviewUrl(postid: string): Promise<string> {
     let previewUrl: string
     const newPostid = postid.substring(postid.lastIndexOf("/") + 1).replace(".md", "")
-    previewUrl = this.cfg.previewUrl.replace("[postid]", newPostid)
+    previewUrl = this.cfg.previewPostUrl.replace("[postid]", newPostid)
     // 路径组合
-    previewUrl = StrUtil.pathJoin(StrUtil.pathJoin(this.cfg.home, this.cfg.username), previewUrl)
+    // previewUrl = StrUtil.pathJoin(this.cfg.postHome, previewUrl)
 
     return previewUrl
   }
@@ -189,47 +220,12 @@ class CommonGithubApiAdaptor extends BaseBlogApi {
   // ================
   // private methods
   // ================
-  private processFilename(post: Post, cfg: CommonGitlabConfig) {
-    // 处理文件规则
-    const created = DateUtil.formatIsoToZhDate(post.dateCreated.toISOString(), true)
-    const datearr = created.split(" ")[0]
-    const numarr = datearr.split("-")
-    const y = numarr[0]
-    const m = numarr[1]
-    const d = numarr[2]
-    this.logger.debug("created numarr=>", numarr)
-    let filename = cfg.mdFilenameRule.replace(/\.md/g, "")
-    if (cfg.useMdFilename) {
-      // 使用真实文件名作为MD文件名
-      filename = filename.replace(/\[filename\]/g, post.title)
-    } else {
-      // 使用别名作为MD文件名
-      filename = filename.replace(/\[slug\]/g, post.wp_slug)
-    }
-    // 年月日
-    filename = filename
-      .replace(/\[yyyy\]/g, y)
-      .replace(/\[MM\]/g, m)
-      .replace(/\[mm\]/g, m)
-      .replace(/\[dd\]/g, d)
+  public async safeDeletePost(postid: string): Promise<boolean> {
+    try {
+      await this.githubClient.deleteGithubPage(postid)
+    } catch (e) {}
 
-    return filename
-  }
-
-  private processPathCategory(savePath: string, cfg: CommonGitlabConfig) {
-    let categories = []
-    if (cfg.usePathCategory) {
-      this.logger.debug("savePath=>", savePath)
-      const docPathArray = savePath.split("/")
-      if (docPathArray.length > 1) {
-        for (let i = 1; i < docPathArray.length - 1; i++) {
-          const docCate = HtmlUtil.removeTitleNumber(docPathArray[i])
-          categories.push(docCate)
-        }
-      }
-    }
-
-    return categories
+    return true
   }
 }
 

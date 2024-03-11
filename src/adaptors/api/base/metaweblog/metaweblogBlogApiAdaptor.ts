@@ -57,6 +57,10 @@ class MetaweblogBlogApiAdaptor extends BaseBlogApi {
     this.proxyXmlrpc = proxyXmlrpc
   }
 
+  public async checkAuth(): Promise<boolean> {
+    return true
+  }
+
   public override async getUsersBlogs(): Promise<Array<UserBlog>> {
     let result: UserBlog[] = []
     result = await this.metaweblogCall(MetaweblogConstants.METHOD_GET_USERS_BLOGS, [
@@ -183,7 +187,8 @@ class MetaweblogBlogApiAdaptor extends BaseBlogApi {
 
   public async getPreviewUrl(postid: string): Promise<string> {
     const previewUrl = this.cfg.previewUrl.replace(/\[postid\]/g, postid)
-    return StrUtil.pathJoin(this.cfg.home ?? "", previewUrl)
+    // return StrUtil.pathJoin(this.cfg.home ?? "", previewUrl)
+    return previewUrl
   }
 
   public async getCategories(): Promise<CategoryInfo[]> {

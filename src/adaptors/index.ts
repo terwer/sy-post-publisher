@@ -50,6 +50,9 @@ import { useVuepress2Api } from "~/src/adaptors/api/vuepress2/useVuepress2Api.ts
 import { useVitepressApi } from "~/src/adaptors/api/vitepress/useVitepressApi.ts"
 import { useGitlabvuepress2Api } from "~/src/adaptors/api/gitlab-vuepress2/useGitlabvuepress2Api.ts"
 import { useGitlabvitepressApi } from "~/src/adaptors/api/gitlab-vitepress/useGitlabvitepressApi.ts"
+import { useHaloApi } from "~/src/adaptors/api/halo/useHaloApi.ts"
+import { useTelegraphApi } from "~/src/adaptors/api/telegraph/useTelegraphApi.ts"
+import { useJvueApi } from "~/src/adaptors/api/jvue/useJvueApi.ts"
 
 /**
  * 适配器统一入口
@@ -78,6 +81,16 @@ class Adaptors {
       }
       case SubPlatformType.Common_Notion: {
         const { cfg } = await useNotionApi(key, newCfg)
+        conf = cfg
+        break
+      }
+      case SubPlatformType.Common_Halo: {
+        const { cfg } = await useHaloApi(key, newCfg)
+        conf = cfg
+        break
+      }
+      case SubPlatformType.Common_Telegraph: {
+        const { cfg } = await useTelegraphApi(key, newCfg)
         conf = cfg
         break
       }
@@ -156,6 +169,11 @@ class Adaptors {
         conf = cfg
         break
       }
+      case SubPlatformType.Metaweblog_Jvue: {
+        const { cfg } = await useJvueApi(key, newCfg)
+        conf = cfg
+        break
+      }
       case SubPlatformType.Wordpress_Wordpress: {
         const { cfg } = await useWordpressApi(key, newCfg)
         conf = cfg
@@ -186,6 +204,11 @@ class Adaptors {
         conf = cfg
         break
       }
+      // case SubPlatformType.Custom_Flowus: {
+      //   const { cfg } = await useFlowusWeb(key)
+      //   conf = cfg
+      //   break
+      // }
       case SubPlatformType.System_Siyuan: {
         const { siyuanConfig } = useSiyuanApi()
         conf = siyuanConfig
@@ -218,6 +241,16 @@ class Adaptors {
       }
       case SubPlatformType.Common_Notion: {
         const { blogApi } = await useNotionApi(key, newCfg)
+        blogAdaptor = blogApi
+        break
+      }
+      case SubPlatformType.Common_Halo: {
+        const { blogApi } = await useHaloApi(key, newCfg)
+        blogAdaptor = blogApi
+        break
+      }
+      case SubPlatformType.Common_Telegraph: {
+        const { blogApi } = await useTelegraphApi(key, newCfg)
         blogAdaptor = blogApi
         break
       }
@@ -296,6 +329,11 @@ class Adaptors {
         blogAdaptor = blogApi
         break
       }
+      case SubPlatformType.Metaweblog_Jvue: {
+        const { blogApi } = await useJvueApi(key, newCfg)
+        blogAdaptor = blogApi
+        break
+      }
       case SubPlatformType.Wordpress_Wordpress: {
         const { blogApi } = await useWordpressApi(key, newCfg)
         blogAdaptor = blogApi
@@ -326,6 +364,11 @@ class Adaptors {
         blogAdaptor = webApi
         break
       }
+      // case SubPlatformType.Custom_Flowus: {
+      //   const { webApi } = await useFlowusWeb(key, newCfg)
+      //   blogAdaptor = webApi
+      //   break
+      // }
       case SubPlatformType.System_Siyuan: {
         const { blogApi } = useSiyuanApi()
         blogAdaptor = blogApi

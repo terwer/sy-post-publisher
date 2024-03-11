@@ -24,12 +24,12 @@
   -->
 
 <script setup lang="ts">
-import { computed, markRaw, onMounted, reactive, toRaw } from "vue"
+import { computed, markRaw, onMounted, reactive, ref, toRaw } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import BackPage from "~/src/components/common/BackPage.vue"
 import { usePublish } from "~/src/composables/usePublish.ts"
 import { MethodEnum } from "~/src/models/methodEnum.ts"
-import { BlogConfig, Post } from "zhi-blog-api"
+import { BlogConfig, PageEditMode, Post } from "zhi-blog-api"
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { DynamicConfig, getDynYamlKey } from "~/src/platforms/dynamicConfig.ts"
@@ -40,16 +40,18 @@ import { BrowserUtil } from "zhi-device"
 import { StrUtil } from "zhi-common"
 import { usePublishConfig } from "~/src/composables/usePublishConfig.ts"
 import { IPublishCfg } from "~/src/types/IPublishCfg.ts"
-import { PageEditMode } from "~/src/models/pageEditMode.ts"
 import EditModeSelect from "~/src/components/publish/form/EditModeSelect.vue"
 import PublishTime from "~/src/components/publish/form/PublishTime.vue"
-import { pre } from "~/src/utils/import/pre.ts"
+import { pre } from "~/src/platforms/pre.ts"
 import { ICategoryConfig } from "~/src/types/ICategoryConfig.ts"
 import PublishKnowledgeSpace from "~/src/components/publish/form/PublishKnowledgeSpace.vue"
 import { SiyuanAttr } from "zhi-siyuan-api"
 import PublishTitle from "~/src/components/publish/form/PublishTitle.vue"
 import { useChatGPT } from "~/src/composables/useChatGPT.ts"
-import _ from "lodash"
+import _ from "lodash-es"
+import { useLoadingTimer } from "~/src/composables/useLoadingTimer.ts"
+import CrossPageUtils from "~/cross/crossPageUtils.ts"
+import { ITagConfig } from "~/src/types/ITagConfig.ts"
 
 const logger = createAppLogger("single-publish-do-publish")
 
@@ -76,6 +78,7 @@ const formData = reactive({
   method: query.method as MethodEnum,
   isPublishLoading: false,
   isDeleteLoading: false,
+  errMsg: "",
 
   // 单个平台信息
   siyuanPost: {} as Post,
@@ -83,13 +86,14 @@ const formData = reactive({
   mergedPost: {} as Post,
   publishCfg: {} as IPublishCfg,
 
+  // 标签配置
+  tagConfig: {} as ITagConfig,
   // 分类配置
   categoryConfig: {} as ICategoryConfig,
   // 知识空间配置
   knowledgeSpaceConfig: {} as ICategoryConfig,
 
   postPreviewUrl: "",
-  changeTips: { title: "" },
 
   // =========================
   // extra sync attrs start
@@ -110,6 +114,8 @@ const handlePublish = async () => {
   try {
     formData.isPublishLoading = true
     formData.actionEnable = false
+    isTimerInit.value = false
+    formData.errMsg = ""
 
     logger.info("保存到系统平台开始")
     for (const sysKey of sysKeys) {
@@ -120,7 +126,7 @@ const handlePublish = async () => {
     logger.info("保存到系统平台结束")
 
     logger.info("单个常规发布开始")
-    await handleSyncPlatformAttrToSiyuan()
+    formData.mergedPost.editMode = formData.editType
     const processResult = await doSinglePublish(key, id, formData.publishCfg as IPublishCfg, formData.mergedPost)
     logger.info("normal publish processResult =>", processResult)
     logger.info("单个常规发布结束")
@@ -135,14 +141,17 @@ const handlePublish = async () => {
       }
     } else {
       formData.actionEnable = true
-      ElMessage.error(processResult.errMsg)
       logger.error(processResult.errMsg)
+      formData.errMsg = processResult.errMsg
+      ElMessage.error(processResult.errMsg)
     }
   } catch (e) {
-    ElMessage.error(e.message)
     logger.error(t("main.opt.failure") + "=>", e)
+    formData.errMsg = e.toString()
+    ElMessage.error(e.toString())
   } finally {
     formData.isPublishLoading = false
+    isTimerInit.value = true
   }
 }
 
@@ -169,6 +178,7 @@ const doDelete = async () => {
   try {
     formData.isDeleteLoading = true
     formData.actionEnable = false
+    formData.errMsg = ""
 
     const processResult = await doSingleDelete(key, id, formData.publishCfg as IPublishCfg)
     if (processResult.status) {
@@ -186,12 +196,14 @@ const doDelete = async () => {
       }, 200)
     } else {
       formData.actionEnable = true
-      ElMessage.error(processResult.errMsg)
       logger.error(processResult.errMsg)
+      formData.errMsg = processResult.errMsg
+      ElMessage.error(processResult.errMsg)
     }
   } catch (e) {
-    ElMessage.error(e.message)
     logger.error(t("main.opt.failure") + "=>", e)
+    formData.errMsg = e.toString()
+    ElMessage.error(e.toString())
   } finally {
     formData.isDeleteLoading = false
   }
@@ -199,6 +211,8 @@ const doDelete = async () => {
 
 const handleForceDelete = async () => {
   try {
+    formData.errMsg = ""
+
     await doForceSingleDelete(key, id, formData.publishCfg as IPublishCfg)
     const platformName = getPlatformName()
     const blogName = getBlogName()
@@ -212,6 +226,7 @@ const handleForceDelete = async () => {
       window.location.reload()
     }, 200)
   } catch (error) {
+    formData.errMsg = error.message
     ElMessage.error(error.message)
   } finally {
     formData.isDeleteLoading = false
@@ -219,16 +234,16 @@ const handleForceDelete = async () => {
 }
 
 const handleSyncToSiyuan = async () => {
-  await handleSyncSiyuaAttrnToSiyuan()
+  await handleSyncSiyuanAttrToSiyuan()
   await handleSyncPlatformAttrToSiyuan()
   ElMessage.success("属性已经成功同步到思源")
 }
 
-const handleSyncSiyuaAttrnToSiyuan = async () => {
+const handleSyncSiyuanAttrToSiyuan = async () => {
   const newAttrs = {
     [SiyuanAttr.Sys_memo]: formData.mergedPost.shortDesc,
     [SiyuanAttr.Sys_tags]: formData.mergedPost.mt_keywords,
-    [SiyuanAttr.Custom_categories]: formData.mergedPost.categories.join(","),
+    [SiyuanAttr.Custom_categories]: formData.mergedPost?.categories?.join(",") ?? [],
   }
   await kernelApi.setBlockAttrs(id, newAttrs)
   logger.debug("保存内置平台属性", newAttrs)
@@ -249,7 +264,7 @@ const getPlatformName = () => {
 const getBlogName = () => {
   const cfg = formData.publishCfg?.cfg as BlogConfig
   let blogName = cfg?.blogName || ""
-  if (cfg.knowledgeSpaceEnabled) {
+  if (cfg?.knowledgeSpaceEnabled) {
     if (formData.mergedPost?.cate_slugs?.length > 0) {
       let cateName: string
       if (formData.mergedPost?.categories?.length > 0) {
@@ -269,20 +284,14 @@ const topTitle = computed(() => {
   const blogName = getBlogName()
 
   let title = "当前操作的平台为 - "
-  title += platformName ? platformName : key
+  const platName = platformName ? platformName : key
+  title += CrossPageUtils.longPlatformName(platName, 11)
   if (blogName) {
     title += " - " + blogName
   }
 
   return title
 })
-
-const showChangeTip = (v1: string, v2: string) => {
-  if (StrUtil.isEmptyString(v2)) {
-    return ""
-  }
-  return `系统标题为 [${v1}] ， 已在远程平台被修改为 [${v2}]`
-}
 
 const syncEditMode = async (val: PageEditMode) => {
   formData.editType = val
@@ -393,45 +402,65 @@ const checkChatGPTEnabled = () => {
   return flag
 }
 
+// 计时器
+const isTimerInit = ref(false)
+const { loadingTime } = useLoadingTimer(isTimerInit)
+
 onMounted(async () => {
   logger.info("获取到的ID为=>", id)
-  // ==================
-  // 初始化开始
-  // ==================
-  // 初始化属性
-  formData.publishCfg = await getPublishCfg(key)
-  // 单篇文章初始化
-  await initPage()
-  // 元数据初始化
-  formData.mergedPost = await initPublishMethods.assignInitAttrs(formData.mergedPost, id, formData.publishCfg)
-  formData.isInit = true
+  try {
+    // ==================
+    // 初始化开始
+    // ==================
+    // 初始化属性
+    formData.publishCfg = await getPublishCfg(key)
+    // 单篇文章初始化
+    await initPage()
+    // 元数据初始化
+    formData.mergedPost = await initPublishMethods.assignInitAttrs(formData.mergedPost, id, formData.publishCfg)
 
-  const cfg = formData.publishCfg.cfg as BlogConfig
-  // 分类数据初始化
-  formData.categoryConfig = {
-    cateEnabled: cfg.cateEnabled,
-    readonlyMode: formData.method === MethodEnum.METHOD_EDIT && !cfg.allowCateChange,
-    readonlyModeTip: cfg?.placeholder?.cateReadonlyModeTip,
-    apiType: key,
-    cfg: cfg,
+    const cfg = formData.publishCfg.cfg as BlogConfig
+    // 标签数据初始化
+    formData.tagConfig = {
+      apiType: key,
+      cfg: cfg,
+    }
+    // 分类数据初始化
+    formData.categoryConfig = {
+      cateEnabled: cfg.cateEnabled,
+      readonlyMode: formData.method === MethodEnum.METHOD_EDIT && !cfg.allowCateChange,
+      readonlyModeTip: cfg?.placeholder?.cateReadonlyModeTip,
+      apiType: key,
+      cfg: cfg,
+    }
+    // 知识空间
+    formData.knowledgeSpaceConfig = {
+      cateEnabled: cfg.knowledgeSpaceEnabled,
+      readonlyMode: formData.method === MethodEnum.METHOD_EDIT && !cfg.allowKnowledgeSpaceChange,
+      readonlyModeTip: cfg?.placeholder?.knowledgeSpaceReadonlyModeTip,
+      apiType: key,
+      cfg: cfg,
+    }
+
+    logger.debug("single publish inited mergedPost =>", toRaw(formData.mergedPost))
+    // ==================
+    // 初始化结束
+    // ==================
+
+    // 这里可以控制一些功能开关
+    formData.useAi = checkChatGPTEnabled()
+    formData.editType = PageEditMode.EditMode_simple
+  } catch (e) {
+    const errMsg = t("main.opt.failure") + "=>" + e
+    logger.error(t("main.opt.failure") + "=>", e)
+    await kernelApi.pushErrMsg({
+      msg: errMsg,
+      timeout: 7000,
+    })
+  } finally {
+    formData.isInit = true
+    isTimerInit.value = true
   }
-  // 知识空间
-  formData.knowledgeSpaceConfig = {
-    cateEnabled: cfg.knowledgeSpaceEnabled,
-    readonlyMode: formData.method === MethodEnum.METHOD_EDIT && !cfg.allowKnowledgeSpaceChange,
-    readonlyModeTip: cfg?.placeholder?.knowledgeSpaceReadonlyModeTip,
-    apiType: key,
-    cfg: cfg,
-  }
-
-  logger.debug("single publish inited mergedPost =>", toRaw(formData.mergedPost))
-  // ==================
-  // 初始化结束
-  // ==================
-
-  // 这里可以控制一些功能开关
-  formData.useAi = checkChatGPTEnabled()
-  formData.editType = PageEditMode.EditMode_simple
 })
 </script>
 
@@ -439,13 +468,22 @@ onMounted(async () => {
   <back-page title="常规发布" :has-back-emit="true" @backEmit="onBack">
     <el-skeleton class="placeholder" v-if="!formData.isInit" :rows="5" animated />
     <div v-else id="batch-publish-index">
+      <!-- 显示加载计时器 -->
+      <loading-timer :loading-time="loadingTime" />
       <el-alert class="top-tip" :title="topTitle" type="info" :closable="false" />
       <el-alert
         v-if="formData.useAi"
         class="top-tip"
         :title="t('category.ai.enabled')"
         type="success"
-        :closable="false"
+        :closable="true"
+      />
+      <el-alert
+        v-if="!StrUtil.isEmptyString(formData.errMsg)"
+        class="top-tip"
+        :title="formData.errMsg"
+        type="error"
+        :closable="true"
       />
       <el-container>
         <el-main>
@@ -467,6 +505,7 @@ onMounted(async () => {
                 :page-id="id"
                 :cfg="formData.publishCfg.cfg"
                 @emitSyncPost="syncPost"
+                @edmtSyncToSiyuan="handleSyncToSiyuan"
               />
               <div v-else class="normal-mode">
                 <!-- 文章标题 -->
@@ -480,7 +519,7 @@ onMounted(async () => {
 
                 <!-- 知识空间 -->
                 <publish-knowledge-space
-                  v-if="formData.publishCfg.cfg.knowledgeSpaceEnabled"
+                  v-if="formData.publishCfg.cfg?.knowledgeSpaceEnabled"
                   v-model:knowledge-space-type="formData.publishCfg.cfg.knowledgeSpaceType"
                   v-model:knowledge-space-config="formData.knowledgeSpaceConfig"
                   v-model:cate-slugs="formData.mergedPost.cate_slugs"
@@ -489,7 +528,7 @@ onMounted(async () => {
 
                 <!-- 标签别名 -->
                 <single-tag-slug
-                  v-if="formData.publishCfg.cfg.tagSlugEnabled"
+                  v-if="formData.publishCfg.cfg?.tagSlugEnabled"
                   v-model:cfg="formData.publishCfg.cfg"
                   v-model:api-type="key"
                   v-model:tag-slugs="formData.mergedPost.tags_slugs"
@@ -529,6 +568,7 @@ onMounted(async () => {
                     v-model:tags="formData.mergedPost.mt_keywords"
                     v-model:md="formData.mergedPost.markdown"
                     v-model:html="formData.mergedPost.html"
+                    v-model:tag-config="formData.tagConfig"
                     @emitSyncTags="syncTags"
                   />
 
@@ -585,7 +625,11 @@ onMounted(async () => {
                 >
                   {{ t("main.force.cancel") }}
                 </el-button>
-                <el-button type="warning" @click="handleSyncToSiyuan" :disabled="!formData.actionEnable">
+                <el-button
+                  type="warning"
+                  @click="handleSyncToSiyuan"
+                  :disabled="!formData.actionEnable && formData.editType !== PageEditMode.EditMode_source"
+                >
                   同步修改到思源笔记
                 </el-button>
               </el-form-item>
@@ -618,9 +662,10 @@ onMounted(async () => {
 <style scoped lang="stylus">
 .placeholder
   margin-top 10px
+
 .top-tip
   margin-top 10px
-  padding-left 0
+
 .form-item-tip
   padding 2px 4px
   margin 0 10px 0 0

@@ -25,6 +25,7 @@
 
 import { PasswordType } from "zhi-blog-api"
 import { CommonBlogConfig } from "~/src/adaptors/api/base/commonBlogConfig.ts"
+import { StrUtil } from "zhi-common"
 
 /**
  * CommonGithubConfig 类用于存储 GitHub 相关配置信息
@@ -61,6 +62,11 @@ class CommonGithubConfig extends CommonBlogConfig {
   public email: string
 
   /**
+   * 作者主页
+   */
+  public site: string
+
+  /**
    * Markdown文件名规则（占位符：[yyyy] [MM] [dd] [slug] [filename] ）
    */
   public mdFilenameRule: string
@@ -68,7 +74,7 @@ class CommonGithubConfig extends CommonBlogConfig {
   /**
    * 预览规则（占位符：[yyyy] [MM] [dd] [postid]）
    */
-  public previewPostUrl: string
+  public override previewPostUrl: string = ""
 
   /**
    * MD文件预览规则（占位符：[user] [repo] [branch] [docpath]）
@@ -111,9 +117,8 @@ class CommonGithubConfig extends CommonBlogConfig {
     this.defaultMsg = "auto published by siyuan-plugin-publisher"
     this.author = "terwer"
     this.email = "youweics@163.com"
+    this.site = StrUtil.pathJoin(this.home, "/" + this.username)
     this.mdFilenameRule = "[filename].md"
-    this.useMdFilename = false
-    this.usePathCategory = false
 
     this.middlewareUrl = middlewareUrl
   }

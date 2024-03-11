@@ -23,8 +23,8 @@
  * questions.
  */
 
-import { VitepressPlaceHolder } from "~/src/adaptors/api/vitepress/vitepressPlaceHolder.ts"
+import { VitepressPlaceholder } from "~/src/adaptors/api/vitepress/vitepressPlaceholder.ts"
 
-class GitlabvitepressPlaceHolder extends VitepressPlaceHolder {}
+class GitlabvitepressPlaceholder extends VitepressPlaceholder {}
 
-export { GitlabvitepressPlaceHolder }
+export { GitlabvitepressPlaceholder }

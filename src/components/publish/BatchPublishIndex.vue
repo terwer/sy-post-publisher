@@ -27,27 +27,27 @@
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import PublishTips from "~/src/components/publish/form/PublishTips.vue"
 import PublishPlatform from "~/src/components/publish/form/PublishPlatform.vue"
-import { markRaw, onMounted, reactive, toRaw } from "vue"
+import { markRaw, onMounted, reactive, ref, toRaw } from "vue"
 import { usePublish } from "~/src/composables/usePublish.ts"
 import { useSiyuanApi } from "~/src/composables/useSiyuanApi.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
 import { ElMessage, ElMessageBox } from "element-plus"
 import { StrUtil } from "zhi-common"
-import { pre } from "~/src/utils/import/pre.ts"
+import { pre } from "~/src/platforms/pre.ts"
 import { Delete } from "@element-plus/icons-vue"
 import { BrowserUtil } from "zhi-device"
 import { usePublishConfig } from "~/src/composables/usePublishConfig.ts"
-import { Post } from "zhi-blog-api"
+import { PageEditMode, Post } from "zhi-blog-api"
 import { IPublishCfg } from "~/src/types/IPublishCfg.ts"
-import { PageEditMode } from "~/src/models/pageEditMode.ts"
 import EditModeSelect from "~/src/components/publish/form/EditModeSelect.vue"
 import PublishTime from "~/src/components/publish/form/PublishTime.vue"
 import { ICategoryConfig } from "~/src/types/ICategoryConfig.ts"
 import { SiyuanAttr } from "zhi-siyuan-api"
 import { DistributionPattern } from "~/src/models/distributionPattern.ts"
-import _ from "lodash"
+import _ from "lodash-es"
 import PublishTitle from "~/src/components/publish/form/PublishTitle.vue"
 import { useChatGPT } from "~/src/composables/useChatGPT.ts"
+import { useLoadingTimer } from "~/src/composables/useLoadingTimer.ts"
 
 const logger = createAppLogger("publisher-index")
 
@@ -72,6 +72,8 @@ const sysKeys = pre.systemCfg.map((item) => {
 })
 const id = StrUtil.isEmptyString(props.id) ? process.env.VITE_DEV_PAGE_ID : props.id
 const formData = reactive({
+  isInit: false,
+
   // loading
   isPublishLoading: false,
   isDeleteLoading: false,
@@ -79,8 +81,8 @@ const formData = reactive({
   // process
   showProcessResult: false,
   errCount: 0,
-  successBatchResults: <any[]>[],
-  failBatchResults: <any[]>[],
+  successBatchResults: [] as any[],
+  failBatchResults: [] as any[],
 
   // 单个平台信息
   siyuanPost: {} as Post,
@@ -111,6 +113,8 @@ const formData = reactive({
 const handlePublish = async () => {
   try {
     formData.isPublishLoading = true
+    isTimerInit.value = false
+
     if (formData.dynList.length === 0) {
       throw new Error("必须选择一个分发平台")
     }
@@ -177,6 +181,7 @@ const handlePublish = async () => {
     })
   } finally {
     formData.isPublishLoading = false
+    isTimerInit.value = true
   }
 }
 
@@ -330,6 +335,10 @@ const checkChatGPTEnabled = () => {
   return flag
 }
 
+// 计时器
+const isTimerInit = ref(false)
+const { loadingTime } = useLoadingTimer(isTimerInit)
+
 onMounted(async () => {
   // ==================
   // 初始化开始
@@ -348,16 +357,24 @@ onMounted(async () => {
   // 这里可以控制一些功能开关
   formData.useAi = checkChatGPTEnabled()
   formData.editType = PageEditMode.EditMode_simple
+
+  formData.isInit = true
+  isTimerInit.value = true
 })
 </script>
 
 <template>
   <div id="batch-publish-index">
     <el-container>
-      <el-main>
+      <el-skeleton v-if="!formData.isInit" class="placeholder" :rows="12" animated style="padding: 40px 12px" />
+      <el-main v-else>
+        <!-- 显示加载计时器 -->
+        <loading-timer :loading-time="loadingTime" />
+
         <!-- 提示 -->
         <publish-tips />
 
+        <!-- 批处理结果 -->
         <div
           :class="formData.errCount > 0 ? 'batch-result fail-tips' : 'batch-result success-tips'"
           v-if="formData.showProcessResult"
@@ -392,7 +409,7 @@ onMounted(async () => {
               class="top-tip"
               :title="t('category.ai.enabled')"
               type="success"
-              :closable="false"
+              :closable="true"
             />
             <!-- 编辑模式选择 -->
             <edit-mode-select v-model:edit-type="formData.editType" @emitSyncEditMode="syncEditMode" />
@@ -421,8 +438,8 @@ onMounted(async () => {
               <div class="distri-type">
                 <el-form-item label="分发模式">
                   <el-radio-group v-model="formData.distriPattern" class="ml-4 distri-type-check">
-                    <el-radio :label="DistributionPattern.Override" size="large">覆盖</el-radio>
-                    <el-radio :label="DistributionPattern.Merge" size="large">合并</el-radio>
+                    <el-radio :value="DistributionPattern.Override" size="large">覆盖</el-radio>
+                    <el-radio :value="DistributionPattern.Merge" size="large">合并</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item class="distri-tip">
@@ -539,6 +556,7 @@ onMounted(async () => {
 .batch-result
   margin 16px 0
   font-size 14px
+
   .platform
     color var(--el-color-info)
 
@@ -553,6 +571,7 @@ onMounted(async () => {
 
 .success-tips
   color var(--el-color-success)
+
 .fail-tips
   color var(--el-color-error)
 
@@ -562,10 +581,13 @@ onMounted(async () => {
 .distri-type
   :deep(.el-form-item)
     margin-bottom -16px
+
 .distri-type-check
   margin-top -3px
+
 .distri-tip
   margin-top 10px
+
   .distri-tip-alert
     margin 10px 0
     padding: 2px 0

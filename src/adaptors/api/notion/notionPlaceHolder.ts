@@ -28,6 +28,6 @@ import { CommonBlogPlaceholder } from "~/src/adaptors/api/base/commonBlogPlaceho
 /**
  * Notion 配置提示
  */
-class NotionPlaceHolder extends CommonBlogPlaceholder {}
+class NotionPlaceholder extends CommonBlogPlaceholder {}
 
-export { NotionPlaceHolder }
+export { NotionPlaceholder }

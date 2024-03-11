@@ -27,14 +27,14 @@
 import { createAppLogger } from "~/src/utils/appLogger.ts"
 import { PublisherAppInstance } from "~/src/publisherAppInstance.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { useSettingStore } from "~/src/stores/useSettingStore.ts"
+import { usePublishSettingStore } from "~/src/stores/usePublishSettingStore.ts"
 import { onMounted, reactive, ref, toRaw, watch } from "vue"
 import { DynamicConfig, DynamicJsonCfg, getDynCfgByKey, setDynamicJsonCfg } from "~/src/platforms/dynamicConfig.ts"
 import { SypConfig } from "~/syp.config.ts"
 import { CommonBlogConfig } from "~/src/adaptors/api/base/commonBlogConfig.ts"
-import { JsonUtil, ObjectUtil, StrUtil } from "zhi-common"
+import { JsonUtil, ObjectUtil } from "zhi-common"
 import { DYNAMIC_CONFIG_KEY } from "~/src/utils/constants.ts"
-import { PageTypeEnum, PasswordType } from "zhi-blog-api"
+import { BlogAdaptor, PageTypeEnum, PasswordType, UserBlog } from "zhi-blog-api"
 import Adaptors from "~/src/adaptors"
 import { Utils } from "~/src/utils/utils.ts"
 import { ElMessage } from "element-plus"
@@ -45,7 +45,7 @@ const appInstance = new PublisherAppInstance()
 
 // uses
 const { t } = useVueI18n()
-const { getSetting, updateSetting } = useSettingStore()
+const { getSetting, updateSetting } = usePublishSettingStore()
 
 const props = defineProps({
   apiType: {
@@ -60,10 +60,15 @@ const props = defineProps({
 })
 
 // emits
-const emit = defineEmits(["onHomeChange"])
+const emit = defineEmits(["onHomeChange", "onApiUrlChange", "onUsernameChange"])
 const handleHomeChange = (value: string | number): void => {
   if (emit) {
     emit("onHomeChange", value, formData.cfg)
+  }
+}
+const handleUsernameChange = (value: string | number): void => {
+  if (emit) {
+    emit("onUsernameChange", value, formData.cfg)
   }
 }
 
@@ -116,56 +121,89 @@ const valiConf = async () => {
   isLoading.value = true
 
   let errMsg: any
+  const commonblogApiAdaptor = await Adaptors.getAdaptor(props.apiType, formData.cfg as any)
+  const api = Utils.blogApi(appInstance, commonblogApiAdaptor) as BlogAdaptor
   try {
-    const commonblogApiAdaptor = await Adaptors.getAdaptor(props.apiType, formData.cfg as any)
-    logger.debug("commonblogApiAdaptor=>", commonblogApiAdaptor)
-    const api = Utils.blogApi(appInstance, commonblogApiAdaptor)
-    const usersBlogs = await api.getUsersBlogs(formData.ksKeyword)
-    if (usersBlogs && usersBlogs.length > 0) {
-      // 首次未保存验证的时候才去更新
-      if (StrUtil.isEmptyString(formData.cfg?.blogid)) {
-        // 首次验证需要初始化下拉选择
-        if (formData.kwSpaces.length == 0) {
-          usersBlogs.forEach((item) => {
-            const kwItem = {
-              label: item.blogName,
-              value: item.blogid,
-            }
-            formData.kwSpaces.push(kwItem)
-          })
+    await api.checkAuth()
+    try {
+      await afterValid(api)
+      formData.cfg.apiStatus = true
+    } catch (e2) {
+      formData.cfg.apiStatus = false
+      errMsg = e2.toString()
+    }
+    logger.info("======校验正常结束======")
+  } catch (e) {
+    if (typeof e === "boolean") {
+      if (e === true) {
+        try {
+          await afterValid(api)
+          formData.cfg.apiStatus = true
+        } catch (e2) {
+          formData.cfg.apiStatus = false
+          errMsg = e2.toString()
         }
-
-        // 初始化选中
-        const userBlog = usersBlogs[0]
-        formData.cfg.blogid = userBlog.blogid
-        formData.cfg.blogName = userBlog.blogName
+      } else {
+        formData.cfg.apiStatus = false
+        errMsg = "校验失败，请检查平台配置"
       }
 
-      formData.cfg.apiStatus = true
+      logger.info("======校验修正结束======")
     } else {
-      errMsg = "接口返回信息不完整，请检查接口适配器"
       formData.cfg.apiStatus = false
+      errMsg = e.toString()
+      logger.error(t("main.opt.failure") + "=>", e)
     }
-  } catch (e) {
-    formData.cfg.apiStatus = false
-    errMsg = e
-    logger.error(t("main.opt.failure") + "=>", e)
   }
 
   if (!formData.cfg.apiStatus) {
-    logger.error(errMsg.toString())
-    ElMessage.error(t("setting.blog.vali.error") + "=>" + errMsg)
+    const errMsg2 = t("setting.blog.vali.error") + `=>${errMsg.toString()}`
+    logger.error(errMsg2)
+    ElMessage.error(errMsg2)
   } else {
     ElMessage.success(t("main.opt.success"))
   }
 
   // isAuth和apiStatus同步
-  formData.dynCfg.isAuth = formData.cfg.apiStatus
+  if (formData.dynCfg) {
+    formData.dynCfg.isAuth = formData.cfg.apiStatus
+  }
   // 刷新状态
   await saveConf(true)
 
   isLoading.value = false
   logger.debug("Commonblog通用Setting验证完毕")
+}
+
+const afterValid = async (api: any) => {
+  // 验证成功就去初始化知识空间
+  const usersBlogs = await api.getUsersBlogs(formData.ksKeyword)
+  if (usersBlogs && usersBlogs.length > 0) {
+    // 更新知识空间
+    if (formData.kwSpaces.length == 0) {
+      usersBlogs.forEach((item: any) => {
+        const kwItem = {
+          label: item.blogName,
+          value: item.blogid,
+        }
+        formData.kwSpaces.push(kwItem)
+      })
+    }
+
+    // 更新博客信息
+    const userBlog = usersBlogs[0] as UserBlog
+    formData.cfg.blogid = userBlog.blogid
+    formData.cfg.blogName = userBlog.blogName
+
+    // 元数据映射，字词验证需更新
+    // @since 1.20.0
+    for (const key in userBlog.metadataMap) {
+      // 这里不用校验，因为可能是继承的属性
+      // if (ObjectUtil.hasKey(formData.cfg, key)) {
+      formData.cfg[key] = userBlog.metadataMap[key]
+      // }
+    }
+  }
 }
 
 const saveConf = async (hideTip?: any) => {
@@ -293,7 +331,11 @@ onMounted(async () => {
     </el-form-item>
     <!-- 登录名 -->
     <el-form-item :label="t('setting.common.username')" v-if="props.cfg.usernameEnabled">
-      <el-input v-model="formData.cfg.username" :placeholder="props.cfg?.placeholder.usernamePlaceholder" />
+      <el-input
+        v-model="formData.cfg.username"
+        :placeholder="props.cfg?.placeholder.usernamePlaceholder"
+        @input="handleUsernameChange"
+      />
     </el-form-item>
     <!-- 密码 -->
     <el-form-item
@@ -353,8 +395,8 @@ onMounted(async () => {
     </el-form-item>
     <el-form-item :label="t('setting.blog.pageType')">
       <el-radio-group v-model="formData.cfg.pageType" class="ml-4">
-        <el-radio :label="PageTypeEnum.Markdown" size="large">Markdown</el-radio>
-        <el-radio :label="PageTypeEnum.Html" size="large">HTML</el-radio>
+        <el-radio :value="PageTypeEnum.Markdown" size="large">Markdown</el-radio>
+        <el-radio :value="PageTypeEnum.Html" size="large">HTML</el-radio>
       </el-radio-group>
     </el-form-item>
     <!-- 知识空间 -->
@@ -388,6 +430,33 @@ onMounted(async () => {
         type="info"
       ></el-alert>
     </el-form-item>
+    <!-- 新 CORS 代理 -->
+    <el-form-item :label="t('setting.blog.middlewareUrl.new')">
+      <el-input v-model="formData.cfg.corsAnywhereUrl" :placeholder="t('setting.blog.corsAnywhereUrl.tip')" />
+      <el-alert
+        :closable="false"
+        :title="t('setting.blog.middlewareUrl.my.new.tip')"
+        class="top-tip"
+        type="warning"
+      ></el-alert>
+    </el-form-item>
+    <el-form-item>
+      <el-alert
+        :closable="false"
+        :title="t('setting.blog.middlewareUrl.my.warn.tip')"
+        class="top-tip"
+        type="error"
+      ></el-alert>
+      <el-alert
+        :closable="false"
+        :title="t('setting.blog.middlewareUrl.my.fee.tip')"
+        class="top-tip"
+        type="error"
+      ></el-alert>
+      <a target="_blank" href="https://gitee.com/terwer/siyuan-plugin-publisher#%E6%8D%90%E8%B5%A0">
+        {{ t("setting.blog.middlewareUrl.my.coffee") }}
+      </a>
+    </el-form-item>
     <!-- 校验 -->
     <el-form-item>
       <el-button type="primary" :loading="isLoading" @click="valiConf">
@@ -418,9 +487,10 @@ onMounted(async () => {
 <style lang="stylus" scoped>
 .placeholder
   margin-top 10px
+
 .top-tip
   margin 10px 0
-  padding-left 0
+
 .inline-tip
   margin 0
   padding-left 0

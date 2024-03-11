@@ -25,7 +25,7 @@
 
 import { DynamicConfig, PlatformType } from "~/src/platforms/dynamicConfig.ts"
 import { useVueI18n } from "~/src/composables/useVueI18n.ts"
-import { mainPre, pre } from "~/src/utils/import/pre.ts"
+import { mainPre, pre } from "~/src/platforms/pre.ts"
 
 /**
  * 通用平台定义。包含平台类型列表、getPlatformType函数和getPrePlatform函数的对象。
@@ -68,9 +68,29 @@ export const usePlatformDefine = () => {
     return prePlatformList.find((platform) => platform.platformKey === key)
   }
 
+  /**
+   * 根据所有预定义平台 key 集合
+   */
+  const getPrePlatformKeys = (): string[] => {
+    return prePlatformList.map((platform) => {
+      return platform.platformKey
+    })
+  }
+
+  /**
+   * 获取所有平台
+   *
+   * @since 1.20.0
+   */
+  const getAllPrePlatformList = (): DynamicConfig[] => {
+    return prePlatformList
+  }
+
   return {
+    getPrePlatformKeys,
     platformTypeList,
     getPlatformType,
+    getAllPrePlatformList,
     getPrePlatformList,
     getPrePlatform,
   }

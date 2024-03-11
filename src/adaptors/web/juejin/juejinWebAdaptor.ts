@@ -96,6 +96,23 @@ class JuejinWebAdaptor extends BaseWebApi {
       // throw new Error("掘金平台必须选择一个标签")
     }
 
+    const DEFAULT_DESC =
+      "由于掘金平台的摘要有强制字数要求，这里需要给一下默认文字作为摘要。这里是掘金平台的默认摘要，您可以稍后自行修改。"
+    if (StrUtil.isEmptyString(post.shortDesc) || post.shortDesc.length < DEFAULT_DESC.length) {
+      post.shortDesc = DEFAULT_DESC
+      this.logger.error("掘金平台未设置摘要或者摘要字数，将使用默认摘要")
+    }
+
+    // 摘要控制在 50 - 100
+    if (post.shortDesc.length < 50) {
+      while (post.shortDesc.length < 50) {
+        post.shortDesc += post.shortDesc
+      }
+      post.shortDesc = post.shortDesc.slice(0, 100)
+    } else if (post.shortDesc.length > 100) {
+      post.shortDesc = post.shortDesc.slice(0, 100)
+    }
+
     // 保存草稿
     const draftUrl = "https://api.juejin.cn/content_api/v1/article_draft/create"
     const draftParams = {
@@ -173,13 +190,16 @@ class JuejinWebAdaptor extends BaseWebApi {
     const juejinPostKey = this.getJuejinPostidKey(postid)
     const pageId = juejinPostKey.pageId
     const postUrl = this.cfg.previewUrl.replace("[postid]", pageId)
-    return StrUtil.pathJoin(this.cfg.home ?? "", postUrl)
+    return postUrl
+    // return StrUtil.pathJoin(this.cfg.home ?? "", postUrl)
   }
 
   public async deletePost(postid: string): Promise<boolean> {
     const url = "https://api.juejin.cn/content_api/v1/article/delete"
+    const juejinPostKey = this.getJuejinPostidKey(postid)
+    const pageId = juejinPostKey.pageId
     const params = {
-      article_id: postid,
+      article_id: pageId,
     }
     const res = await this.webProxyFetch(url, [], params, "POST")
     this.logger.debug("juejin delete post res =>", res)
@@ -270,6 +290,7 @@ class JuejinWebAdaptor extends BaseWebApi {
 
     return tags
   }
+
   // ================
   // private methods
   // ================
@@ -308,7 +329,7 @@ class JuejinWebAdaptor extends BaseWebApi {
     const res = await this.webProxyFetch(url, [], params, "POST")
     this.logger.debug("juejin publish post res =>", res)
     if (res.err_no !== 0) {
-      throw new Error("掘金文章发布失败 =>" + res?.err_msg ?? res)
+      throw new Error("掘金文章发布失败 =>" + (res?.err_msg ?? res))
     }
 
     return res.data.article_id.toString()

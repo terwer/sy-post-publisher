@@ -25,6 +25,6 @@
 
 import { CommonGithubPlaceholder } from "~/src/adaptors/api/base/github/commonGithubPlaceholder.ts"
 
-class JekyllPlaceHolder extends CommonGithubPlaceholder {}
+class JekyllPlaceholder extends CommonGithubPlaceholder {}
 
-export { JekyllPlaceHolder }
+export { JekyllPlaceholder }

@@ -23,7 +23,7 @@
  * questions.
  */
 
-import idUtil from "~/src/utils/idUtil.ts"
+import sypIdUtil from "~/src/utils/sypIdUtil.ts"
 import { StrUtil } from "zhi-common"
 
 export class DynamicConfig {
@@ -104,6 +104,9 @@ export class DynamicConfig {
     this.isAuth = false
     this.isEnabled = false
     this.authMode = AuthMode.API
+    if (platformKey.toLowerCase().includes(PlatformType.Custom.toString().toLowerCase())) {
+      this.authMode = AuthMode.WEBSITE
+    }
     this.cookieLimit = false
     this.isSys = false
 
@@ -170,6 +173,8 @@ export enum SubPlatformType {
   // Common
   Common_Yuque = "Yuque",
   Common_Notion = "Notion",
+  Common_Halo = "Halo",
+  Common_Telegraph = "Telegraph",
 
   // Github 子平台
   Github_Hexo = "Hexo",
@@ -191,6 +196,7 @@ export enum SubPlatformType {
   Metaweblog_Metaweblog = "Metaweblog",
   Metaweblog_Cnblogs = "Cnblogs",
   Metaweblog_Typecho = "Typecho",
+  Metaweblog_Jvue = "Jvue",
 
   // WordPress
   Wordpress_Wordpress = "Wordpress",
@@ -201,6 +207,7 @@ export enum SubPlatformType {
   Custom_Wechat = "Wechat",
   Custom_Jianshu = "Jianshu",
   Custom_Juejin = "Juejin",
+  // Custom_Flowus = "Flowus",
 
   // System
   System_Siyuan = "Siyuan",
@@ -232,6 +239,8 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
     case PlatformType.Common:
       subtypeList.push(SubPlatformType.Common_Yuque)
       subtypeList.push(SubPlatformType.Common_Notion)
+      subtypeList.push(SubPlatformType.Common_Halo)
+      subtypeList.push(SubPlatformType.Common_Telegraph)
       break
     case PlatformType.Github:
       subtypeList.push(SubPlatformType.Github_Hexo)
@@ -253,6 +262,7 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
       subtypeList.push(SubPlatformType.Metaweblog_Metaweblog)
       subtypeList.push(SubPlatformType.Metaweblog_Cnblogs)
       subtypeList.push(SubPlatformType.Metaweblog_Typecho)
+      subtypeList.push(SubPlatformType.Metaweblog_Jvue)
       break
     case PlatformType.Wordpress:
       subtypeList.push(SubPlatformType.Wordpress_Wordpress)
@@ -263,6 +273,7 @@ export function getSubtypeList(ptype: PlatformType): SubPlatformType[] {
       subtypeList.push(SubPlatformType.Custom_Wechat)
       subtypeList.push(SubPlatformType.Custom_Jianshu)
       subtypeList.push(SubPlatformType.Custom_Juejin)
+      // subtypeList.push(SubPlatformType.Custom_Flowus)
       break
     case PlatformType.System:
       subtypeList.push(SubPlatformType.System_Siyuan)
@@ -368,7 +379,7 @@ export function getSubPlatformTypeByKey(key: string): SubPlatformType {
  */
 export function getNewPlatformKey(ptype: PlatformType, subtype: SubPlatformType): string {
   let ret: any
-  const newId = idUtil.newID()
+  const newId = sypIdUtil.newID()
   ret = ptype.toLowerCase()
 
   if (!StrUtil.isEmptyString(subtype) && SubPlatformType.NONE !== subtype) {
@@ -453,4 +464,22 @@ export function getDynPostidKey(platformKey: string): string {
  */
 export function getDynYamlKey(platformKey: string): string {
   return "custom-" + platformKey.replace(/_/g, "-") + "-yaml"
+}
+
+/**
+ * 获取元数据 key
+ *
+ * @param postidKey 文章 key
+ */
+export function getDynPlatformKeyFromPostidKey(postidKey: string): string {
+  // 匹配postidKey的正则表达式
+  const regex = /^custom-(.+?)-post-id$/
+  const match = postidKey.match(regex)
+  if (match && match[1]) {
+    // 提取platformKey
+    const platformKey = match[1]
+    return platformKey
+  } else {
+    throw new Error("Invalid postidKey format")
+  }
 }

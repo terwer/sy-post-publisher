@@ -124,7 +124,7 @@ class YuqueApiAdaptor extends BaseBlogApi {
     const docId = yuquePostidKey.docId
     const repo = yuquePostidKey.docRepo ?? this.cfg.blogid ?? ""
     const postUrl = purl.replace("[postid]", docId).replace("[notebook]", repo)
-    return StrUtil.pathJoin(this.cfg.home ?? "", postUrl)
+    return postUrl
   }
 
   // ================
@@ -299,7 +299,7 @@ class YuqueApiAdaptor extends BaseBlogApi {
 
     // 使用兼容的fetch调用并返回统一的JSON数据
     const body = ObjectUtil.isEmptyObject(params) ? "" : JSON.stringify(params)
-    const resJson = await this.proxyFetch(apiUrl, [headers], body, method, contentType)
+    const resJson = await this.apiProxyFetch(apiUrl, [headers], body, method, contentType)
     this.logger.debug("向语雀请求数据，resJson =>", resJson)
 
     if (resJson?.status === 401) {
